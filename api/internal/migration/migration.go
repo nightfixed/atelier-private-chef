@@ -1,0 +1,66 @@
+// Package migration wraps golang-migrate to run embedded SQL migration files.
+package migration
+
+import (
+	"database/sql"
+	"errors"
+	"fmt"
+	"io/fs"
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
+)
+
+// Migrator is the interface used by RunMigrations.
+type Migrator interface {
+	Up() error
+	Force(version int) error
+}
+
+type migrateMaker func(db *sql.DB, migrationsFS fs.ReadDirFS) (Migrator, error)
+
+func defaultMakeMigrator(db *sql.DB, migrationsFS fs.ReadDirFS) (Migrator, error) {
+	src, err := iofs.New(migrationsFS, ".")
+	if err != nil {
+		return nil, fmt.Errorf("iofs source: %w", err)
+	}
+
+	driver, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		return nil, fmt.Errorf("postgres driver: %w", err)
+	}
+
+	m, err := migrate.NewWithInstance("iofs", src, "postgres", driver)
+	if err != nil {
+		return nil, fmt.Errorf("migrate instance: %w", err)
+	}
+	return m, nil
+}
+
+// RunMigrations applies all pending migrations.
+func RunMigrations(db *sql.DB, migrationsFS fs.ReadDirFS) error {
+	return runMigrations(db, migrationsFS, defaultMakeMigrator)
+}
+
+func runMigrations(db *sql.DB, migrationsFS fs.ReadDirFS, maker migrateMaker) error {
+	m, err := maker(db, migrationsFS)
+	if err != nil {
+		return err
+	}
+
+	if err := m.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
+		var dirtyErr migrate.ErrDirty
+		if errors.As(err, &dirtyErr) {
+			if ferr := m.Force(dirtyErr.Version); ferr != nil {
+				return fmt.Errorf("migrate force version %d: %w", dirtyErr.Version, ferr)
+			}
+			if rerr := m.Up(); rerr != nil && !errors.Is(rerr, migrate.ErrNoChange) {
+				return fmt.Errorf("migrate up after force: %w", rerr)
+			}
+			return nil
+		}
+		return fmt.Errorf("migrate up: %w", err)
+	}
+	return nil
+}

@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS contact_requests;
+DROP TABLE IF EXISTS gallery_items;
+DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS dishes;

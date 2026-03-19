@@ -1,0 +1,23 @@
+# Go
+/api/server
+/api/atelier-api
+*.exe
+
+# Node
+web/node_modules/
+web/.next/
+web/out/
+
+# Env
+dmtools.env
+*.env
+gcp-key.json
+ai-teammate-gcp-key.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/

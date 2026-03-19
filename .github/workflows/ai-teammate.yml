@@ -1,0 +1,279 @@
+name: AI Teammate
+
+run-name: "${{ inputs.config_file }} : ${{ inputs.concurrency_key }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      config_file:
+        description: 'Path to config'
+        required: true
+      encoded_config:
+        description: 'Encoded or JSON Agent Config'
+        required: false
+      concurrency_key:
+        description: 'Ticket key for concurrency grouping (e.g., APC-123)'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  ai-teammate:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ai-teammate-${{ inputs.config_file }}-${{ inputs.concurrency_key }}
+      cancel-in-progress: false
+
+    steps:
+      - name: 📋 Job Info
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "🤖 AI Teammate Workflow Started"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "📁 Config File: ${{ inputs.config_file }}"
+          echo "🎫 Ticket Key: ${{ inputs.concurrency_key }}"
+          if [ -n "${{ inputs.encoded_config }}" ]; then
+            echo "📝 Encoded Config: provided"
+          else
+            echo "📝 Encoded Config: (not provided - using default JQL from config)"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        env:
+          ENCODED_CONFIG: ${{ inputs.encoded_config }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.PAT_TOKEN }}
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_AI_TEAMMATE_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Cache JDK 23
+        uses: actions/cache@v4
+        with:
+          path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/
+          key: jdk-temurin-23-linux
+
+      - name: Setup Java Environment
+        uses: ./.github/actions/setup-java-only
+        with:
+          cache-key-suffix: '-cursor'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache web node_modules
+        id: cache-web-deps
+        uses: actions/cache@v4
+        with:
+          path: web/node_modules
+          key: ${{ runner.os }}-node20-web-node-modules-${{ hashFiles('web/package-lock.json') }}
+
+      - name: Install web dependencies
+        if: steps.cache-web-deps.outputs.cache-hit != 'true'
+        run: cd web && npm ci --no-audit --progress=false
+
+      - name: Cache Python packages
+        id: cache-python-deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('testing/requirements.txt') }}
+
+      - name: Install Python test dependencies
+        run: pip install -q -r testing/requirements.txt
+
+      - name: Cache Playwright browsers
+        id: cache-playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-chromium-${{ hashFiles('testing/requirements.txt') }}
+
+      - name: Install Playwright Chromium browser
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: playwright install chromium --with-deps
+
+      - name: Configure npm global prefix
+        if: vars.AI_AGENT_PROVIDER == 'codemie' || vars.AI_AGENT_PROVIDER == 'copilot'
+        run: |
+          npm config set prefix ~/.npm-global
+          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Cache npm global packages
+        if: vars.AI_AGENT_PROVIDER == 'codemie' || vars.AI_AGENT_PROVIDER == 'copilot'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm-global
+            ~/.codemie
+            ~/.local/bin
+          key: ${{ runner.os }}-npm-global-${{ vars.AI_AGENT_PROVIDER }}-${{ hashFiles('.github/workflows/ai-teammate.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-global-${{ vars.AI_AGENT_PROVIDER }}-
+            ${{ runner.os }}-npm-global-
+
+      - name: Install Cursor CLI
+        if: vars.AI_AGENT_PROVIDER != 'codemie' && vars.AI_AGENT_PROVIDER != 'copilot'
+        run: |
+          echo "Installing Cursor CLI..."
+          curl https://cursor.com/install -fsS | bash
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.local/bin:$PATH"
+          if command -v cursor-agent; then
+            echo "✅ cursor-agent found at: $(command -v cursor-agent)"
+          else
+            echo "❌ cursor-agent not found after installation"
+          fi
+
+      - name: Install Codemie CLI
+        if: vars.AI_AGENT_PROVIDER == 'codemie'
+        run: |
+          if ! command -v codemie-claude &> /dev/null; then
+            echo "📦 Installing Codemie CLI..."
+            npm install -g @codemieai/code
+          else
+            echo "✅ Codemie CLI found in cache"
+          fi
+          codemie install claude --supported
+          echo "✅ Codemie CLI ready"
+
+      - name: Install Copilot CLI
+        if: vars.AI_AGENT_PROVIDER == 'copilot'
+        run: |
+          if ! command -v github-copilot-cli &> /dev/null; then
+            echo "📦 Installing GitHub Copilot CLI..."
+            npm install -g @github/copilot
+          else
+            echo "✅ Copilot CLI already installed (from cache)"
+          fi
+          echo "✅ Copilot CLI ready"
+
+      - name: Cache DMTools CLI
+        id: cache-dmtools
+        uses: actions/cache@v4
+        with:
+          path: ~/.dmtools
+          key: dmtools-v1.7.149
+
+      - name: Install DMTools CLI
+        if: steps.cache-dmtools.outputs.cache-hit != 'true'
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/IstiN/dmtools/v1.7.149/install.sh | bash -s v1.7.149
+
+      - name: Add DMTools to PATH
+        run: echo "$HOME/.dmtools/bin" >> $GITHUB_PATH
+
+      - name: Configure Git Author
+        run: |
+          git config --global user.name "AI Teammate"
+          git config --global user.email "agent.ai.native@gmail.com"
+
+      - name: Start Cloud SQL Auth Proxy
+        run: |
+          curl -fsSL -o cloud-sql-proxy \
+            https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.2/cloud-sql-proxy.linux.amd64
+          chmod +x cloud-sql-proxy
+          ./cloud-sql-proxy --port 5432 ${{ vars.CLOUD_SQL_CONNECTION_NAME }} &
+          echo "DB_HOST=127.0.0.1" >> $GITHUB_ENV
+          for i in $(seq 1 10); do
+            nc -z 127.0.0.1 5432 && echo "✅ Cloud SQL Proxy ready" && break
+            echo "Waiting for proxy... ($i/10)"
+            sleep 2
+          done
+
+      - name: Get Firebase test token
+        run: |
+          RESP=$(curl -s -X POST \
+            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${{ secrets.FIREBASE_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"email\":\"${{ vars.FIREBASE_TEST_EMAIL }}\",\"password\":\"${{ secrets.FIREBASE_TEST_PASSWORD }}\",\"returnSecureToken\":true}")
+          TOKEN=$(echo $RESP | jq -r .idToken)
+          if [ "$TOKEN" = "null" ] || [ -z "$TOKEN" ]; then
+            echo "⚠️ Firebase token not obtained — skipping"
+          else
+            echo "FIREBASE_TEST_TOKEN=${TOKEN}" >> $GITHUB_ENV
+            echo "✅ Firebase test token obtained"
+          fi
+          echo "FIREBASE_TEST_UID=${{ vars.FIREBASE_TEST_UID }}" >> $GITHUB_ENV
+          echo "FIREBASE_TEST_EMAIL=${{ vars.FIREBASE_TEST_EMAIL }}" >> $GITHUB_ENV
+
+      - name: Run AI Teammate
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          MODEL: sonnet-4.5
+          AGENT_DISABLE_WATCHDOG: "1"
+          PATH: "/home/runner/.local/bin:/home/runner/.dmtools/bin:/bin:/usr/bin:$PATH"
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_PATH: ${{ vars.JIRA_BASE_PATH }}
+          JIRA_AUTH_TYPE: ${{ vars.JIRA_AUTH_TYPE }}
+          JIRA_TRANSFORM_CUSTOM_FIELDS_TO_NAMES: ${{ vars.JIRA_TRANSFORM_CUSTOM_FIELDS_TO_NAMES }}
+          CONFLUENCE_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          CONFLUENCE_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          CONFLUENCE_BASE_PATH: ${{ vars.CONFLUENCE_BASE_PATH }}
+          JIRA_CLEAR_CACHE: "true"
+          DMTOOLS_INTEGRATIONS: "jira,confluence,figma,ai,cli,file,github"
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+          DEFAULT_LLM: "gemini"
+          DEFAULT_TRACKER: "jira"
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+          FIGMA_BASE_PATH: ${{ vars.FIGMA_BASE_PATH }}
+          ENCODED_CONFIG: ${{ inputs.encoded_config }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          SOURCE_GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN || secrets.PAT_TOKEN }}
+          COPILOT_MODEL: ${{ vars.COPILOT_MODEL || 'gpt-5-mini' }}
+          AI_AGENT_PROVIDER: ${{ vars.AI_AGENT_PROVIDER }}
+          CODEMIE_API_KEY: ${{ secrets.CODEMIE_API_KEY }}
+          CODEMIE_BASE_URL: ${{ vars.CODEMIE_BASE_URL }}
+          CODEMIE_MODEL: ${{ vars.CODEMIE_MODEL }}
+          CODEMIE_MAX_TURNS: ${{ vars.CODEMIE_MAX_TURNS }}
+          CLI_ALLOWED_COMMANDS: "find,ls,cat,mkdir,bash,run-agent.sh"
+          GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ vars.GCP_REGION }}
+          CLOUD_SQL_CONNECTION_NAME: ${{ vars.CLOUD_SQL_CONNECTION_NAME }}
+          GCP_DB_USER_SECRET: ${{ vars.GCP_DB_USER_SECRET }}
+          GCP_DB_PASSWORD_SECRET: ${{ vars.GCP_DB_PASSWORD_SECRET }}
+          API_BASE_URL: ${{ vars.API_URL }}
+          CDN_BASE_URL: ${{ vars.CDN_BASE_URL }}
+          DB_HOST: ${{ env.DB_HOST }}
+          DB_NAME: ${{ vars.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          SSL_MODE: disable
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ vars.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ vars.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_TEST_EMAIL: ${{ env.FIREBASE_TEST_EMAIL }}
+          FIREBASE_TEST_UID: ${{ env.FIREBASE_TEST_UID }}
+          FIREBASE_TEST_TOKEN: ${{ env.FIREBASE_TEST_TOKEN }}
+          FIREBASE_TEST_PASSWORD: ${{ secrets.FIREBASE_TEST_PASSWORD }}
+        run: |
+          echo "Using configuration: ${{ inputs.config_file }}"
+          CI_RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "CI Run URL: ${CI_RUN_URL}"
+          if [ -n "${ENCODED_CONFIG}" ]; then
+            dmtools --debug run "${{ inputs.config_file }}" "${ENCODED_CONFIG}" --ciRunUrl "${CI_RUN_URL}"
+          else
+            dmtools --debug run "${{ inputs.config_file }}" --ciRunUrl "${CI_RUN_URL}"
+          fi

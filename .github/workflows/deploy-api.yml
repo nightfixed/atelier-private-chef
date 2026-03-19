@@ -1,0 +1,91 @@
+name: Deploy API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/**'
+      - '.github/workflows/deploy-api.yml'
+
+concurrency:
+  group: deploy-api-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  REGION: ${{ vars.GCP_REGION }}
+  SERVICE: atelier-api
+  IMAGE: gcr.io/${{ vars.GCP_PROJECT_ID }}/atelier-api
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker gcr.io --quiet
+
+      - name: Build and push API image
+        run: |
+          docker build -t ${{ env.IMAGE }}:${{ github.sha }} ./api
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
+
+      - name: Deploy API to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE }} \
+            --image ${{ env.IMAGE }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --max-instances 2 \
+            --add-cloudsql-instances ${{ vars.CLOUD_SQL_CONNECTION_NAME }} \
+            --set-env-vars "DB_NAME=${{ vars.DB_NAME }},INSTANCE_UNIX_SOCKET=/cloudsql/${{ vars.CLOUD_SQL_CONNECTION_NAME }},FIREBASE_PROJECT_ID=${{ vars.FIREBASE_PROJECT_ID }},IMAGES_BUCKET=${{ vars.IMAGES_BUCKET }},CDN_BASE_URL=${{ vars.CDN_BASE_URL }}" \
+            --set-secrets "DB_USER=${{ vars.GCP_DB_USER_SECRET }}:latest,DB_PASSWORD=${{ vars.GCP_DB_PASSWORD_SECRET }}:latest" \
+            --project ${{ env.PROJECT_ID }}
+
+      - name: Show service URL
+        run: |
+          gcloud run services describe ${{ env.SERVICE }} \
+            --region ${{ env.REGION }} \
+            --format "value(status.url)" \
+            --project ${{ env.PROJECT_ID }}
+
+      - name: Delete old Cloud Run revisions
+        run: |
+          OLD=$(gcloud run revisions list \
+            --service ${{ env.SERVICE }} \
+            --region ${{ env.REGION }} \
+            --project ${{ env.PROJECT_ID }} \
+            --format="value(name)" \
+            --sort-by="~metadata.creationTimestamp" | tail -n +2)
+          if [ -n "$OLD" ]; then
+            echo "$OLD" | xargs -I{} gcloud run revisions delete {} \
+              --region ${{ env.REGION }} \
+              --project ${{ env.PROJECT_ID }} \
+              --quiet || true
+          fi
+
+      - name: Delete old GCR images
+        run: |
+          OLD=$(gcloud container images list-tags "${{ env.IMAGE }}" \
+            --project ${{ env.PROJECT_ID }} \
+            --format="get(digest)" \
+            --sort-by="~timestamp" | tail -n +2)
+          if [ -n "$OLD" ]; then
+            echo "$OLD" | xargs -I{} gcloud container images delete \
+              "${{ env.IMAGE }}@{}" \
+              --project ${{ env.PROJECT_ID }} \
+              --quiet --force-delete-tags || true
+          fi
