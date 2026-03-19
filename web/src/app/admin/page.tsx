@@ -678,6 +678,10 @@ const TABS = [
 type TabId = (typeof TABS)[number]['id'];
 
 export default function AdminPage() {
+  if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+    return <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',color:'#888',fontFamily:'sans-serif'}}>Admin panel not available in this environment.</div>;
+  }
+
   const [user, setUser] = useState<import('firebase/auth').User | null>(null);
   const [token, setToken] = useState('');
   const [tab, setTab] = useState<TabId>('contacts');
