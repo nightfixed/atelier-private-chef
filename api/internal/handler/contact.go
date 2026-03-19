@@ -11,7 +11,7 @@ import (
 )
 
 type contactRepo interface {
-	CreateContactRequest(ctx context.Context, name, email string, message *string, eventDate *time.Time, guestsCount *int) (*repository.ContactRequest, error)
+	CreateContactRequest(ctx context.Context, name, email string, message *string, eventDate *time.Time, guestsCount *int, occasion *string) (*repository.ContactRequest, error)
 	ListContactRequests(ctx context.Context, status string) ([]repository.ContactRequest, error)
 	UpdateContactRequestStatus(ctx context.Context, id, status string) (*repository.ContactRequest, error)
 }
@@ -28,6 +28,7 @@ func NewContactHandler(repo contactRepo, authMiddleware func(http.Handler) http.
 				Message     *string `json:"message"`
 				EventDate   *string `json:"event_date"`
 				GuestsCount *int    `json:"guests_count"`
+				Occasion    *string `json:"occasion"`
 			}
 			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 				writeError(w, http.StatusBadRequest, "invalid request body")
@@ -46,7 +47,7 @@ func NewContactHandler(repo contactRepo, authMiddleware func(http.Handler) http.
 				}
 				eventDate = &t
 			}
-			cr, err := repo.CreateContactRequest(r.Context(), body.Name, body.Email, body.Message, eventDate, body.GuestsCount)
+			cr, err := repo.CreateContactRequest(r.Context(), body.Name, body.Email, body.Message, eventDate, body.GuestsCount, body.Occasion)
 			if err != nil {
 				writeError(w, http.StatusInternalServerError, err.Error())
 				return

@@ -86,9 +86,18 @@ All JSON. Public endpoints require no auth. Admin endpoints require `Authorizati
 ### Contact
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
-| POST | `/api/contact` | public | Submit contact/booking request |
+| POST | `/api/contact` | public | Submit contact/booking request. Body: `{name, email, message?, event_date?, guests_count?, occasion?}` |
 | GET | `/api/contact` | admin | List requests. `?status=new\|read\|replied` |
 | PUT | `/api/contact/{id}` | admin | Update status |
+
+### Herbarium
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/api/herbarium` | public | List all specimens ordered by display_order |
+| GET | `/api/herbarium/{id}` | public | Get specimen by ID |
+| POST | `/api/herbarium` | admin | Create specimen |
+| PUT | `/api/herbarium/{id}` | admin | Update specimen |
+| DELETE | `/api/herbarium/{id}` | admin | Delete specimen |
 
 ### Upload
 | Method | Path | Auth | Description |
@@ -105,10 +114,13 @@ All JSON. Public endpoints require no auth. Admin endpoints require `Authorizati
 ## Database Schema
 
 ```sql
-dishes          — id (uuid), title, description, category, image_url, featured (bool), created_at, updated_at
-recipes         — id, dish_id (fk→dishes), title, description, ingredients (jsonb), steps (jsonb), prep_time_min, cook_time_min, servings, created_at, updated_at
-gallery_items   — id, image_url, caption, category, display_order (int), created_at, updated_at
-contact_requests — id, name, email, message, event_date (date), guests_count, status (new/read/replied), created_at, updated_at
+dishes              — id (uuid), title, description, category, image_url, featured (bool), created_at, updated_at
+recipes             — id, dish_id (fk→dishes), title, description, ingredients (jsonb), steps (jsonb), prep_time_min, cook_time_min, servings, created_at, updated_at
+gallery_items       — id, image_url, caption, category, display_order (int), created_at, updated_at
+contact_requests    — id, name, email, message, event_date (date), guests_count, occasion, status (new/read/replied), created_at, updated_at
+herbarium_specimens — id, num, code (unique), category, name_ro, name_en, latin_name, name_large, badge, badge_cls,
+                      meta (jsonb [{k,ro,en}]), spectrum (jsonb [color strings]), pills (jsonb [strings]),
+                      desc_ro, desc_en, note_ro, note_en, usage_list (jsonb [strings]), display_order, created_at, updated_at
 ```
 
 ---

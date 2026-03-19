@@ -16,6 +16,7 @@ type ContactRequest struct {
 	Message     *string    `json:"message"`
 	EventDate   *time.Time `json:"event_date"`
 	GuestsCount *int       `json:"guests_count"`
+	Occasion    *string    `json:"occasion"`
 	Status      string     `json:"status"`
 	CreatedAt   time.Time  `json:"created_at"`
 	UpdatedAt   time.Time  `json:"updated_at"`
@@ -32,21 +33,21 @@ func NewContactRepository(db *sql.DB) *ContactRepository {
 }
 
 // CreateContactRequest inserts a new contact request.
-func (r *ContactRepository) CreateContactRequest(ctx context.Context, name, email string, message *string, eventDate *time.Time, guestsCount *int) (*ContactRequest, error) {
+func (r *ContactRepository) CreateContactRequest(ctx context.Context, name, email string, message *string, eventDate *time.Time, guestsCount *int, occasion *string) (*ContactRequest, error) {
 	id := uuid.New().String()
 	var cr ContactRequest
 	err := r.db.QueryRowContext(ctx,
-		`INSERT INTO contact_requests (id, name, email, message, event_date, guests_count)
-		 VALUES ($1,$2,$3,$4,$5,$6)
-		 RETURNING id, name, email, message, event_date, guests_count, status, created_at, updated_at`,
-		id, name, email, message, eventDate, guestsCount).
-		Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt)
+		`INSERT INTO contact_requests (id, name, email, message, event_date, guests_count, occasion)
+		 VALUES ($1,$2,$3,$4,$5,$6,$7)
+		 RETURNING id, name, email, message, event_date, guests_count, occasion, status, created_at, updated_at`,
+		id, name, email, message, eventDate, guestsCount, occasion).
+		Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Occasion, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt)
 	return &cr, err
 }
 
 // ListContactRequests returns all contact requests ordered by creation date.
 func (r *ContactRepository) ListContactRequests(ctx context.Context, status string) ([]ContactRequest, error) {
-	query := `SELECT id, name, email, message, event_date, guests_count, status, created_at, updated_at FROM contact_requests`
+	query := `SELECT id, name, email, message, event_date, guests_count, occasion, status, created_at, updated_at FROM contact_requests`
 	args := []interface{}{}
 	if status != "" {
 		query += ` WHERE status = $1`
@@ -63,7 +64,7 @@ func (r *ContactRepository) ListContactRequests(ctx context.Context, status stri
 	var items []ContactRequest
 	for rows.Next() {
 		var cr ContactRequest
-		if err := rows.Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt); err != nil {
+		if err := rows.Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Occasion, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt); err != nil {
 			return nil, err
 		}
 		items = append(items, cr)
@@ -77,9 +78,9 @@ func (r *ContactRepository) UpdateContactRequestStatus(ctx context.Context, id, 
 	err := r.db.QueryRowContext(ctx,
 		`UPDATE contact_requests SET status=$2, updated_at=NOW()
 		 WHERE id=$1
-		 RETURNING id, name, email, message, event_date, guests_count, status, created_at, updated_at`,
+		 RETURNING id, name, email, message, event_date, guests_count, occasion, status, created_at, updated_at`,
 		id, status).
-		Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt)
+		Scan(&cr.ID, &cr.Name, &cr.Email, &cr.Message, &cr.EventDate, &cr.GuestsCount, &cr.Occasion, &cr.Status, &cr.CreatedAt, &cr.UpdatedAt)
 	if err == sql.ErrNoRows {
 		return nil, nil
 	}

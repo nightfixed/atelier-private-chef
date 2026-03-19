@@ -59,6 +59,7 @@ func main() {
 	recipeRepo := repository.NewRecipeRepository(db)
 	galleryRepo := repository.NewGalleryRepository(db)
 	contactRepo := repository.NewContactRepository(db)
+	herbariumRepo := repository.NewHerbariumRepository(db)
 	gcsSigner := storage.NewGCSSigner(gcsClient)
 	gcsDeleter := storage.NewGCSObjectDeleter(gcsClient)
 	authMiddleware := middleware.RequireAuth(verifier)
@@ -83,6 +84,10 @@ func main() {
 	// Contact
 	mux.Handle("/api/contact", handler.NewContactHandler(contactRepo, authMiddleware))
 	mux.Handle("/api/contact/{id}", handler.NewContactByIDHandler(contactRepo, authMiddleware))
+
+	// Herbarium
+	mux.Handle("/api/herbarium", handler.NewHerbariumHandler(herbariumRepo, authMiddleware))
+	mux.Handle("/api/herbarium/{id}", handler.NewHerbariumSpecimenByIDHandler(herbariumRepo, authMiddleware))
 
 	// Upload (signed GCS PUT URL)
 	mux.Handle("/api/upload", authMiddleware(handler.NewUploadHandler(gcsSigner, imagesBucket)))
