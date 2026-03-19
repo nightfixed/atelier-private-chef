@@ -452,7 +452,8 @@ function HerbariumTab({ token }: { token: string }) {
     const body = { ...editing, num, code, name_ro, meta, pills, usage_list, spectrum,
       display_order: Number(editing.display_order ?? 0) };
     // remove helper fields
-    delete body.pills_str; delete body.usage_str; delete body.spectrum_str; delete body.meta_str;
+    const bodyAny = body as Record<string, unknown>;
+    delete bodyAny.pills_str; delete bodyAny.usage_str; delete bodyAny.spectrum_str; delete bodyAny.meta_str;
 
     setSaving(true); setErr('');
     try {
