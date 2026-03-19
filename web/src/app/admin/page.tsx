@@ -77,7 +77,7 @@ const S = {
 } as const;
 
 // ── LOGIN FORM ──
-function LoginForm({ onLogin }: { onLogin: (user: User) => void }) {
+function LoginForm({ onLogin }: { onLogin: (user: User, token: string) => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -88,7 +88,8 @@ function LoginForm({ onLogin }: { onLogin: (user: User) => void }) {
     setLoading(true); setError('');
     try {
       const cred = await signInWithEmailAndPassword(auth, email, password);
-      onLogin(cred.user);
+      const token = await cred.user.getIdToken();
+      onLogin(cred.user, token);
     } catch {
       setError('Email sau parolă incorectă.');
     }
