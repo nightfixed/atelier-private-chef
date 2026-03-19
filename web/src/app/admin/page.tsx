@@ -85,6 +85,7 @@ function LoginForm({ onLogin }: { onLogin: (user: User, token: string) => void }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!auth) return;
     setLoading(true); setError('');
     try {
       const cred = await signInWithEmailAndPassword(auth, email, password);
@@ -688,6 +689,7 @@ export default function AdminPage() {
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
+    if (!auth) { setAuthLoading(false); return; }
     const unsub = onAuthStateChanged(auth, async (u: User | null) => {
       setUser(u);
       if (u) { setToken(await u.getIdToken()); }
@@ -697,7 +699,7 @@ export default function AdminPage() {
   }, []);
 
   async function logout() {
-    await signOut(auth);
+    if (auth) { await signOut(auth); }
     setUser(null); setToken('');
   }
 
