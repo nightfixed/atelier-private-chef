@@ -1,6 +1,6 @@
 # Atelier — Private Chef Portfolio
 
-Portfolio and showcase platform for a private chef, featuring meal preparations, recipes, and plating photography. Built with an agentic development workflow.
+Portfolio and showcase platform for a private chef, featuring meal preparations, recipes, and plating photography. Built with an agentic development workflow and LLM support.
 
 ## Architecture
 
