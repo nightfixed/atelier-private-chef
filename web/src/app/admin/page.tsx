@@ -85,7 +85,6 @@ function LoginForm({ onLogin }: { onLogin: (user: User, token: string) => void }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!auth) return;
     setLoading(true); setError('');
     try {
       const cred = await signInWithEmailAndPassword(auth, email, password);
@@ -679,17 +678,12 @@ const TABS = [
 type TabId = (typeof TABS)[number]['id'];
 
 export default function AdminPage() {
-  if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
-    return <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100vh',color:'#888',fontFamily:'sans-serif'}}>Admin panel not available in this environment.</div>;
-  }
-
   const [user, setUser] = useState<import('firebase/auth').User | null>(null);
   const [token, setToken] = useState('');
   const [tab, setTab] = useState<TabId>('contacts');
   const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
-    if (!auth) { setAuthLoading(false); return; }
     const unsub = onAuthStateChanged(auth, async (u: User | null) => {
       setUser(u);
       if (u) { setToken(await u.getIdToken()); }
@@ -699,7 +693,7 @@ export default function AdminPage() {
   }, []);
 
   async function logout() {
-    if (auth) { await signOut(auth); }
+    await signOut(auth);
     setUser(null); setToken('');
   }
 
