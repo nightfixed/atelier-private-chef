@@ -63,6 +63,7 @@ export default function HomePage() {
   const [genStep, setGenStep] = useState(0);
   const [genAnswers, setGenAnswers] = useState<(string|string[])[]>([]);
   const [genCurrent, setGenCurrent] = useState<string|string[]>('');
+  const [genResult, setGenResult] = useState<{title:string;subtitle:string;courses:{num:number;category:string;name:string;ingredient:string}[];chef_note:string;tags:string[]} | null>(null);
   // booking form
   const [rezOcazie, setRezOcazie] = useState('');
   const [rezPersoane, setRezPersoane] = useState('');
@@ -171,11 +172,23 @@ export default function HomePage() {
   function sendAI() {
     if (!aiInput.trim()) return;
     const msg = aiInput.trim();
-    setAiMessages(m => [...m, {role:'user',text:msg}]);
+    const newMessages = [...aiMessages, {role:'user' as const, text:msg}];
+    setAiMessages(newMessages);
     setAiInput('');
-    setTimeout(() => {
-      setAiMessages(m => [...m, {role:'bot',text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați direct la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.'}]);
-    }, 800);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
+    fetch(apiUrl + '/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: newMessages.map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.text })) }),
+    })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați direct la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
+        setAiMessages(m => [...m, {role:'bot', text:reply}]);
+      })
+      .catch(() => {
+        setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați direct la exquisitefoodtravel@yahoo.com.'}]);
+      });
   }
 
   async function submitRez() {
@@ -194,15 +207,32 @@ export default function HomePage() {
     setRezLoading(false);
   }
 
-  function genStart() { setGenStep(0); setGenAnswers([]); setGenCurrent(''); setGenScreen('steps'); }
+  function genStart() { setGenStep(0); setGenAnswers([]); setGenCurrent(''); setGenResult(null); setGenScreen('steps'); }
   function genNext() {
     const ans = [...genAnswers];
     ans[genStep] = genCurrent;
     setGenAnswers(ans);
     if (genStep < GEN_STEPS.length - 1) { setGenStep(genStep + 1); setGenCurrent(''); }
-    else { setGenScreen('generating'); setTimeout(() => setGenScreen('result'), 3000); }
+    else {
+      setGenScreen('generating');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
+      fetch(apiUrl + '/api/generate-menu', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          occasion: String(ans[0] ?? ''),
+          guest_count: String(ans[1] ?? ''),
+          season: String(ans[2] ?? ''),
+          dietary: Array.isArray(ans[3]) ? ans[3] : (ans[3] ? [String(ans[3])] : []),
+          host_name: String(ans[4] ?? ''),
+        }),
+      })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data) setGenResult(data); setGenScreen('result'); })
+        .catch(() => { setGenScreen('result'); });
+    }
   }
-  function genRestart() { setGenScreen('intro'); setGenStep(0); setGenAnswers([]); setGenCurrent(''); }
+  function genRestart() { setGenScreen('intro'); setGenStep(0); setGenAnswers([]); setGenCurrent(''); setGenResult(null); }
   function genContact() { setGenOpen(false); document.getElementById('rezervare')?.scrollIntoView({behavior:'smooth'}); }
   function genCanReady() {
     const s = GEN_STEPS[genStep];
@@ -889,29 +919,30 @@ export default function HomePage() {
           {genScreen === 'result' && (
             <div className="grscr on">
               <div className="grh">
-                <div className="gro">{occasion} · {season}</div>
-                <div className="grt">Seara {guestName}</div>
+                <div className="gro">{genResult?.subtitle ?? `${occasion} · ${season}`}</div>
+                <div className="grt">{genResult?.title ?? `Seara ${guestName}`}</div>
                 <div className="grst">Un meniu de degustare creat exclusiv pentru acest moment</div>
                 <div className="grrl"></div>
               </div>
               <div className="grm">
                 <div className="grmt">
-                  <span className="grmi">9 preparate</span>
+                  <span className="grmi">{genResult ? `${genResult.courses.length} preparate` : '9 preparate'}</span>
                   <span className="grmi">Ingrediente Herbarium</span>
-                  <span className="grmi">Craft · Discretion · Excellence</span>
+                  {genResult?.tags?.slice(0,1).map(t => <span key={t} className="grmi">{t}</span>)}
                 </div>
                 <div className="grcrs">
-                  {['Amuse-bouche · Piatră de munte', 'Pâinea Atelierului', 'Supă de pădure', 'Somon și Feleac', 'Foie Gras și Molid', 'Hrișcă și ciuperci', 'Calcan și cenușă', 'Rată și lichen · Specialitatea Casei', 'Caramel de brad'].map((c, i) => (
+                  {(genResult?.courses ?? ['Amuse-bouche · Piatră de munte', 'Pâinea Atelierului', 'Supă de pădure', 'Somon și Feleac', 'Foie Gras și Molid', 'Hrișcă și ciuperci', 'Calcan și cenușă', 'Rată și lichen · Specialitatea Casei', 'Caramel de brad'].map((c, i) => ({num:i+1,category:'',name:typeof c === 'string' ? c : '',ingredient:''}))).map((c, i) => (
                     <div key={i} className="grco show" style={{transitionDelay: `${i*.08}s`}}>
-                      <div className="grcon">Preparatul {i+1}</div>
-                      <div className="grcname">{c}</div>
+                      <div className="grcon">{c.category || `Preparatul ${c.num}`}</div>
+                      <div className="grcname">{c.name}</div>
+                      {c.ingredient && <div style={{fontSize:'10px',color:'rgba(201,169,110,.45)',letterSpacing:'1px',marginTop:'2px'}}>{c.ingredient}</div>}
                     </div>
                   ))}
                 </div>
               </div>
               <div className="grlt show">
                 <div className="grltl">Notă de Chef</div>
-                <div className="grltt">Am creat acest meniu gândindu-mă la {guestName} și la seara de {occasion?.toLowerCase()}. Fiecare preparat poartă în el un ingredient din Herbarium — colecția noastră de ingrediente carpatice. Sper că această seară va deveni un moment pe care îl veți ține minte.</div>
+                <div className="grltt">{genResult?.chef_note ?? `Am creat acest meniu gândindu-mă la ${guestName} și la seara de ${occasion?.toLowerCase()}. Fiecare preparat poartă în el un ingredient din Herbarium — colecția noastră de ingrediente carpatice. Sper că această seară va deveni un moment pe care îl veți ține minte.`}</div>
                 <div className="grlts">Chef Răzvan</div>
               </div>
               <div className="gract">

@@ -9,6 +9,7 @@ import (
 	"os"
 
 	gcstorage "cloud.google.com/go/storage"
+	"github.com/nightfixed/atelier-private-chef/api/internal/ai"
 	"github.com/nightfixed/atelier-private-chef/api/internal/auth"
 	"github.com/nightfixed/atelier-private-chef/api/internal/database"
 	"github.com/nightfixed/atelier-private-chef/api/internal/handler"
@@ -63,6 +64,7 @@ func main() {
 	gcsSigner := storage.NewGCSSigner(gcsClient)
 	gcsDeleter := storage.NewGCSObjectDeleter(gcsClient)
 	authMiddleware := middleware.RequireAuth(verifier)
+	aiProvider := &ai.MockProvider{}
 
 	mux := http.NewServeMux()
 
@@ -88,6 +90,10 @@ func main() {
 	// Herbarium
 	mux.Handle("/api/herbarium", handler.NewHerbariumHandler(herbariumRepo, authMiddleware))
 	mux.Handle("/api/herbarium/{id}", handler.NewHerbariumSpecimenByIDHandler(herbariumRepo, authMiddleware))
+
+	// AI — menu generator + chat (swap aiProvider for a real LLM when ready)
+	mux.Handle("/api/generate-menu", handler.NewGenerateHandler(aiProvider, herbariumRepo))
+	mux.Handle("/api/chat", handler.NewChatHandler(aiProvider))
 
 	// Upload (signed GCS PUT URL)
 	mux.Handle("/api/upload", authMiddleware(handler.NewUploadHandler(gcsSigner, imagesBucket)))

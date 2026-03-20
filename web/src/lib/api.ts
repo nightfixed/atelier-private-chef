@@ -57,12 +57,17 @@ export const api = {
   getUploadUrl: (filename: string, contentType: string, token: string) =>
     apiFetch(`/api/upload?filename=${encodeURIComponent(filename)}&content_type=${encodeURIComponent(contentType)}`, {}, token),
 
-  getHerbarium: () => apiFetch("/api/herbarium"),
-  getSpecimen: (id: string) => apiFetch(`/api/herbarium/${id}`),
+  getHerbarium: () => apiFetch("/api/herbarium"),  getSpecimen: (id: string) => apiFetch(`/api/herbarium/${id}`),
   createSpecimen: (body: object, token: string) =>
     apiFetch("/api/herbarium", { method: "POST", body: JSON.stringify(body) }, token),
   updateSpecimen: (id: string, body: object, token: string) =>
     apiFetch(`/api/herbarium/${id}`, { method: "PUT", body: JSON.stringify(body) }, token),
   deleteSpecimen: (id: string, token: string) =>
     apiFetch(`/api/herbarium/${id}`, { method: "DELETE" }, token),
+
+  generateMenu: (body: { occasion: string; guest_count: string; season: string; dietary: string[]; host_name: string }) =>
+    apiFetch("/api/generate-menu", { method: "POST", body: JSON.stringify(body) }),
+
+  chat: (messages: { role: string; content: string }[]) =>
+    apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages }) }),
 };
