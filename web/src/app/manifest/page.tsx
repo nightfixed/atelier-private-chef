@@ -1,0 +1,315 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Manifest · Atelier Private Dining',
+  description: 'Codex Atelier — manifestul unui atelier viu. Filozofia culinară a lui Răzvan, chef și fondator Atelier Private Dining, Cluj-Napoca.',
+};
+
+const principles = [
+  {
+    num: 'I',
+    title: 'Ingredientul are origine sau nu are gust.',
+    body: 'Orice ingredient fără poveste este doar materie primă. Noi nu cumpărăm materie primă — cumpărăm locuri, oameni, sezoane. Un fruct din Ardeal nu seamănă cu același fruct din Spania. Nu din patriotism, ci din adevăr. Originea nu este opțională. Este primul strat de gust.',
+    axiom: '"Dacă nu știu de unde vine, nu îl pun pe masă."',
+  },
+  {
+    num: 'II',
+    title: 'Fermentarea nu este tehnică. Este timp cu intenție.',
+    body: 'Fermentarea este singurul proces culinar care se continuă fără chef. Este materia care lucrează singură dacă i-ai creat condițiile corecte. Un produs fermentat bine este dovada că ai știut să te dai la o parte. Nu toate lucrurile bune se fac mai repede cu mai multă intervenție.',
+    axiom: '"Răbdarea nu este virtute. Este ingredient."',
+  },
+  {
+    num: 'III',
+    title: 'Masa nu se termină când pleci. Se termină când uiți.',
+    body: 'O cină la Atelier nu este un serviciu. Este o experiență care continuă în conversația din mașină, în visul de noaptea aceea, în momentul când, luni mai târziu, miroși ceva și îți amintești brusc. Construim pentru memorie, nu pentru recenzie.',
+    axiom: '"Cel mai bun compliment pe care îl poți primi este: nu știu să explic, dar nu uit."',
+  },
+  {
+    num: 'IV',
+    title: 'Tehnica este japoneză. Ingredientul este al nostru.',
+    body: 'Precizia, disciplina, respectul față de produs — le-am luat de oriunde au existat cel mai bine. Dar solul, ciobanul, apele, pădurile, mirosul de fân uscat în august — acestea sunt ale noastre. Sinteza dintre rigoarea mondială și materia primă locală nu este un compromis. Este cea mai înaltă formă de fine dining.',
+    axiom: '"Nu avem bucătărie românească. Avem bucătărie ardeleană cu gramatică internațională."',
+  },
+  {
+    num: 'V',
+    title: 'Oaspetele nu este client. Este co-autor.',
+    body: 'Fiecare persoană care se așază la masa noastră aduce cu ea o stare, o amintire, o așteptare. Ignorarea lor este lipsă de respect. Lectura lor este artă. Construim experiența în jurul omului, nu în jurul meniului. Meniul se adaptează. Omul rămâne suveran.',
+    axiom: '"Un meniu fix este o declarație de indiferență față de cel care mănâncă."',
+  },
+  {
+    num: 'VI',
+    title: 'Sustenabilitatea este etică, nu marketing.',
+    body: 'Nu scriem "sustenabil" pe nimic. Fie facem, fie nu facem. Zero waste nu înseamnă că valorificăm resturile — înseamnă că gândim invers: de la întreg la parte, de la animal la farfurie, de la grădină la fond. Cel mai scump ingredient este cel pe care l-ai aruncat.',
+    axiom: '"Dacă nu poți folosi tot, nu ai înțeles ingredientul."',
+  },
+  {
+    num: 'VII',
+    title: 'Tăcerea este un curs.',
+    body: 'Există un moment în fiecare seară când nu se întâmplă nimic intenționat. Nicio farfurie, nicio muzică, nicio explicație. Două minute de absență completă. Nu este o pauză tehnică. Este un spațiu creat pentru ca experiența anterioară să se sedimenteze. Luxul suprem nu este abundența. Este permisiunea de a fi liniștit.',
+    axiom: '"Cel mai greu curs de gătit este golul."',
+  },
+  {
+    num: 'VIII',
+    title: 'Inteligența artificială este scribul, nu bucătarul.',
+    body: 'Folosim AI ca să ascultăm mai bine, nu ca să gătim mai repede. Sistemul nostru cunoaște fiecare oaspete — nu ca date, ci ca profil senzorial și emoțional. Înainte de cină, AI-ul compune. După cină, AI-ul documentează. Între aceste momente — totul este uman, cald, imperfect și real.',
+    axiom: '"Tehnologia bună dispare. Rămâne doar experiența."',
+  },
+  {
+    num: 'IX',
+    title: 'Fiecare seară este un capitol. Codex-ul crește.',
+    body: 'Atelier nu este o destinație fixă. Este un manuscris viu. Fiecare cină adaugă un text, o textură, o întrebare. Peste zece ani, vom avea un corpus unic de experiențe documentate, un arhiv al sensibilității culinare transilvănene. Nimeni altcineva nu va putea scrie acest text — pentru că nimeni altcineva nu a trăit aceste seri.',
+    axiom: '"Nu construim un restaurant. Construim un corp de cunoaștere."',
+  },
+  {
+    num: 'X',
+    title: 'Autorul nu se ascunde în bucătărie.',
+    body: 'Vocea din spatele Atelier este o voce reală, cu opinie, cu greșeli, cu evoluție publică. Ideologia culinară a acestui loc nu există fără cel care a gândit-o. Anonimatul este confortabil, dar ștergerea identității autorului distruge autenticitatea operei. Suntem ce gătim. Și gătim ce credem.',
+    axiom: '"Un atelier fără autor este doar o bucătărie."',
+  },
+];
+
+export default function ManifestPage() {
+  return (
+    <>
+      {/* NAV */}
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+        background: 'rgba(8,8,8,.97)', backdropFilter: 'blur(16px)',
+        borderBottom: '1px solid #1a1a1a', height: 64,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 48px',
+      }}>
+        <a href="/" style={{
+          fontFamily: "'Cormorant Garamond', serif", fontSize: 17,
+          letterSpacing: 5, color: 'var(--gold)', textDecoration: 'none',
+        }}>ATELIER</a>
+        <ul style={{ display: 'flex', gap: 28, listStyle: 'none' }}>
+          {[
+            { label: 'Povestea', href: '/#story' },
+            { label: 'Servicii', href: '/#services' },
+            { label: 'Manifest', href: '/manifest' },
+            { label: 'Meniu', href: '/#meniu' },
+            { label: 'Așezat', href: '/#asezat' },
+            { label: 'FAQ', href: '/#faq' },
+            { label: 'Rezervare', href: '/#rezervare' },
+          ].map(({ label, href }) => (
+            <li key={href}>
+              <a href={href} style={{
+                fontSize: 9, letterSpacing: 3,
+                color: label === 'Manifest' ? 'var(--gold)' : '#555',
+                textDecoration: 'none', textTransform: 'uppercase',
+                transition: '.3s',
+              }}>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <main style={{ background: '#0a0a0a', color: '#e8e0d0', fontFamily: "'Cormorant Garamond', serif", paddingTop: 64 }}>
+
+        {/* COVER */}
+        <section style={{
+          minHeight: '100vh',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center',
+          textAlign: 'center', padding: '4rem 2rem',
+          position: 'relative',
+          borderBottom: '1px solid rgba(201,169,110,0.2)',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,169,110,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+
+          <p style={{
+            fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+            fontSize: '0.65rem', letterSpacing: '0.5em',
+            color: 'var(--gold)', textTransform: 'uppercase',
+            marginBottom: '3rem', opacity: 0.8,
+          }}>Atelier Private Dining — Cluj-Napoca</p>
+
+          <h1 style={{
+            fontSize: 'clamp(3rem, 10vw, 7rem)',
+            fontWeight: 300, letterSpacing: '0.08em',
+            color: 'var(--gold)', lineHeight: 1, marginBottom: '0.5rem',
+          }}>CODEX</h1>
+
+          <p style={{
+            fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+            fontWeight: 300, fontStyle: 'italic',
+            color: 'rgba(232,224,208,0.45)', letterSpacing: '0.15em',
+            marginBottom: '4rem',
+          }}>Manifestul unui atelier viu</p>
+
+          <p style={{
+            maxWidth: 520,
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+            fontWeight: 300, lineHeight: 1.9,
+            color: '#e8e0d0', opacity: 0.85,
+          }}>
+            Nu scriem meniuri.<br />
+            Scriem capitole.<br /><br />
+            Fiecare seară este un text care nu va mai exista niciodată în aceeași formă.
+            Aceasta este credința noastră. Aceasta este metoda noastră.
+            Aceasta este singura regulă pe care nu o încălcăm niciodată.
+          </p>
+
+          <div style={{
+            width: 1, height: 80,
+            background: 'linear-gradient(to bottom, transparent, var(--gold), transparent)',
+            margin: '3rem auto',
+          }} />
+
+          <p style={{
+            fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+            fontSize: '0.6rem', letterSpacing: '0.4em',
+            color: 'var(--gold)', opacity: 0.6, textTransform: 'uppercase',
+          }}>Cluj-Napoca — 23 Martie 2026</p>
+        </section>
+
+        {/* BODY */}
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '6rem 2rem 8rem' }}>
+
+          {/* PREAMBLE */}
+          <p style={{
+            fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+            fontSize: '0.6rem', letterSpacing: '0.5em',
+            color: 'var(--gold)', textTransform: 'uppercase',
+            marginBottom: '2rem', opacity: 0.7,
+          }}>Preambul</p>
+
+          <p style={{
+            fontSize: '1.15rem', fontWeight: 300, fontStyle: 'italic',
+            lineHeight: 2, color: 'rgba(232,224,208,0.45)',
+            marginBottom: '6rem', paddingLeft: '2rem',
+            borderLeft: '1px solid rgba(201,169,110,0.25)',
+          }}>
+            Acest document este fundația. Nu un meniu, nu un brand — o ideologie culinară scrisă de mână, cu intenție, cu timp.<br /><br />
+            Înainte de orice altceva, a existat o convingere simplă: că o masă bună nu se uită niciodată,
+            dar o masă cu sens schimbă ceva în cel care a mâncat-o. Codex Atelier este declarația acestei convingeri.
+          </p>
+
+          {/* PRINCIPLES */}
+          {principles.map((p, i) => (
+            <div key={p.num}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '3rem 1fr',
+                gap: '0 2rem',
+                marginBottom: '5rem',
+              }}>
+                <div style={{
+                  fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+                  fontSize: '0.6rem', letterSpacing: '0.3em',
+                  color: 'var(--gold)', opacity: 0.5,
+                  paddingTop: '0.4rem', textAlign: 'right',
+                }}>{p.num}</div>
+
+                <div>
+                  <h2 style={{
+                    fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+                    fontWeight: 300, fontStyle: 'italic',
+                    color: 'var(--gold)', lineHeight: 1.3,
+                    marginBottom: '1.2rem',
+                  }}>{p.title}</h2>
+
+                  <p style={{
+                    fontSize: '1rem', fontWeight: 300,
+                    lineHeight: 2, color: '#e8e0d0', opacity: 0.8,
+                  }}>{p.body}</p>
+
+                  <p style={{
+                    marginTop: '1.2rem', fontSize: '0.85rem',
+                    fontStyle: 'italic', color: 'var(--gold)', opacity: 0.7,
+                    paddingLeft: '1.2rem',
+                    borderLeft: '1px solid rgba(201,169,110,0.3)',
+                    lineHeight: 1.8,
+                  }}>{p.axiom}</p>
+                </div>
+              </div>
+
+              {i < principles.length - 1 && (
+                <div style={{
+                  width: '100%', height: 1,
+                  background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.2), transparent)',
+                  margin: '5rem 0',
+                }} />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* COLOPHON */}
+        <div style={{
+          textAlign: 'center', padding: '4rem 2rem',
+          borderTop: '1px solid rgba(201,169,110,0.15)',
+          maxWidth: 760, margin: '0 auto',
+        }}>
+          <div style={{
+            width: 1, height: 80,
+            background: 'linear-gradient(to bottom, transparent, var(--gold), transparent)',
+            margin: '0 auto 3rem',
+          }} />
+
+          <p style={{
+            fontSize: '1.3rem', fontWeight: 300,
+            letterSpacing: '0.2em', color: 'var(--gold)', marginBottom: '0.5rem',
+          }}>Răzvan</p>
+
+          <p style={{
+            fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+            fontSize: '0.6rem', letterSpacing: '0.45em',
+            color: 'rgba(232,224,208,0.45)', textTransform: 'uppercase',
+            marginBottom: '2.5rem',
+          }}>Chef & Fondator — Atelier Private Dining</p>
+
+          <p style={{
+            fontSize: '0.75rem', fontStyle: 'italic',
+            color: 'rgba(232,224,208,0.45)', opacity: 0.5, lineHeight: 2,
+          }}>
+            Cluj-Napoca, 23 Martie 2026<br />
+            Versiunea I — Document fondator<br /><br />
+            <em>Acest manifest este proprietatea intelectuală a autorului.<br />
+            Reproducerea totală sau parțială fără acord scris este interzisă.</em>
+          </p>
+        </div>
+
+        {/* FOOTER */}
+        <footer style={{
+          borderTop: '1px solid #1a1a1a',
+          padding: '48px 40px', textAlign: 'center', marginTop: '4rem',
+        }}>
+          <div style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 17, letterSpacing: 5, color: 'var(--gold)', marginBottom: 12,
+          }}>ATELIER</div>
+          <div style={{
+            fontFamily: "'Raleway', sans-serif", fontWeight: 200,
+            fontSize: 9, letterSpacing: 3, color: '#333',
+            textTransform: 'uppercase', marginBottom: 24,
+          }}>
+            Private Dining · Manifest · Așezat · Gelato Artizanal
+          </div>
+          <ul style={{ display: 'flex', justifyContent: 'center', gap: 32, listStyle: 'none' }}>
+            {[
+              { label: 'Povestea', href: '/#story' },
+              { label: 'Servicii', href: '/#services' },
+              { label: 'Manifest', href: '/manifest' },
+              { label: 'Meniu', href: '/#meniu' },
+              { label: 'Rezervare', href: '/#rezervare' },
+            ].map(({ label, href }) => (
+              <li key={href}>
+                <a href={href} style={{
+                  fontSize: 9, letterSpacing: 3, color: '#444',
+                  textDecoration: 'none', textTransform: 'uppercase',
+                }}>{label}</a>
+              </li>
+            ))}
+          </ul>
+        </footer>
+
+      </main>
+    </>
+  );
+}

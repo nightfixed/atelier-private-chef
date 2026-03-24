@@ -256,7 +256,8 @@ export default function HomePage() {
         <ul className="nav-links">
           <li><a href="#story">Povestea</a></li>
           <li><a href="#services">Servicii</a></li>
-          <li><a href="#herbarium" className="nav-herb-link">Herbarium</a></li>
+          {/* <li><a href="#herbarium" className="nav-herb-link">Herbarium</a></li> */}
+          <li><a href="/manifest">Manifest</a></li>
           <li><a href="#meniu">Meniu</a></li>
           <li><a href="#asezat">Așezat</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -772,7 +773,8 @@ export default function HomePage() {
         <ul className="footer-links">
           <li><a href="#story">Povestea</a></li>
           <li><a href="#services">Servicii</a></li>
-          <li><a href="#herbarium">Herbarium</a></li>
+          {/* <li><a href="#herbarium">Herbarium</a></li> */}
+          <li><a href="/manifest">Manifest</a></li>
           <li><a href="#meniu">Meniu</a></li>
           <li><a href="#asezat">Așezat</a></li>
           <li><a href="#faq">FAQ</a></li>
