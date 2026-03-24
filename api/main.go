@@ -64,7 +64,15 @@ func main() {
 	gcsSigner := storage.NewGCSSigner(gcsClient)
 	gcsDeleter := storage.NewGCSObjectDeleter(gcsClient)
 	authMiddleware := middleware.RequireAuth(verifier)
-	aiProvider := &ai.MockProvider{}
+
+	var aiProvider ai.Provider
+	if key := os.Getenv("ANTHROPIC_API_KEY"); key != "" {
+		log.Println("AI: using Anthropic Claude Sonnet")
+		aiProvider = ai.NewAnthropicProvider(key)
+	} else {
+		log.Println("AI: ANTHROPIC_API_KEY not set, using MockProvider")
+		aiProvider = &ai.MockProvider{}
+	}
 
 	mux := http.NewServeMux()
 
