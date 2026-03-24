@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CODEX — Ritual de Inițiere</title>
+<meta name="description" content="Codex Atelier — Ritualul de Inițiere. Compune-ți seara la Atelier Private Dining, Cluj-Napoca.">
+<meta property="og:title" content="CODEX — Ritual de Inițiere | Atelier Private Dining">
+<meta property="og:description" content="Șase întrebări. O seară compusă pentru tine.">
+<meta property="og:url" content="https://atelierprivatedining.ro/codex-guest-system.html">
+<meta property="og:type" content="website">
+<title>CODEX — Ritual de Inițiere | Atelier Private Dining</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,17 +20,78 @@
     --muted: rgba(232,224,208,0.45);
     --border: rgba(201,169,110,0.2);
   }
+  html { scroll-behavior: smooth; }
+
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Cormorant Garamond', serif;
     min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  .nav-back {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-back:hover { color: var(--gold); }
+
+  /* MAIN */
+  main {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 1rem;
+    padding: 6rem 1.5rem 4rem;
   }
+
   .app { width: 100%; max-width: 640px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  footer a {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.5rem;
+    letter-spacing: 0.45em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  footer a:hover { opacity: 1; color: var(--gold); }
 
   /* SCREENS */
   .screen { display: none; animation: fadeIn 0.8s ease; }
@@ -279,6 +345,13 @@
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="https://atelierprivatedining.ro" class="nav-logo">Atelier Private Dining</a>
+  <a href="https://atelierprivatedining.ro" class="nav-back">← Înapoi</a>
+</nav>
+
+<main>
 <div class="app">
 
   <!-- SCREEN 1: INTRO -->
@@ -379,6 +452,11 @@
   </div>
 
 </div>
+</main>
+
+<footer>
+  <a href="https://atelierprivatedining.ro">atelierprivatedining.ro</a>
+</footer>
 
 <script>
 const QUESTIONS = [
@@ -457,6 +535,10 @@ let guestName = '';
 let answers = {};
 let currentQ = 0;
 let currentSelection = null;
+
+function today() {
+  return new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+}
 
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -542,7 +624,7 @@ Filosofia personală despre o masă bună: ${answers.philosophy}`;
 async function buildComposition() {
   show('s-generating');
   const profile = buildProfile();
-  const today = new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateStr = today();
 
   const prompt = `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare, și experiențe senzoriale imersive.
 
@@ -566,21 +648,21 @@ Răspunde DOAR cu textul compoziției, fără titlu, fără introducere, fără 
     const text = data.content?.map(b => b.text || '').join('') || '';
 
     document.getElementById('comp-name').textContent = guestName;
-    document.getElementById('comp-date').textContent = today;
+    document.getElementById('comp-date').textContent = dateStr;
     document.getElementById('comp-text').textContent = text.trim();
     show('s-composition');
   } catch(e) {
-    show('s-composition');
     document.getElementById('comp-name').textContent = guestName;
-    document.getElementById('comp-date').textContent = today;
+    document.getElementById('comp-date').textContent = dateStr;
     document.getElementById('comp-text').textContent = 'Seara dumneavoastră este în pregătire. Vă rugăm să reîncercați.';
+    show('s-composition');
   }
 }
 
 async function generateArtifact() {
   show('s-gen-artifact');
   const profile = buildProfile();
-  const today = new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+  const dateStr = today();
   const chapterNum = Math.floor(Math.random() * 900) + 100;
 
   const prompt = `Ești arhivarul Codex Atelier — sistemul care documentează fiecare seară ca un capitol unic, ireplicabil.
@@ -588,7 +670,7 @@ async function generateArtifact() {
 Pe baza profilului senzorial al oaspetelui, scrie un artefact post-cină în română. Structură:
 
 1. TITLU_CAPITOL: Un titlu poetic, 3-6 cuvinte (de ex: "Cina Mirosului de Fân Uscat")
-2. SUBTITLU: O linie scurtă, data și un număr de capitol fictiv (ex: "Capitol #${chapterNum} — ${today}")  
+2. SUBTITLU: O linie scurtă, data și un număr de capitol fictiv (ex: "Capitol #${chapterNum} — ${dateStr}")
 3. TEXT: 200-250 cuvinte. Un text literar care evocă seara tocmai încheiată — ca un jurnal scris de un martor invizibil. Nu descrie cursuri. Descrie momente, stări, tranziții senzoriale, ceva ce oaspetele a simțit sau ar fi putut simți. Integrează subtil detalii din profilul lor.
 
 ${profile}
@@ -616,18 +698,18 @@ TEXT: [textul]`;
     const textMatch = raw.match(/TEXT:\s*([\s\S]+)/);
 
     document.getElementById('art-title').textContent = titleMatch ? titleMatch[1].trim() : 'Capitol Personal';
-    document.getElementById('art-sub').textContent = subMatch ? subMatch[1].trim() : `Capitol #${chapterNum} — ${today}`;
+    document.getElementById('art-sub').textContent = subMatch ? subMatch[1].trim() : `Capitol #${chapterNum} — ${dateStr}`;
     document.getElementById('art-text').textContent = textMatch ? textMatch[1].trim() : raw.trim();
     document.getElementById('seal-name').textContent = guestName;
-    document.getElementById('seal-date').textContent = `Atelier Private Dining — ${today}`;
+    document.getElementById('seal-date').textContent = `Atelier Private Dining — ${dateStr}`;
     show('s-artifact');
   } catch(e) {
-    show('s-artifact');
     document.getElementById('art-title').textContent = 'Capitol Personal';
-    document.getElementById('art-sub').textContent = `Capitol #${chapterNum} — ${today}`;
+    document.getElementById('art-sub').textContent = `Capitol #${chapterNum} — ${dateStr}`;
     document.getElementById('art-text').textContent = 'Artefactul nu a putut fi generat. Vă rugăm să reîncercați.';
     document.getElementById('seal-name').textContent = guestName;
-    document.getElementById('seal-date').textContent = today;
+    document.getElementById('seal-date').textContent = `Atelier Private Dining — ${dateStr}`;
+    show('s-artifact');
   }
 }
 
