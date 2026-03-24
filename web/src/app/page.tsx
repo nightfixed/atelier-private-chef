@@ -263,6 +263,7 @@ export default function HomePage() {
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#rezervare">Rezervare</a></li>
           <li><a href="#compune" className="nav-compose-link">Compune Seara</a></li>
+          <li><a href="/codex-guest-system.html" className="nav-compose-link">Sistem Oaspeți</a></li>
         </ul>
       </nav>
 
