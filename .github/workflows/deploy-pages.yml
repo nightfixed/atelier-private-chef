@@ -37,7 +37,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
+        with:
+          enablement: false
+          
       - name: Build Next.js static export
         working-directory: web
         run: npm run build
@@ -51,10 +53,10 @@ jobs:
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
 
-      - name: Restore custom SPA 404.html
+      - name: Ensure CNAME is in output
         working-directory: web
-        run: cp public/404.html out/404.html
-
+        run: cp public/CNAME out/CNAME
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
