@@ -57,13 +57,20 @@ var seasonalCourses = map[string][]MenuCourse{
 }
 
 var occasionNotes = map[string]string{
+// New labels
+"Romantic":   "Am construit această seară pentru doi — fiecare preparat crește în intensitate, ca orice poveste bună de dragoste.",
+"Celebrare":  "Meniurile de celebrare sunt cele mai personale pe care le creez. Am ales ingrediente care să marcheze momentul — unele fermentate, unele coapte, toate cu răbdare.",
+"Intim":      "O cină intimă cere să las tehnica în umbră și să las ingredientele să vorbească. Am ales preparate care invită la conversație.",
+"Business":   "Excellence fără ostentație. Fiecare preparat spune ceva despre calitate și atenție la detaliu — exact ce reprezintă și afacerea dumneavoastră.",
+"Surpriză":   "Cel mai frumos meniu este cel pe care cineva nu îl așteaptă. Am construit fiecare preparat ca o mică revelație.",
+// Legacy labels (backward compat)
 "Cină romantică":      "Am construit această seară pentru doi — fiecare preparat crește în intensitate, ca orice poveste bună de dragoste.",
-"Aniversare":          "Meniurile de aniversare sunt cele mai personale pe care le creez. Am ales ingrediente care să marcheze timpul — unele fermentate, unele coapte, toate cu răbdare.",
+"Aniversare":          "Meniurile de aniversare sunt cele mai personale pe care le creez. Am ales ingrediente care să marcheze momentul — unele fermentate, unele coapte, toate cu răbdare.",
 "Corporate":           "Excellence fără ostentație. Fiecare preparat spune ceva despre calitate și atenție la detaliu — exact ce reprezintă și afacerea dumneavoastră.",
 "Cerere în căsătorie": "Cel mai important preparat nu e pe masă — e întrebarea. Eu mă ocup de tot ce o înconjoară, ca momentul să fie perfect.",
 }
 
-// GenerateMenu returns a seasonally appropriate mock menu.
+// GenerateMenu returns a seasonally and contextually appropriate mock menu.
 func (m *MockProvider) GenerateMenu(_ context.Context, req MenuRequest) (*MenuResponse, error) {
 season := req.Season
 if season == "" {
@@ -84,20 +91,49 @@ note, ok := occasionNotes[req.Occasion]
 if !ok {
 note = "Am creat acest meniu cu ingredientele cele mai bune pe care le-am găsit în acest sezon."
 }
-chefNote := note + " Abia aștept să gătesc pentru " + name + "."
+
+chefNote := note
+if req.Protein != "" {
+chefNote += " " + req.Protein + " va fi inima preparatelor principale."
+}
+if req.TasteProfile != "" {
+chefNote += " Note dominante de " + strings.ToLower(req.TasteProfile) + "."
+}
+if req.Love != "" {
+chefNote += " Am inclus " + req.Love + " — știam că îți place."
+}
+chefNote += " Abia aștept să gătesc pentru " + name + "."
 
 subtitle := "Meniu de degustare · 9 preparate · " + season
 if req.GuestCount != "" {
 subtitle += " · " + req.GuestCount + " persoane"
 }
+if req.Protein != "" {
+subtitle += " · " + req.Protein
+}
+
+occasionTitles := map[string]string{
+"Romantic": "Romantică", "Celebrare": "de Celebrare",
+"Intim": "Intimă", "Business": "de Afaceri", "Surpriză": "Surpriză",
+}
+title := "Seara lui " + name
+if ot, ok := occasionTitles[req.Occasion]; ok {
+title = "Seara " + ot + " a lui " + name
+}
 
 tags := []string{"Herbarium", season, req.Occasion}
+if req.Protein != "" {
+tags = append(tags, req.Protein)
+}
+if req.TasteProfile != "" {
+tags = append(tags, req.TasteProfile)
+}
 if len(req.Dietary) > 0 && !(len(req.Dietary) == 1 && strings.EqualFold(req.Dietary[0], "Niciuna")) {
 tags = append(tags, req.Dietary...)
 }
 
 return &MenuResponse{
-Title:    "Seara " + name,
+Title:    title,
 Subtitle: subtitle,
 Courses:  courses,
 ChefNote: chefNote,

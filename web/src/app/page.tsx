@@ -235,6 +235,13 @@ export default function HomePage() {
     setGenResult(null); setGenScreen('steps');
   }
   function genNext() { if (genStep < 4) { setGenStep(s => s+1); } else { setGenScreen('story'); } }
+  function seasonFromDate(d: string): string {
+    const m = d ? new Date(d+'T12:00:00').getMonth() : new Date().getMonth();
+    if (m >= 2 && m <= 4) return 'Primăvară';
+    if (m >= 5 && m <= 7) return 'Vară';
+    if (m >= 8 && m <= 10) return 'Toamnă';
+    return 'Iarnă';
+  }
   function genStartAPI() {
     setGenScreen('generating');
     const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
@@ -244,6 +251,7 @@ export default function HomePage() {
       body: JSON.stringify({
         occasion: OCCASION_LABELS[genOccasion] || genOccasion,
         guest_count: String(genPersons),
+        season: seasonFromDate(genDate),
         date: genDate,
         protein: PROTEIN_LABELS[genProtein] || genProtein,
         taste_profile: TASTE_LABELS[genTaste] || genTaste,
@@ -1026,7 +1034,7 @@ export default function HomePage() {
 
           {/* STORY — Povestea Serii */}
           {genScreen === 'story' && (
-            <div className="gscr on" style={{justifyContent:'flex-start',paddingTop:'64px',overflowY:'auto'}}>
+            <div className="gscr on" style={{justifyContent:'flex-start',paddingTop:'64px',minHeight:0,overflowY:'auto'}}>
               <div style={{width:'100%',maxWidth:'620px'}}>
                 <div style={{fontSize:'9px',letterSpacing:'7px',color:'rgba(201,169,110,.28)',textTransform:'uppercase',textAlign:'center',marginBottom:'18px'}}>Povestea Serii</div>
                 <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(28px,5vw,50px)',fontWeight:300,color:'#e8d5a3',lineHeight:1.05,letterSpacing:'2px',textAlign:'center',marginBottom:'8px'}}>

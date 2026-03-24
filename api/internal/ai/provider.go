@@ -12,14 +12,20 @@ DescRo string `json:"desc_ro"`
 Pills  []string `json:"pills,omitempty"` // taste notes
 }
 
-// MenuRequest contains the 5 answers from the "Compune Seara" generator.
+// MenuRequest contains the answers from the "Compune Seara" generator.
 type MenuRequest struct {
-Occasion   string            `json:"occasion"`
-GuestCount string            `json:"guest_count"`
-Season     string            `json:"season"`
-Dietary    []string          `json:"dietary"`
-HostName   string            `json:"host_name"`
-Specimens  []SpecimenContext `json:"specimens"` // injected server-side from DB
+Occasion     string            `json:"occasion"`
+GuestCount   string            `json:"guest_count"`
+Season       string            `json:"season"`
+Dietary      []string          `json:"dietary"`
+HostName     string            `json:"host_name"`
+Protein      string            `json:"protein,omitempty"`
+TasteProfile string            `json:"taste_profile,omitempty"`
+Love         string            `json:"love,omitempty"`
+Avoid        string            `json:"avoid,omitempty"`
+Wish         string            `json:"wish,omitempty"`
+Date         string            `json:"date,omitempty"`
+Specimens    []SpecimenContext `json:"specimens"` // injected server-side from DB
 }
 
 // MenuCourse is one course in the generated tasting menu.
@@ -80,12 +86,27 @@ prompt += "\n\nGenerează un meniu de degustare de 9 preparate pentru:"
 prompt += "\n- Ocazie: " + req.Occasion
 prompt += "\n- Persoane: " + req.GuestCount
 prompt += "\n- Sezon: " + req.Season
+if req.Protein != "" {
+prompt += "\n- Proteina principală: " + req.Protein
+}
+if req.TasteProfile != "" {
+prompt += "\n- Nota de gust dominantă: " + req.TasteProfile
+}
 if len(req.Dietary) > 0 {
 prompt += "\n- Restricții: "
 for i, d := range req.Dietary {
 if i > 0 { prompt += ", " }
 prompt += d
 }
+}
+if req.Love != "" {
+prompt += "\n- Ingredient iubit de gazdă: " + req.Love
+}
+if req.Avoid != "" {
+prompt += "\n- De evitat: " + req.Avoid
+}
+if req.Wish != "" {
+prompt += "\n- Dorință specială: " + req.Wish
 }
 prompt += "\n- Gazdă: " + req.HostName
 
