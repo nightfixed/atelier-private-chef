@@ -424,6 +424,79 @@
   }
   .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
+  /* MENU */
+  .menu-section { padding: 1rem 0; }
+  .menu-header { text-align: center; margin-bottom: 3rem; }
+  .menu-header .menu-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .menu-header .menu-guest { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 300; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .menu-header .menu-date { font-size: 0.85rem; font-style: italic; color: var(--muted); }
+  .menu-courses {
+    border-top: 1px solid var(--border);
+    padding-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .menu-course {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0 1.2rem;
+    align-items: start;
+  }
+  .course-num {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.5;
+    padding-top: 0.3rem;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .course-body {}
+  .course-name {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .course-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .menu-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto 2.5rem;
+  }
+  .menu-footer { text-align: center; }
+  .menu-footer .artifact-hint {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.55;
+  }
+
   /* ARTIFACT */
   .artifact { padding: 1rem 0; }
   .art-header { text-align: center; margin-bottom: 3rem; }
@@ -563,7 +636,37 @@
         <div class="comp-text" id="comp-text"></div>
       </div>
       <div class="comp-footer">
-        <div class="artifact-label">La finalul serii, veți primi artefactul dumneavoastră personal</div>
+        <div class="artifact-label">Compoziția serii dumneavoastră este pregătită</div>
+        <div class="btn-row">
+          <button class="btn" onclick="generateMenu()">Generează Meniul</button>
+          <button class="btn" onclick="restart()">Seară Nouă</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5: GENERATING MENU -->
+  <div class="screen" id="s-gen-menu">
+    <div class="generating">
+      <div class="pulse-ring"></div>
+      <div class="divider"></div>
+      <h2>Compunem meniul serii<span class="dots"></span></h2>
+      <p>Sistemul construiește cursurile personalizate<br>pe baza profilului dumneavoastră senzorial.</p>
+    </div>
+  </div>
+
+  <!-- S6: MENU -->
+  <div class="screen" id="s-menu">
+    <div class="menu-section">
+      <div class="menu-header">
+        <div class="menu-label">Meniul Serii — Atelier Private Dining</div>
+        <div class="menu-guest" id="menu-guest"></div>
+        <div class="menu-date" id="menu-date"></div>
+      </div>
+      <div class="menu-courses" id="menu-courses"></div>
+      <div class="menu-divider"></div>
+      <div class="menu-footer">
+        <div class="artifact-hint">La finalul serii, veți primi artefactul dumneavoastră personal</div>
         <div class="btn-row">
           <button class="btn" onclick="generateArtifact()">Generează Artefactul Serii</button>
           <button class="btn" onclick="restart()">Seară Nouă</button>
@@ -572,7 +675,7 @@
     </div>
   </div>
 
-  <!-- S5: GENERATING ARTIFACT -->
+  <!-- S7: GENERATING ARTIFACT -->
   <div class="screen" id="s-gen-artifact">
     <div class="generating">
       <div class="pulse-ring"></div>
@@ -713,6 +816,26 @@ const DEMO_COMPOSITIONS = [
   `Există o anumită calitate a atenției care se activează la o masă bună — o prezență totală, rară în viața de zi cu zi. Este starea pe care căutăm să o invităm în fiecare seară la Atelier.\n\nPe baza profilului dumneavoastră, am înțeles că nu căutați să fiți impresionați superficial. Căutați să fiți atinși. Și acesta este un limbaj pe care îl cunoaștem.\n\nCursurile care urmează vor evolua de la delicat la profund, de la familiar la neașteptat. Veți recunoaște ceva în fiecare — o textură, un miros, o stare. Și veți găsi și lucruri pe care nu le-ați mai întâlnit.\n\nNu grăbiți nimic. Lăsați conversația să respire. Lăsați tăcerea să fie binevenită. La masa aceasta, tot ce simțiți este corect.\n\nAtelier Private Dining vă urează o seară de neuitat.`
 ];
 
+const DEMO_MENUS = [
+  [
+    { name: 'Amuse-bouche', desc: 'Tartă de brânză de burduf afumată, gel de cireșe fermentate, pudră de cenușă de paie' },
+    { name: 'Starter I', desc: 'Carpaccio de sfeclă coaptă în argilă, cremă de hrean, ulei de măcriș, crocant de secară' },
+    { name: 'Starter II', desc: 'Supă limpede de rădăcinoase de iarnă, găluște de măduvă, trufe de Ardeal' },
+    { name: 'Intermediar', desc: 'Sorbet de măr verde și pin, spumă de cimbru, cristale de sare de la Turda' },
+    { name: 'Fel principal', desc: 'Piept de rață din Sălaj, confiat 48h, jus de ciuperci sălbatice, piure de gulie arsă, ierburi murate' },
+    { name: 'Pre-desert', desc: 'Brie de Ardeal copt, miere de tei, nuci caramelizate cu lavandă, pâine de secară prăjită' },
+    { name: 'Desert', desc: 'Ciocolată neagră 72% și cafea de la Napoca, caramel sărat, cremă de lapte coagulat, flori de soc' }
+  ],
+  [
+    { name: 'Amuse-bouche', desc: 'Cornet de aluat negru, mousse de ficat de pasăre, compot de prune cu vin fiert' },
+    { name: 'Starter I', desc: 'Salată de varză roșie fermentată 21 de zile, tipar de cârnați afumați, dressing de semințe de muștar' },
+    { name: 'Starter II', desc: 'Bisque de raci de râu, ulei de tarhon, spumă de unt ars, икра de crap din Cojocna' },
+    { name: 'Intermediar', desc: 'Granit de zer și mentă sălbatică de câmp' },
+    { name: 'Fel principal', desc: 'Miel de la stâna din Apuseni, copt în sare și ierburi, sos de usturoi negru, legume rădăcinoase glasate' },
+    { name: 'Desert', desc: 'Tort cu mac și lămâie fermentată, cremă de rozmarin, fructe de pădure din Munții Apuseni' }
+  ]
+];
+
 const DEMO_ARTIFACTS = [
   { title: 'Seara Contrastelor Liniștite', text: `Au venit la ora când lumina de afară mai ezita încă să se retragă complet. S-au așezat fără grabă, cu acea familiaritate discretă a oamenilor care știu să fie împreună fără să umple fiecare secundă cu cuvinte.\n\nPrimul curs a sosit ca o întrebare — acid și dulce în aceeași lingură, o tensiune rezolvată înainte să devină incomodă. Cineva a zâmbit fără să spună nimic. Era de ajuns.\n\nPe la al treilea fel, conversația s-a adâncit — nu în subiecte mari, ci în calitate. Vorbele au devenit mai rare și mai precise. Mâncarea a trecut pe planul al doilea, nu pentru că ar fi fost mai puțin prezentă, ci pentru că cei doi deveniseră mai prezenți unul față de celălalt.\n\nDulcele final a venit ca o concluzie la care nu te aștepți: simplu, aproape sever, dar cu o reverberație lungă. Genul de gust la care te gândești a doua zi, fără să știi de ce.\n\nAu plecat târziu. Nimeni nu s-a uitat la ceas.` },
   { title: 'Capitolul Memoriei Recuperate', text: `Există o teorie că gustul este singurul simț care poate traversa timpul fără avertisment. Că o aromă poate deschide o ușă pe care credeai că ai închis-o demult.\n\nAceastă seară a fost construită în jurul acestei teorii. Nu ca o demonstrație, ci ca o invitație.\n\nPrimul moment a adus ceva familiar — un ecou al unui miros de copilărie, reinterpretat cu o tehnică pe care copilăria nu o cunoștea. Recunoașterea a venit brusc, ca un nume uitat brusc amintit.\n\nUrmătoarele cursuri au mers mai adânc. Fermentarea, fumul, acidul — toate vorbeau despre timp și transformare. Despre cum lucrurile devin mai bune sau mai interesante sau mai înțelepte prin simplul fapt că trece timp peste ele.\n\nSigillum serii: un gust de sfârșit care semăna, în mod inexplicabil, cu un început.` }
@@ -720,6 +843,9 @@ const DEMO_ARTIFACTS = [
 
 function getDemoComposition() {
   return DEMO_COMPOSITIONS[Math.floor(Math.random() * DEMO_COMPOSITIONS.length)];
+}
+function getDemoMenu() {
+  return DEMO_MENUS[Math.floor(Math.random() * DEMO_MENUS.length)];
 }
 function getDemoArtifact() {
   return DEMO_ARTIFACTS[Math.floor(Math.random() * DEMO_ARTIFACTS.length)];
@@ -896,6 +1022,91 @@ Răspunde DOAR cu textul compoziției, fără titlu, fără introducere, fără 
     setComposition(text);
   } catch(e) {
     setComposition('Seara dumneavoastră este în pregătire.\nVă rugăm să reîncercați sau contactați echipa Atelier.');
+  }
+}
+
+function renderMenuCourses(courses) {
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII'];
+  return courses.map((c, i) => `
+    <div class="menu-course">
+      <div class="course-num">${ROMAN[i] || (i+1)}</div>
+      <div class="course-body">
+        <div class="course-name">${c.name}</div>
+        <div class="course-desc">${c.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+async function generateMenu() {
+  show('s-gen-menu');
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+
+  const setMenu = (courses) => {
+    document.getElementById('menu-guest').textContent = guestName;
+    document.getElementById('menu-date').textContent = `${dateLabel} · ${personsLabel()}`;
+    document.getElementById('menu-courses').innerHTML = renderMenuCourses(courses);
+    show('s-menu');
+  };
+
+  if (DEMO_MODE) {
+    await new Promise(r => setTimeout(r, 2000));
+    setMenu(getDemoMenu());
+    return;
+  }
+
+  const profile = buildProfile();
+  const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
+  const occasionDesc = occasionObj ? `${occasionObj.name} — ${occasionObj.desc}` : '';
+
+  const prompt = `Ești bucătarul-șef al Atelier Private Dining, un atelier de fine dining din Cluj-Napoca. Filozofia culinară: ingrediente ardelene de sezon, tehnici internaționale, fermentare, foc și simplitate complexă.
+
+Pe baza profilului senzorial al oaspetelui, compune un meniu de degustare personalizat pentru această seară (5-7 feluri). Ține cont de tipul serii (${occasionDesc}), de preferințele senzoriale și de filosofia lor culinară.
+
+${profile}
+
+Răspunde STRICT în formatul următor (un fel per bloc, exact ca în exemplu):
+CURS: [Numele felului — ex: Amuse-bouche, Starter I, Fel principal, Desert]
+DESC: [Descriere scurtă, 1 propoziție, ingrediente și tehnici, ton elegant]
+
+Repetă blocul CURS/DESC pentru fiecare fel. Fără numerotare, fără text suplimentar.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.content) throw new Error(data.error?.message || 'API error');
+    const raw = data.content.map(b => b.text || '').join('').trim();
+    if (!raw) throw new Error('Empty response');
+
+    const courses = [];
+    const blocks = raw.split(/\n(?=CURS:)/);
+    blocks.forEach(block => {
+      const nameMatch = block.match(/CURS:\s*(.+)/);
+      const descMatch = block.match(/DESC:\s*([\s\S]+)/);
+      if (nameMatch) {
+        courses.push({
+          name: nameMatch[1].trim(),
+          desc: descMatch ? descMatch[1].trim().split('\n')[0] : ''
+        });
+      }
+    });
+
+    if (courses.length === 0) throw new Error('Parse error');
+    setMenu(courses);
+  } catch(e) {
+    setMenu([{ name: 'Meniu în pregătire', desc: 'Vă rugăm să reîncercați sau contactați echipa Atelier.' }]);
   }
 }
 
