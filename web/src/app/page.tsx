@@ -307,7 +307,7 @@ export default function HomePage() {
           {/* <li><a href="#herbarium" className="nav-herb-link">Herbarium</a></li> */}
           <li><a href="/manifest">Manifest</a></li>
           <li><a href="#meniu">Meniu</a></li>
-          <li><a href="#asezat">Așezat</a></li>
+          {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#rezervare">Rezervare</a></li>
           <li><a href="#compune" className="nav-compose-link">Compune Seara</a></li>
@@ -498,8 +498,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* HERBARIUM */}
-      <div id="herbarium" style={{borderTop:'1px solid #111',background:'#060504',position:'relative',overflow:'hidden'}}>
+      {/* HERBARIUM — ascuns temporar, de reactivat la cerere */}
+      {false && <div id="herbarium" style={{borderTop:'1px solid #111',background:'#060504',position:'relative',overflow:'hidden'}}>
         <div className="herb-cover">
           <div className="herb-eyebrow" id="hEyebrow">Atelier Private Dining · Cluj-Napoca · Romania</div>
           <div className="herb-title" id="hTitle">
@@ -602,7 +602,7 @@ export default function HomePage() {
             <div className="herb-back-right">Craft · Discretion · Excellence<br/>Cluj-Napoca · România<br/>Vol. I · 2024</div>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* MENU PREVIEW */}
       <div id="meniu" style={{borderTop:'1px solid #111',padding:'110px 0'}}>
@@ -664,8 +664,8 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* ASEZAT */}
-      <div id="asezat" style={{borderTop:'1px solid #111',padding:'110px 0',background:'#080808'}}>
+      {/* ASEZAT — ascuns temporar, de reactivat la cerere */}
+      {false && <div id="asezat" style={{borderTop:'1px solid #111',padding:'110px 0',background:'#080808'}}>
         <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
           <div className="asezat-wrap">
             <div className="asezat-left reveal-left">
@@ -698,7 +698,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
 
       {/* GELATO & SORBETURI */}
       <div id="gelato" className="gelato-section-wrap">
@@ -894,14 +894,14 @@ export default function HomePage() {
       <footer>
         <div className="footer-orn"></div>
         <div className="footer-logo">ATELIER</div>
-        <div className="footer-sub">Private Dining · Herbarium · Așezat · Gelato Artizanal</div>
+        <div className="footer-sub">Private Dining · Gelato Artizanal</div>
         <ul className="footer-links">
           <li><a href="#story">Povestea</a></li>
           <li><a href="#services">Servicii</a></li>
           {/* <li><a href="#herbarium">Herbarium</a></li> */}
           <li><a href="/manifest">Manifest</a></li>
           <li><a href="#meniu">Meniu</a></li>
-          <li><a href="#asezat">Așezat</a></li>
+          {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#rezervare">Rezervare</a></li>
         </ul>
