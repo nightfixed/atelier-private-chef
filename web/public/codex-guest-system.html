@@ -625,7 +625,7 @@ const QUESTIONS = [
   }
 ];
 
-const API_URL = '__API_URL__';
+const ANTHROPIC_KEY = '__ANTHROPIC_API_KEY__';
 let guestName = '';
 let answers = {};
 let currentQ = 0;
@@ -722,34 +722,70 @@ function setGenStep(text) {
   if (el) el.textContent = text;
 }
 
+async function callAI(prompt, maxTokens) {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': ANTHROPIC_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: maxTokens,
+      messages: [{ role: 'user', content: prompt }]
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || `HTTP ${res.status}`);
+  }
+  const data = await res.json();
+  return data.content?.map(b => b.text || '').join('') || '';
+}
+
 async function buildComposition() {
   show('s-generating');
-  setGenStep('Compunem seara dumneavoastră...');
   const dateStr = today();
+  const profile = buildProfile();
+
+  const menuPrompt = `Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+
+Pe baza profilului senzorial al oaspetelui, compune un meniu personalizat de 6-7 cursuri. Fiecare curs trebuie să aibă:
+- "tip": tipul cursului (ex: Amuse-bouche, Entrée, Intermezzo, Fel principal, Pre-desert, Desert)
+- "nume": un nume poetic și evocator în română sau bilingv ro/fr
+- "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
+
+Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
+[{"tip":"...","nume":"...","descriere":"..."}]
+
+${profile}`;
+
+  const storyPrompt = `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+
+Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 200-240 cuvinte în română care evocă atmosfera, preparatele, ingredientele cheie și starea pe care o va trăi oaspetele. Tonul: cald, literar, imersiv, ca o scrisoare intimă. Integrează subtil detalii din profil. Nu enumera cursuri sec.
+
+Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără explicații.
+
+${profile}`;
 
   try {
-    const res = await fetch(API_URL + '/api/generate-codex', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        guest_name: guestName,
-        memory:     answers.memory,
-        sensation:  answers.sensation,
-        rhythm:     answers.rhythm,
-        element:    answers.element,
-        end:        answers.end,
-        philosophy: answers.philosophy
-      })
-    });
+    setGenStep('Compunem meniul serii...');
+    const menuRaw = await callAI(menuPrompt, 900);
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || `HTTP ${res.status}`);
+    setGenStep('Scriem povestea serii...');
+    const storyRaw = await callAI(storyPrompt, 800);
+
+    // Parse menu JSON
+    let courses = [];
+    try {
+      const jsonStr = menuRaw.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+      courses = JSON.parse(jsonStr);
+    } catch {
+      const m = menuRaw.match(/\[[\s\S]+\]/);
+      if (m) { try { courses = JSON.parse(m[0]); } catch { courses = []; } }
     }
-
-    const data = await res.json();
-    const courses = data.menu || [];
-    const story = data.story || '';
 
     // Render menu
     const menuBody = document.getElementById('menu-body');
@@ -765,13 +801,9 @@ async function buildComposition() {
       menuBody.innerHTML = `<div class="course-desc" style="text-align:center;padding:1rem 0;">Meniul va fi compus la masă.</div>`;
     }
 
-    // Render story
-    document.getElementById('story-text').textContent = story;
-
-    // Set header
+    document.getElementById('story-text').textContent = storyRaw.trim();
     document.getElementById('comp-name').textContent = guestName;
     document.getElementById('comp-date').textContent = dateStr;
-
     show('s-composition');
   } catch (e) {
     const genDiv = document.querySelector('#s-generating .generating');
@@ -805,14 +837,7 @@ SUBTITLU: [subtitlul]
 TEXT: [textul]`;
 
   try {
-    const res = await fetch(API_URL + '/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const raw = data.reply || '';
+    const raw = await callAI(prompt, 1000);
 
     const titleMatch = raw.match(/TITLU:\s*(.+)/);
     const subMatch = raw.match(/SUBTITLU:\s*(.+)/);
