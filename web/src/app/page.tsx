@@ -178,19 +178,39 @@ export default function HomePage() {
     const newMessages = [...aiMessages, {role:'user' as const, text:msg}];
     setAiMessages(newMessages);
     setAiInput('');
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-    fetch(apiUrl + '/api/chat', {
+
+    const key = process.env.NEXT_PUBLIC_ANTHROPIC_KEY ?? '';
+    const systemPrompt = `Ești asistentul virtual al Atelier Private Dining, un serviciu exclusiv de private chef din Cluj-Napoca, România.
+Chef Răzvan și Roland gătesc în casele oaspeților sau în spații private — meniuri de degustare personalizate cu ingrediente carpatice rare din Herbarium-ul Atelierului.
+Răspunzi în română, elegant și cald, în maximum 3 propoziții concise.
+Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele să completeze formularul de rezervare sau să scrie la exquisitefoodtravel@yahoo.com.`;
+
+    const anthropicMessages = newMessages
+      .filter(m => m.role === 'user' || m.role === 'bot')
+      .map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.text }));
+
+    fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ messages: newMessages.map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.text })) }),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5',
+        max_tokens: 300,
+        system: systemPrompt,
+        messages: anthropicMessages,
+      }),
     })
       .then(r => r.ok ? r.json() : null)
       .then(data => {
-        const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați direct la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
+        const reply = data?.content?.[0]?.text ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
         setAiMessages(m => [...m, {role:'bot', text:reply}]);
       })
       .catch(() => {
-        setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați direct la exquisitefoodtravel@yahoo.com.'}]);
+        setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com.'}]);
       });
   }
 
