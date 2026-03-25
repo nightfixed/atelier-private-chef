@@ -271,6 +271,18 @@ export default function HomePage() {
     setGenResult(null);
   }
   function genContact() { setGenOpen(false); document.getElementById('rezervare')?.scrollIntoView({behavior:'smooth'}); }
+
+  function downloadCard() {
+    const G='#c9a96e', CU2='#d09070', CUD='#7a4830';
+    const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600"><defs><linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060606"/><stop offset="100%" stop-color="#141414"/></linearGradient><linearGradient id="rb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3a1e10"/><stop offset="100%" stop-color="#5c2e18"/></linearGradient><linearGradient id="lf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${G}" stop-opacity="0"/><stop offset="50%" stop-color="${G}" stop-opacity="1"/><stop offset="100%" stop-color="${G}" stop-opacity="0"/></linearGradient><linearGradient id="rf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${CU2}" stop-opacity="0"/><stop offset="50%" stop-color="${CU2}" stop-opacity="1"/><stop offset="100%" stop-color="${CU2}" stop-opacity="0"/></linearGradient></defs><rect x="0" y="0" width="525" height="600" fill="url(#lb)"/><rect x="525" y="0" width="525" height="600" fill="url(#rb)"/><text x="263" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${G}">ATELIER</text><text x="263" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#ffffff">Răzvan</text><text x="263" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${G}">CHEF / FONDATOR</text><rect x="163" y="382" width="200" height="0.8" fill="url(#lf)"/><text x="263" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#666">exquisitefoodtravel@yahoo.com</text><text x="788" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${CU2}">ATELIER</text><text x="788" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#f0e0d0">Roland</text><text x="788" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${CU2}">CHEF / PARTNER</text><rect x="688" y="382" width="200" height="0.8" fill="url(#rf)"/><text x="788" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="${CU2}">exquisitefoodtravel@yahoo.com</text></svg>`;
+    void CUD;
+    const a=document.createElement('a');
+    a.href='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
+    a.download='atelier-card.svg';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
   function genCanReady() {
     if (genStep===0) return genOccasion !== '';
     if (genStep===1) return genDate !== '' && isDateValid(genDate);
@@ -688,31 +700,59 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* GELATO */}
-      <div id="gelato" style={{borderTop:'1px solid #111',padding:'110px 0'}}>
-        <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
-          <div style={{textAlign:'center',marginBottom:'60px'}} className="reveal">
+      {/* GELATO & SORBETURI */}
+      <div id="gelato" className="gelato-section-wrap">
+        <div className="gelato-inner">
+          <div style={{textAlign:'center',marginBottom:'52px'}} className="reveal">
             <div className="sec-label">O altă obsesie</div>
-            <div className="sec-title" style={{marginBottom:'16px'}}>Gelato <em>Artizanal</em></div>
+            <div className="sec-title" style={{marginBottom:'16px'}}>Gelato & Sorbeturi <em>Artizanale</em></div>
             <div className="gold-line" style={{margin:'0 auto 28px'}}></div>
-            <p style={{maxWidth:'600px',margin:'0 auto',fontSize:'13px',color:'#444',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero.</p>
+            <p style={{maxWidth:'580px',margin:'0 auto',fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',fontSize:'17px',color:'#666',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero. Fiecare aromă e construită în jurul unui ingredient din Herbarium — sezonier, local, imposibil de replicat industrial.</p>
           </div>
-          <div className="gelato-grid">
+          <div className="gelato-sub-label reveal">Gelato · Cu lapte de bivoliță transilvăneană · Herbarium #08</div>
+          <div className="gelato-grid reveal">
             {[
-              {e:'🌹',n:'Trandafir & Piper Roz',d:'Floral, ușor picant, cu o persistență neașteptată.',notes:['Floral','Picant'],cls:'d1'},
-              {e:'🖤',n:'Cărbune Activ & Vanilie Bourbon',d:'Negru ca miezul nopții, pur ca prima dimineață.',notes:['Vizual','Pur'],cls:'d2'},
-              {e:'🌿',n:'Busuioc, Miere & Lămâie de Amalfi',d:'Proaspăt, acid, aromatic.',notes:['Fresh','Acid'],cls:'d3'},
-              {e:'🔥',n:'Miso & Caramel Sărat',d:'Umami întâlnește caramelul. Nu ar trebui să funcționeze.',notes:['Umami','Sărat'],cls:'d1'},
-              {e:'🌸',n:'Lavandă & Miere de Mânăstire',d:'Parfumat, dulce cu reținere, limpede ca Provence.',notes:['Parfumat','Delicat'],cls:'d2'},
-              {e:'🌶️',n:'Ciocolată Neagră 85% & Gochugaru',d:'Bitterul ciocolatei pe căldura ardeiului coreean.',notes:['Intens','Curajos'],cls:'d3'},
+              {e:'🌿',n:'Piatră de munte',en:'Mountain Stone · Carpathian Lichen',d:'Un gelato gri care miroase a stâncă umedă după ploaie. Nu există altundeva pe un meniu fin din România.',notes:['Mineral','Ușor amar','Crem-gri'],season:'Tot anul',rare:false},
+              {e:'🌲',n:'Caramel de brad',en:'Fir Caramel · Spruce Resin',d:'Aroma condensată a bradului — dulce și ușor amară — în grăsimea bivoliței transilvănene. Fără corespondent în patiseria clasică.',notes:['Rășinos','Dulce-amar','Crem-auriu'],season:'Tot anul',rare:false},
+              {e:'🖤',n:'Cenușă dulce',en:'Sweet Ash · Beech Wood',d:'Un desert care nu arată a desert. O culoare pe care nu ai mai văzut-o pe linguriță — și un gust care nu o trădează.',notes:['Mineral','Gri-perlă','Alcalin'],season:'Tot anul',rare:false},
+              {e:'🍯',n:'Miere de Mănăstire',en:'Monastery Honey · Transylvanian Wildflower',d:'Miere polifloră culeasă de la o mănăstire din Ardeal. Complexitate florală comprimată în lapte de bivoliță. Nu se poate reproduce cu miere comercială.',notes:['Floral complex','Caramel cald','Ambru'],season:'Tot anul',rare:false},
+              {e:'🍋',n:'Lămâie Kulfi',en:'Lemon Kulfi · Cardamom · Condensed Buffalo Milk',d:'Tehnica kulfi-ului indian — fiert lent, nu churned. Lămâie confită, cardamom verde, lapte de bivoliță redus. O textură pe care alte gelato-uri nu o au.',notes:['Citric intens','Cardamom','Dens'],season:'Tot anul',rare:false},
+              {e:'🌶️',n:'Gochugaru & Ciocolată',en:'Korean Chili · Dark Chocolate 72% · Buffalo Milk',d:'Căldura fumată a ardeiului coreean întâlnește ciocolata amară la 72%. O căldură lentă care rămâne după ultima linguriță.',notes:['Ciocolată amară','Fum dulce','Căldură'],season:'Tot anul',rare:false},
+              {e:'🌸',n:'O săptămână pe an',en:'One Week a Year · Acacia Blossom',d:'Alb pe alb. Parfumul pe care nu îl aștepți. Disponibil o singură săptămână — pe meniu cu data dispariției.',notes:['Floral dens','Miere sălbatică','Alb pur'],season:'Mai · 7 zile',rare:true},
+              {e:'🌿',n:'Prima săptămână',en:'First Week · Birch Buds, Feleac',d:'Mirosul primăverii de pe Dealul Feleacului, surprins în lapte de bivoliță. Cules înainte ca frunzele să se deschidă.',notes:['Bălsamic','Mentă','Crem-auriu'],season:'Martie–Aprilie',rare:true},
+              {e:'🌱',n:'Sevă',en:'Sap · Birch · Collected this morning',d:'Disponibil două săptămâni pe an. Lichidul pe care mesteacănul îl urcă din rădăcini — cules azi dimineață, servit în această seară.',notes:['Dulce mineral','Pur','Alb'],season:'Martie · 2 săpt.',rare:true},
+              {e:'🫘',n:'Umami dulce',en:'Sweet Umami · Romanian Bean Miso',d:'Fermentarea care nu știe că e în desert. Umami din fasole de Ardeal, în lapte de bivoliță, cu caramel sărat. Nu se ghicește din prima linguriță.',notes:['Umami','Caramel-sărat','Amprentă fermentare'],season:'Tot anul',rare:false},
             ].map((g,i) => (
-              <div key={i} className={`gelato-card reveal ${g.cls}`}>
+              <div key={i} className="gelato-card reveal">
+                <div className={`g-season-badge${g.rare?' rare':''}`}>{g.season}</div>
                 <span className="gelato-emoji">{g.e}</span>
-                <h4>{g.n}</h4>
-                <p>{g.d}</p>
+                <div className="g-name-ro">{g.n}</div>
+                <div className="g-name-en">{g.en}</div>
+                <div className="g-desc">{g.d}</div>
                 <div className="gelato-notes">{g.notes.map(n => <span key={n} className="g-note">{n}</span>)}</div>
               </div>
             ))}
+          </div>
+          <div className="gelato-sub-label reveal" style={{marginTop:'48px'}}>Sorbeturi · Fără lactate · Acid în prim-plan · Ingrediente culese local</div>
+          <div className="sorbet-grid reveal">
+            {[
+              {cls:'violet',n:'Violet de Feleac',en:'Feleac Violet · Wild Bilberry',d:'Violet-negru intens. Recoltat la zece minute de restaurant. Acid lactic viu în fiecare linguriță.',season:'Iulie–August · Herbarium #04'},
+              {cls:'orange',n:'Portocaliu eclectic',en:'Eclectic Orange · Wild Sea Buckthorn',d:'O culoare imposibilă pe farfurie. Aciditate extremă. Servit imediat, fără garnitură — culoarea care oprește conversația.',season:'Septembrie · Carpathian hills'},
+              {cls:'red',n:'Roșu de deal',en:'Hill Red · Lacto-fermented Cherry Plum',d:'Acid-sărat-taninos. Aproape umeboshi — dar din dealul de lângă Cluj. O complexitate pe care fructele cultivate nu o ating.',season:'Iulie–Septembrie'},
+              {cls:'white',n:'Alb mineral',en:'Mineral White · Fermented Bran & Fir Honey',d:'Acid lactic pur, mineral, rotunjit de mierea amară a bradului. Resetează palatul altfel decât orice sorbet de citrice.',season:'Tot anul · Palate cleanser'},
+            ].map((s,i) => (
+              <div key={i} className={`sorbet-card ${s.cls}`}>
+                <div className="sorbet-accent"></div>
+                <div className="s-name-ro">{s.n}</div>
+                <div className="s-name-en">{s.en}</div>
+                <div className="s-desc">{s.d}</div>
+                <span className="s-season">{s.season}</span>
+              </div>
+            ))}
+          </div>
+          <div className="gelato-footnote reveal">
+            <div className="gf-dot"></div>
+            <div className="gf-text">Gelato-urile sezoniere (flori de salcâm, sevă de mesteacăn, muguri) apar pe meniu doar în fereastra lor naturală de câteva zile. Nu se produc în afara sezonului. Nu există stoc. Dacă suntem în sezon — le veți găsi. Dacă nu — așteptați.</div>
           </div>
         </div>
       </div>
@@ -798,6 +838,54 @@ export default function HomePage() {
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CARTE DE VIZITA */}
+      <div id="card" style={{borderTop:'1px solid #111',padding:'110px 0',background:'#080808'}}>
+        <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
+          <div className="sec-label reveal">Identitate</div>
+          <div className="sec-title reveal d1">Carte de <em>Vizită</em></div>
+          <div className="gold-line reveal d2"></div>
+          <div className="biz-card reveal">
+            <div className="biz-left">
+              <div className="corner tl"></div>
+              <div className="corner br"></div>
+              <div className="bc-logo">
+                <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="29" cy="29" r="27" fill="none" stroke="#c9a96e" strokeWidth="1.2"/>
+                  <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#c9a96e">A</text>
+                </svg>
+              </div>
+              <div className="bc-brand">ATELIER</div>
+              <div className="bc-brand-sub">PRIVATE DINING</div>
+              <div className="bc-name" style={{color:'#fff'}}>Răzvan</div>
+              <div className="bc-title" style={{color:'var(--gold)'}}>CHEF / FONDATOR</div>
+              <div className="bc-line" style={{background:'linear-gradient(to right,transparent,var(--gold),transparent)'}}></div>
+              <div className="bc-email" style={{color:'#fff'}}>exquisitefoodtravel@yahoo.com</div>
+              <div className="bc-city" style={{color:'#fff'}}>CLUJ-NAPOCA · ROMANIA</div>
+            </div>
+            <div className="biz-right">
+              <div className="corner tr2"></div>
+              <div className="corner bl2"></div>
+              <div className="bc-logo">
+                <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="29" cy="29" r="27" fill="none" stroke="#d09070" strokeWidth="1.2"/>
+                  <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#d09070">A</text>
+                </svg>
+              </div>
+              <div className="bc-brand" style={{color:'var(--copper2)'}}>ATELIER</div>
+              <div className="bc-brand-sub" style={{color:'var(--copper-dk)'}}>PRIVATE DINING</div>
+              <div className="bc-name" style={{color:'#f0e0d0'}}>Roland</div>
+              <div className="bc-title" style={{color:'var(--copper2)'}}>CHEF / PARTNER</div>
+              <div className="bc-line" style={{background:'linear-gradient(to right,transparent,var(--copper2),transparent)'}}></div>
+              <div className="bc-email" style={{color:'var(--copper2)'}}>exquisitefoodtravel@yahoo.com</div>
+              <div className="bc-city" style={{color:'var(--copper2)'}}>CLUJ-NAPOCA · ROMANIA</div>
+            </div>
+          </div>
+          <div className="dl-row">
+            <button className="btn-gold" onClick={downloadCard}>↓ DESCARCĂ CARTE DE VIZITĂ SVG</button>
           </div>
         </div>
       </div>

@@ -205,17 +205,76 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);b
 .tag:hover{border-color:rgba(201,169,110,.3);color:var(--gold);}
 
 /* GELATO */
-.gelato-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:60px;}
-.gelato-card{padding:40px 28px;background:#0a0a0a;border:1px solid #141414;text-align:center;position:relative;overflow:hidden;transition:.3s;}
-.gelato-card:hover{transform:translateY(-6px);border-color:#2a2a2a;}
+.gelato-section-wrap{padding:110px 0;border-top:1px solid #111;}
+.gelato-inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+.gelato-sub-label{font-size:9px;letter-spacing:4px;color:rgba(201,169,110,.3);text-transform:uppercase;margin-bottom:16px;padding-left:2px;}
+.gelato-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;margin-bottom:4px;}
+.gelato-card{padding:36px 28px;background:#0a0a0a;border:1px solid #141414;position:relative;overflow:hidden;transition:.35s;}
+.gelato-card:hover{transform:translateY(-5px);border-color:#202020;background:#0d0d0d;}
 .gelato-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;}
 .gelato-card:hover::after{transform:scaleX(1);}
-.gelato-emoji{font-size:40px;margin-bottom:16px;display:block;transition:transform .3s;}
-.gelato-card:hover .gelato-emoji{transform:scale(1.2) rotate(8deg);}
-.gelato-card h4{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;margin-bottom:8px;}
-.gelato-card p{font-size:11px;color:#555;line-height:1.7;}
-.gelato-notes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
-.g-note{font-size:8px;letter-spacing:2px;color:var(--gold);border:1px solid rgba(201,169,110,.2);padding:4px 10px;}
+.g-season-badge{position:absolute;top:16px;right:16px;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(201,169,110,.2);color:rgba(201,169,110,.4);}
+.g-season-badge.rare{border-color:rgba(76,175,122,.25);color:rgba(76,175,122,.5);}
+.gelato-emoji{font-size:32px;margin-bottom:14px;display:block;transition:transform .3s;}
+.gelato-card:hover .gelato-emoji{transform:scale(1.15) rotate(5deg);}
+.g-name-ro{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;color:#e8d5a3;margin-bottom:2px;line-height:1.2;}
+.g-name-en{font-size:9px;letter-spacing:2px;color:rgba(201,169,110,.25);text-transform:uppercase;margin-bottom:12px;}
+.g-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(207,192,160,.55);line-height:1.7;margin-bottom:14px;border-left:1px solid rgba(201,169,110,.12);padding-left:10px;}
+.gelato-notes{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.g-note{font-size:7.5px;letter-spacing:1.5px;color:rgba(201,169,110,.3);border:1px solid rgba(201,169,110,.1);padding:3px 9px;text-transform:uppercase;transition:.3s;}
+.gelato-card:hover .g-note{border-color:rgba(201,169,110,.2);color:rgba(201,169,110,.55);}
+
+/* SORBETURI */
+.sorbet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:2px;}
+.sorbet-card{padding:32px 24px;background:#080808;border:1px solid #111;position:relative;overflow:hidden;transition:.35s;}
+.sorbet-card:hover{transform:translateY(-4px);border-color:#1a1a1a;}
+.sorbet-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;}
+.sorbet-card.violet::before{background:linear-gradient(to right,transparent,rgba(120,80,180,.4),transparent);}
+.sorbet-card.orange::before{background:linear-gradient(to right,transparent,rgba(220,120,50,.4),transparent);}
+.sorbet-card.red::before{background:linear-gradient(to right,transparent,rgba(180,60,60,.35),transparent);}
+.sorbet-card.white::before{background:linear-gradient(to right,transparent,rgba(201,169,110,.25),transparent);}
+.sorbet-accent{width:20px;height:1px;margin-bottom:16px;}
+.sorbet-card.violet .sorbet-accent{background:rgba(120,80,180,.4);}
+.sorbet-card.orange .sorbet-accent{background:rgba(220,120,50,.4);}
+.sorbet-card.red .sorbet-accent{background:rgba(180,60,60,.35);}
+.sorbet-card.white .sorbet-accent{background:rgba(201,169,110,.25);}
+.s-name-ro{font-family:'Cormorant Garamond',serif;font-size:19px;color:#e8d5a3;margin-bottom:2px;}
+.s-name-en{font-size:8px;letter-spacing:2px;color:rgba(201,169,110,.2);text-transform:uppercase;margin-bottom:10px;}
+.s-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:rgba(207,192,160,.5);line-height:1.65;margin-bottom:10px;}
+.s-season{font-size:7px;letter-spacing:2px;text-transform:uppercase;margin-top:12px;display:block;}
+.sorbet-card.violet .s-season{color:rgba(120,80,180,.35);}
+.sorbet-card.orange .s-season{color:rgba(220,120,50,.35);}
+.sorbet-card.red .s-season{color:rgba(180,60,60,.3);}
+.sorbet-card.white .s-season{color:rgba(201,169,110,.25);}
+.gelato-footnote{margin-top:40px;padding:18px 24px;background:rgba(201,169,110,.025);border:1px solid rgba(201,169,110,.08);display:flex;align-items:center;gap:20px;}
+.gf-dot{width:5px;height:5px;border-radius:50%;background:rgba(201,169,110,.25);flex-shrink:0;}
+.gf-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(207,192,160,.4);line-height:1.6;}
+
+/* CARTE DE VIZITA */
+.biz-card{width:100%;max-width:900px;height:290px;display:flex;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 28px 90px rgba(0,0,0,.95);transition:.4s;}
+.biz-card:hover{transform:translateY(-6px);}
+.biz-left{flex:1;background:linear-gradient(135deg,#060606,#141414);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+.biz-right{flex:1;background:linear-gradient(135deg,#3a1e10,#5c2e18);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;border-left:1px solid rgba(201,169,110,.15);}
+.corner{position:absolute;width:14px;height:14px;}
+.tl{top:14px;left:14px;border-top:1.5px solid var(--gold);border-left:1.5px solid var(--gold);}
+.br{bottom:14px;right:14px;border-bottom:1.5px solid var(--gold);border-right:1.5px solid var(--gold);}
+.tr2{top:14px;right:14px;border-top:1.5px solid var(--copper2);border-right:1.5px solid var(--copper2);}
+.bl2{bottom:14px;left:14px;border-bottom:1.5px solid var(--copper2);border-left:1.5px solid var(--copper2);}
+.bc-logo svg{width:56px;height:56px;}
+.bc-brand{font-family:'Cormorant Garamond',serif;font-size:9px;letter-spacing:5px;text-transform:uppercase;margin-top:5px;}
+.bc-brand-sub{font-size:6px;letter-spacing:2px;margin-top:2px;}
+.biz-left .bc-brand{color:var(--gold);}.biz-left .bc-brand-sub{color:#2a2a2a;}
+.biz-right .bc-brand{color:var(--copper2);}.biz-right .bc-brand-sub{color:var(--copper-dk);}
+.bc-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-top:10px;text-align:center;}
+.bc-title{font-size:7px;letter-spacing:4px;margin-top:4px;}
+.bc-line{height:1px;width:50px;margin:8px auto;}
+.bc-email{font-size:9px;opacity:.55;text-align:center;letter-spacing:.5px;}
+.bc-city{font-size:7px;letter-spacing:3px;margin-top:3px;opacity:.3;text-align:center;}
+.biz-left .bc-name{color:#fff;}.biz-left .bc-title{color:var(--gold);}.biz-left .bc-email,.biz-left .bc-city{color:#fff;}
+.biz-right .bc-name{color:#f0e0d0;}.biz-right .bc-title{color:var(--copper2);}.biz-right .bc-email{color:var(--copper2);}.biz-right .bc-city{color:var(--copper2);}
+.dl-row{display:flex;justify-content:center;gap:16px;margin-top:28px;}
+.btn-gold{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:12px 32px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:4px;text-transform:uppercase;transition:.2s;}
+.btn-gold:hover{background:var(--gold);color:#000;}
 
 /* FAQ */
 .faq-wrap{display:flex;flex-direction:column;gap:0;max-width:780px;}
@@ -547,7 +606,10 @@ footer{padding:80px 48px 48px;border-top:1px solid #111;text-align:center;}
 @media(max-width:768px){
   nav{padding:0 20px}.nav-links{gap:14px}
   .section{padding:70px 20px}
-  .story-grid,.asezat-wrap,.logo-grid,.services-grid,.gelato-grid,.process-steps,.phil-pillars,.asezat-products,.testi-grid,.rez-wrap,.menu-prev-wrap{grid-template-columns:1fr!important}
+  .story-grid,.asezat-wrap,.biz-card,.services-grid,.gelato-grid,.sorbet-grid,.process-steps,.phil-pillars,.asezat-products,.testi-grid,.rez-wrap,.menu-prev-wrap{grid-template-columns:1fr!important}
+  .biz-card{flex-direction:column;height:auto}
+  .gelato-inner{padding:0 20px}
+  .sorbet-grid{grid-template-columns:1fr!important}
   .philosophy-wrap{grid-template-columns:1fr;gap:40px}
   .phil-visual{margin:0 auto}
   .ai-panel{width:calc(100vw - 2rem);right:1rem}
