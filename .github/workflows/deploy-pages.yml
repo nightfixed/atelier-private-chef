@@ -53,6 +53,15 @@ jobs:
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
 
+      - name: Inject API_URL into static HTML files
+        working-directory: web
+        env:
+          API_URL: ${{ vars.API_URL }}
+        run: |
+          for file in out/*.html out/**/*.html; do
+            [ -f "$file" ] && sed -i "s|__API_URL__|${API_URL}|g" "$file"
+          done
+
       - name: Ensure CNAME is in output
         working-directory: web
         run: cp public/CNAME out/CNAME
