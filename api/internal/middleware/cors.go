@@ -1,16 +1,36 @@
 package middleware
 
-import "net/http"
+import (
+	"net/http"
+	"os"
+	"strings"
+)
 
-// allowedOrigin is the GitHub Pages URL for this project.
-// Update this after enabling GitHub Pages on the repository.
-const allowedOrigin = "https://nightfixed.github.io"
+// defaultAllowedOrigins are the origins permitted when CORS_ORIGINS is not set.
+var defaultAllowedOrigins = []string{
+	"https://atelierprivatedining.ro",
+	"https://www.atelierprivatedining.ro",
+	"https://nightfixed.github.io",
+}
 
-// CORS adds Cross-Origin Resource Sharing headers so the frontend on
-// GitHub Pages can call the Cloud Run API.
+// CORS adds Cross-Origin Resource Sharing headers.
+// Set the CORS_ORIGINS env var to a comma-separated list to override defaults.
 func CORS(next http.Handler) http.Handler {
+	allowed := defaultAllowedOrigins
+	if env := os.Getenv("CORS_ORIGINS"); env != "" {
+		allowed = strings.Split(env, ",")
+	}
+
+	allowedSet := make(map[string]bool, len(allowed))
+	for _, o := range allowed {
+		allowedSet[strings.TrimSpace(o)] = true
+	}
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
+		origin := r.Header.Get("Origin")
+		if allowedSet[origin] {
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+		}
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 

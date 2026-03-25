@@ -124,6 +124,59 @@ func (p *AnthropicProvider) GenerateMenu(ctx context.Context, req MenuRequest) (
 	return &menu, nil
 }
 
+// GenerateCodex calls Claude to produce a Codex tasting menu + story from a sensory profile.
+func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest) (*CodexResponse, error) {
+	profile := "Oaspete: " + req.GuestName +
+		"\nAmintire culinară din copilărie: " + req.Memory +
+		"\nSenzație căutată: " + req.Sensation +
+		"\nRitm la masă: " + req.Rhythm +
+		"\nIngredient de atracție: " + req.Element +
+		"\nStare dorită la final: " + req.End +
+		"\nFilosofia personală despre o masă bună: " + req.Philosophy
+
+	menuSystem := `Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+
+Pe baza profilului senzorial al oaspetelui, compune un meniu personalizat de 6-7 cursuri. Fiecare curs trebuie să aibă:
+- "tip": tipul cursului (ex: Amuse-bouche, Entrée, Intermezzo, Fel principal, Pre-desert, Desert)
+- "nume": un nume poetic și evocator în română sau bilingv ro/fr
+- "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
+
+Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
+[{"tip":"...","nume":"...","descriere":"..."}]`
+
+	menuText, err := p.call(ctx, menuSystem, profile, 900)
+	if err != nil {
+		return nil, fmt.Errorf("menu generation: %w", err)
+	}
+
+	// Strip markdown fences if present
+	menuText = strings.TrimSpace(menuText)
+	if idx := strings.Index(menuText, "["); idx > 0 {
+		menuText = menuText[idx:]
+	}
+	if idx := strings.LastIndex(menuText, "]"); idx >= 0 && idx < len(menuText)-1 {
+		menuText = menuText[:idx+1]
+	}
+
+	var courses []CodexCourse
+	if err := json.Unmarshal([]byte(menuText), &courses); err != nil {
+		return nil, fmt.Errorf("parse codex menu JSON: %w (raw: %.200s)", err, menuText)
+	}
+
+	storySystem := `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+
+Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 200-240 cuvinte în română care evocă atmosfera, preparatele, ingredientele cheie și starea pe care o va trăi oaspetele. Tonul: cald, literar, imersiv, ca o scrisoare intimă. Integrează subtil detalii din profil. Nu enumera cursuri sec.
+
+Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără explicații.`
+
+	story, err := p.call(ctx, storySystem, profile, 800)
+	if err != nil {
+		return nil, fmt.Errorf("story generation: %w", err)
+	}
+
+	return &CodexResponse{Menu: courses, Story: strings.TrimSpace(story)}, nil
+}
+
 // Chat handles multi-turn conversation using Claude.
 func (p *AnthropicProvider) Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error) {
 	system := `Ești asistentul virtual al Atelier Private Dining, un serviciu exclusiv de private chef din Cluj-Napoca, România.

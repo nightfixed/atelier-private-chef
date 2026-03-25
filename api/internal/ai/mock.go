@@ -141,6 +141,28 @@ Tags:     tags,
 }, nil
 }
 
+// GenerateCodex returns a mock Codex menu and story based on the sensory profile.
+func (m *MockProvider) GenerateCodex(_ context.Context, req CodexRequest) (*CodexResponse, error) {
+	name := req.GuestName
+	if name == "" {
+		name = "Oaspete"
+	}
+	courses := []CodexCourse{
+		{Tip: "Amuse-bouche", Nume: "Lichen & piatră de izvor", Descriere: "Un bun-venit mineral, rece — licheni carpatici deshidratați, apă de izvor gelificată, ulei de brad."},
+		{Tip: "Pâine", Nume: "Pâinea Atelierului", Descriere: "Maia de trei zile, coaptă în fontă, servită cu unt de bivoliță afumat și sare de Praid."},
+		{Tip: "Supă", Nume: "Consommé de rădăcini & rășină de molid", Descriere: "Un bulion limpede de rădăcini carpatice, cu o picătură de rășină tânără și petale de gălbenele."},
+		{Tip: "Aperitiv", Nume: "Tartă de hrean & somon afumat la rece", Descriere: "Hrean de Turda fermentat, somon afumat 48h, cremă acidă, icre de păstrăv."},
+		{Tip: "Intermezzo", Nume: "Sorbet de cenușă de fag & lămâie verde", Descriere: "Un moment de pauză — sorbet fumuriu, acid, care curăță palatul și deschide a doua parte a serii."},
+		{Tip: "Fel principal", Nume: "Rață dry-aged & jus de pădure", Descriere: "Rață maturată 14 zile, gătită sous-vide, cu jus de fructe de pădure, lichen prăjit și legume rădăcinoase caramelizate."},
+		{Tip: "Desert", Nume: "Panna cotta de bivoliță & caramel de brad", Descriere: "Cremă de lapte de bivoliță, caramel de rășină de brad, praf de cenușă de fag și flori de sezon."},
+	}
+	story := "Seara lui " + name + " începe înainte ca prima farfurie să apară pe masă — în liniștea din care se naște atenția. " +
+		"Fiecare preparat poartă ceva din pădurile Ardealului: un miros de rășină, o textură de scoarță, o aciditate vie ca un izvor de munte. " +
+		"Nu este o cină în care mănânci și pleci. Este o seară în care rămâi cu tine însuți, ascultat de ingrediente care au crescut cu răbdare. " +
+		"La final, nu vei ști exact ce ai mâncat — vei ști doar cum te-ai simțit."
+	return &CodexResponse{Menu: courses, Story: story}, nil
+}
+
 // Chat handles conversational messages about Atelier Private Dining.
 func (m *MockProvider) Chat(_ context.Context, req ChatRequest) (*ChatResponse, error) {
 if len(req.Messages) == 0 {

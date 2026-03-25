@@ -61,11 +61,36 @@ type ChatResponse struct {
 Reply string `json:"reply"`
 }
 
+// CodexRequest contains the sensory profile answers from the Codex ritual.
+type CodexRequest struct {
+	GuestName  string `json:"guest_name"`
+	Memory     string `json:"memory"`
+	Sensation  string `json:"sensation"`
+	Rhythm     string `json:"rhythm"`
+	Element    string `json:"element"`
+	End        string `json:"end"`
+	Philosophy string `json:"philosophy"`
+}
+
+// CodexCourse is one course in the Codex-generated tasting menu.
+type CodexCourse struct {
+	Tip      string `json:"tip"`
+	Nume     string `json:"nume"`
+	Descriere string `json:"descriere"`
+}
+
+// CodexResponse contains the generated menu and story for the Codex ritual.
+type CodexResponse struct {
+	Menu  []CodexCourse `json:"menu"`
+	Story string        `json:"story"`
+}
+
 // Provider is the interface every LLM backend must implement.
 // To connect a real model, implement this interface and inject it in main.go.
 type Provider interface {
-GenerateMenu(ctx context.Context, req MenuRequest) (*MenuResponse, error)
-Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error)
+	GenerateMenu(ctx context.Context, req MenuRequest) (*MenuResponse, error)
+	GenerateCodex(ctx context.Context, req CodexRequest) (*CodexResponse, error)
+	Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error)
 }
 
 // SystemPrompt returns the full context prompt used with any real LLM provider.

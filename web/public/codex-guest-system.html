@@ -71,7 +71,7 @@
     padding: 6rem 1.5rem 4rem;
   }
 
-  .app { width: 100%; max-width: 640px; }
+  .app { width: 100%; max-width: 660px; }
 
   /* FOOTER */
   footer {
@@ -116,8 +116,8 @@
   .divider { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 0 auto 2.5rem; }
 
   /* NAME INPUT */
-  .name-wrap { margin-bottom: 2.5rem; }
-  .name-wrap input {
+  .name-wrap { margin-bottom: 1.5rem; }
+  .name-wrap input, .api-wrap input {
     width: 100%;
     background: transparent;
     border: none;
@@ -132,8 +132,9 @@
     outline: none;
     transition: border-color 0.3s;
   }
-  .name-wrap input::placeholder { color: var(--muted); font-style: italic; }
-  .name-wrap input:focus { border-bottom-color: var(--gold); }
+  .name-wrap input::placeholder, .api-wrap input::placeholder { color: var(--muted); font-style: italic; }
+  .name-wrap input:focus, .api-wrap input:focus { border-bottom-color: var(--gold); }
+
 
   /* BUTTON */
   .btn {
@@ -251,6 +252,18 @@
     0%, 100% { transform: scale(1); opacity: 0.6; }
     50% { transform: scale(1.15); opacity: 1; }
   }
+  .gen-step {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+    min-height: 1.2em;
+    transition: opacity 0.4s;
+  }
 
   /* SCREEN: COMPOSITION */
   .composition { padding: 1rem 0; }
@@ -268,13 +281,76 @@
   .comp-header .guest-name { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 300; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
   .comp-header .eve-date { font-size: 0.85rem; font-style: italic; color: var(--muted); }
 
-  .comp-body {
+  /* MENIU SECTION */
+  .section-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.65;
+    text-align: center;
+    margin-bottom: 1.8rem;
+  }
+  .menu-body {
     border: 1px solid var(--border);
     padding: 2.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
     position: relative;
   }
-  .comp-body::before {
+  .menu-body::before {
+    content: '✦';
+    position: absolute;
+    top: -0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 1rem;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 0.8rem;
+  }
+  .menu-course {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .menu-course:last-child { border-bottom: none; padding-bottom: 0; }
+  .menu-course:first-child { padding-top: 0; }
+  .course-name {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+  .course-desc {
+    font-size: 0.9rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .course-type {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.45rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0.45;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  /* STORY SECTION */
+  .story-body {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .story-body::before {
     content: '❧';
     position: absolute;
     top: -0.7rem;
@@ -286,7 +362,13 @@
     opacity: 0.5;
     font-size: 1rem;
   }
-  .comp-text { font-size: 1.05rem; font-weight: 300; line-height: 2.2; color: var(--text); white-space: pre-wrap; }
+  .story-text {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 2.3;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
 
   .comp-footer { text-align: center; }
   .comp-footer .artifact-label {
@@ -370,6 +452,7 @@
         <input type="text" id="guest-name" placeholder="Numele dumneavoastră" autocomplete="off" />
       </div>
       <button class="btn" onclick="startRitual()">Începe Ritualul</button>
+      <div id="intro-error" class="error-msg" style="display:none;"></div>
     </div>
   </div>
 
@@ -394,11 +477,12 @@
       <div class="pulse-ring"></div>
       <div class="divider"></div>
       <h2>Compunem seara dumneavoastră<span class="dots"></span></h2>
-      <p>Sistemul citește profilul dumneavoastră senzorial<br>și construiește experiența acestei seri.</p>
+      <div class="gen-step" id="gen-step">Citim profilul senzorial</div>
+      <p>Sistemul construiește meniul și povestea serii dumneavoastră.<br>Un moment de răbdare.</p>
     </div>
   </div>
 
-  <!-- SCREEN 4: COMPOSITION (pre-dinner) -->
+  <!-- SCREEN 4: COMPOSITION (meniu + poveste) -->
   <div class="screen" id="s-composition">
     <div class="composition">
       <div class="comp-header">
@@ -406,9 +490,19 @@
         <div class="guest-name" id="comp-name"></div>
         <div class="eve-date" id="comp-date"></div>
       </div>
-      <div class="comp-body">
-        <div class="comp-text" id="comp-text"></div>
+
+      <!-- MENIU -->
+      <div class="section-label">Meniul Serii</div>
+      <div class="menu-body" id="menu-body">
+        <!-- populated by JS -->
       </div>
+
+      <!-- POVESTE -->
+      <div class="section-label">Povestea Serii</div>
+      <div class="story-body">
+        <div class="story-text" id="story-text"></div>
+      </div>
+
       <div class="comp-footer">
         <div class="artifact-label">La finalul serii, veți primi artefactul dumneavoastră personal</div>
         <div class="btn-row">
@@ -531,6 +625,7 @@ const QUESTIONS = [
   }
 ];
 
+const API_URL = '__API_URL__';
 let guestName = '';
 let answers = {};
 let currentQ = 0;
@@ -543,12 +638,17 @@ function today() {
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function startRitual() {
-  const input = document.getElementById('guest-name');
-  guestName = input.value.trim();
-  if (!guestName) { input.focus(); return; }
+  const nameInput = document.getElementById('guest-name');
+  const errEl = document.getElementById('intro-error');
+  guestName = nameInput.value.trim();
+
+  errEl.style.display = 'none';
+  if (!guestName) { nameInput.focus(); return; }
+
   currentQ = 0;
   answers = {};
   show('s-questions');
@@ -558,7 +658,7 @@ function startRitual() {
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
   currentSelection = null;
-  const fill = ((currentQ) / QUESTIONS.length) * 100;
+  const fill = (currentQ / QUESTIONS.length) * 100;
   document.getElementById('progress-fill').style.width = fill + '%';
   document.getElementById('progress-label').textContent = currentQ + ' / ' + QUESTIONS.length;
 
@@ -569,7 +669,7 @@ function renderQuestion() {
 
   if (q.type === 'options') {
     html += `<div class="options">`;
-    q.options.forEach((opt, i) => {
+    q.options.forEach(opt => {
       html += `<button class="option-btn" onclick="selectOption(this, '${escQ(opt)}')">${opt}</button>`;
     });
     html += `</div>`;
@@ -583,7 +683,7 @@ function renderQuestion() {
   document.getElementById('question-slot').innerHTML = html;
 }
 
-function escQ(s) { return s.replace(/'/g, "\\'"); }
+function escQ(s) { return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
 
 function selectOption(btn, val) {
   document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
@@ -598,11 +698,7 @@ function freeInput(el) {
 
 function nextQuestion() {
   const q = QUESTIONS[currentQ];
-  if (q.type === 'options') {
-    answers[q.id] = currentSelection;
-  } else {
-    answers[q.id] = document.getElementById('free-ans').value.trim();
-  }
+  answers[q.id] = q.type === 'options' ? currentSelection : document.getElementById('free-ans').value.trim();
   currentQ++;
   if (currentQ >= QUESTIONS.length) {
     buildComposition();
@@ -621,41 +717,69 @@ Stare dorită la final: ${answers.end}
 Filosofia personală despre o masă bună: ${answers.philosophy}`;
 }
 
+function setGenStep(text) {
+  const el = document.getElementById('gen-step');
+  if (el) el.textContent = text;
+}
+
 async function buildComposition() {
   show('s-generating');
-  const profile = buildProfile();
+  setGenStep('Compunem seara dumneavoastră...');
   const dateStr = today();
 
-  const prompt = `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare, și experiențe senzoriale imersive.
-
-Pe baza profilului senzorial al oaspetelui de mai jos, compune o descriere personalizată a serii lor — un text de 180-220 cuvinte, în română, scris ca o scrisoare intimă dar elegantă. Tonul: cald, profund, poetic dar nu kitsch. Nu enumera cursuri. Nu promite nimic specific. Evocă o stare, un arc emoțional, o atmosferă. Folosește câteva detalii din profilul oaspetelui, subtil integrate.
-
-${profile}
-
-Răspunde DOAR cu textul compoziției, fără titlu, fără introducere, fără explicații.`;
-
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch(API_URL + '/api/generate-codex', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+        guest_name: guestName,
+        memory:     answers.memory,
+        sensation:  answers.sensation,
+        rhythm:     answers.rhythm,
+        element:    answers.element,
+        end:        answers.end,
+        philosophy: answers.philosophy
       })
     });
-    const data = await res.json();
-    const text = data.content?.map(b => b.text || '').join('') || '';
 
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const courses = data.menu || [];
+    const story = data.story || '';
+
+    // Render menu
+    const menuBody = document.getElementById('menu-body');
+    if (courses.length > 0) {
+      menuBody.innerHTML = courses.map(c => `
+        <div class="menu-course">
+          <div class="course-type">${c.tip || ''}</div>
+          <div class="course-name">${c.nume || ''}</div>
+          <div class="course-desc">${c.descriere || ''}</div>
+        </div>
+      `).join('');
+    } else {
+      menuBody.innerHTML = `<div class="course-desc" style="text-align:center;padding:1rem 0;">Meniul va fi compus la masă.</div>`;
+    }
+
+    // Render story
+    document.getElementById('story-text').textContent = story;
+
+    // Set header
     document.getElementById('comp-name').textContent = guestName;
     document.getElementById('comp-date').textContent = dateStr;
-    document.getElementById('comp-text').textContent = text.trim();
+
     show('s-composition');
-  } catch(e) {
-    document.getElementById('comp-name').textContent = guestName;
-    document.getElementById('comp-date').textContent = dateStr;
-    document.getElementById('comp-text').textContent = 'Seara dumneavoastră este în pregătire. Vă rugăm să reîncercați.';
-    show('s-composition');
+  } catch (e) {
+    const genDiv = document.querySelector('#s-generating .generating');
+    if (genDiv) {
+      genDiv.innerHTML += `<div class="error-msg" style="margin-top:2rem;">Eroare: ${e.message}<br><br><button class="btn" onclick="restart()" style="margin-top:1rem;">Reîncearcă</button></div>`;
+      const stepEl = document.getElementById('gen-step');
+      if (stepEl) stepEl.style.display = 'none';
+    }
   }
 }
 
@@ -669,9 +793,9 @@ async function generateArtifact() {
 
 Pe baza profilului senzorial al oaspetelui, scrie un artefact post-cină în română. Structură:
 
-1. TITLU_CAPITOL: Un titlu poetic, 3-6 cuvinte (de ex: "Cina Mirosului de Fân Uscat")
-2. SUBTITLU: O linie scurtă, data și un număr de capitol fictiv (ex: "Capitol #${chapterNum} — ${dateStr}")
-3. TEXT: 200-250 cuvinte. Un text literar care evocă seara tocmai încheiată — ca un jurnal scris de un martor invizibil. Nu descrie cursuri. Descrie momente, stări, tranziții senzoriale, ceva ce oaspetele a simțit sau ar fi putut simți. Integrează subtil detalii din profilul lor.
+1. TITLU: Un titlu poetic, 3-6 cuvinte (de ex: "Cina Mirosului de Fân Uscat")
+2. SUBTITLU: O linie scurtă cu data și numărul de capitol (ex: "Capitol #${chapterNum} — ${dateStr}")
+3. TEXT: 200-250 cuvinte. Un text literar care evocă seara tocmai încheiată — ca un jurnal scris de un martor invizibil. Nu descrie cursuri sec. Descrie momente, stări, tranziții senzoriale, ceva ce oaspetele a simțit sau ar fi putut simți. Integrează subtil detalii din profil.
 
 ${profile}
 
@@ -681,17 +805,14 @@ SUBTITLU: [subtitlul]
 TEXT: [textul]`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch(API_URL + '/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
     });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    const raw = data.content?.map(b => b.text || '').join('') || '';
+    const raw = data.reply || '';
 
     const titleMatch = raw.match(/TITLU:\s*(.+)/);
     const subMatch = raw.match(/SUBTITLU:\s*(.+)/);
@@ -703,10 +824,10 @@ TEXT: [textul]`;
     document.getElementById('seal-name').textContent = guestName;
     document.getElementById('seal-date').textContent = `Atelier Private Dining — ${dateStr}`;
     show('s-artifact');
-  } catch(e) {
+  } catch (e) {
     document.getElementById('art-title').textContent = 'Capitol Personal';
     document.getElementById('art-sub').textContent = `Capitol #${chapterNum} — ${dateStr}`;
-    document.getElementById('art-text').textContent = 'Artefactul nu a putut fi generat. Vă rugăm să reîncercați.';
+    document.getElementById('art-text').textContent = `Artefactul nu a putut fi generat: ${e.message}`;
     document.getElementById('seal-name').textContent = guestName;
     document.getElementById('seal-date').textContent = `Atelier Private Dining — ${dateStr}`;
     show('s-artifact');
@@ -715,6 +836,7 @@ TEXT: [textul]`;
 
 function restart() {
   document.getElementById('guest-name').value = '';
+  document.getElementById('intro-error').style.display = 'none';
   guestName = '';
   answers = {};
   currentQ = 0;

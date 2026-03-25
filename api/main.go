@@ -99,8 +99,9 @@ func main() {
 	mux.Handle("/api/herbarium", handler.NewHerbariumHandler(herbariumRepo, authMiddleware))
 	mux.Handle("/api/herbarium/{id}", handler.NewHerbariumSpecimenByIDHandler(herbariumRepo, authMiddleware))
 
-	// AI — menu generator + chat (swap aiProvider for a real LLM when ready)
+	// AI — menu generator + codex ritual + chat
 	mux.Handle("/api/generate-menu", handler.NewGenerateHandler(aiProvider, herbariumRepo))
+	mux.Handle("/api/generate-codex", handler.NewCodexHandler(aiProvider))
 	mux.Handle("/api/chat", handler.NewChatHandler(aiProvider))
 
 	// Upload (signed GCS PUT URL)
