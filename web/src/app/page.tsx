@@ -619,21 +619,21 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <div className="gold-line reveal d2"></div>
           <div className="menu-prev-wrap reveal">
             <div>
-              <p className="menu-prev-intro">"Un meniu de seară compus în jurul contrastului: lux clasic și tehnici moderne, fiecare curs o propoziție despre rafinament fără ostentație."</p>
+              <p className="menu-prev-intro">"Un meniu de seară construit pe ce are România mai bun — completat cu ingrediente de lux disponibile în magazine și online. Nimic exotic de negsit, totul ales cu intenție."</p>
               <p className="menu-prev-note">Meniurile sunt create exclusiv pentru ocazia și preferințele voastre. Ingredientele variază în funcție de sezon și disponibilitate. Toate restricțiile alimentare sunt luate în considerare.</p>
             </div>
             <div className="menu-prev-div"></div>
             <div className="menu-courses">
               {[
-                {n:'I', label:'Amuse-bouche', name:'Oscietra pe gheață', desc:'Caviar Oscietra · cremă de smântână 48h fermentată · chive oil · blini de hrișcă cu unt clarificat'},
-                {n:'II', label:'Pâine · Unt', name:'Brioche și trufe', desc:'Brioche cu maia caldă · unt de trufe negre bătut la masă · sare Maldon · ulei extra-virgin de primă presă'},
-                {n:'III', label:'Supă', name:'Bisque de langustine', desc:'Bisque concentrat de langustine · cremă de șofran · ulei de ardei de piquillo afumat · coadă de langustine sotată'},
-                {n:'IV', label:'Pește · Starter', name:'Ton și ponzu', desc:'Yellowfin tuna în crustă de susan negru · ponzu propriu · avocado fermentat · icre de păstrăv · petale de shiso'},
-                {n:'V', label:'Foie Gras · ✦ Signature', name:'Foie Gras și Sauternes', desc:'Foie gras poêlé · reducție de Sauternes · struguri Muscat caramelizați · migdale și brioche prăjit'},
-                {n:'VI', label:'Intermediar', name:'Risotto al Barolo', desc:'Risotto cu reducție de Barolo · Parmigiano Reggiano 36 luni · trufe de vară rase la masă · unt de salvie'},
-                {n:'VII', label:'Pește', name:'Doradă sălbatică și safran', desc:'Doradă sălbatică la cuptor pe pat de fennel · emulsie de safran iranian · capere de Pantelleria · lemon confit'},
-                {n:'VIII', label:'Principal · ✦ Specialitatea Casei', name:'Entrecôte dry-aged și măduvă', desc:'Entrecôte dry-aged 45 zile · sos bordelaise cu măduvă de vită · gratin Dauphinois cu Comté · trufe rase'},
-                {n:'IX', label:'Desert', name:'Valrhona și vanilie Tahiti', desc:'Soufflé cald de ciocolată Valrhona Guanaja 70% · înghețată de vanilie Tahiti · caramel de fleur de sel · gold leaf'},
+                {n:'I', label:'Amuse-bouche', name:'Icre de nisetru și smântână', desc:'Icre negre de nisetru românesc · smântână 48h fermentată · blini cald cu maia · ceapă roșie murată fin'},
+                {n:'II', label:'Pâine · Unt', name:'Pâine la vatră și unt de trufe', desc:'Pâine cu maia coaptă la vatră · unt bătut cu pastă de trufe negre · sare de Slănic Moldova · ulei de măsline extravirgin'},
+                {n:'III', label:'Supă', name:'Consommé de vită și hribi de Bucovina', desc:'Consommé clarificat de vită maturată · hribi de Bucovina rehidratați · julienne de rădăcinoase · ulei de trufe'},
+                {n:'IV', label:'Pește · Starter', name:'Somon cu icre și smântână de casă', desc:'Somon norvegian curat la 52°C · cremă de smântână de casă · icre de somon roz · crocant de capere și lămâie'},
+                {n:'V', label:'Foie Gras · ✦ Signature', name:'Foie Gras și Cotnari', desc:'Foie gras poêlé · reducție de Cotnari Grasă de Cotnari · smochine caramelizate · migdale prăjite · brioche cu maia'},
+                {n:'VI', label:'Intermediar', name:'Risotto cu gălbiori de Ardeal', desc:'Risotto Arborio · gălbiori de Ardeal sotați în unt brun · vin alb sec de Dealu Mare · Parmigiano Reggiano 24 luni · salvie'},
+                {n:'VII', label:'Pește', name:'Calcan de Marea Neagră', desc:'Calcan sălbatic de Marea Neagră la cuptor · emulsie de șofran și vin alb · capere și lămâie murată · piure de țelină'},
+                {n:'VIII', label:'Principal · ✦ Specialitatea Casei', name:'Miel de lapte și măduvă de vită', desc:'Cotlet de miel de lapte · jus cu vin roșu de Dealu Mare · os de măduvă de vită la cuptor · gălbiori sotați · piure de rădăcinoase'},
+                {n:'IX', label:'Desert', name:'Ciocolată Valrhona și miere de brad', desc:'Mousse de ciocolată Valrhona Guanaja 70% · caramel de miere de brad · cremă mascarpone · nuci caramelizate · fleur de sel'},
               ].map((c, i) => (
                 <div key={i} className="menu-course">
                   <div className="mc-num">{c.n}</div>
