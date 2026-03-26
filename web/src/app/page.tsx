@@ -619,21 +619,21 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <div className="gold-line reveal d2"></div>
           <div className="menu-prev-wrap reveal">
             <div>
-              <p className="menu-prev-intro">"Acesta este un exemplu de meniu de toamnă, construit în jurul colecției Herbarium. Fiecare seară Atelier este diferită."</p>
+              <p className="menu-prev-intro">"Un meniu de seară compus în jurul contrastului: lux clasic și tehnici moderne, fiecare curs o propoziție despre rafinament fără ostentație."</p>
               <p className="menu-prev-note">Meniurile sunt create exclusiv pentru ocazia și preferințele voastre. Ingredientele variază în funcție de sezon și disponibilitate. Toate restricțiile alimentare sunt luate în considerare.</p>
             </div>
             <div className="menu-prev-div"></div>
             <div className="menu-courses">
               {[
-                {n:'I', label:'Amuse-bouche', name:'Piatră de munte', desc:'Lichen carpatic · gel de conifer · praf de cenușă de fag · Herbarium #01 · #03'},
-                {n:'II', label:'Pâine', name:'Pâinea Atelierului', desc:'Pâine cu maia din hrișcă transilvăneană · unt de miso · tărâțe prăjite'},
-                {n:'III', label:'Supă', name:'Aburi de pădure', desc:'Supă clară de ciuperci sălbatice de sezon · muguri de mesteacăn · ulei de cimbru · Herbarium #05'},
-                {n:'IV', label:'Pește · Starter', name:'Somon și Feleac', desc:'Somon curat la temperatură joasă · afine sălbatice fermentate lacto · hrean de Turda · Herbarium #04 · #07'},
-                {n:'V', label:'Pasăre · ✦ Signature', name:'Foie Gras și Molid', desc:'Foie gras poêlé · glazură de rășină de molid și Sauternes · brioche prăjit · Herbarium #02'},
-                {n:'VI', label:'Intermediar', name:'Hrișcă și pădure', desc:'Risotto de hrișcă transilvăneană prăjită · ciuperci sălbatice de sezon · unt de mesteacăn · Herbarium #05 · #11'},
-                {n:'VII', label:'Pește', name:'Calcan de Marea Neagră și cenușă', desc:'Calcan la cuptor · crustă de cenușă de fag · unt brun cu capere și lămâie murată · Herbarium #03'},
-                {n:'VIII', label:'Principal · ✦ Specialitatea Casei', name:'Piept de rată · Lichior Lotus · Carambolă', desc:'Piept de rată lăcuit · glazură de lichen și miere de brad · licheni carpatici sotați în unt brun · Herbarium #01'},
-                {n:'IX', label:'Desert', name:'Caramel de brad', desc:'Crème brûlée cu infuzie de rășină de molid · caramel de rășină · fleur de sel · Herbarium #02'},
+                {n:'I', label:'Amuse-bouche', name:'Oscietra pe gheață', desc:'Caviar Oscietra · cremă de smântână 48h fermentată · chive oil · blini de hrișcă cu unt clarificat'},
+                {n:'II', label:'Pâine · Unt', name:'Brioche și trufe', desc:'Brioche cu maia caldă · unt de trufe negre bătut la masă · sare Maldon · ulei extra-virgin de primă presă'},
+                {n:'III', label:'Supă', name:'Bisque de langustine', desc:'Bisque concentrat de langustine · cremă de șofran · ulei de ardei de piquillo afumat · coadă de langustine sotată'},
+                {n:'IV', label:'Pește · Starter', name:'Ton și ponzu', desc:'Yellowfin tuna în crustă de susan negru · ponzu propriu · avocado fermentat · icre de păstrăv · petale de shiso'},
+                {n:'V', label:'Foie Gras · ✦ Signature', name:'Foie Gras și Sauternes', desc:'Foie gras poêlé · reducție de Sauternes · struguri Muscat caramelizați · migdale și brioche prăjit'},
+                {n:'VI', label:'Intermediar', name:'Risotto al Barolo', desc:'Risotto cu reducție de Barolo · Parmigiano Reggiano 36 luni · trufe de vară rase la masă · unt de salvie'},
+                {n:'VII', label:'Pește', name:'Doradă sălbatică și safran', desc:'Doradă sălbatică la cuptor pe pat de fennel · emulsie de safran iranian · capere de Pantelleria · lemon confit'},
+                {n:'VIII', label:'Principal · ✦ Specialitatea Casei', name:'Entrecôte dry-aged și măduvă', desc:'Entrecôte dry-aged 45 zile · sos bordelaise cu măduvă de vită · gratin Dauphinois cu Comté · trufe rase'},
+                {n:'IX', label:'Desert', name:'Valrhona și vanilie Tahiti', desc:'Soufflé cald de ciocolată Valrhona Guanaja 70% · înghețată de vanilie Tahiti · caramel de fleur de sel · gold leaf'},
               ].map((c, i) => (
                 <div key={i} className="menu-course">
                   <div className="mc-num">{c.n}</div>
