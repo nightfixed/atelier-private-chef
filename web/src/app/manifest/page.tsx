@@ -85,20 +85,21 @@ export default function ManifestPage() {
         }}>ATELIER</a>
         <ul style={{ display: 'flex', gap: 28, listStyle: 'none' }}>
           {[
+            { label: 'Acasă', href: '/' },
             { label: 'Povestea', href: '/#story' },
             { label: 'Servicii', href: '/#services' },
             { label: 'Manifest', href: '/manifest' },
             { label: 'Meniu', href: '/#meniu' },
-            { label: 'Așezat', href: '/#asezat' },
             { label: 'FAQ', href: '/#faq' },
-            { label: 'Rezervare', href: '/#rezervare' },
+            { label: 'Codex', href: '/codex-guest-system.html' },
           ].map(({ label, href }) => (
             <li key={href}>
               <a href={href} style={{
                 fontSize: 9, letterSpacing: 3,
-                color: label === 'Manifest' ? 'var(--gold)' : '#555',
+                color: label === 'Manifest' ? 'var(--gold)' : label === 'Codex' ? 'var(--gold)' : '#555',
                 textDecoration: 'none', textTransform: 'uppercase',
                 transition: '.3s',
+                ...(label === 'Codex' ? { border: '1px solid rgba(201,169,110,0.3)', padding: '6px 14px' } : {}),
               }}>{label}</a>
             </li>
           ))}

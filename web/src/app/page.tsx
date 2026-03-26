@@ -217,16 +217,32 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
   async function submitRez() {
     if (!rezEmail || !rezNume) return;
     setRezLoading(true);
+    let sent = false;
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-      const body: Record<string,unknown> = { name: rezNume, email: rezEmail };
-      if (rezOcazie) body.occasion = rezOcazie;
-      if (rezPersoane) body.guests_count = Number(rezPersoane);
-      if (rezData) body.event_date = rezData;
-      if (rezMsg) body.message = rezMsg;
-      const res = await fetch(apiUrl + '/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-      if (res.ok || res.status === 201) setRezSuccess(true);
-    } catch (_) { setRezSuccess(true); }
+      if (apiUrl) {
+        const body: Record<string,unknown> = { name: rezNume, email: rezEmail };
+        if (rezOcazie) body.occasion = rezOcazie;
+        if (rezPersoane) body.guests_count = Number(rezPersoane);
+        if (rezData) body.event_date = rezData;
+        if (rezMsg) body.message = rezMsg;
+        const res = await fetch(apiUrl + '/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+        if (res.ok || res.status === 201) sent = true;
+      }
+    } catch (_) {}
+    if (!sent) {
+      const subject = encodeURIComponent(`Rezervare Atelier — ${rezOcazie || 'Cină privată'} · ${rezNume}`);
+      const lines = [
+        `Nume: ${rezNume}`,
+        `Email: ${rezEmail}`,
+        rezOcazie ? `Ocazie: ${rezOcazie}` : '',
+        rezPersoane ? `Persoane: ${rezPersoane}` : '',
+        rezData ? `Data preferată: ${rezData}` : '',
+        rezMsg ? `Mesaj: ${rezMsg}` : '',
+      ].filter(Boolean).join('\n');
+      window.location.href = `mailto:exquisitefoodtravel@yahoo.com?subject=${subject}&body=${encodeURIComponent(lines)}`;
+    }
+    setRezSuccess(true);
     setRezLoading(false);
   }
 
@@ -914,10 +930,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
         <div className="footer-email">exquisitefoodtravel@yahoo.com</div>
         <div className="footer-city">Cluj-Napoca · România</div>
         <div style={{width:'30px',height:'1px',background:'#1a1a1a',margin:'32px auto'}}></div>
-        <div className="footer-copy">© 2025 Atelier Private Dining · Craft · Discretion · Excellence</div>
-        <div style={{marginTop:'16px'}}>
-          <button onClick={() => setShow404(true)} style={{background:'none',border:'none',color:'#1a1a1a',fontSize:'8px',letterSpacing:'2px',cursor:'pointer',textTransform:'uppercase'}}>Demo 404</button>
-        </div>
+        <div className="footer-copy">© 2026 Atelier Private Dining · Craft · Discretion · Excellence</div>
       </footer>
 
       {/* 404 OVERLAY */}
