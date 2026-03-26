@@ -322,6 +322,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
       <nav>
         <div className="nav-logo">ATELIER</div>
         <ul className="nav-links">
+          <li><a href="/">Acasă</a></li>
           <li><a href="#story">Povestea</a></li>
           <li><a href="#services">Servicii</a></li>
           {/* <li><a href="#herbarium" className="nav-herb-link">Herbarium</a></li> */}
