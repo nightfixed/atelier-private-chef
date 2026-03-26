@@ -334,17 +334,6 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
         </ul>
       </nav>
 
-      {/* AVAILABILITY STRIP */}
-      <div className="avail-strip">
-        <div className="avail-inner">
-          <div className="avail-dot"></div>
-          <span className="avail-text">Disponibilitate <strong>{availText}</strong></span>
-          <span className="avail-sep">·</span>
-          <span className="avail-slots">{availSlots}</span>
-          <a href="#rezervare" className="avail-cta">Rezervă</a>
-        </div>
-      </div>
-
       {/* HERO */}
       <section className="hero">
         <div className="hero-bg"></div>
