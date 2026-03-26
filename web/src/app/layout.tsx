@@ -27,12 +27,21 @@ export const metadata: Metadata = {
     title: "Atelier Private Dining · Cluj-Napoca",
     description:
       "Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate, ingrediente carpatice, 18+ ani fine dining. Cluj-Napoca, România.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Atelier Private Dining · Cluj-Napoca",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Atelier Private Dining · Cluj-Napoca",
     description:
       "Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate · Cluj-Napoca.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
