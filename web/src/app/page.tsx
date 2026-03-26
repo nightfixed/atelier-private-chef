@@ -391,6 +391,25 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
   // ── RENDER ──
   return (
     <>
+      {/* JSON-LD LOCAL BUSINESS */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'FoodEstablishment',
+          name: 'Atelier Private Dining',
+          description: 'Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate, 18+ ani fine dining. Cluj-Napoca, România.',
+          url: 'https://atelierprivatedining.ro',
+          email: 'exquisitefoodtravel@yahoo.com',
+          address: { '@type': 'PostalAddress', addressLocality: 'Cluj-Napoca', addressRegion: 'Cluj', addressCountry: 'RO' },
+          geo: { '@type': 'GeoCoordinates', latitude: 46.7712, longitude: 23.6236 },
+          servesCuisine: ['Fine Dining', 'Romanian Cuisine', 'European Cuisine'],
+          priceRange: '€€€€',
+          openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], description: 'Evenimente private la programare' },
+          founder: [{ '@type': 'Person', name: 'Răzvan', jobTitle: 'Chef & Fondator' }, { '@type': 'Person', name: 'Roland', jobTitle: 'Chef & Partner' }],
+        }) }}
+      />
+
       {/* NAV */}
       <nav>
         <div className="nav-logo">ATELIER</div>
@@ -987,7 +1006,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
         <div className="footer-email">exquisitefoodtravel@yahoo.com</div>
         <div className="footer-city">Cluj-Napoca · România</div>
         <div style={{width:'30px',height:'1px',background:'#1a1a1a',margin:'32px auto'}}></div>
-        <div className="footer-copy">© 2026 Atelier Private Dining · Craft · Discretion · Excellence</div>
+        <div className="footer-copy">© {new Date().getFullYear()} Atelier Private Dining · Craft · Discretion · Excellence</div>
       </footer>
 
       {/* 404 OVERLAY */}

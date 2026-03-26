@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,6 +40,11 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   authors: [{ name: "Răzvan", url: "https://atelierprivatedining.ro" }],
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
