@@ -1213,7 +1213,6 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
                 <div className="grlts">Chef Răzvan</div>
               </div>
               <div className="gract">
-                <button className="grab primary" onClick={genContact}>Rezervă această seară →</button>
                 <button className="grab" onClick={genRestart}>Compune altă seară</button>
               </div>
               <div className="grdc">Acest meniu a fost generat ca propunere personalizată. Meniul final va fi rafinat împreună cu Chef Răzvan în cadrul consultației de rezervare.</div>

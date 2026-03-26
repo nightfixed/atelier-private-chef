@@ -537,6 +537,22 @@
 
   .error-msg { color: #c96e6e; font-style: italic; font-size: 0.9rem; text-align: center; margin-top: 1rem; }
 
+  /* SUMMARY */
+  .summary-page { padding: 1rem 0; }
+  .sum-header { text-align: center; margin-bottom: 2rem; }
+  .sum-section-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1.8rem;
+    text-align: center;
+  }
+  .sum-story-wrap { margin-bottom: 1rem; }
+
   /* FOOTER */
   footer {
     text-align: center;
@@ -672,9 +688,38 @@
       </div>
       <div style="text-align:center; margin-top:1rem;">
         <div class="btn-row">
-          <a class="btn" href="https://atelierprivatedining.ro/#rezervare" target="_blank">Rezervă o Seară</a>
+          <button class="btn" onclick="showSummary()">Finalizează Povestea</button>
           <button class="btn" onclick="restart()">Seară Nouă</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8: SUMMARY FINAL -->
+  <div class="screen" id="s-summary">
+    <div class="summary-page">
+      <div class="sum-header">
+        <div class="sigil">Codex Atelier — Seara Dumneavoastră</div>
+        <div class="guest-name" id="sum-name"></div>
+        <div class="eve-date" id="sum-date"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sum-section-label">Meniul Serii</div>
+      <div class="menu-courses" id="sum-courses"></div>
+      <div class="menu-divider"></div>
+      <div class="sum-section-label">Povestea Serii</div>
+      <div class="sum-story-wrap">
+        <div class="art-title" id="sum-story-title"></div>
+        <div class="art-sub" id="sum-story-sub" style="margin-bottom:1.5rem;"></div>
+        <div class="art-text" id="sum-story-text"></div>
+      </div>
+      <div class="art-seal">
+        <div class="divider"></div>
+        <div class="seal-name" id="sum-seal-name"></div>
+        <div class="seal-date" id="sum-seal-date"></div>
+      </div>
+      <div style="text-align:center; margin-top:2rem;">
+        <button class="btn" onclick="restart()">Seară Nouă</button>
       </div>
     </div>
   </div>
@@ -1128,6 +1173,19 @@ TEXT: [textul]`;
   } catch(e) {
     setArtifact('Capitol Personal', null, 'Artefactul nu a putut fi generat.\nVă rugăm să reîncercați sau contactați echipa Atelier.');
   }
+}
+
+function showSummary() {
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+  document.getElementById('sum-name').textContent = guestName;
+  document.getElementById('sum-date').textContent = `${dateLabel} · ${personsLabel()}`;
+  document.getElementById('sum-courses').innerHTML = document.getElementById('menu-courses').innerHTML;
+  document.getElementById('sum-story-title').textContent = document.getElementById('art-title').textContent;
+  document.getElementById('sum-story-sub').textContent = document.getElementById('art-sub').textContent;
+  document.getElementById('sum-story-text').textContent = document.getElementById('art-text').textContent;
+  document.getElementById('sum-seal-name').textContent = guestName;
+  document.getElementById('sum-seal-date').textContent = `Atelier Private Dining — ${dateLabel} · ${personsLabel()}`;
+  show('s-summary');
 }
 
 function restart() {
