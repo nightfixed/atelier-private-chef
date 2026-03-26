@@ -181,7 +181,7 @@ export default function HomePage() {
 
     const key = process.env.NEXT_PUBLIC_ANTHROPIC_KEY ?? '';
     const systemPrompt = `Ești asistentul virtual al Atelier Private Dining, un serviciu exclusiv de private chef din Cluj-Napoca, România.
-Chef Răzvan și Roland gătesc în casele oaspeților sau în spații private — meniuri de degustare personalizate cu ingrediente carpatice rare din Herbarium-ul Atelierului.
+Chef Răzvan și Roland gătesc în casele oaspeților sau în spații private — meniuri de degustare personalizate cu ingrediente carpatice rare, selectate personal.
 Răspunzi în română, elegant și cald, în maximum 3 propoziții concise.
 Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele să completeze formularul de rezervare sau să scrie la exquisitefoodtravel@yahoo.com.`;
 
@@ -258,7 +258,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
     const dateStr = genDate ? new Date(genDate+'T12:00:00').toLocaleDateString('ro-RO',{weekday:'long',day:'numeric',month:'long'}) : '';
     const parts = [
       `${genName ? `Seara lui ${genName}` : 'Seara ta'}${dateStr ? ` din ${dateStr}` : ''} — ${occ} pentru ${genPersons} ${genPersons===1?'persoană':'persoane'}.`,
-      `Inima meniului va fi ${prot}, colorat de ${taste} din Herbarium-ul Atelier.`,
+      `Inima meniului va fi ${prot}, colorat de ${taste}.`,
       ...(genLove ? [`${genLove.charAt(0).toUpperCase()+genLove.slice(1)} — firul roșu care va lega preparatele.`] : []),
       ...(genWish ? [`Dorința specială: ${genWish}.`] : []),
     ];
@@ -388,7 +388,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
               <div className="story-icon">👨‍🍳</div>
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator</div>
-              <p className="story-text">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. <strong>Herbarium</strong> — colecția sa de ingrediente carpatice — este inima fiecărui meniu Atelier.</p>
+              <p className="story-text">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
               <div className="story-stats">
                 <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani fine dining</div></div>
                 <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri create</div></div>
@@ -682,7 +682,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
             <span className="compose-feat">Gratuit</span>
             <span className="compose-feat">60 secunde</span>
             <span className="compose-feat">Meniu unic generat pentru tine</span>
-            <span className="compose-feat">Ingrediente Herbarium</span>
+            <span className="compose-feat">Ingrediente carpatice</span>
           </div>
         </div>
       </div>
@@ -730,9 +730,9 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
             <div className="sec-label">O altă obsesie</div>
             <div className="sec-title" style={{marginBottom:'16px'}}>Gelato & Sorbeturi <em>Artizanale</em></div>
             <div className="gold-line" style={{margin:'0 auto 28px'}}></div>
-            <p style={{maxWidth:'580px',margin:'0 auto',fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',fontSize:'17px',color:'#666',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero. Fiecare aromă e construită în jurul unui ingredient din Herbarium — sezonier, local, imposibil de replicat industrial.</p>
+            <p style={{maxWidth:'580px',margin:'0 auto',fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',fontSize:'17px',color:'#666',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero. Fiecare aromă e construită în jurul unui ingredient carpatic — sezonier, local, imposibil de replicat industrial.</p>
           </div>
-          <div className="gelato-sub-label reveal">Gelato · Cu lapte de bivoliță transilvăneană · Herbarium #08</div>
+          <div className="gelato-sub-label reveal">Gelato · Cu lapte de bivoliță transilvăneană · Câmpia Transilvaniei</div>
           <div className="gelato-grid reveal">
             {[
               {e:'🌿',n:'Piatră de munte',en:'Mountain Stone · Carpathian Lichen',d:'Un gelato gri care miroase a stâncă umedă după ploaie. Nu există altundeva pe un meniu fin din România.',notes:['Mineral','Ușor amar','Crem-gri'],season:'Tot anul',rare:false},
@@ -759,7 +759,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <div className="gelato-sub-label reveal" style={{marginTop:'48px'}}>Sorbeturi · Fără lactate · Acid în prim-plan · Ingrediente culese local</div>
           <div className="sorbet-grid reveal">
             {[
-              {cls:'violet',n:'Violet de Feleac',en:'Feleac Violet · Wild Bilberry',d:'Violet-negru intens. Recoltat la zece minute de restaurant. Acid lactic viu în fiecare linguriță.',season:'Iulie–August · Herbarium #04'},
+              {cls:'violet',n:'Violet de Feleac',en:'Feleac Violet · Wild Bilberry',d:'Violet-negru intens. Recoltat la zece minute de restaurant. Acid lactic viu în fiecare linguriță.',season:'Iulie–August · Dealul Feleac'},
               {cls:'orange',n:'Portocaliu eclectic',en:'Eclectic Orange · Wild Sea Buckthorn',d:'O culoare imposibilă pe farfurie. Aciditate extremă. Servit imediat, fără garnitură — culoarea care oprește conversația.',season:'Septembrie · Carpathian hills'},
               {cls:'red',n:'Roșu de deal',en:'Hill Red · Lacto-fermented Cherry Plum',d:'Acid-sărat-taninos. Aproape umeboshi — dar din dealul de lângă Cluj. O complexitate pe care fructele cultivate nu o ating.',season:'Iulie–Septembrie'},
               {cls:'white',n:'Alb mineral',en:'Mineral White · Fermented Bran & Fir Honey',d:'Acid lactic pur, mineral, rotunjit de mierea amară a bradului. Resetează palatul altfel decât orice sorbet de citrice.',season:'Tot anul · Palate cleanser'},
@@ -1205,7 +1205,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
               <div className="grm">
                 <div className="grmt">
                   <span className="grmi">{genResult ? `${genResult.courses.length} preparate` : '9 preparate'}</span>
-                  <span className="grmi">Ingrediente Herbarium</span>
+                  <span className="grmi">Ingrediente carpatice</span>
                   {genResult?.tags?.slice(0,1).map(t => <span key={t} className="grmi">{t}</span>)}
                 </div>
                 <div className="grcrs">
@@ -1220,7 +1220,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
               </div>
               <div className="grlt show">
                 <div className="grltl">Notă de Chef</div>
-                <div className="grltt">{genResult?.chef_note ?? `Am creat acest meniu gândindu-mă la ${guestName} și la seara de ${occasionLabel?.toLowerCase()}. Fiecare preparat poartă în el un ingredient din Herbarium — colecția noastră de ingrediente carpatice. Sper că această seară va deveni un moment pe care îl veți ține minte.`}</div>
+                <div className="grltt">{genResult?.chef_note ?? `Am creat acest meniu gândindu-mă la ${guestName} și la seara de ${occasionLabel?.toLowerCase()}. Fiecare preparat poartă în el un ingredient carpatic, selectat personal. Sper că această seară va deveni un moment pe care îl veți ține minte.`}</div>
                 <div className="grlts">Chef Răzvan</div>
               </div>
               <div className="gract">

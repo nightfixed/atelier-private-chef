@@ -290,7 +290,7 @@ export default function ManifestPage() {
             fontSize: 9, letterSpacing: 3, color: '#333',
             textTransform: 'uppercase', marginBottom: 24,
           }}>
-            Private Dining · Manifest · Așezat · Gelato Artizanal
+            Private Dining · Manifest · Gelato Artizanal
           </div>
           <ul style={{ display: 'flex', justifyContent: 'center', gap: 32, listStyle: 'none' }}>
             {[
