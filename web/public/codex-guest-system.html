@@ -614,37 +614,6 @@
     </div>
   </div>
 
-  <!-- S3: GENERATING -->
-  <div class="screen" id="s-generating">
-    <div class="generating">
-      <div class="pulse-ring"></div>
-      <div class="divider"></div>
-      <h2>Compunem seara dumneavoastră<span class="dots"></span></h2>
-      <p>Sistemul citește profilul dumneavoastră senzorial<br>și construiește experiența acestei seri.</p>
-    </div>
-  </div>
-
-  <!-- S4: COMPOSITION -->
-  <div class="screen" id="s-composition">
-    <div class="composition">
-      <div class="comp-header">
-        <div class="eve-label">Seara dumneavoastră la Atelier</div>
-        <div class="guest-name" id="comp-name"></div>
-        <div class="eve-date" id="comp-date"></div>
-      </div>
-      <div class="comp-body">
-        <div class="comp-text" id="comp-text"></div>
-      </div>
-      <div class="comp-footer">
-        <div class="artifact-label">Compoziția serii dumneavoastră este pregătită</div>
-        <div class="btn-row">
-          <button class="btn" onclick="generateMenu()">Generează Meniul</button>
-          <button class="btn" onclick="restart()">Seară Nouă</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- S5: GENERATING MENU -->
   <div class="screen" id="s-gen-menu">
     <div class="generating">
@@ -810,45 +779,68 @@ let answers = {};
 let currentQ = 0;
 let currentSelection = null;
 
-const DEMO_COMPOSITIONS = [
-  `Există seri care se anunță înainte să înceapă — în felul în care aerul se schimbă, în liniștea dintre cuvinte. Seara aceasta poartă în ea ceva dintr-o amintire veche, din bucătăria unui loc familiar, și ceva cu totul nou, neîncercat.\n\nLa Atelier, fiecare curs este construit ca o propoziție într-un text mai lung — cu sens și cu pauze, cu accente și cu răsuflări. Nu venim să vă oferim un meniu. Venim să compunem împreună o seară care să rămână.\n\nÎncepeți cu răbdare. Lăsați gusturile să vorbească înainte de a le traduce. Există o frumusețe în a nu ști exact ce urmează — în a fi prezent doar în momentul acesta, la masa aceasta, cu oamenii din jurul vostru.\n\nSeara pe care o compunem pentru dumneavoastră este scrisă din detaliile pe care ni le-ați încredințat. Fiecare ingredient ales, fiecare tehnică aplicată poartă în ea ecoul profilului dumneavoastră senzorial. Este seara dumneavoastră. Noi suntem doar scribii ei.`,
-  `Sunt oameni care mănâncă pentru a se sătura și oameni care se așează la masă pentru a simți ceva. Dumneavoastră, prin răspunsurile pe care le-ați ales, aparțineți celei de-a doua categorii — și acesta este cel mai frumos lucru pe care ni l-ați putut spune.\n\nSeara pe care o pregătim nu este alcătuită din feluri de mâncare. Este alcătuită din momente. Un moment de surpriză, unul de confort adânc, unul de întrebare fără răspuns imediat. Împreună, acestea formează un arc — o călătorie care începe când vă ocupați locul și se termină mult mai târziu, în amintire.\n\nIngredientele noastre vin din pământul Ardealului — fermentate, afumate, transformate cu grijă. Tehnicile vin de mai departe, dar sufletul rămâne local. Aceasta este filozofia pe care o recunoașteți, poate, în propriile cuvinte.\n\nBine ați venit la Atelier. Seara aceasta este a dumneavoastră.`,
-  `Există o anumită calitate a atenției care se activează la o masă bună — o prezență totală, rară în viața de zi cu zi. Este starea pe care căutăm să o invităm în fiecare seară la Atelier.\n\nPe baza profilului dumneavoastră, am înțeles că nu căutați să fiți impresionați superficial. Căutați să fiți atinși. Și acesta este un limbaj pe care îl cunoaștem.\n\nCursurile care urmează vor evolua de la delicat la profund, de la familiar la neașteptat. Veți recunoaște ceva în fiecare — o textură, un miros, o stare. Și veți găsi și lucruri pe care nu le-ați mai întâlnit.\n\nNu grăbiți nimic. Lăsați conversația să respire. Lăsați tăcerea să fie binevenită. La masa aceasta, tot ce simțiți este corect.\n\nAtelier Private Dining vă urează o seară de neuitat.`
-];
-
-const DEMO_MENUS = [
-  [
-    { name: 'Amuse-bouche', desc: 'Tartă de brânză de burduf afumată, gel de cireșe fermentate, pudră de cenușă de paie' },
+const DEMO_MENUS = {
+  romantic: [
+    { name: 'Amuse-bouche', desc: 'Tartă de brânză de burduf afumată, gel de cireșe fermentate, petale de trandafir comestibil' },
     { name: 'Starter I', desc: 'Carpaccio de sfeclă coaptă în argilă, cremă de hrean, ulei de măcriș, crocant de secară' },
-    { name: 'Starter II', desc: 'Supă limpede de rădăcinoase de iarnă, găluște de măduvă, trufe de Ardeal' },
-    { name: 'Intermediar', desc: 'Sorbet de măr verde și pin, spumă de cimbru, cristale de sare de la Turda' },
-    { name: 'Fel principal', desc: 'Piept de rață din Sălaj, confiat 48h, jus de ciuperci sălbatice, piure de gulie arsă, ierburi murate' },
-    { name: 'Pre-desert', desc: 'Brie de Ardeal copt, miere de tei, nuci caramelizate cu lavandă, pâine de secară prăjită' },
-    { name: 'Desert', desc: 'Ciocolată neagră 72% și cafea de la Napoca, caramel sărat, cremă de lapte coagulat, flori de soc' }
+    { name: 'Starter II', desc: 'Supă limpede de rădăcinoase, găluște de măduvă, trufe de Ardeal, frunze de măcriș' },
+    { name: 'Intermediar', desc: 'Sorbet de trandafir și litchi, spumă de apă de roze, petale cristalizate' },
+    { name: 'Fel principal', desc: 'Piept de rață confiat 48h, jus de portocală sanguină, piure de gulie arsă, ierburi murate' },
+    { name: 'Pre-desert', desc: 'Brie de Ardeal copt, miere de lavandă, nuci caramelizate, flori de cimbru' },
+    { name: 'Desert', desc: 'Mousse de ciocolată neagră și zmeur, geleu de roze, foiță de aur, caramel de vin roșu' }
   ],
-  [
-    { name: 'Amuse-bouche', desc: 'Cornet de aluat negru, mousse de ficat de pasăre, compot de prune cu vin fiert' },
-    { name: 'Starter I', desc: 'Salată de varză roșie fermentată 21 de zile, tipar de cârnați afumați, dressing de semințe de muștar' },
-    { name: 'Starter II', desc: 'Bisque de raci de râu, ulei de tarhon, spumă de unt ars, икра de crap din Cojocna' },
-    { name: 'Intermediar', desc: 'Granit de zer și mentă sălbatică de câmp' },
-    { name: 'Fel principal', desc: 'Miel de la stâna din Apuseni, copt în sare și ierburi, sos de usturoi negru, legume rădăcinoase glasate' },
-    { name: 'Desert', desc: 'Tort cu mac și lămâie fermentată, cremă de rozmarin, fructe de pădure din Munții Apuseni' }
+  celebrare: [
+    { name: 'Amuse-bouche', desc: 'Cornet de aluat auriu, mousse de foie gras, compot de smochine cu vin fiert și stea de anason' },
+    { name: 'Starter I', desc: 'Blini de hrișcă cu somon selvatic marinat 24h, cremă de hrean cu dill, icre de crap din Cojocna' },
+    { name: 'Starter II', desc: 'Velouté de castane cu trufe negre, spumă de unt ars, crocant de prosciutto de Bihor' },
+    { name: 'Intermediar', desc: 'Sorbet de șampanie cu mentă sălbatică, zest de lămâie confiată' },
+    { name: 'Fel principal', desc: 'Mușchi de vițel din Câmpia Ardealului, en croûte de ierburi, jus de vișine și vin negru, legume glasate cu miere' },
+    { name: 'Brânzeturi', desc: 'Selecție de brânzeturi ardelene afumate și maturate, dulceață de gutui, nuci și pâine de secară cu semințe' },
+    { name: 'Desert', desc: 'Tartă cu vanilie Bourbon și praline de alune de pădure, cremă de caramel sărat, aur comestibil' }
+  ],
+  intim: [
+    { name: 'Amuse-bouche', desc: 'Supă de ceapă caramelizată cu crutoane de pâine de casă, gratinată cu brânză de burduf' },
+    { name: 'Starter I', desc: 'Salată caldă de fasole bătută, ceapă roșie murată, ou poșat, ulei de ardei copt și papricaș afumat' },
+    { name: 'Starter II', desc: 'Bisque de ciuperci de pădure, spumă de unt cu usturoi, pesmet de secară prăjit, tarhon proaspăt' },
+    { name: 'Intermediar', desc: 'Sorbet de măr verde și cimbru, cristale de sare de la Turda' },
+    { name: 'Fel principal', desc: 'Miel de la stâna din Apuseni, copt lent în sare și ierburi, sos de usturoi negru, legume rădăcinoase glasate' },
+    { name: 'Desert', desc: 'Tort cu mac și lămâie fermentată, cremă de rozmarin, fructe de pădure din Munții Apuseni, miere brută' }
+  ],
+  business: [
+    { name: 'Amuse-bouche', desc: 'Tartă crispy de parmezan, mousse de avocado, caviar de somon, crocant de capere' },
+    { name: 'Starter I', desc: 'Carpaccio de vițel cu trufă neagră rasă, rucola sălbatică, ulei de lămâie Meyer, parmigiano 36 luni' },
+    { name: 'Starter II', desc: 'Bisque de homar cu cognac, spumă de unt de tarhon, crocant de brioche și ikre de sturion' },
+    { name: 'Intermediar', desc: 'Sorbet de yuzu cu mentă de câmp, granit de prosecco' },
+    { name: 'Fel principal', desc: 'Piept de vițel de lapte din Sălaj, sous-vide 72h, jus de ciuperci sălbatice, piure de trufe și cartofi albi, asparagi' },
+    { name: 'Brânzeturi', desc: 'Brânzeturi fine de Ardeal și internaționale, selecție de miere, nuci și fructe deshidratate' },
+    { name: 'Desert', desc: 'Soufflé de ciocolată Valrhona 70%, înghețată de vanilie Bourbon, tofee de caramel sărat' }
+  ],
+  surpriza: [
+    { name: 'Amuse-bouche', desc: 'Sferă de apă de rozmarin care explodează în gură, pe pat de cenușă comestibilă de paie' },
+    { name: 'Starter I', desc: 'Varză roșie fermentată 21 de zile, prezentată ca desert — zahăr brun, ghimbir, cremă de zer' },
+    { name: 'Starter II', desc: 'Ouă de prepeliță cu negru de sepie, praf de sfeclă, spumă de sare afumată — fals caviar ardelean' },
+    { name: 'Intermediar', desc: 'Granit transparent cu miere și pin — un zer de culoarea gheții de munte' },
+    { name: 'Fel principal', desc: 'Rată din Sălaj servită cu garnitură care pare desert: rădăcinoase glazate cu scorțișoară, faux caramel din ceapă' },
+    { name: 'Pre-desert', desc: 'Brânză de burduf ca pre-desert: spumă sărată cu dulceață de vișine și biscuit de secară cu cacao' },
+    { name: 'Desert', desc: 'Desert care arată a farfurie savuroasă — ciocolată modelată, praf de papricaș dulce, caramel de oțet balsamic' }
   ]
-];
+};
 
-const DEMO_ARTIFACTS = [
-  { title: 'Seara Contrastelor Liniștite', text: `Au venit la ora când lumina de afară mai ezita încă să se retragă complet. S-au așezat fără grabă, cu acea familiaritate discretă a oamenilor care știu să fie împreună fără să umple fiecare secundă cu cuvinte.\n\nPrimul curs a sosit ca o întrebare — acid și dulce în aceeași lingură, o tensiune rezolvată înainte să devină incomodă. Cineva a zâmbit fără să spună nimic. Era de ajuns.\n\nPe la al treilea fel, conversația s-a adâncit — nu în subiecte mari, ci în calitate. Vorbele au devenit mai rare și mai precise. Mâncarea a trecut pe planul al doilea, nu pentru că ar fi fost mai puțin prezentă, ci pentru că cei doi deveniseră mai prezenți unul față de celălalt.\n\nDulcele final a venit ca o concluzie la care nu te aștepți: simplu, aproape sever, dar cu o reverberație lungă. Genul de gust la care te gândești a doua zi, fără să știi de ce.\n\nAu plecat târziu. Nimeni nu s-a uitat la ceas.` },
-  { title: 'Capitolul Memoriei Recuperate', text: `Există o teorie că gustul este singurul simț care poate traversa timpul fără avertisment. Că o aromă poate deschide o ușă pe care credeai că ai închis-o demult.\n\nAceastă seară a fost construită în jurul acestei teorii. Nu ca o demonstrație, ci ca o invitație.\n\nPrimul moment a adus ceva familiar — un ecou al unui miros de copilărie, reinterpretat cu o tehnică pe care copilăria nu o cunoștea. Recunoașterea a venit brusc, ca un nume uitat brusc amintit.\n\nUrmătoarele cursuri au mers mai adânc. Fermentarea, fumul, acidul — toate vorbeau despre timp și transformare. Despre cum lucrurile devin mai bune sau mai interesante sau mai înțelepte prin simplul fapt că trece timp peste ele.\n\nSigillum serii: un gust de sfârșit care semăna, în mod inexplicabil, cu un început.` }
-];
+const DEMO_ARTIFACTS = {
+  romantic: { title: 'Seara Contrastelor Liniștite', text: `Au venit la ora când lumina de afară mai ezita încă să se retragă complet. S-au așezat fără grabă, cu acea familiaritate discretă a oamenilor care știu să fie împreună fără să umple fiecare secundă cu cuvinte.\n\nPrimul curs a sosit ca o întrebare — acid și dulce în aceeași lingură, o tensiune rezolvată înainte să devină incomodă. Cineva a zâmbit fără să spună nimic. Era de ajuns.\n\nPe la al treilea fel, conversația s-a adâncit — nu în subiecte mari, ci în calitate. Vorbele au devenit mai rare și mai precise. Mâncarea a trecut pe planul al doilea, nu pentru că ar fi fost mai puțin prezentă, ci pentru că cei doi deveniseră mai prezenți unul față de celălalt.\n\nDulcele final a venit ca o concluzie la care nu te aștepți: simplu, aproape sever, dar cu o reverberație lungă. Genul de gust la care te gândești a doua zi, fără să știi de ce.\n\nAu plecat târziu. Nimeni nu s-a uitat la ceas.` },
+  celebrare: { title: 'Capitolul Luminii Meritate', text: `Există seri care se cer marcate — nu pentru că ar fi diferite de altele, ci pentru că ai nevoie să le spui pe nume. Să le privești în față și să spui: aceasta este a mea.\n\nSeara aceasta a fost construită în jurul acestei certitudini. Fiecare curs a venit ca o confirmare — nu ca o surpriză, ci ca o recunoaștere. Conversația a devenit mai caldă, mai deschisă, mai ușoară de purtat odată cu brânzeturile.\n\nLa final, tarta cu caramel sărat a adus acea lacrimă mică pe care nu o vezi venind. Genul de dulce care nu e despre zahăr. Este despre timp și despre oamenii cu care îl trăiești.\n\nO seară de marcat. Marcată.` },
+  intim: { title: 'Capitolul Memoriei Recuperate', text: `Există o teorie că gustul este singurul simț care poate traversa timpul fără avertisment. Că o aromă poate deschide o ușă pe care credeai că ai închis-o demult.\n\nAceastă seară a fost construită în jurul acestei teorii. Nu ca o demonstrație, ci ca o invitație.\n\nPrimul moment a adus ceva familiar — un ecou al unui miros de copilărie, reinterpretat cu o tehnică pe care copilăria nu o cunoștea. Recunoașterea a venit brusc, ca un nume uitat brusc amintit.\n\nUrmătoarele cursuri au mers mai adânc. Fermentarea, fumul, acidul — toate vorbeau despre timp și transformare. Despre cum lucrurile devin mai bune sau mai înțelepte prin simplul fapt că trece timp peste ele.\n\nSigillum serii: un gust de sfârșit care semăna, în mod inexplicabil, cu un început.` },
+  business: { title: 'Seara Atenției Depline', text: `Unele mese se mănâncă. Altele se negociază în timp ce mâncarea se răcește în farfurie. Seara aceasta nu a fost nici una, nici alta.\n\nA fost o masă în care atenția s-a împărțit echitabil — jumătate la oameni, jumătate la ceea ce era în farfurie. Un echilibru rar, obținut fără efort aparent.\n\nCarpaccio cu trufă a impus tăcere. Nu o tăcere incomodă, ci aceea în care toți din jurul mesei înțeleg că ceva merită oprit și savurat. Conversația a reînceput mai bine după.\n\nSoufflé-ul de final a sosit exact la momentul potrivit — când agenda se epuizase și rămăsese doar compania. A fost primit ca un cadou neașteptat: cald, fragil, irepetabil.\n\nAfacerile pot aștepta. Gustul unui soufflé perfect, nu.` },
+  surpriza: { title: 'Noaptea Când Nimic Nu Era Ce Părea', text: `A intrat fără să știe unde merge. Aceasta este, poate, cea mai curajoasă formă de a fi prezent la o masă.\n\nPrimul curs l-a dezechilibrat — în sens bun. Acea sferă care explodează, gustul care nu se potrivea cu ce vedea ochiul: o mică declarație de intenție. Seara aceasta nu va fi previzibilă.\n\nPe parcurs, dezorientarea s-a transformat în curiozitate, curiozitatea în joc. A început să ghicească ce urmează — și a greșit de fiecare dată, cu plăcere crescândă.\n\nDesertul care arăta a farfurie savuroasă a primit o privire lungă, înainte de prima lingură. Și primul zâmbet adevărat al serii — nu unul politicos, ci unul surprins de sine însuși.\n\nA plecat cu senzația că a trăit ceva ce nu poate explica exact. Cel mai bun sentiment cu care poți părăsi o masă.` }
+};
 
-function getDemoComposition() {
-  return DEMO_COMPOSITIONS[Math.floor(Math.random() * DEMO_COMPOSITIONS.length)];
-}
 function getDemoMenu() {
-  return DEMO_MENUS[Math.floor(Math.random() * DEMO_MENUS.length)];
+  const occ = answers.occasion || 'romantic';
+  return DEMO_MENUS[occ] || DEMO_MENUS.romantic;
 }
 function getDemoArtifact() {
-  return DEMO_ARTIFACTS[Math.floor(Math.random() * DEMO_ARTIFACTS.length)];
+  const occ = answers.occasion || 'romantic';
+  return DEMO_ARTIFACTS[occ] || DEMO_ARTIFACTS.romantic;
 }
 
 function changePersons(delta) {
@@ -965,63 +957,9 @@ function nextQuestion() {
   answers[q.id] = q.type === 'free' ? document.getElementById('free-ans').value.trim() : currentSelection;
   currentQ++;
   if (currentQ >= QUESTIONS.length) {
-    buildComposition();
+    generateMenu();
   } else {
     renderQuestion();
-  }
-}
-
-async function buildComposition() {
-  show('s-generating');
-  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
-
-  const setComposition = (text) => {
-    document.getElementById('comp-name').textContent = guestName;
-    document.getElementById('comp-date').textContent = `${dateLabel} · ${personsLabel()}`;
-    document.getElementById('comp-text').textContent = text;
-    show('s-composition');
-  };
-
-  if (DEMO_MODE) {
-    await new Promise(r => setTimeout(r, 1800));
-    setComposition(getDemoComposition());
-    return;
-  }
-
-  const profile = buildProfile();
-  const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
-  const occasionDesc = occasionObj ? `${occasionObj.name} — ${occasionObj.desc}` : '';
-
-  const prompt = `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare, și experiențe senzoriale imersive.
-
-Pe baza profilului senzorial al oaspetelui de mai jos, compune o descriere personalizată a serii lor — un text de 180-220 cuvinte, în română, scris ca o scrisoare intimă dar elegantă. Tonul: cald, profund, poetic dar nu kitsch. Nu enumera cursuri. Nu promite nimic specific. Evocă o stare, un arc emoțional, o atmosferă. Folosește câteva detalii din profilul oaspetelui, subtil integrate. Ține cont de tipul serii (${occasionDesc}) pentru a calibra tonul.
-
-${profile}
-
-Răspunde DOAR cu textul compoziției, fără titlu, fără introducere, fără explicații.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    if (!res.ok || !data.content) throw new Error(data.error?.message || 'API error');
-    const text = data.content.map(b => b.text || '').join('').trim();
-    if (!text) throw new Error('Empty response');
-    setComposition(text);
-  } catch(e) {
-    setComposition('Seara dumneavoastră este în pregătire.\nVă rugăm să reîncercați sau contactați echipa Atelier.');
   }
 }
 
@@ -1060,11 +998,18 @@ async function generateMenu() {
 
   const prompt = `Ești bucătarul-șef al Atelier Private Dining, un atelier de fine dining din Cluj-Napoca. Filozofia culinară: ingrediente ardelene de sezon, tehnici internaționale, fermentare, foc și simplitate complexă.
 
-Pe baza profilului senzorial al oaspetelui, compune un meniu de degustare personalizat pentru această seară (5-7 feluri). Ține cont de tipul serii (${occasionDesc}), de preferințele senzoriale și de filosofia lor culinară.
+Compune un meniu de degustare STRICT personalizat (5-7 feluri) bazat pe profilul senzorial de mai jos. Fiecare curs trebuie să reflecte direct alegerile oaspetelui:
+- Tipul serii (${occasionDesc}) determină registrul emoțional al întregului meniu
+- Amintirea culinară din copilărie trebuie să apară subtil în cel puțin un curs
+- Senzația căutată (contrast / profunzime / simplitate / surpriză / confort) trebuie să fie principiul de construcție al meniului
+- Ingredientul de atracție ales trebuie să apară explicit în meniu
+- Starea dorită la final ghidează evoluția cursurilor și desertul
+
+IMPORTANT: Dacă oaspetele a ales "Surpriză", include tehnici neașteptate și prezentări înșelătoare. Dacă a ales "Romantică", include flori comestibile și tehnici delicate. Dacă a ales "Business", meniul trebuie să fie elegant și curat. Dacă a ales "Celebrare", include un moment spectaculos. Dacă a ales "Intimă", bazează-te pe confort și familiaritate.
 
 ${profile}
 
-Răspunde STRICT în formatul următor (un fel per bloc, exact ca în exemplu):
+Răspunde STRICT în formatul următor (un fel per bloc):
 CURS: [Numele felului — ex: Amuse-bouche, Starter I, Fel principal, Desert]
 DESC: [Descriere scurtă, 1 propoziție, ingrediente și tehnici, ton elegant]
 
@@ -1082,6 +1027,7 @@ Repetă blocul CURS/DESC pentru fiecare fel. Fără numerotare, fără text supl
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1200,
+        temperature: 1,
         messages: [{ role: 'user', content: prompt }]
       })
     });
@@ -1159,6 +1105,7 @@ TEXT: [textul]`;
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1000,
+        temperature: 1,
         messages: [{ role: 'user', content: prompt }]
       })
     });
