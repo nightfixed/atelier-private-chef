@@ -278,28 +278,85 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
     if (m >= 8 && m <= 10) return 'Toamnă';
     return 'Iarnă';
   }
-  function genStartAPI() {
+  function makeDemoResult() {
+    const prot = PROTEIN_LABELS[genProtein] || genProtein || 'vită';
+    const occ  = OCCASION_LABELS[genOccasion] || genOccasion || 'Seara';
+    return {
+      title: `Seara ${genName || 'Ta'}`,
+      subtitle: `${occ} · ${seasonFromDate(genDate)}`,
+      courses: [
+        {num:1, category:'Amuse-bouche',    name:'Icre de nisetru și burrata',         ingredient:'nisetru românesc · trufe negre'},
+        {num:2, category:'Pâine',           name:'Pâine la vatră, miso și Parma',      ingredient:'maia · miso alb · Prosciutto di Parma'},
+        {num:3, category:'Supă',            name:'Bisque de creveți și gălbiori',      ingredient:'creveți tigru · gălbiori de Ardeal'},
+        {num:4, category:'Starter',         name:'Somon și avocado',                   ingredient:'somon norvegian · icre somon roz'},
+        {num:5, category:'✦ Signature',     name:'Foie Gras, Cotnari și smochine',     ingredient:'foie gras · Grasă de Cotnari'},
+        {num:6, category:'Pește',           name:'Calcan de Marea Neagră și miso',     ingredient:'calcan sălbatic · miso alb'},
+        {num:7, category:'✦ Principal',     name:`${prot} dry-aged și măduvă`,         ingredient:`${prot} · jus Dealu Mare · măduvă`},
+        {num:8, category:'Desert',          name:'Valrhona, miere de brad și pralin',  ingredient:'Valrhona 70% · miere de brad'},
+      ],
+      chef_note: `Am compus această seară gândindu-mă la ${genName || 'dumneavoastră'} și la ocazia specială. Fiecare preparat poartă în el un ingredient selectat personal — pentru ca această seară să devină un moment de neuitat.`,
+      tags: [occ, seasonFromDate(genDate), 'Fine Dining'],
+    };
+  }
+
+  async function genStartAPI() {
     setGenScreen('generating');
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-    fetch(apiUrl + '/api/generate-menu', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        occasion: OCCASION_LABELS[genOccasion] || genOccasion,
-        guest_count: String(genPersons),
-        season: seasonFromDate(genDate),
-        date: genDate,
-        protein: PROTEIN_LABELS[genProtein] || genProtein,
-        taste_profile: TASTE_LABELS[genTaste] || genTaste,
-        love: genLove,
-        avoid: genAvoid,
-        wish: genWish,
-        host_name: genName,
-      }),
-    })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { if (data) setGenResult(data); setGenScreen('result'); })
-      .catch(() => { setGenScreen('result'); });
+    const key = process.env.NEXT_PUBLIC_ANTHROPIC_KEY ?? '';
+    const hasKey = key && key !== '__ANTHROPIC_API_KEY__';
+
+    if (hasKey) {
+      try {
+        const occ  = OCCASION_LABELS[genOccasion] || genOccasion;
+        const prot = PROTEIN_LABELS[genProtein] || genProtein;
+        const taste = TASTE_LABELS[genTaste] || genTaste;
+        const season = seasonFromDate(genDate);
+        const userMsg = [
+          `Creează un meniu de degustare fine dining personalizat pentru:`,
+          `Ocazie: ${occ}`,
+          `Persoane: ${genPersons}`,
+          `Sezon: ${season}${genDate ? ` (${genDate})` : ''}`,
+          `Proteina principală: ${prot}`,
+          `Profil de gust dominant: ${taste}`,
+          genLove  ? `Ingredient preferat: ${genLove}`  : '',
+          genAvoid ? `De evitat: ${genAvoid}`           : '',
+          genWish  ? `Dorință specială: ${genWish}`     : '',
+          `Oaspete: ${genName}`,
+          ``,
+          `Răspunde EXCLUSIV cu JSON valid, fără text înainte sau după. Format exact:`,
+          `{"title":"titlu poetic scurt","subtitle":"${occ} · ${season}","courses":[{"num":1,"category":"Amuse-bouche","name":"Numele preparatului","ingredient":"ingredientul principal"},{"num":2,"category":"Pâine","name":"...","ingredient":"..."},{"num":3,"category":"Supă","name":"...","ingredient":"..."},{"num":4,"category":"Starter","name":"...","ingredient":"..."},{"num":5,"category":"✦ Signature","name":"...","ingredient":"..."},{"num":6,"category":"Pește","name":"...","ingredient":"..."},{"num":7,"category":"✦ Principal","name":"...","ingredient":"..."},{"num":8,"category":"Desert","name":"...","ingredient":"..."}],"chef_note":"notă caldă de la Chef Răzvan, 2-3 propoziții în română","tags":["tag1","tag2","tag3"]}`,
+        ].filter(Boolean).join('\n');
+
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': key,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true',
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5',
+            max_tokens: 1400,
+            system: 'Ești Chef Răzvan de la Atelier Private Dining, Cluj-Napoca. Creezi meniuri de degustare fine dining personalizate cu ingrediente din România și Europa accesibile. Răspunzi EXCLUSIV cu JSON valid.',
+            messages: [{ role: 'user', content: userMsg }],
+          }),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const text = data?.content?.[0]?.text ?? '';
+          const match = text.match(/\{[\s\S]*\}/);
+          if (match) {
+            try { setGenResult(JSON.parse(match[0])); setGenScreen('result'); return; } catch { /* fall through */ }
+          }
+        }
+      } catch { /* fall through to demo */ }
+    } else {
+      await new Promise(r => setTimeout(r, 2200));
+    }
+
+    setGenResult(makeDemoResult());
+    setGenScreen('result');
   }
   function genRestart() {
     setGenScreen('intro'); setGenStep(0); setGenName(''); setGenOccasion(''); setGenPersons(2);
@@ -1209,7 +1266,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
                   {genResult?.tags?.slice(0,1).map(t => <span key={t} className="grmi">{t}</span>)}
                 </div>
                 <div className="grcrs">
-                  {(genResult?.courses ?? ['Amuse-bouche · Piatră de munte', 'Pâinea Atelierului', 'Supă de pădure', 'Somon și Feleac', 'Foie Gras și Molid', 'Hrișcă și ciuperci', 'Calcan și cenușă', 'Rată și lichen · Specialitatea Casei', 'Caramel de brad'].map((c, i) => ({num:i+1,category:'',name:typeof c === 'string' ? c : '',ingredient:''}))).map((c, i) => (
+                  {(genResult?.courses ?? makeDemoResult().courses).map((c, i) => (
                     <div key={i} className="grco show" style={{transitionDelay: `${i*.08}s`}}>
                       <div className="grcon">{c.category || `Preparatul ${c.num}`}</div>
                       <div className="grcname">{c.name}</div>
@@ -1220,7 +1277,7 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
               </div>
               <div className="grlt show">
                 <div className="grltl">Notă de Chef</div>
-                <div className="grltt">{genResult?.chef_note ?? `Am creat acest meniu gândindu-mă la ${guestName} și la seara de ${occasionLabel?.toLowerCase()}. Fiecare preparat poartă în el un ingredient carpatic, selectat personal. Sper că această seară va deveni un moment pe care îl veți ține minte.`}</div>
+                <div className="grltt">{genResult?.chef_note ?? makeDemoResult().chef_note}</div>
                 <div className="grlts">Chef Răzvan</div>
               </div>
               <div className="gract">

@@ -1,4 +1,5 @@
-/** Placeholder — will be fully implemented from HTML template in step 6. */
+import { redirect } from 'next/navigation';
+
 export default function RecipesPage() {
-  return <main><h1>Recipes</h1></main>;
+  redirect('/');
 }
