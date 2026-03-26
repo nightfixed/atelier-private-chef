@@ -629,3 +629,30 @@ footer{padding:80px 48px 48px;border-top:1px solid #111;text-align:center;}
   .herb-specimens{padding:0 20px 60px}
   .avail-strip{display:none}
 }
+
+@media(max-width:520px){
+  nav{padding:0 14px;height:52px;}
+  .nav-logo{display:none;}
+  .nav-links{gap:6px;flex-wrap:nowrap;}
+  .nav-links a{font-size:7px;letter-spacing:.8px;}
+  .nav-compose-link{padding:3px 7px!important;font-size:7px!important;letter-spacing:.8px!important;}
+  .hero{padding:60px 16px 60px;}
+  .hero-desc{font-size:11px;letter-spacing:2px;}
+  .hero-eye{font-size:8px;letter-spacing:6px;}
+  .section{padding:56px 16px;}
+  .quote-section{padding:72px 16px;}
+  .gelato-inner{padding:0 14px;}
+  .herb-specimens{padding:0 14px 48px;}
+  .herb-cover{padding:100px 20px 60px;}
+  .herb-intro{grid-template-columns:1fr;gap:0;}
+  .gract{padding:0 20px 24px;}
+  .grm{padding:28px 20px 0;}
+  .grh{padding:32px 20px 0;}
+  .gen-hdr{padding:16px 20px;}
+  .gscr{padding:48px 20px;}
+  .gsw{max-width:100%;}
+  footer{padding:56px 20px 36px;}
+  .ai-trigger{right:.7rem;bottom:.7rem;padding:.6rem 1rem .6rem .75rem;}
+  .compose-content{padding:0 20px;}
+  .compose-cta-btn{padding:15px 40px;}
+}
