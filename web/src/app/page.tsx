@@ -329,7 +329,6 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <li><a href="#meniu">Meniu</a></li>
           {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#rezervare">Rezervare</a></li>
           <li><a href="/codex-guest-system.html" className="nav-compose-link">Codex</a></li>
         </ul>
       </nav>
@@ -351,7 +350,6 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <div className="hero-cursive">Private Dining</div>
           <div className="hero-div"><span></span><i>✦</i><span></span></div>
           <p className="hero-desc">Experiențe culinare private · Chef Răzvan & Roland · 18+ ani fine dining</p>
-          <a href="#rezervare" className="hero-cta">Rezervă o experiență</a>
         </div>
         <div className="hero-bottom">Descoperă<div className="scroll-line"></div></div>
       </section>
@@ -911,7 +909,6 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
           <li><a href="#meniu">Meniu</a></li>
           {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#rezervare">Rezervare</a></li>
         </ul>
         <div className="footer-email">exquisitefoodtravel@yahoo.com</div>
         <div className="footer-city">Cluj-Napoca · România</div>
