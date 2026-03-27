@@ -61,6 +61,8 @@ func main() {
 	galleryRepo := repository.NewGalleryRepository(db)
 	contactRepo := repository.NewContactRepository(db)
 	herbariumRepo := repository.NewHerbariumRepository(db)
+	availabilityRepo := repository.NewAvailabilityRepository(db)
+	reservationRepo := repository.NewReservationRepository(db)
 	gcsSigner := storage.NewGCSSigner(gcsClient)
 	gcsDeleter := storage.NewGCSObjectDeleter(gcsClient)
 	authMiddleware := middleware.RequireAuth(verifier)
@@ -106,6 +108,14 @@ func main() {
 
 	// Upload (signed GCS PUT URL)
 	mux.Handle("/api/upload", authMiddleware(handler.NewUploadHandler(gcsSigner, imagesBucket)))
+
+	// Availability windows (public GET, admin POST/PUT/DELETE)
+	mux.Handle("/api/availability", handler.NewAvailabilityHandler(availabilityRepo, authMiddleware))
+	mux.Handle("/api/availability/", handler.NewAvailabilityByIDHandler(availabilityRepo, authMiddleware))
+
+	// Reservations (public POST, admin GET/PUT)
+	mux.Handle("/api/reservations", handler.NewReservationsHandler(reservationRepo, authMiddleware))
+	mux.Handle("/api/reservations/", handler.NewReservationByIDHandler(reservationRepo, authMiddleware))
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)

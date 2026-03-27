@@ -84,4 +84,41 @@ export const api = {
 
   chat: (messages: { role: "user" | "assistant"; content: string }[]) =>
     apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages }) }),
+
+  // Availability windows
+  getAvailability: () => apiFetch("/api/availability"),
+  createAvailabilityWindow: (body: {
+    date: string;
+    start_time?: string;
+    end_time?: string;
+    max_guests?: number;
+    notes?: string;
+  }, token: string) =>
+    apiFetch("/api/availability", { method: "POST", body: JSON.stringify(body) }, token),
+  updateAvailabilityWindow: (id: string, body: {
+    start_time?: string;
+    end_time?: string;
+    max_guests?: number;
+    notes?: string;
+    is_active?: boolean;
+  }, token: string) =>
+    apiFetch(`/api/availability/${id}`, { method: "PUT", body: JSON.stringify(body) }, token),
+  deleteAvailabilityWindow: (id: string, token: string) =>
+    apiFetch(`/api/availability/${id}`, { method: "DELETE" }, token),
+
+  // Reservations
+  submitReservation: (body: {
+    window_id?: string;
+    name: string;
+    email: string;
+    phone?: string;
+    guests_count?: number;
+    occasion?: string;
+    message?: string;
+  }) =>
+    apiFetch("/api/reservations", { method: "POST", body: JSON.stringify(body) }),
+  getReservations: (token: string, status?: string) =>
+    apiFetch(`/api/reservations${status ? `?status=${encodeURIComponent(status)}` : ""}`, {}, token),
+  updateReservationStatus: (id: string, status: string, token: string) =>
+    apiFetch(`/api/reservations/${id}`, { method: "PUT", body: JSON.stringify({ status }) }, token),
 };
