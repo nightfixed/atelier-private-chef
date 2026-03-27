@@ -16,7 +16,7 @@ env:
   PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
   REGION: ${{ vars.GCP_REGION }}
   SERVICE: atelier-api
-  IMAGE: gcr.io/${{ vars.GCP_PROJECT_ID }}/atelier-api
+  IMAGE: europe-west1-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/atelier-api/atelier-api
 
 jobs:
   deploy:
@@ -34,8 +34,8 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker for GCR
-        run: gcloud auth configure-docker gcr.io --quiet
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 
       - name: Generate go.sum if missing
         working-directory: api
@@ -84,15 +84,16 @@ jobs:
               --quiet || true
           fi
 
-      - name: Delete old GCR images
+      - name: Delete old Artifact Registry images
         run: |
-          OLD=$(gcloud container images list-tags "${{ env.IMAGE }}" \
+          OLD=$(gcloud artifacts docker images list \
+            europe-west1-docker.pkg.dev/${{ env.PROJECT_ID }}/atelier-api/atelier-api \
             --project ${{ env.PROJECT_ID }} \
             --format="get(digest)" \
-            --sort-by="~timestamp" | tail -n +2)
+            --sort-by="~createTime" | tail -n +2)
           if [ -n "$OLD" ]; then
-            echo "$OLD" | xargs -I{} gcloud container images delete \
-              "${{ env.IMAGE }}@{}" \
+            echo "$OLD" | xargs -I{} gcloud artifacts docker images delete \
+              "europe-west1-docker.pkg.dev/${{ env.PROJECT_ID }}/atelier-api/atelier-api@{}" \
               --project ${{ env.PROJECT_ID }} \
-              --quiet --force-delete-tags || true
+              --quiet --delete-tags || true
           fi
