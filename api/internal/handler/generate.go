@@ -10,7 +10,7 @@ import (
 )
 
 type herbariumLister interface {
-ListSpecimens(ctx context.Context, category string) ([]repository.HerbariumSpecimen, error)
+ListSpecimens(ctx context.Context) ([]repository.HerbariumSpecimen, error)
 }
 
 // NewGenerateHandler handles POST /api/generate-menu.
@@ -31,7 +31,7 @@ req.HostName = "dumneavoastră"
 }
 
 // Inject herbarium context server-side — never trust the client for this.
-if specimens, err := herbRepo.ListSpecimens(r.Context(), ""); err == nil {
+if specimens, err := herbRepo.ListSpecimens(r.Context()); err == nil {
 for _, s := range specimens {
 sc := ai.SpecimenContext{NameRo: s.NameRo}
 			if s.LatinName != nil {
