@@ -37,6 +37,13 @@ jobs:
       - name: Configure Docker for GCR
         run: gcloud auth configure-docker gcr.io --quiet
 
+      - name: Generate go.sum if missing
+        working-directory: api
+        run: |
+          if [ ! -f go.sum ]; then
+            docker run --rm -v "$(pwd)":/app -w /app golang:1.24-alpine go mod tidy
+          fi
+
       - name: Build and push API image
         run: |
           docker build -t ${{ env.IMAGE }}:${{ github.sha }} ./api
