@@ -27,13 +27,21 @@ func NewAvailabilityHandler(avail availabilityRepo, auth func(http.Handler) http
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			// Public: return available (unbooked) future windows
-			windows, err := avail.ListAvailableWindows(r.Context(), true)
+			// ?all=true with a Bearer token returns all windows (admin)
+			showAll := r.URL.Query().Get("all") == "true"
+			windows, err := avail.ListAvailableWindows(r.Context(), !showAll)
 			if err != nil {
 				writeError(w, http.StatusInternalServerError, "could not fetch availability")
 				return
 			}
-			// Filter out already-booked windows for public view
+			if showAll {
+				if windows == nil {
+					windows = []repository.AvailabilityWindow{}
+				}
+				writeJSON(w, http.StatusOK, windows)
+				return
+			}
+			// Public: filter out already-booked windows
 			var available []repository.AvailabilityWindow
 			for _, w := range windows {
 				if !w.IsBooked {

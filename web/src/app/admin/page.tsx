@@ -26,15 +26,27 @@ interface Recipe {
   id: string; title: string; description?: string; dish_id?: string;
   prep_time_min?: number; cook_time_min?: number; servings?: number; created_at: string;
 }
+interface AvailabilityWindow {
+  id: string; date: string; start_time?: string; end_time?: string;
+  max_guests: number; notes?: string; is_active: boolean;
+  is_booked: boolean; created_at: string;
+}
+interface Reservation {
+  id: string; window_id?: string; window_date?: string;
+  name: string; email: string; phone?: string;
+  guests_count?: number; occasion?: string; message?: string;
+  status: string; created_at: string;
+}
 
-type Tab = 'contacts' | 'dishes' | 'gallery' | 'herbarium' | 'recipes';
+type Tab = 'contacts' | 'dishes' | 'gallery' | 'herbarium' | 'recipes' | 'reservations';
 
 const TAB_LABELS: Record<Tab, string> = {
-  contacts: 'Cereri',
-  dishes: 'Preparate',
-  gallery: 'Galerie',
-  herbarium: 'Herbarium',
-  recipes: 'Rețete',
+  contacts:     'Cereri',
+  reservations: 'Rezervări',
+  dishes:       'Preparate',
+  gallery:      'Galerie',
+  herbarium:    'Herbarium',
+  recipes:      'Rețete',
 };
 
 // ── SHARED ADMIN STYLES (inline, keeps admin isolated from public CSS) ──
@@ -666,13 +678,254 @@ function RecipesTab({ token }: { token: string }) {
   );
 }
 
+// ── RESERVATIONS TAB ──
+function ReservationsTab({ token }: { token: string }) {
+  const [windows, setWindows] = useState<AvailabilityWindow[]>([]);
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [loadingW, setLoadingW] = useState(true);
+  const [loadingR, setLoadingR] = useState(true);
+  const [statusFilter, setStatusFilter] = useState('');
+  const [showNewWindow, setShowNewWindow] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+  const [newWin, setNewWin] = useState({ date: '', start_time: '', end_time: '', max_guests: 20, notes: '' });
+
+  const loadWindows = useCallback(async () => {
+    setLoadingW(true);
+    try {
+      const wins = await api.getAvailability(token);
+      setWindows(Array.isArray(wins) ? wins : []);
+    } catch { setWindows([]); }
+    setLoadingW(false);
+  }, [token]);
+
+  const loadReservations = useCallback(async () => {
+    setLoadingR(true);
+    try {
+      const data = await api.getReservations(token, statusFilter);
+      setReservations(Array.isArray(data) ? data : []);
+    } catch { setReservations([]); }
+    setLoadingR(false);
+  }, [token, statusFilter]);
+
+  useEffect(() => { loadWindows(); }, [loadWindows]);
+  useEffect(() => { loadReservations(); }, [loadReservations]);
+
+  async function createWindow() {
+    if (!newWin.date) { setError('Data este obligatorie.'); return; }
+    setSaving(true); setError('');
+    try {
+      await api.createAvailabilityWindow({
+        date: newWin.date,
+        start_time: newWin.start_time || undefined,
+        end_time: newWin.end_time || undefined,
+        max_guests: newWin.max_guests || 20,
+        notes: newWin.notes || undefined,
+      }, token);
+      setShowNewWindow(false);
+      setNewWin({ date: '', start_time: '', end_time: '', max_guests: 20, notes: '' });
+      loadWindows();
+    } catch (e: unknown) { setError(e instanceof Error ? e.message : 'Eroare la creare.'); }
+    setSaving(false);
+  }
+
+  async function toggleActive(w: AvailabilityWindow) {
+    try {
+      await api.updateAvailabilityWindow(w.id, {
+        start_time: w.start_time, end_time: w.end_time,
+        max_guests: w.max_guests, notes: w.notes, is_active: !w.is_active,
+      }, token);
+      loadWindows();
+    } catch { /* ignore */ }
+  }
+
+  async function deleteWindow(id: string) {
+    if (!confirm('Șterge această fereastră de disponibilitate?')) return;
+    try { await api.deleteAvailabilityWindow(id, token); loadWindows(); } catch { /* ignore */ }
+  }
+
+  async function updateStatus(id: string, status: string) {
+    try {
+      await api.updateReservationStatus(id, status, token);
+      loadReservations();
+    } catch { /* ignore */ }
+  }
+
+  const statusColor: Record<string, string> = {
+    pending:   'rgba(201,169,110,.6)',
+    confirmed: 'rgba(76,175,122,.7)',
+    declined:  'rgba(220,100,100,.6)',
+    cancelled: '#555',
+  };
+  const statusBorder: Record<string, string> = {
+    pending:   'rgba(201,169,110,.3)',
+    confirmed: 'rgba(76,175,122,.3)',
+    declined:  'rgba(220,100,100,.3)',
+    cancelled: '#333',
+  };
+
+  return (
+    <div>
+      {/* ── AVAILABILITY WINDOWS ── */}
+      <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:'24px'}}>
+        <div>
+          <div style={S.sectionTitle}>Ferestre de Disponibilitate</div>
+          <div style={S.sectionSub}>Datele deschise pentru rezervări private</div>
+        </div>
+        <button style={S.btnPrimary} onClick={() => { setShowNewWindow(true); setError(''); }}>+ Adaugă Dată</button>
+      </div>
+
+      {loadingW ? (
+        <div style={S.emptyState}>Se încarcă…</div>
+      ) : windows.length === 0 ? (
+        <div style={S.emptyState}>Nu există ferestre definite</div>
+      ) : (
+        <table style={S.table}>
+          <thead><tr>
+            <th style={S.th}>Data</th>
+            <th style={S.th}>Interval Orar</th>
+            <th style={S.th}>Maxim Oaspeți</th>
+            <th style={S.th}>Note</th>
+            <th style={S.th}>Status</th>
+            <th style={S.th}></th>
+          </tr></thead>
+          <tbody>
+            {windows.map(w => (
+              <tr key={w.id}>
+                <td style={S.tdStrong}>{w.date}</td>
+                <td style={S.td}>{w.start_time && w.end_time ? `${w.start_time} – ${w.end_time}` : w.start_time || '—'}</td>
+                <td style={S.td}>{w.max_guests}</td>
+                <td style={S.td}>{w.notes || '—'}</td>
+                <td style={S.td}>
+                  <span style={{display:'inline-block',padding:'3px 10px',fontSize:'8px',letterSpacing:'2px',textTransform:'uppercase',border:`1px solid ${w.is_booked ? 'rgba(220,100,100,.3)' : w.is_active ? 'rgba(76,175,122,.3)' : '#333'}`,color:w.is_booked ? 'rgba(220,100,100,.6)' : w.is_active ? 'rgba(76,175,122,.7)' : '#555'}}>
+                    {w.is_booked ? 'Rezervat' : w.is_active ? 'Disponibil' : 'Inactiv'}
+                  </span>
+                </td>
+                <td style={{...S.td,textAlign:'right'}}>
+                  <div style={{display:'flex',gap:'8px',justifyContent:'flex-end'}}>
+                    <button style={S.btnSmall} onClick={() => toggleActive(w)}>
+                      {w.is_active ? 'Dezactivează' : 'Activează'}
+                    </button>
+                    <button style={S.btnDanger} onClick={() => deleteWindow(w.id)}>Șterge</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {/* New window modal */}
+      {showNewWindow && (
+        <div style={S.modal} onClick={() => setShowNewWindow(false)}>
+          <div style={S.modalBox} onClick={e => e.stopPropagation()}>
+            <div style={S.modalTitle}>Fereastră Nouă</div>
+            {error && <div style={S.error}>{error}</div>}
+            <label style={S.label}>Data *</label>
+            <input type="date" style={S.input} value={newWin.date} onChange={e => setNewWin(p => ({...p, date: e.target.value}))} />
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px'}}>
+              <div>
+                <label style={S.label}>Ora Start</label>
+                <input type="time" style={S.input} value={newWin.start_time} onChange={e => setNewWin(p => ({...p, start_time: e.target.value}))} />
+              </div>
+              <div>
+                <label style={S.label}>Ora Sfârșit</label>
+                <input type="time" style={S.input} value={newWin.end_time} onChange={e => setNewWin(p => ({...p, end_time: e.target.value}))} />
+              </div>
+            </div>
+            <label style={S.label}>Maxim Oaspeți</label>
+            <input type="number" min={1} max={100} style={S.input} value={newWin.max_guests} onChange={e => setNewWin(p => ({...p, max_guests: +e.target.value}))} />
+            <label style={S.label}>Note (opțional)</label>
+            <input type="text" style={S.input} placeholder="ex: Seară tematică" value={newWin.notes} onChange={e => setNewWin(p => ({...p, notes: e.target.value}))} />
+            <div style={{display:'flex',gap:'12px',justifyContent:'flex-end',marginTop:'8px'}}>
+              <button style={S.btnSmall} onClick={() => setShowNewWindow(false)}>Anulează</button>
+              <button style={S.btnPrimary} onClick={createWindow} disabled={saving}>{saving ? 'Se salvează…' : 'Salvează'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={S.divider}/>
+
+      {/* ── RESERVATIONS ── */}
+      <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',marginBottom:'24px'}}>
+        <div>
+          <div style={S.sectionTitle}>Solicitări de Rezervare</div>
+          <div style={S.sectionSub}>Cereri primite de la oaspeți</div>
+        </div>
+        <div style={{display:'flex',gap:'8px'}}>
+          {['', 'pending', 'confirmed', 'declined', 'cancelled'].map(s => (
+            <button key={s} style={{...S.btnSmall, color: statusFilter === s ? '#c9a96e' : undefined, borderColor: statusFilter === s ? 'rgba(201,169,110,.6)' : undefined}} onClick={() => setStatusFilter(s)}>
+              {s === '' ? 'Toate' : s === 'pending' ? 'În așteptare' : s === 'confirmed' ? 'Confirmate' : s === 'declined' ? 'Refuzate' : 'Anulate'}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {loadingR ? (
+        <div style={S.emptyState}>Se încarcă…</div>
+      ) : reservations.length === 0 ? (
+        <div style={S.emptyState}>Nu există solicitări</div>
+      ) : (
+        <table style={S.table}>
+          <thead><tr>
+            <th style={S.th}>Oaspete</th>
+            <th style={S.th}>Contact</th>
+            <th style={S.th}>Data Eveniment</th>
+            <th style={S.th}>Oaspeți / Ocazie</th>
+            <th style={S.th}>Mesaj</th>
+            <th style={S.th}>Status</th>
+            <th style={S.th}></th>
+          </tr></thead>
+          <tbody>
+            {reservations.map(res => (
+              <tr key={res.id}>
+                <td style={S.tdStrong}>{res.name}</td>
+                <td style={S.td}>
+                  <div>{res.email}</div>
+                  {res.phone && <div style={{color:'#555',marginTop:'2px'}}>{res.phone}</div>}
+                </td>
+                <td style={S.td}>{res.window_date || '—'}</td>
+                <td style={S.td}>
+                  {res.guests_count && <div>{res.guests_count} pers.</div>}
+                  {res.occasion && <div style={{color:'#555',marginTop:'2px'}}>{res.occasion}</div>}
+                </td>
+                <td style={{...S.td,maxWidth:'220px'}}>
+                  <div style={{overflow:'hidden',textOverflow:'ellipsis',display:'-webkit-box',WebkitLineClamp:3,WebkitBoxOrient:'vertical'}}>{res.message || '—'}</div>
+                </td>
+                <td style={S.td}>
+                  <span style={{display:'inline-block',padding:'3px 10px',fontSize:'8px',letterSpacing:'2px',textTransform:'uppercase' as const,border:`1px solid ${statusBorder[res.status]||'#333'}`,color:statusColor[res.status]||'#555'}}>
+                    {res.status}
+                  </span>
+                </td>
+                <td style={{...S.td,textAlign:'right'}}>
+                  {res.status === 'pending' && (
+                    <div style={{display:'flex',gap:'8px',justifyContent:'flex-end'}}>
+                      <button style={{...S.btnSmall,borderColor:'rgba(76,175,122,.4)',color:'rgba(76,175,122,.8)'}} onClick={() => updateStatus(res.id, 'confirmed')}>Confirmă</button>
+                      <button style={S.btnDanger} onClick={() => updateStatus(res.id, 'declined')}>Refuză</button>
+                    </div>
+                  )}
+                  {res.status === 'confirmed' && (
+                    <button style={S.btnDanger} onClick={() => updateStatus(res.id, 'cancelled')}>Anulează</button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
 // ── MAIN ADMIN PAGE ──
 const TABS = [
-  { id: 'contacts', label: '📬 Solicitări', component: ContactsTab },
-  { id: 'dishes',   label: '🍽 Preparate',  component: DishesTab },
-  { id: 'gallery',  label: '🖼 Galerie',    component: GalleryTab },
-  { id: 'herbarium',label: '🌿 Herbarium',  component: HerbariumTab },
-  { id: 'recipes',  label: '📜 Rețete',     component: RecipesTab },
+  { id: 'contacts',     label: '📬 Solicitări',   component: ContactsTab },
+  { id: 'reservations', label: '🗓 Rezervări',     component: ReservationsTab },
+  { id: 'dishes',       label: '🍽 Preparate',     component: DishesTab },
+  { id: 'gallery',      label: '🖼 Galerie',       component: GalleryTab },
+  { id: 'herbarium',    label: '🌿 Herbarium',     component: HerbariumTab },
+  { id: 'recipes',      label: '📜 Rețete',        component: RecipesTab },
 ] as const;
 
 type TabId = (typeof TABS)[number]['id'];

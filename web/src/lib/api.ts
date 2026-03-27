@@ -86,7 +86,10 @@ export const api = {
     apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages }) }),
 
   // Availability windows
-  getAvailability: () => apiFetch("/api/availability"),
+  getAvailability: (token?: string) =>
+    token
+      ? apiFetch('/api/availability?all=true', {}, token)
+      : apiFetch('/api/availability'),
   createAvailabilityWindow: (body: {
     date: string;
     start_time?: string;
