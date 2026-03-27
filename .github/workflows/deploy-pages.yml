@@ -45,6 +45,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: atelier-private-dining
+          projectName: atelier-private-chef
           directory: web/out
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
