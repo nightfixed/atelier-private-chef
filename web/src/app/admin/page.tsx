@@ -98,12 +98,20 @@ function LoginForm({ onLogin }: { onLogin: (user: User, token: string) => void }
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true); setError('');
+    if (!auth) {
+      setError('Firebase nu este configurat — verificați variabilele de mediu (NEXT_PUBLIC_FIREBASE_API_KEY).');
+      setLoading(false);
+      return;
+    }
     try {
-      const cred = await signInWithEmailAndPassword(auth!, email, password);
+      const cred = await signInWithEmailAndPassword(auth, email, password);
       const token = await cred.user.getIdToken();
       onLogin(cred.user, token);
-    } catch {
-      setError('Email sau parolă incorectă.');
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setError(msg.includes('invalid-credential') || msg.includes('wrong-password')
+        ? 'Email sau parolă incorectă.'
+        : msg);
     }
     setLoading(false);
   }
