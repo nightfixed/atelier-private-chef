@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import { api } from '@/lib/api';
 
 interface SpecimenMeta { k: string; ro: string; en: string; }
 interface Specimen {
@@ -179,34 +180,13 @@ export default function HomePage() {
     setAiMessages(newMessages);
     setAiInput('');
 
-    const key = process.env.NEXT_PUBLIC_ANTHROPIC_KEY ?? '';
-    const systemPrompt = `Ești asistentul virtual al Atelier Private Dining, un serviciu exclusiv de private chef din Cluj-Napoca, România.
-Chef Răzvan și Roland gătesc în casele oaspeților sau în spații private — meniuri de degustare personalizate cu ingrediente carpatice rare, selectate personal.
-Răspunzi în română, elegant și cald, în maximum 3 propoziții concise.
-Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele să completeze formularul de rezervare sau să scrie la exquisitefoodtravel@yahoo.com.`;
-
-    const anthropicMessages = newMessages
+    const apiMessages = newMessages
       .filter(m => m.role === 'user' || m.role === 'bot')
-      .map(m => ({ role: m.role === 'bot' ? 'assistant' : 'user', content: m.text }));
+      .map(m => ({ role: (m.role === 'bot' ? 'assistant' : 'user') as 'user' | 'assistant', content: m.text }));
 
-    fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 300,
-        system: systemPrompt,
-        messages: anthropicMessages,
-      }),
-    })
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        const reply = data?.content?.[0]?.text ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
+    api.chat(apiMessages)
+      .then((data: { reply?: string } | null) => {
+        const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
         setAiMessages(m => [...m, {role:'bot', text:reply}]);
       })
       .catch(() => {
@@ -301,58 +281,43 @@ Nu inventezi prețuri sau date specifice — pentru detalii, invită oaspetele s
 
   async function genStartAPI() {
     setGenScreen('generating');
-    const key = process.env.NEXT_PUBLIC_ANTHROPIC_KEY ?? '';
-    const hasKey = key && key !== '__ANTHROPIC_API_KEY__';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
 
-    if (hasKey) {
+    if (apiUrl) {
       try {
-        const occ  = OCCASION_LABELS[genOccasion] || genOccasion;
-        const prot = PROTEIN_LABELS[genProtein] || genProtein;
-        const taste = TASTE_LABELS[genTaste] || genTaste;
-        const season = seasonFromDate(genDate);
-        const userMsg = [
-          `Creează un meniu de degustare fine dining personalizat pentru:`,
-          `Ocazie: ${occ}`,
-          `Persoane: ${genPersons}`,
-          `Sezon: ${season}${genDate ? ` (${genDate})` : ''}`,
-          `Proteina principală: ${prot}`,
-          `Profil de gust dominant: ${taste}`,
-          genLove  ? `Ingredient preferat: ${genLove}`  : '',
-          genAvoid ? `De evitat: ${genAvoid}`           : '',
-          genWish  ? `Dorință specială: ${genWish}`     : '',
-          `Oaspete: ${genName}`,
-          ``,
-          `Răspunde EXCLUSIV cu JSON valid, fără text înainte sau după. Format exact:`,
-          `{"title":"titlu poetic scurt","subtitle":"${occ} · ${season}","courses":[{"num":1,"category":"Amuse-bouche","name":"Numele preparatului","ingredient":"ingredientul principal"},{"num":2,"category":"Pâine","name":"...","ingredient":"..."},{"num":3,"category":"Supă","name":"...","ingredient":"..."},{"num":4,"category":"Starter","name":"...","ingredient":"..."},{"num":5,"category":"✦ Signature","name":"...","ingredient":"..."},{"num":6,"category":"Pește","name":"...","ingredient":"..."},{"num":7,"category":"✦ Principal","name":"...","ingredient":"..."},{"num":8,"category":"Desert","name":"...","ingredient":"..."}],"chef_note":"notă caldă de la Chef Răzvan, 2-3 propoziții în română","tags":["tag1","tag2","tag3"]}`,
-        ].filter(Boolean).join('\n');
-
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': key,
-            'anthropic-version': '2023-06-01',
-            'anthropic-dangerous-direct-browser-access': 'true',
-          },
-          body: JSON.stringify({
-            model: 'claude-haiku-4-5',
-            max_tokens: 1400,
-            system: 'Ești Chef Răzvan de la Atelier Private Dining, Cluj-Napoca. Creezi meniuri de degustare fine dining personalizate cu ingrediente din România și Europa accesibile. Răspunzi EXCLUSIV cu JSON valid.',
-            messages: [{ role: 'user', content: userMsg }],
-          }),
+        const data = await api.generateCodex({
+          guest_name:    genName,
+          occasion:      OCCASION_LABELS[genOccasion] || genOccasion,
+          guest_count:   genPersons,
+          season:        seasonFromDate(genDate),
+          protein:       PROTEIN_LABELS[genProtein] || genProtein,
+          taste_profile: TASTE_LABELS[genTaste] || genTaste,
+          love:          genLove  || undefined,
+          avoid:         genAvoid || undefined,
+          wish:          genWish  || undefined,
+          date:          genDate  || undefined,
         });
 
-        if (res.ok) {
-          const data = await res.json();
-          const text = data?.content?.[0]?.text ?? '';
-          const match = text.match(/\{[\s\S]*\}/);
-          if (match) {
-            try { setGenResult(JSON.parse(match[0])); setGenScreen('result'); return; } catch { /* fall through */ }
-          }
+        // Map CodexResponse (menu: [{tip,nume,descriere}], story) to the result shape
+        if (data?.menu?.length) {
+          const occ = OCCASION_LABELS[genOccasion] || genOccasion;
+          const season = seasonFromDate(genDate);
+          setGenResult({
+            title: data.story ? data.story.split('.')[0] : `O seară pentru ${genName || 'dumneavoastră'}`,
+            subtitle: `${occ} · ${season}`,
+            courses: data.menu.map((c: {tip: string; nume: string; descriere: string}, i: number) => ({
+              num: i + 1,
+              category: c.tip,
+              name: c.nume,
+              ingredient: c.descriere,
+            })),
+            chef_note: data.story ?? '',
+            tags: [occ, season, 'Fine Dining'],
+          });
+          setGenScreen('result');
+          return;
         }
       } catch { /* fall through to demo */ }
-    } else {
-      await new Promise(r => setTimeout(r, 2200));
     }
 
     setGenResult(makeDemoResult());

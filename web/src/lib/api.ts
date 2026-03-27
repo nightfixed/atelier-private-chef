@@ -68,6 +68,20 @@ export const api = {
   generateMenu: (body: { occasion: string; guest_count: string; season: string; dietary: string[]; host_name: string }) =>
     apiFetch("/api/generate-menu", { method: "POST", body: JSON.stringify(body) }),
 
-  chat: (messages: { role: string; content: string }[]) =>
+  generateCodex: (body: {
+    guest_name: string;
+    occasion: string;
+    guest_count: number;
+    season: string;
+    protein: string;
+    taste_profile: string;
+    love?: string;
+    avoid?: string;
+    wish?: string;
+    date?: string;
+  }) =>
+    apiFetch("/api/generate-codex", { method: "POST", body: JSON.stringify(body) }),
+
+  chat: (messages: { role: "user" | "assistant"; content: string }[]) =>
     apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages }) }),
 };

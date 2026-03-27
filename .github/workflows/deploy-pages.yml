@@ -52,16 +52,6 @@ jobs:
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.FIREBASE_MESSAGING_SENDER_ID }}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
-          NEXT_PUBLIC_ANTHROPIC_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-
-      - name: Inject secrets into static HTML files
-        working-directory: web
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          for file in out/*.html; do
-            [ -f "$file" ] && sed -i "s|__ANTHROPIC_API_KEY__|${ANTHROPIC_API_KEY}|g" "$file"
-          done
 
       - name: Ensure CNAME is in output
         working-directory: web
