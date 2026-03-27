@@ -10,7 +10,7 @@ import (
 var defaultAllowedOrigins = []string{
 	"https://atelierprivatedining.ro",
 	"https://www.atelierprivatedining.ro",
-	"https://nightfixed.github.io",
+	"https://atelier-private-chef.pages.dev",
 }
 
 // CORS adds Cross-Origin Resource Sharing headers.
