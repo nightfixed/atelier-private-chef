@@ -1219,6 +1219,7 @@ function startRitual() {
 }
 
 function renderQuestion() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   const q = QUESTIONS[currentQ];
   currentSelection = null;
   const total = QUESTIONS.length;
