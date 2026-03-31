@@ -22,7 +22,7 @@
     --border: rgba(201,169,110,0.2);
   }
 
-  html { scroll-behavior: smooth; }
+  html { }
 
   body {
     background: var(--bg);
@@ -1157,10 +1157,15 @@ function changePersons(delta) {
   document.getElementById('persons-plus').disabled = guestPersons >= 12;
 }
 
+function scrollTop() {
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollTop();
 }
 
 function formatDate(dateStr) {
@@ -1223,7 +1228,7 @@ function startRitual() {
 }
 
 function renderQuestion() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollTop();
   const q = QUESTIONS[currentQ];
   currentSelection = null;
   const total = QUESTIONS.length;
