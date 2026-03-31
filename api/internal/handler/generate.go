@@ -30,19 +30,6 @@ if req.HostName == "" {
 req.HostName = "dumneavoastră"
 }
 
-// Inject herbarium context server-side — never trust the client for this.
-if specimens, err := herbRepo.ListSpecimens(r.Context()); err == nil {
-for _, s := range specimens {
-sc := ai.SpecimenContext{NameRo: s.NameRo}
-			if s.LatinName != nil {
-				sc.Latin = *s.LatinName
-			}
-if s.DescRo != nil {
-sc.DescRo = *s.DescRo
-}
-req.Specimens = append(req.Specimens, sc)
-}
-}
 
 resp, err := provider.GenerateMenu(r.Context(), req)
 if err != nil {

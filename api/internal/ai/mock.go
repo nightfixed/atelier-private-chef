@@ -148,17 +148,16 @@ func (m *MockProvider) GenerateCodex(_ context.Context, req CodexRequest) (*Code
 		name = "Oaspete"
 	}
 	courses := []CodexCourse{
-		{Tip: "Amuse-bouche", Nume: "Lichen & piatră de izvor", Descriere: "Un bun-venit mineral, rece — licheni carpatici deshidratați, apă de izvor gelificată, ulei de brad."},
-		{Tip: "Pâine", Nume: "Pâinea Atelierului", Descriere: "Maia de trei zile, coaptă în fontă, servită cu unt de bivoliță afumat și sare de Praid."},
-		{Tip: "Supă", Nume: "Consommé de rădăcini & rășină de molid", Descriere: "Un bulion limpede de rădăcini carpatice, cu o picătură de rășină tânără și petale de gălbenele."},
-		{Tip: "Aperitiv", Nume: "Tartă de hrean & somon afumat la rece", Descriere: "Hrean de Turda fermentat, somon afumat 48h, cremă acidă, icre de păstrăv."},
-		{Tip: "Intermezzo", Nume: "Sorbet de cenușă de fag & lămâie verde", Descriere: "Un moment de pauză — sorbet fumuriu, acid, care curăță palatul și deschide a doua parte a serii."},
-		{Tip: "Fel principal", Nume: "Rață dry-aged & jus de pădure", Descriere: "Rață maturată 14 zile, gătită sous-vide, cu jus de fructe de pădure, lichen prăjit și legume rădăcinoase caramelizate."},
-		{Tip: "Desert", Nume: "Panna cotta de bivoliță & caramel de brad", Descriere: "Cremă de lapte de bivoliță, caramel de rășină de brad, praf de cenușă de fag și flori de sezon."},
+		{Tip: "Amuse-bouche", Nume: "Bun-venit al bucătăriei", Descriere: "O îmbucătură de sezon — delicată, concentrată, care anunță intenția serii."},
+		{Tip: "Pâine", Nume: "Pâinea Atelierului", Descriere: "Pâine de casă cu maia, coaptă în fontă, servită cu unt artizanal și sare de calitate."},
+		{Tip: "Supă", Nume: "Consommé de legume rădăcinoase", Descriere: "Un bulion limpede și aromat, cu ierburi proaspete și un fir de ulei extravirgin."},
+		{Tip: "Aperitiv", Nume: "Tartă cu somon afumat la rece", Descriere: "Somon afumat 48h, cremă acidă, ierburi fine, servit pe o tartă crocantă."},
+		{Tip: "Intermezzo", Nume: "Sorbet de citrice & ghimbir", Descriere: "Un moment de pauză — acid, viu, care curăță palatul și deschide a doua parte a serii."},
+		{Tip: "Fel principal", Nume: "Proteina zilei · gătită sous-vide", Descriere: "Gătită precis sub vid, finisată la cărbune, cu jus concentrat și legume de sezon."},
+		{Tip: "Desert", Nume: "Cremă · caramel · textură crocantă", Descriere: "Un desert elegant, echilibrat între dulce și sărat, cu flori și ierburi proaspete."},
 	}
-	story := "Seara lui " + name + " începe înainte ca prima farfurie să apară pe masă — în liniștea din care se naște atenția. " +
-		"Fiecare preparat poartă ceva din pădurile Ardealului: un miros de rășină, o textură de scoarță, o aciditate vie ca un izvor de munte. " +
-		"Nu este o cină în care mănânci și pleci. Este o seară în care rămâi cu tine însuți, ascultat de ingrediente care au crescut cu răbdare. " +
+	story := "Seara lui " + name + " se construiește preparat cu preparat, fiecare farfurie o decizie luată cu grijă. " +
+		"Nu există rețetă standard — există o combinație gândită pentru această ocazie, pentru aceste persoane, pentru această seară. " +
 		"La final, nu vei ști exact ce ai mâncat — vei ști doar cum te-ai simțit."
 	return &CodexResponse{Menu: courses, Story: story}, nil
 }

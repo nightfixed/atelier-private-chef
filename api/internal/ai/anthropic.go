@@ -126,15 +126,33 @@ func (p *AnthropicProvider) GenerateMenu(ctx context.Context, req MenuRequest) (
 
 // GenerateCodex calls Claude to produce a Codex tasting menu + story from a sensory profile.
 func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest) (*CodexResponse, error) {
-	profile := "Oaspete: " + req.GuestName +
-		"\nAmintire culinară din copilărie: " + req.Memory +
+	profile := "Oaspete: " + req.GuestName
+	if req.Occasion != "" {
+		profile += "\nOcazie: " + req.Occasion
+	}
+	if req.GuestCount > 0 {
+		profile += fmt.Sprintf("\nNumăr persoane: %d", req.GuestCount)
+	}
+	if req.Season != "" {
+		profile += "\nAnotimp: " + req.Season
+	}
+	if req.Protein != "" {
+		profile += "\nProteina preferată: " + req.Protein
+	}
+	if req.TasteProfile != "" {
+		profile += "\nProfil de gust: " + req.TasteProfile
+	}
+	if req.Avoid != "" {
+		profile += "\nDe evitat: " + req.Avoid
+	}
+	profile += "\nAmintire culinară din copilărie: " + req.Memory +
 		"\nSenzație căutată: " + req.Sensation +
 		"\nRitm la masă: " + req.Rhythm +
 		"\nIngredient de atracție: " + req.Element +
 		"\nStare dorită la final: " + req.End +
 		"\nFilosofia personală despre o masă bună: " + req.Philosophy
 
-	menuSystem := `Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+	menuSystem := `Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
 
 Pe baza profilului senzorial al oaspetelui, compune un meniu personalizat de 6-7 cursuri. Fiecare curs trebuie să aibă:
 - "tip": tipul cursului (ex: Amuse-bouche, Entrée, Intermezzo, Fel principal, Pre-desert, Desert)
@@ -163,7 +181,7 @@ Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
 		return nil, fmt.Errorf("parse codex menu JSON: %w (raw: %.200s)", err, menuText)
 	}
 
-	storySystem := `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe ingrediente ardelene, tehnici internaționale, fermentare și experiențe senzoriale imersive.
+	storySystem := `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
 
 Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 200-240 cuvinte în română care evocă atmosfera, preparatele, ingredientele cheie și starea pe care o va trăi oaspetele. Tonul: cald, literar, imersiv, ca o scrisoare intimă. Integrează subtil detalii din profil. Nu enumera cursuri sec.
 

@@ -38,10 +38,6 @@ const SPECIMENS: Specimen[] = [
   {num:'11',code:'APD-011',nameRo:'Hrișcă Transilvăneană Prăjită',latin:'Fagopyrum esculentum',nameLarge:'Hrișcă',badge:'Ardeal',badgeCls:'local',meta:[{k:'Origine',ro:'Cultivată în Ardeal',en:'Grown in Transylvania'},{k:'Tehnica',ro:'Prăjire uscată obligatorie',en:'Mandatory dry-toast'},{k:'Disponibilitate',ro:'Permanent',en:'Year-round'}],spectrum:['rgba(160,120,60,.6)','rgba(180,140,80,.5)','rgba(140,100,50,.4)','rgba(120,90,40,.35)','rgba(100,70,30,.3)'],pills:['Nucă','Pământ','Complex'],descRo:'Nu orez. Nu quinoa. Hrișca Ardealului, prăjită uscat până devine altceva complet.',descEn:'Not rice. Not quinoa. Transylvanian buckwheat dry-toasted until it becomes something else.',noteRo:'Nu orez. Nu quinoa. Garnitura care face preparatul întreg.',noteEn:'The side that completes a dish without asking for attention.',usage:['Risotto','Vânat','Cruste','Granola']},
 ];
 
-const OCCASION_LABELS: Record<string,string> = {romantic:'Romantic',celebrare:'Celebrare',intim:'Intim',business:'Business',surpriza:'Surpriză'};
-const PROTEIN_LABELS: Record<string,string> = {vita:'Vită',miel:'Miel',rata:'Rată',peste:'Pește',fructe_mare:'Fructe de mare',surprinde:'Surprinde-mă'};
-const TASTE_LABELS: Record<string,string> = {umami:'Umami profund',acid:'Acid & viu',dulce_savuros:'Dulce & savuros',afumat:'Afumat & prăjit',floral:'Floral & delicat'};
-
 export default function HomePage() {
   // ── STATE ──
   const [specimens, setSpecimens] = useState<Specimen[]>(SPECIMENS);
@@ -54,20 +50,6 @@ export default function HomePage() {
     {role:'bot', text:'Bună ziua. Sunt asistentul Atelier Private Dining. Cu ce vă pot fi de folos?'}
   ]);
   const [show404, setShow404] = useState(false);
-  // generator
-  const [genOpen, setGenOpen] = useState(false);
-  const [genScreen, setGenScreen] = useState<'intro'|'steps'|'story'|'generating'|'result'>('intro');
-  const [genStep, setGenStep] = useState(0);
-  const [genName, setGenName] = useState('');
-  const [genPersons, setGenPersons] = useState(2);
-  const [genOccasion, setGenOccasion] = useState('');
-  const [genDate, setGenDate] = useState('');
-  const [genProtein, setGenProtein] = useState('');
-  const [genTaste, setGenTaste] = useState('');
-  const [genLove, setGenLove] = useState('');
-  const [genAvoid, setGenAvoid] = useState('');
-  const [genWish, setGenWish] = useState('');
-  const [genResult, setGenResult] = useState<{title:string;subtitle:string;courses:{num:number;category:string;name:string;ingredient:string}[];chef_note:string;tags:string[]} | null>(null);
   // booking form
   const [rezOcazie, setRezOcazie] = useState('');
   const [rezPersoane, setRezPersoane] = useState('');
@@ -227,108 +209,6 @@ export default function HomePage() {
   }
 
   function minDateStr(): string { const d = new Date(); d.setDate(d.getDate()+2); return d.toISOString().split('T')[0]; }
-  function isDateValid(v: string): boolean { const sel = new Date(v); const min = new Date(); min.setDate(min.getDate()+2); min.setHours(0,0,0,0); return sel >= min; }
-  function buildStoryNarrative(): string {
-    const occText: Record<string,string> = {romantic:'o seară romantică',celebrare:'o celebrare',intim:'o cină intimă',business:'o întâlnire profesională',surpriza:'o seară surpriză'};
-    const protText: Record<string,string> = {vita:'vita',miel:'mielul de Ardeal',rata:'rața',peste:'peștele',fructe_mare:'fructele de mare',surprinde:'o surpriză a bucătăriei'};
-    const tastText: Record<string,string> = {umami:'note de umami profund',acid:'note acide și vii',dulce_savuros:'contrast dulce-savuros',afumat:'arome afumate și prăjite',floral:'delicatețe florală'};
-    const occ = occText[genOccasion] || genOccasion;
-    const prot = protText[genProtein] || genProtein;
-    const taste = tastText[genTaste] || genTaste;
-    const dateStr = genDate ? new Date(genDate+'T12:00:00').toLocaleDateString('ro-RO',{weekday:'long',day:'numeric',month:'long'}) : '';
-    const parts = [
-      `${genName ? `Seara lui ${genName}` : 'Seara ta'}${dateStr ? ` din ${dateStr}` : ''} — ${occ} pentru ${genPersons} ${genPersons===1?'persoană':'persoane'}.`,
-      `Inima meniului va fi ${prot}, colorat de ${taste}.`,
-      ...(genLove ? [`${genLove.charAt(0).toUpperCase()+genLove.slice(1)} — firul roșu care va lega preparatele.`] : []),
-      ...(genWish ? [`Dorința specială: ${genWish}.`] : []),
-    ];
-    return parts.join(' ');
-  }
-  function genStart() {
-    if (!genName.trim()) return;
-    setGenStep(0); setGenOccasion(''); setGenPersons(2); setGenDate('');
-    setGenProtein(''); setGenTaste(''); setGenLove(''); setGenAvoid(''); setGenWish('');
-    setGenResult(null); setGenScreen('steps');
-  }
-  function genNext() { if (genStep < 4) { setGenStep(s => s+1); } else { setGenScreen('story'); } }
-  function seasonFromDate(d: string): string {
-    const m = d ? new Date(d+'T12:00:00').getMonth() : new Date().getMonth();
-    if (m >= 2 && m <= 4) return 'Primăvară';
-    if (m >= 5 && m <= 7) return 'Vară';
-    if (m >= 8 && m <= 10) return 'Toamnă';
-    return 'Iarnă';
-  }
-  function makeDemoResult() {
-    const prot = PROTEIN_LABELS[genProtein] || genProtein || 'vită';
-    const occ  = OCCASION_LABELS[genOccasion] || genOccasion || 'Seara';
-    return {
-      title: `Seara ${genName || 'Ta'}`,
-      subtitle: `${occ} · ${seasonFromDate(genDate)}`,
-      courses: [
-        {num:1, category:'Amuse-bouche',    name:'Icre de nisetru și burrata',         ingredient:'nisetru românesc · trufe negre'},
-        {num:2, category:'Pâine',           name:'Pâine la vatră, miso și Parma',      ingredient:'maia · miso alb · Prosciutto di Parma'},
-        {num:3, category:'Supă',            name:'Bisque de creveți și gălbiori',      ingredient:'creveți tigru · gălbiori de Ardeal'},
-        {num:4, category:'Starter',         name:'Somon și avocado',                   ingredient:'somon norvegian · icre somon roz'},
-        {num:5, category:'✦ Signature',     name:'Foie Gras, Cotnari și smochine',     ingredient:'foie gras · Grasă de Cotnari'},
-        {num:6, category:'Pește',           name:'Calcan de Marea Neagră și miso',     ingredient:'calcan sălbatic · miso alb'},
-        {num:7, category:'✦ Principal',     name:`${prot} dry-aged și măduvă`,         ingredient:`${prot} · jus Dealu Mare · măduvă`},
-        {num:8, category:'Desert',          name:'Valrhona, miere de brad și pralin',  ingredient:'Valrhona 70% · miere de brad'},
-      ],
-      chef_note: `Am compus această seară gândindu-mă la ${genName || 'dumneavoastră'} și la ocazia specială. Fiecare preparat poartă în el un ingredient selectat personal — pentru ca această seară să devină un moment de neuitat.`,
-      tags: [occ, seasonFromDate(genDate), 'Fine Dining'],
-    };
-  }
-
-  async function genStartAPI() {
-    setGenScreen('generating');
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-
-    if (apiUrl) {
-      try {
-        const data = await api.generateCodex({
-          guest_name:    genName,
-          occasion:      OCCASION_LABELS[genOccasion] || genOccasion,
-          guest_count:   genPersons,
-          season:        seasonFromDate(genDate),
-          protein:       PROTEIN_LABELS[genProtein] || genProtein,
-          taste_profile: TASTE_LABELS[genTaste] || genTaste,
-          love:          genLove  || undefined,
-          avoid:         genAvoid || undefined,
-          wish:          genWish  || undefined,
-          date:          genDate  || undefined,
-        });
-
-        // Map CodexResponse (menu: [{tip,nume,descriere}], story) to the result shape
-        if (data?.menu?.length) {
-          const occ = OCCASION_LABELS[genOccasion] || genOccasion;
-          const season = seasonFromDate(genDate);
-          setGenResult({
-            title: data.story ? data.story.split('.')[0] : `O seară pentru ${genName || 'dumneavoastră'}`,
-            subtitle: `${occ} · ${season}`,
-            courses: data.menu.map((c: {tip: string; nume: string; descriere: string}, i: number) => ({
-              num: i + 1,
-              category: c.tip,
-              name: c.nume,
-              ingredient: c.descriere,
-            })),
-            chef_note: data.story ?? '',
-            tags: [occ, season, 'Fine Dining'],
-          });
-          setGenScreen('result');
-          return;
-        }
-      } catch { /* fall through to demo */ }
-    }
-
-    setGenResult(makeDemoResult());
-    setGenScreen('result');
-  }
-  function genRestart() {
-    setGenScreen('intro'); setGenStep(0); setGenName(''); setGenOccasion(''); setGenPersons(2);
-    setGenDate(''); setGenProtein(''); setGenTaste(''); setGenLove(''); setGenAvoid(''); setGenWish('');
-    setGenResult(null);
-  }
-  function genContact() { setGenOpen(false); document.getElementById('rezervare')?.scrollIntoView({behavior:'smooth'}); }
 
   function downloadCard() {
     const G='#c9a96e', CU2='#d09070', CUD='#7a4830';
@@ -341,18 +221,6 @@ export default function HomePage() {
     a.click();
     document.body.removeChild(a);
   }
-  function genCanReady() {
-    if (genStep===0) return genOccasion !== '';
-    if (genStep===1) return genDate !== '' && isDateValid(genDate);
-    if (genStep===2) return genProtein !== '';
-    if (genStep===3) return genTaste !== '';
-    if (genStep===4) return true;
-    return false;
-  }
-
-  const guestName = genName || 'dumneavoastră';
-  const occasionLabel = OCCASION_LABELS[genOccasion] || genOccasion || 'Seara';
-
   // ── RENDER ──
   return (
     <>
@@ -706,28 +574,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* COMPUNE SEARA */}
-      <div id="compune" className="compose-sec reveal">
-        <div className="compose-sec-bg"></div>
-        <div className="compose-rings">
-          <div className="cr cr1"></div><div className="cr cr2"></div><div className="cr cr3"></div>
-        </div>
-        <div className="compose-content">
-          <div className="compose-eyebrow">Exclusiv · Powered by AI · Atelier Private Dining</div>
-          <h2 className="compose-title">Compune-ți<em>Seara</em></h2>
-          <p className="compose-sub">Răspunde la <strong>5 întrebări</strong> despre seara ta și primești un meniu de degustare complet, scris în vocea Atelierului — <strong>inexistent înainte de acest moment.</strong></p>
-          <button className="compose-cta-btn" onClick={() => { setGenOpen(true); setGenScreen('intro'); }}>
-            <span>Începe experiența →</span>
-          </button>
-          <div className="compose-feats">
-            <span className="compose-feat">Gratuit</span>
-            <span className="compose-feat">60 secunde</span>
-            <span className="compose-feat">Meniu unic generat pentru tine</span>
-            <span className="compose-feat">Ingrediente carpatice</span>
-          </div>
-        </div>
-      </div>
-
       {/* ASEZAT — ascuns temporar, de reactivat la cerere */}
       {false && <div id="asezat" style={{borderTop:'1px solid #111',padding:'110px 0',background:'#080808'}}>
         <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
@@ -776,7 +622,7 @@ export default function HomePage() {
           <div className="gelato-sub-label reveal">Gelato · Cu lapte de bivoliță transilvăneană · Câmpia Transilvaniei</div>
           <div className="gelato-grid reveal">
             {[
-              {e:'🖤',n:'Sesam Negru',en:'Black Sesame · Japanese Paste · Buffalo Milk',d:'Pasta de sesam negru prăjit — cea mai profundă culoare naturală pe care o poți pune pe linguriță — în lapte de bivoliță. Umami discret, nucă adâncă, antracit absolut. Nicio colorare artificială.',notes:['Nucă adâncă','Umami fin','Negru-antracit'],season:'Tot anul',rare:false},
+              {e:'🖤',n:'Susan Negru',en:'Black Sesame · Japanese Paste · Buffalo Milk',d:'Pasta de susan negru prăjit — cea mai profundă culoare naturală pe care o poți pune pe linguriță — în lapte de bivoliță. Umami discret, nucă adâncă, antracit absolut. Nicio colorare artificială.',notes:['Nucă adâncă','Umami fin','Negru-antracit'],season:'Tot anul',rare:false},
               {e:'🌹',n:'Trandafir Damasc & Cardamom',en:'Damascus Rose · Green Cardamom · Buffalo Milk',d:'Apa de trandafir damasc și cardamomul verde — combinația care a dominat patiseria Orientului timp de secole — în lapte de bivoliță transilvăneană. Floral, cald, ușor exotic. O aromă pe care nu o ghicești din prima.',notes:['Floral dens','Cald-picant','Crem-roz'],season:'Tot anul',rare:false},
               {e:'🫒',n:'Ulei de Măsline & Fleur de Sel',en:'Extra Virgin Olive Oil · Fleur de Sel · Buffalo Milk',d:'Uleiul de măsline extravirgin bătut în lapte de bivoliță cu cristale de fleur de sel. Niciun colorant. Un gust care pune o singură întrebare: ce este asta? Și nu primești un răspuns simplu.',notes:['Fructat','Sărat-mineral','Crem-verzui'],season:'Tot anul',rare:false},
               {e:'🍯',n:'Miere de Mănăstire',en:'Monastery Honey · Transylvanian Wildflower',d:'Miere polifloră culeasă de la o mănăstire din Ardeal. Complexitate florală comprimată în lapte de bivoliță. Nu se poate reproduce cu miere comercială.',notes:['Floral complex','Caramel cald','Ambru'],season:'Tot anul',rare:false},
@@ -1013,264 +859,6 @@ export default function HomePage() {
           <button className="ai-send" onClick={sendAI}>→</button>
         </div>
         <div className="ai-footer-note">Powered by Claude · Atelier Private Dining</div>
-      </div>
-
-      {/* GENERATOR OVERLAY */}
-      <div className={`gen-ov${genOpen ? ' show' : ''}`}>
-        <div className="gen-ov-bg"></div>
-        <div className="gen-ov-inner">
-          <div className="gen-hdr">
-            <div className="gen-hdr-logo">Atelier · Compune-ți Seara</div>
-            <button className="gen-hdr-close" onClick={() => setGenOpen(false)}>✕ Închide</button>
-          </div>
-
-          {/* INTRO */}
-          {genScreen === 'intro' && (
-            <div className="gscr on">
-              <div className="gi-orn"></div>
-              <div className="gi-ey">Experiență unică · Generat exclusiv pentru tine</div>
-              <h2 className="gi-ttl">Compune-ți<em>Seara</em></h2>
-              <p className="gi-sub">Alegi ingredientele serii tale. Noi compunem meniul. <em>Răzvan îl gătește pentru tine.</em></p>
-              <input
-                className="gin"
-                type="text"
-                placeholder="Numele tău..."
-                value={genName}
-                onChange={e => setGenName(e.target.value)}
-                onKeyDown={e => { if (e.key==='Enter' && genName.trim()) genStart(); }}
-                style={{maxWidth:'320px',marginBottom:'28px'}}
-              />
-              <button className="gi-btn" onClick={genStart} style={{opacity: genName.trim() ? 1 : 0.45}}>
-                <span>Compune Seara →</span>
-              </button>
-              <div className="gi-note">Gratuit · 60 secunde · Confidențial</div>
-            </div>
-          )}
-
-          {/* STEPS */}
-          {genScreen === 'steps' && (
-            <div className="gscr on">
-              <div className="gprog">
-                {[0,1,2,3,4].map((i) => [
-                  <div key={`d${i}`} className={`gpd${i < genStep ? ' done' : i === genStep ? ' active' : ''}`}></div>,
-                  i < 4 && <div key={`l${i}`} className="gpl"></div>
-                ])}
-              </div>
-              <div className="gsw">
-
-                {/* STEP 0: Persons + Occasion */}
-                {genStep === 0 && (<>
-                  <div className="gs-n">Pasul 1 din 5</div>
-                  <div className="gs-q">Cine vine în această <em>seară</em>?</div>
-                  <div className="gs-h">Numărul de persoane și ocazia</div>
-                  <div className="gctr-wrap">
-                    <button className="gctr-btn" onClick={() => setGenPersons(p => Math.max(1,p-1))}>−</button>
-                    <div>
-                      <div className="gctr-val">{genPersons}</div>
-                      <div className="gctr-label">{genPersons===1?'persoană':'persoane'}</div>
-                    </div>
-                    <button className="gctr-btn" onClick={() => setGenPersons(p => Math.min(50,p+1))}>+</button>
-                  </div>
-                  <div className="gch">
-                    {([
-                      {i:'🕯️',l:'Romantic',d:'Aniversare, cerere în căsătorie, prima întâlnire specială',v:'romantic'},
-                      {i:'✦',l:'Celebrare',d:'Zi de naștere, reușită, moment important',v:'celebrare'},
-                      {i:'◯',l:'Intim',d:'Cină între prieteni sau familie apropiată',v:'intim'},
-                      {i:'◈',l:'Business',d:'Întâlnire profesională, parteneriat, negociere',v:'business'},
-                      {i:'◇',l:'Surpriză',d:'Cineva nu știe că vine — totul e secret',v:'surpriza'},
-                    ] as {i:string;l:string;d:string;v:string}[]).map(c => (
-                      <div key={c.v} className={`gc${genOccasion===c.v?' sel':''}`} onClick={() => setGenOccasion(c.v)}>
-                        <span className="gc-i">{c.i}</span>
-                        <span className="gc-l">{c.l}</span>
-                        <span className="gc-d">{c.d}</span>
-                      </div>
-                    ))}
-                  </div>
-                </>)}
-
-                {/* STEP 1: Date */}
-                {genStep === 1 && (<>
-                  <div className="gs-n">Pasul 2 din 5</div>
-                  <div className="gs-q">Când doriți să vă <em>vedem</em>?</div>
-                  <div className="gs-h">Avem nevoie de minimum 48 de ore pentru a pregăti seara</div>
-                  <div style={{textAlign:'center'}}>
-                    <input
-                      type="date"
-                      className="gdate"
-                      value={genDate}
-                      min={minDateStr()}
-                      onChange={e => setGenDate(e.target.value)}
-                    />
-                  </div>
-                </>)}
-
-                {/* STEP 2: Protein */}
-                {genStep === 2 && (<>
-                  <div className="gs-n">Pasul 3 din 5</div>
-                  <div className="gs-q">Ce <em>proteină</em> va fi inima serii?</div>
-                  <div className="gs-h">Aceasta va fi centrul felului principal</div>
-                  <div className="gch">
-                    {([
-                      {i:'🥩',l:'Vită',d:'Wagyu local, dry-aged, tehnici lente',v:'vita'},
-                      {i:'◍',l:'Miel',d:'Ardeal, ierbi sălbatice, fân',v:'miel'},
-                      {i:'◈',l:'Rață',d:'Confit, piept, foie gras',v:'rata'},
-                      {i:'◇',l:'Pește',d:'Somon, biban, homar — tehnici japoneze',v:'peste'},
-                      {i:'◎',l:'Fructe de mare',d:'Creveți, scoici, caracatiță',v:'fructe_mare'},
-                      {i:'✦',l:'Surprinde-mă',d:'Răzvan alege pentru tine',v:'surprinde'},
-                    ] as {i:string;l:string;d:string;v:string}[]).map(c => (
-                      <div key={c.v} className={`gc${genProtein===c.v?' sel':''}`} onClick={() => setGenProtein(c.v)}>
-                        <span className="gc-i">{c.i}</span>
-                        <span className="gc-l">{c.l}</span>
-                        <span className="gc-d">{c.d}</span>
-                      </div>
-                    ))}
-                  </div>
-                </>)}
-
-                {/* STEP 3: Taste */}
-                {genStep === 3 && (<>
-                  <div className="gs-n">Pasul 4 din 5</div>
-                  <div className="gs-q">Ce <em>notă de gust</em> să domine seara?</div>
-                  <div className="gs-h">Aceasta va colora toate cursurile</div>
-                  <div className="gch">
-                    {([
-                      {i:'◉',l:'Umami profund',d:'Garum, fermentat, miso, pământ',v:'umami'},
-                      {i:'◌',l:'Acid & viu',d:'Citrice, fermentare, lacto, oțet de lemn',v:'acid'},
-                      {i:'◇',l:'Dulce & savuros',d:'Contrast, reducții, caramel sărat',v:'dulce_savuros'},
-                      {i:'◈',l:'Afumat & prăjit',d:'Foc, cărbune, memorie, rădăcini',v:'afumat'},
-                      {i:'◍',l:'Floral & delicat',d:'Efemer, petale, ierburi, brumă',v:'floral'},
-                    ] as {i:string;l:string;d:string;v:string}[]).map(c => (
-                      <div key={c.v} className={`gc${genTaste===c.v?' sel':''}`} onClick={() => setGenTaste(c.v)}>
-                        <span className="gc-i">{c.i}</span>
-                        <span className="gc-l">{c.l}</span>
-                        <span className="gc-d">{c.d}</span>
-                      </div>
-                    ))}
-                  </div>
-                </>)}
-
-                {/* STEP 4: Preferences */}
-                {genStep === 4 && (<>
-                  <div className="gs-n">Pasul 5 din 5</div>
-                  <div className="gs-q">Ceva ce <em>iubești</em> sau ceva ce eviți?</div>
-                  <div className="gs-h">Opțional — dar ne ajută să compunem mai bine</div>
-                  <div style={{display:'flex',flexDirection:'column',gap:'24px',width:'100%',maxWidth:'520px',margin:'0 auto 42px'}}>
-                    <div>
-                      <div style={{fontSize:'8px',letterSpacing:'3px',color:'rgba(201,169,110,.3)',textTransform:'uppercase',marginBottom:'8px'}}>Un ingredient pe care îl iubești</div>
-                      <input className="gin" type="text" placeholder="ex: trufe, lămâie, nucă, scorțișoară…" value={genLove} onChange={e => setGenLove(e.target.value)} style={{marginBottom:0}} />
-                    </div>
-                    <div>
-                      <div style={{fontSize:'8px',letterSpacing:'3px',color:'rgba(201,169,110,.3)',textTransform:'uppercase',marginBottom:'8px'}}>Ceva ce eviți sau nu consumi</div>
-                      <input className="gin" type="text" placeholder="ex: nuci, lactate, gluten, prea picant…" value={genAvoid} onChange={e => setGenAvoid(e.target.value)} style={{marginBottom:0}} />
-                    </div>
-                    <div>
-                      <div style={{fontSize:'8px',letterSpacing:'3px',color:'rgba(201,169,110,.3)',textTransform:'uppercase',marginBottom:'8px'}}>O dorință specială pentru această seară</div>
-                      <input className="gin" type="text" placeholder="ex: ceva care să surprindă, meniu ușor, vin natural…" value={genWish} onChange={e => setGenWish(e.target.value)} style={{marginBottom:0}} />
-                    </div>
-                  </div>
-                </>)}
-
-                <div className="gnav">
-                  {genStep > 0 && <button className="gprev" onClick={() => setGenStep(s => s-1)}>← Înapoi</button>}
-                  <button className="gnxt" onClick={genNext} disabled={!genCanReady()}>
-                    <span>{genStep < 4 ? 'Continuă →' : 'Compune Seara →'}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* STORY — Povestea Serii */}
-          {genScreen === 'story' && (
-            <div className="gscr on" style={{justifyContent:'flex-start',paddingTop:'64px',minHeight:0,overflowY:'auto'}}>
-              <div style={{width:'100%',maxWidth:'620px'}}>
-                <div style={{fontSize:'9px',letterSpacing:'7px',color:'rgba(201,169,110,.28)',textTransform:'uppercase',textAlign:'center',marginBottom:'18px'}}>Povestea Serii</div>
-                <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(28px,5vw,50px)',fontWeight:300,color:'#e8d5a3',lineHeight:1.05,letterSpacing:'2px',textAlign:'center',marginBottom:'8px'}}>
-                  {genName || 'Seara Ta'}
-                </div>
-                <div style={{fontFamily:'Cormorant Garamond,serif',fontStyle:'italic',fontSize:'15px',color:'rgba(201,169,110,.4)',textAlign:'center',marginBottom:'32px'}}>
-                  {genPersons} {genPersons===1?'persoană':'persoane'}{genDate ? ` · ${new Date(genDate+'T12:00:00').toLocaleDateString('ro-RO',{weekday:'long',day:'numeric',month:'long'})}` : ''}
-                </div>
-                <div style={{width:'1px',height:'48px',background:'linear-gradient(to bottom,transparent,rgba(201,169,110,.25),transparent)',margin:'0 auto 32px'}}></div>
-                <div style={{background:'rgba(201,169,110,.025)',border:'1px solid rgba(201,169,110,.08)',padding:'28px 32px',marginBottom:'24px',textAlign:'center',position:'relative'}}>
-                  <span style={{position:'absolute',top:'-10px',left:'50%',transform:'translateX(-50%)',background:'#080705',padding:'0 10px',color:'var(--gold)',opacity:.4,fontSize:'14px'}}>❧</span>
-                  <p style={{fontFamily:'Cormorant Garamond,serif',fontStyle:'italic',fontSize:'15px',color:'rgba(232,224,208,.7)',lineHeight:2,fontWeight:300}}>{buildStoryNarrative()}</p>
-                </div>
-                <div style={{border:'1px solid rgba(201,169,110,.08)',padding:'22px 28px',marginBottom:'32px'}}>
-                  <div style={{fontSize:'8px',letterSpacing:'4px',color:'rgba(201,169,110,.2)',textTransform:'uppercase',marginBottom:'14px'}}>Detaliile serii</div>
-                  {([
-                    {k:'Ocazie', v: OCCASION_LABELS[genOccasion]||genOccasion},
-                    {k:'Persoane', v:`${genPersons} ${genPersons===1?'persoană':'persoane'}`},
-                    {k:'Data', v: genDate ? new Date(genDate+'T12:00:00').toLocaleDateString('ro-RO',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : '—'},
-                    {k:'Proteina', v: PROTEIN_LABELS[genProtein]||genProtein},
-                    {k:'Nota de gust', v: TASTE_LABELS[genTaste]||genTaste},
-                    ...(genLove ? [{k:'Ingredient iubit', v:genLove}] : []),
-                    ...(genAvoid ? [{k:'De evitat', v:genAvoid}] : []),
-                  ] as {k:string;v:string}[]).map((row,i) => (
-                    <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',gap:'16px',borderBottom:'1px solid rgba(201,169,110,.04)',paddingBottom:'9px',marginBottom:'9px'}}>
-                      <span style={{fontSize:'8px',letterSpacing:'2px',color:'rgba(201,169,110,.22)',textTransform:'uppercase',whiteSpace:'nowrap'}}>{row.k}</span>
-                      <span style={{fontFamily:'Cormorant Garamond,serif',fontSize:'15px',color:'#ccc',textAlign:'right'}}>{row.v}</span>
-                    </div>
-                  ))}
-                </div>
-                <div style={{display:'flex',gap:'12px',justifyContent:'center',flexWrap:'wrap',marginBottom:'20px'}}>
-                  <button className="gprev" onClick={() => { setGenStep(4); setGenScreen('steps'); }}>← Înapoi</button>
-                  <button className="gnxt" onClick={genStartAPI}><span>Generează meniul complet →</span></button>
-                </div>
-                <div style={{textAlign:'center',fontSize:'10px',letterSpacing:'.7px',color:'rgba(201,169,110,.1)',fontStyle:'italic',fontFamily:'Cormorant Garamond,serif',lineHeight:1.6}}>Meniul va fi creat exclusiv pentru această seară — inexistent înainte de acest moment.</div>
-              </div>
-            </div>
-          )}
-
-          {/* GENERATING */}
-          {genScreen === 'generating' && (
-            <div className="gscr on">
-              <div className="ggw">
-                <div className="ggr ggr1"></div><div className="ggr ggr2"></div><div className="ggr ggr3"></div>
-                <div className="ggc">A</div>
-              </div>
-              <div className="ggs">Compun seara ta<span className="gdots"><span>.</span><span>.</span><span>.</span></span></div>
-              <div className="ggsb">Chef Răzvan analizează preferințele tale</div>
-            </div>
-          )}
-
-          {/* RESULT */}
-          {genScreen === 'result' && (
-            <div className="grscr on">
-              <div className="grh">
-                <div className="gro">{genResult?.subtitle ?? occasionLabel}</div>
-                <div className="grt">{genResult?.title ?? `Seara ${guestName}`}</div>
-                <div className="grst">Un meniu de degustare creat exclusiv pentru acest moment</div>
-                <div className="grrl"></div>
-              </div>
-              <div className="grm">
-                <div className="grmt">
-                  <span className="grmi">{genResult ? `${genResult.courses.length} preparate` : '9 preparate'}</span>
-                  <span className="grmi">Ingrediente carpatice</span>
-                  {genResult?.tags?.slice(0,1).map(t => <span key={t} className="grmi">{t}</span>)}
-                </div>
-                <div className="grcrs">
-                  {(genResult?.courses ?? makeDemoResult().courses).map((c, i) => (
-                    <div key={i} className="grco show" style={{transitionDelay: `${i*.08}s`}}>
-                      <div className="grcon">{c.category || `Preparatul ${c.num}`}</div>
-                      <div className="grcname">{c.name}</div>
-                      {c.ingredient && <div style={{fontSize:'10px',color:'rgba(201,169,110,.45)',letterSpacing:'1px',marginTop:'2px'}}>{c.ingredient}</div>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="grlt show">
-                <div className="grltl">Notă de Chef</div>
-                <div className="grltt">{genResult?.chef_note ?? makeDemoResult().chef_note}</div>
-                <div className="grlts">Chef Răzvan</div>
-              </div>
-              <div className="gract">
-                <button className="grab" onClick={genRestart}>Compune altă seară</button>
-              </div>
-              <div className="grdc">Acest meniu a fost generat ca propunere personalizată. Meniul final va fi rafinat împreună cu Chef Răzvan în cadrul consultației de rezervare.</div>
-            </div>
-          )}
-        </div>
       </div>
     </>
   );

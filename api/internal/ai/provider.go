@@ -63,13 +63,19 @@ Reply string `json:"reply"`
 
 // CodexRequest contains the sensory profile answers from the Codex ritual.
 type CodexRequest struct {
-	GuestName  string `json:"guest_name"`
-	Memory     string `json:"memory"`
-	Sensation  string `json:"sensation"`
-	Rhythm     string `json:"rhythm"`
-	Element    string `json:"element"`
-	End        string `json:"end"`
-	Philosophy string `json:"philosophy"`
+	GuestName    string `json:"guest_name"`
+	GuestCount   int    `json:"guest_count,omitempty"`
+	Occasion     string `json:"occasion,omitempty"`
+	Season       string `json:"season,omitempty"`
+	Protein      string `json:"protein,omitempty"`
+	TasteProfile string `json:"taste_profile,omitempty"`
+	Avoid        string `json:"avoid,omitempty"`
+	Memory       string `json:"memory"`
+	Sensation    string `json:"sensation"`
+	Rhythm       string `json:"rhythm"`
+	Element      string `json:"element"`
+	End          string `json:"end"`
+	Philosophy   string `json:"philosophy"`
 }
 
 // CodexCourse is one course in the Codex-generated tasting menu.
@@ -98,14 +104,8 @@ type Provider interface {
 func SystemPrompt(req MenuRequest) string {
 prompt := `Ești Chef Răzvan, bucătarul-chef al Atelier Private Dining din Cluj-Napoca, România.
 Atelier este un serviciu de private dining de lux — gătești în casele oaspeților sau în spații private.
-Filosofia ta: ingrediente carpatice rare, fine dining tehnic, personalizare completă.
-Vocea ta: caldă, poetică, elegantă — niciodată comercială.
-
-Herbarium — ingredientele tale de semnătură:`
-
-for _, s := range req.Specimens {
-prompt += "\n- " + s.NameRo + " (" + s.Latin + "): " + s.DescRo
-}
+Filosofia ta: fine dining tehnic de calitate superioară, personalizare completă.
+Vocea ta: caldă, poetică, elegantă — niciodată comercială.`
 
 prompt += "\n\nGenerează un meniu de degustare de 9 preparate pentru:"
 prompt += "\n- Ocazie: " + req.Occasion

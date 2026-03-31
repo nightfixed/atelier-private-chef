@@ -943,12 +943,40 @@ const OCCASIONS = [
   { id: 'surpriza',  icon: '◉', name: 'Surpriză',    desc: 'Oaspetele nu știe unde ajunge — magie și neașteptat' }
 ];
 
+const PROTEINS = [
+  { id: 'vita',        icon: '◉', name: 'Vită',            desc: 'Wagyu local, dry-aged, tehnici lente' },
+  { id: 'miel',        icon: '◍', name: 'Miel',            desc: 'Ardeal, ierburi sălbatice, fân' },
+  { id: 'rata',        icon: '◈', name: 'Rață',            desc: 'Confit, piept, foie gras' },
+  { id: 'peste',       icon: '◇', name: 'Pește',           desc: 'Somon, biban, homar — tehnici japoneze' },
+  { id: 'fructe_mare', icon: '○', name: 'Fructe de mare',  desc: 'Creveți, scoici, caracatiță' },
+  { id: 'surprinde',   icon: '✦', name: 'Surprinde-mă',   desc: 'Răzvan alege pentru tine' }
+];
+
 const QUESTIONS = [
   {
     id: 'occasion',
     type: 'occasion',
     text: 'Care este natura acestei seri?',
     hint: 'Alegerea dumneavoastră va ghida compoziția întregii experiențe.'
+  },
+  {
+    id: 'protein',
+    type: 'protein',
+    text: 'Ce proteină va fi inima serii?',
+    hint: 'Aceasta va fi centrul felului principal.'
+  },
+  {
+    id: 'taste',
+    type: 'options',
+    text: 'Ce notă de gust să domine seara?',
+    hint: 'Aceasta va colora toate cursurile.',
+    options: [
+      'Umami profund — garum, fermentat, miso, pământ',
+      'Acid & viu — citrice, fermentare, lacto, oțet',
+      'Dulce & savuros — contrast, reducții, caramel sărat',
+      'Afumat & prăjit — foc, cărbune, memorie, rădăcini',
+      'Floral & delicat — efemer, petale, ierburi, brumă'
+    ]
   },
   {
     id: 'memory',
@@ -1014,6 +1042,12 @@ const QUESTIONS = [
     ]
   },
   {
+    id: 'avoid',
+    type: 'free',
+    text: 'Ceva ce evitați sau nu consumați?',
+    hint: 'Opțional — dar ne ajută să compunem mai precis. Scrieți "—" dacă nu aveți restricții.'
+  },
+  {
     id: 'philosophy',
     type: 'free',
     text: 'O singură frază: ce înseamnă pentru dumneavoastră o masă bună?',
@@ -1024,8 +1058,9 @@ const QUESTIONS = [
 let guestName = '';
 let reservationDate = '';
 let guestPersons = 2;
+const API_URL = 'https://api.atelierprivatedining.ro';
 const apiKey = '__ANTHROPIC_API_KEY__';
-const DEMO_MODE = (apiKey === '__ANTHROPIC_API_KEY__');
+const DEMO_MODE = (apiKey === '__ANTHROPIC_API_KEY__') && !API_URL;
 let answers = {};
 let currentQ = 0;
 let currentSelection = null;
@@ -1121,6 +1156,15 @@ function today() {
 
 function escQ(s) { return s.replace(/'/g, "\\'"); }
 
+function getSeason() {
+  const d = reservationDate ? new Date(reservationDate + 'T12:00:00') : new Date();
+  const m = d.getMonth();
+  if (m >= 2 && m <= 4) return 'Primăvară';
+  if (m >= 5 && m <= 7) return 'Vară';
+  if (m >= 8 && m <= 10) return 'Toamnă';
+  return 'Iarnă';
+}
+
 function personsLabel() {
   return guestPersons >= 12 ? '12+ persoane' : `${guestPersons} ${guestPersons === 1 ? 'persoană' : 'persoane'}`;
 }
@@ -1128,12 +1172,17 @@ function personsLabel() {
 function buildProfile() {
   const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
   const occasionLabel = occasionObj ? occasionObj.name : answers.occasion;
+  const proteinObj = PROTEINS.find(p => p.id === answers.protein);
+  const proteinLabel = proteinObj ? proteinObj.name : (answers.protein || '—');
   const dateLabel = reservationDate ? formatDate(reservationDate) : today();
   const persLabel = personsLabel();
   return `Oaspete: ${guestName}
 Data rezervării: ${dateLabel}
 Număr persoane: ${persLabel}
 Tipul serii: ${occasionLabel}
+Proteina principală: ${proteinLabel}
+Nota de gust dominantă: ${answers.taste || '—'}
+De evitat: ${answers.avoid || '—'}
 Amintire culinară din copilărie: ${answers.memory}
 Senzație căutată: ${answers.sensation}
 Ritm la masă: ${answers.rhythm}
@@ -1173,6 +1222,18 @@ function renderQuestion() {
         <span class="occasion-info">
           <span class="occasion-name">${occ.name}</span>
           <span class="occasion-desc">${occ.desc}</span>
+        </span>
+      </button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'protein') {
+    html += `<div class="occasion-options">`;
+    PROTEINS.forEach(p => {
+      html += `<button class="occasion-btn" onclick="selectOption(this, '${p.id}')">
+        <span class="occasion-icon">${p.icon}</span>
+        <span class="occasion-info">
+          <span class="occasion-name">${p.name}</span>
+          <span class="occasion-desc">${p.desc}</span>
         </span>
       </button>`;
     });
@@ -1243,7 +1304,42 @@ async function generateMenu() {
     return;
   }
 
-  const profile = buildProfile();
+  // Try backend API first
+  if (API_URL) {
+    try {
+      const proteinObj = PROTEINS.find(p => p.id === answers.protein);
+      const res = await fetch(API_URL + '/api/generate-codex', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guest_name:    guestName,
+          occasion:      OCCASIONS.find(o => o.id === answers.occasion)?.name || answers.occasion,
+          guest_count:   guestPersons,
+          season:        getSeason(),
+          protein:       proteinObj ? proteinObj.name : (answers.protein || ''),
+          taste_profile: answers.taste || '',
+          avoid:         answers.avoid || '',
+          memory:        answers.memory || '',
+          sensation:     answers.sensation || '',
+          rhythm:        answers.rhythm || '',
+          element:       answers.element || '',
+          end:           answers.end || '',
+          philosophy:    answers.philosophy || '',
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.menu?.length) {
+          const courses = data.menu.map(c => ({ name: c.tip, desc: c.descriere ? `${c.nume} — ${c.descriere}` : c.nume }));
+          setMenu(courses);
+          window._codexStory = data.story || '';
+          return;
+        }
+      }
+    } catch(_) {}
+  }
+
+  // Fallback: direct Anthropic
   const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
   const occasionDesc = occasionObj ? `${occasionObj.name} — ${occasionObj.desc}` : '';
 
@@ -1328,6 +1424,18 @@ async function generateArtifact() {
     return;
   }
 
+  // Use story from backend if already generated
+  if (window._codexStory) {
+    const story = window._codexStory;
+    window._codexStory = '';
+    setArtifact(
+      guestName ? `Seara lui ${guestName}` : 'Capitol Personal',
+      `Capitol #${chapterNum} — ${dateLabel}`,
+      story
+    );
+    return;
+  }
+
   const profile = buildProfile();
   const prompt = `Ești arhivarul Codex Atelier — sistemul care documentează fiecare seară ca un capitol unic, ireplicabil.
 
@@ -1400,6 +1508,7 @@ function restart() {
   changePersons(0);
   answers = {};
   currentQ = 0;
+  window._codexStory = '';
   show('s-intro');
 }
 
