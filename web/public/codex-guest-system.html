@@ -61,6 +61,10 @@
     text-transform: uppercase;
     text-decoration: none;
     transition: color 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
   }
   .nav-back:hover { color: var(--gold); }
 
@@ -781,7 +785,7 @@
 
 <nav>
   <a href="https://atelierprivatedining.ro" class="nav-logo">Atelier Private Dining</a>
-  <a href="https://atelierprivatedining.ro" class="nav-back">← Înapoi</a>
+  <button class="nav-back" onclick="navBack()">← Înapoi</button>
 </nav>
 
 <main>
@@ -1279,6 +1283,68 @@ function selectOption(btn, val) {
 
 function freeInput(el) {
   document.getElementById('next-btn').disabled = el.value.trim().length < 3;
+}
+
+function navBack() {
+  if (document.getElementById('s-questions').classList.contains('active')) {
+    if (currentQ > 0) {
+      currentQ--;
+      // restore previous answer as selection
+      const prevQ = QUESTIONS[currentQ];
+      currentSelection = answers[prevQ.id] || null;
+      delete answers[prevQ.id];
+      renderQuestion();
+      // re-highlight previously selected option after render
+      if (currentSelection) {
+        setTimeout(() => {
+          document.querySelectorAll('.option-btn, .occasion-btn').forEach(b => {
+            if (b.textContent.trim() === currentSelection ||
+                b.querySelector('.occasion-name')?.textContent === OCCASIONS.find(o=>o.id===currentSelection)?.name ||
+                b.querySelector('.occasion-name')?.textContent === PROTEINS.find(p=>p.id===currentSelection)?.name) {
+              b.classList.add('selected');
+            }
+          });
+          const ta = document.getElementById('free-ans');
+          if (ta) { ta.value = currentSelection; document.getElementById('next-btn').disabled = false; }
+        }, 50);
+      }
+    } else {
+      show('s-intro');
+    }
+  } else {
+    window.location.href = 'https://atelierprivatedining.ro';
+  }
+}
+
+function navBack() {
+  if (document.getElementById('s-questions').classList.contains('active')) {
+    if (currentQ > 0) {
+      currentQ--;
+      const prevQ = QUESTIONS[currentQ];
+      currentSelection = answers[prevQ.id] || null;
+      delete answers[prevQ.id];
+      renderQuestion();
+      if (currentSelection) {
+        setTimeout(() => {
+          document.querySelectorAll('.option-btn, .occasion-btn').forEach(b => {
+            const name = b.querySelector('.occasion-name')?.textContent;
+            const txt = b.textContent.trim();
+            const matchOcc = OCCASIONS.find(o => o.id === currentSelection)?.name;
+            const matchProt = PROTEINS.find(p => p.id === currentSelection)?.name;
+            if (txt === currentSelection || name === matchOcc || name === matchProt) {
+              b.classList.add('selected');
+            }
+          });
+          const ta = document.getElementById('free-ans');
+          if (ta && currentSelection) { ta.value = currentSelection; document.getElementById('next-btn').disabled = false; }
+        }, 50);
+      }
+    } else {
+      show('s-intro');
+    }
+  } else {
+    window.location.href = 'https://atelierprivatedining.ro';
+  }
 }
 
 function nextQuestion() {
