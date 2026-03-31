@@ -1121,9 +1121,24 @@ const DEMO_ARTIFACTS = {
   surpriza: { title: 'Noaptea Când Nimic Nu Era Ce Părea', text: `A intrat fără să știe unde merge. Aceasta este, poate, cea mai curajoasă formă de a fi prezent la o masă.\n\nPrimul curs l-a dezechilibrat — în sens bun. Acea sferă care explodează, gustul care nu se potrivea cu ce vedea ochiul: o mică declarație de intenție. Seara aceasta nu va fi previzibilă.\n\nPe parcurs, dezorientarea s-a transformat în curiozitate, curiozitatea în joc. A început să ghicească ce urmează — și a greșit de fiecare dată, cu plăcere crescândă.\n\nDesertul care arăta a farfurie savuroasă a primit o privire lungă, înainte de prima lingură. Și primul zâmbet adevărat al serii — nu unul politicos, ci unul surprins de sine însuși.\n\nA plecat cu senzația că a trăit ceva ce nu poate explica exact. Cel mai bun sentiment cu care poți părăsi o masă.` }
 };
 
+const PROTEIN_MAINS = {
+  vita:        'Mușchi de vită dry-aged 28 de zile, jus de ciuperci sălbatice și vin Fetească Neagră, piure de trufe, varză murată glasată cu unt brun',
+  miel:        'Cotlet de miel din stâna Apusenilor, crustă de ierburi de munte, sos de rozmarin și vin roșu de Dealu Mare, legume rădăcinoase coapte în cenușă',
+  rata:        'Piept de rată din Sălaj confiat 48h, portocală sanguină redusă cu anason, piure de gulie arsă, ierburi murate și sos de jus clar',
+  peste:       'File de calcan sălbatic de Marea Neagră, beurre blanc cu capere și lămâie confiată, spanac sălbatic, roe de crap afumat',
+  fructe_mare: 'Lagustine și creveți tigru, bisque de crustacee redus cu cognac, spumă de unt cu tarhon, legume juliene și caviar de șampanie',
+  surprinde:   'Surpriza zilei — proteina aleasă de chef în dimineața evenimentului, dezvăluită la masă cu ceremonie',
+};
+
 function getDemoMenu() {
   const occ = answers.occasion || 'romantic';
-  return DEMO_MENUS[occ] || DEMO_MENUS.romantic;
+  const base = (DEMO_MENUS[occ] || DEMO_MENUS.romantic).map(c => ({ ...c }));
+  const mainDesc = PROTEIN_MAINS[answers.protein];
+  if (mainDesc) {
+    const idx = base.findIndex(c => c.name === 'Fel principal');
+    if (idx !== -1) base[idx] = { name: 'Fel principal', desc: mainDesc };
+  }
+  return base;
 }
 function getDemoArtifact() {
   const occ = answers.occasion || 'romantic';
