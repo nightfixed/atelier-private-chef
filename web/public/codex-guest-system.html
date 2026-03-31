@@ -1310,7 +1310,7 @@ async function generateMenu() {
     try {
       const proteinObj = PROTEINS.find(p => p.id === answers.protein);
       const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 40000);
+      const timer = setTimeout(() => ctrl.abort(), 20000);
       const res = await fetch(API_URL + '/api/generate-codex', {
         signal: ctrl.signal,
         method: 'POST',
@@ -1344,68 +1344,8 @@ async function generateMenu() {
     } catch(_) {}
   }
 
-  // Fallback: direct Anthropic
-  const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
-  const occasionDesc = occasionObj ? `${occasionObj.name} — ${occasionObj.desc}` : '';
-
-  const prompt = `Ești bucătarul-șef al Atelier Private Dining, un atelier de fine dining din Cluj-Napoca. Filozofia culinară: ingrediente ardelene de sezon, tehnici internaționale, fermentare, foc și simplitate complexă.
-
-Compune un meniu de degustare STRICT personalizat (5-7 feluri) bazat pe profilul senzorial de mai jos. Fiecare curs trebuie să reflecte direct alegerile oaspetelui:
-- Tipul serii (${occasionDesc}) determină registrul emoțional al întregului meniu
-- Amintirea culinară din copilărie trebuie să apară subtil în cel puțin un curs
-- Senzația căutată (contrast / profunzime / simplitate / surpriză / confort) trebuie să fie principiul de construcție al meniului
-- Ingredientul de atracție ales trebuie să apară explicit în meniu
-- Starea dorită la final ghidează evoluția cursurilor și desertul
-
-IMPORTANT: Dacă oaspetele a ales "Surpriză", include tehnici neașteptate și prezentări înșelătoare. Dacă a ales "Romantică", include flori comestibile și tehnici delicate. Dacă a ales "Business", meniul trebuie să fie elegant și curat. Dacă a ales "Celebrare", include un moment spectaculos. Dacă a ales "Intimă", bazează-te pe confort și familiaritate.
-
-${profile}
-
-Răspunde STRICT în formatul următor (un fel per bloc):
-CURS: [Numele felului — ex: Amuse-bouche, Starter I, Fel principal, Desert]
-DESC: [Descriere scurtă, 1 propoziție, ingrediente și tehnici, ton elegant]
-
-Repetă blocul CURS/DESC pentru fiecare fel. Fără numerotare, fără text suplimentar.`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1200,
-        temperature: 1,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    if (!res.ok || !data.content) throw new Error(data.error?.message || 'API error');
-    const raw = data.content.map(b => b.text || '').join('').trim();
-    if (!raw) throw new Error('Empty response');
-
-    const courses = [];
-    const blocks = raw.split(/\n(?=CURS:)/);
-    blocks.forEach(block => {
-      const nameMatch = block.match(/CURS:\s*(.+)/);
-      const descMatch = block.match(/DESC:\s*([\s\S]+)/);
-      if (nameMatch) {
-        courses.push({
-          name: nameMatch[1].trim(),
-          desc: descMatch ? descMatch[1].trim().split('\n')[0] : ''
-        });
-      }
-    });
-
-    if (courses.length === 0) throw new Error('Parse error');
-    setMenu(courses);
-  } catch(e) {
-    setMenu(getDemoMenu());
-  }
+  // Backend unavailable — show demo menu
+  setMenu(getDemoMenu());
 }
 
 async function generateArtifact() {
@@ -1441,54 +1381,9 @@ async function generateArtifact() {
     return;
   }
 
-  const profile = buildProfile();
-  const prompt = `Ești arhivarul Codex Atelier — sistemul care documentează fiecare seară ca un capitol unic, ireplicabil.
-
-Pe baza profilului senzorial al oaspetelui, scrie un artefact post-cină în română. Structură:
-
-1. TITLU_CAPITOL: Un titlu poetic, 3-6 cuvinte (de ex: "Cina Mirosului de Fân Uscat")
-2. SUBTITLU: O linie scurtă, data și un număr de capitol fictiv (ex: "Capitol #${chapterNum} — ${dateLabel}")
-3. TEXT: 200-250 cuvinte. Un text literar care evocă seara tocmai încheiată — ca un jurnal scris de un martor invizibil. Nu descrie cursuri. Descrie momente, stări, tranziții senzoriale, ceva ce oaspetele a simțit sau ar fi putut simți. Integrează subtil detalii din profilul lor.
-
-${profile}
-
-Răspunde STRICT în formatul:
-TITLU: [titlul]
-SUBTITLU: [subtitlul]
-TEXT: [textul]`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        temperature: 1,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    const data = await res.json();
-    if (!res.ok || !data.content) throw new Error(data.error?.message || 'API error');
-    const raw = data.content.map(b => b.text || '').join('').trim();
-    if (!raw) throw new Error('Empty response');
-
-    const titleMatch = raw.match(/TITLU:\s*(.+)/);
-    const subMatch = raw.match(/SUBTITLU:\s*(.+)/);
-    const textMatch = raw.match(/TEXT:\s*([\s\S]+)/);
-    setArtifact(
-      titleMatch ? titleMatch[1].trim() : 'Capitol Personal',
-      subMatch ? subMatch[1].trim() : null,
-      textMatch ? textMatch[1].trim() : raw
-    );
-  } catch(e) {
-    setArtifact('Capitol Personal', null, 'Artefactul nu a putut fi generat.\nVă rugăm să reîncercați sau contactați echipa Atelier.');
-  }
+  // Backend unavailable — show demo artifact
+  const demo = getDemoArtifact();
+  setArtifact(demo.title, `Capitol #${chapterNum} — ${dateLabel}`, demo.text);
 }
 
 function showSummary() {
