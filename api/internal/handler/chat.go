@@ -2,7 +2,8 @@ package handler
 
 import (
 "encoding/json"
-"net/http"
+"log"
+	"net/http"
 
 "github.com/nightfixed/atelier-private-chef/api/internal/ai"
 )
@@ -27,6 +28,7 @@ return
 
 resp, err := provider.Chat(r.Context(), req)
 if err != nil {
+log.Printf("chat error: %v", err)
 writeError(w, http.StatusInternalServerError, "chat failed")
 return
 }

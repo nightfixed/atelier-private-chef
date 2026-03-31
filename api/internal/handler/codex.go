@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 
 	"github.com/nightfixed/atelier-private-chef/api/internal/ai"
@@ -28,6 +29,7 @@ func NewCodexHandler(provider ai.Provider) http.Handler {
 
 		resp, err := provider.GenerateCodex(r.Context(), req)
 		if err != nil {
+			log.Printf("generate-codex error: %v", err)
 			writeError(w, http.StatusInternalServerError, "codex generation failed")
 			return
 		}

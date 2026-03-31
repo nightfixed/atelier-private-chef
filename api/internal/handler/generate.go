@@ -3,6 +3,7 @@ package handler
 import (
 "context"
 "encoding/json"
+"log"
 "net/http"
 
 "github.com/nightfixed/atelier-private-chef/api/internal/ai"
@@ -33,6 +34,7 @@ req.HostName = "dumneavoastră"
 
 resp, err := provider.GenerateMenu(r.Context(), req)
 if err != nil {
+log.Printf("generate-menu error: %v", err)
 writeError(w, http.StatusInternalServerError, "generation failed")
 return
 }
