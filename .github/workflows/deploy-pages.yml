@@ -41,7 +41,10 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
 
       - name: Inject API_URL into codex HTML
-        run: sed -i "s|__API_URL__|${{ vars.API_URL }}|g" web/public/codex-guest-system.html
+        run: |
+          sed -i "s|__API_URL__|${{ vars.API_URL }}|g" web/out/codex-guest-system.html
+          echo "Injected API_URL into web/out/codex-guest-system.html"
+          grep "API_URL" web/out/codex-guest-system.html | head -1
 
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy web/out --project-name=atelier-private-chef --commit-dirty=true
