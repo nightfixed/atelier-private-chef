@@ -808,7 +808,7 @@
       </div>
       <div class="date-wrap">
         <span class="field-label">Data rezervării</span>
-        <input type="date" id="reservation-date" />
+        <input type="date" id="reservation-date" onchange="if(this.value) document.getElementById('intro-cta').scrollIntoView({behavior:'smooth', block:'center'})" />
       </div>
       <div class="persons-wrap">
         <span class="field-label">Numărul de persoane</span>
@@ -818,7 +818,7 @@
           <button class="stepper-btn" id="persons-plus" onclick="changePersons(1)">+</button>
         </div>
       </div>
-      <button class="btn" onclick="startRitual()">Compune Seara</button>
+      <button class="btn" id="intro-cta" onclick="startRitual()">Compune Seara</button>
     </div>
   </div>
 
