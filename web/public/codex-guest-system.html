@@ -862,7 +862,6 @@
         <div class="artifact-hint">La finalul serii, veți primi povestea dumneavoastră personală</div>
         <div class="btn-row">
           <button class="btn" onclick="generateArtifact()">Generează Povestea</button>
-          <button class="btn" onclick="rezerva()" style="background:var(--gold-dim);border-color:var(--gold);">Rezervă Această Seară →</button>
           <button class="btn" onclick="restart()">Seară Nouă</button>
         </div>
       </div>
@@ -928,7 +927,10 @@
         <div class="seal-date" id="sum-seal-date"></div>
       </div>
       <div style="text-align:center; margin-top:2rem;">
-        <button class="btn" onclick="restart()">Seară Nouă</button>
+        <div class="btn-row">
+          <button class="btn" onclick="rezerva()" style="background:var(--gold-dim);border-color:var(--gold);">Rezervă Această Seară →</button>
+          <button class="btn" onclick="restart()">Seară Nouă</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1489,7 +1491,7 @@ function showSummary() {
 
 function rezerva() {
   const name = encodeURIComponent(guestName || '');
-  window.location.href = 'https://atelierprivatedining.ro/#rezervare' + (name ? '?nume=' + name : '');
+  window.location.href = 'https://atelierprivatedining.ro/' + (name ? '?nume=' + name : '') + '#rezervare';
 }
 
 function restart() {
