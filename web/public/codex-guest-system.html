@@ -1066,6 +1066,12 @@ const QUESTIONS = [
 let guestName = '';
 let reservationDate = '';
 let guestPersons = 2;
+let generatedCourses = [];
+let generatedStoryTitle = '';
+let generatedStoryText = '';
+let generatedCourses = [];
+let generatedStoryTitle = '';
+let generatedStoryText = '';
 const API_URL = '__API_URL__';
 const apiKey = '__ANTHROPIC_API_KEY__';
 const DEMO_MODE = !API_URL.startsWith('http');
@@ -1383,6 +1389,7 @@ async function generateMenu() {
   const dateLabel = reservationDate ? formatDate(reservationDate) : today();
 
   const setMenu = (courses) => {
+    generatedCourses = courses;
     document.getElementById('menu-guest').textContent = guestName;
     document.getElementById('menu-date').textContent = `${dateLabel} · ${personsLabel()}`;
     document.getElementById('menu-courses').innerHTML = renderMenuCourses(courses);
@@ -1444,6 +1451,8 @@ async function generateArtifact() {
   const chapterNum = Math.floor(Math.random() * 900) + 100;
 
   const setArtifact = (title, sub, text) => {
+    generatedStoryTitle = title;
+    generatedStoryText = text;
     document.getElementById('art-title').textContent = title;
     document.getElementById('art-sub').textContent = sub || `Capitol #${chapterNum} — ${dateLabel}`;
     document.getElementById('art-text').textContent = text;
@@ -1489,8 +1498,37 @@ function showSummary() {
   show('s-summary');
 }
 
-function rezerva() {
+async function rezerva() {
   const name = encodeURIComponent(guestName || '');
+  // Build message with generated menu + story
+  const menuText = generatedCourses.map((c, i) => `${i+1}. ${c.name} — ${c.desc}`).join('\n');
+  const message = [
+    '[Rezervare via CODEX]',
+    '',
+    'MENIU GENERAT:',
+    menuText || '(meniu demo)',
+    '',
+    'POVESTEA SERII:',
+    generatedStoryTitle ? `${generatedStoryTitle}\n${generatedStoryText}` : '(poveste nedisponibilă)',
+    '',
+    'PROFIL SENZORIAL:',
+    `Amintire: ${answers.memory || '-'}`,
+    `Senzație: ${answers.sensation || '-'}`,
+    `Ritm: ${answers.rhythm || '-'}`,
+    `Ingredient: ${answers.element || '-'}`,
+    `Final dorit: ${answers.end || '-'}`,
+    `Filosofie: ${answers.philosophy || '-'}`,
+  ].join('\n');
+  // Save to backend (fire and forget)
+  if (API_URL && API_URL.startsWith('http')) {
+    try {
+      await fetch(API_URL + '/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: guestName, email: 'codex@atelierprivatedining.ro', message, occasion: 'CODEX' })
+      });
+    } catch (_) {}
+  }
   window.location.href = 'https://atelierprivatedining.ro/' + (name ? '?nume=' + name : '') + '#rezervare';
 }
 
