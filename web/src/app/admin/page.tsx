@@ -150,6 +150,115 @@ function ConfirmModal({ msg, onConfirm, onCancel }: { msg: string; onConfirm: ()
   );
 }
 
+// ── CODEX MESSAGE RENDERER ──
+function CodexMessageView({ message, occasion }: { message?: string; occasion?: string }) {
+  if (!message) return <p style={{color:'#555',fontStyle:'italic'}}>( fără mesaj )</p>;
+
+  const isCodex = occasion === 'CODEX' || message.startsWith('[Rezervare via CODEX]');
+
+  if (!isCodex) {
+    return (
+      <>
+        <strong style={{color:'rgba(201,169,110,.6)',fontSize:'8px',letterSpacing:'3px',textTransform:'uppercase' as const}}>Mesaj</strong>
+        <p style={{marginTop:'8px',lineHeight:'1.8',color:'#888',whiteSpace:'pre-wrap'}}>{message}</p>
+      </>
+    );
+  }
+
+  // Parse CODEX sections
+  const menuMatch = message.match(/MENIU GENERAT:\n([\s\S]+?)(?=\nPOVESTEA SERII:|$)/);
+  const storyMatch = message.match(/POVESTEA SERII:\n([\s\S]+?)(?=\nPROFIL SENZORIAL:|$)/);
+  const profileMatch = message.match(/PROFIL SENZORIAL:\n([\s\S]+?)$/);
+
+  const menuLines = menuMatch ? menuMatch[1].trim().split('\n').filter(Boolean) : [];
+  const storyText = storyMatch ? storyMatch[1].trim() : '';
+  const profileLines = profileMatch ? profileMatch[1].trim().split('\n').filter(Boolean) : [];
+
+  const labelStyle: React.CSSProperties = {
+    fontSize: '7px', letterSpacing: '4px', textTransform: 'uppercase',
+    color: 'rgba(201,169,110,.45)', marginBottom: '12px', display: 'block',
+  };
+  const sectionStyle: React.CSSProperties = {
+    marginBottom: '28px',
+  };
+  const dividerStyle: React.CSSProperties = {
+    height: '1px', background: 'rgba(201,169,110,.08)', margin: '20px 0',
+  };
+
+  return (
+    <div style={{maxWidth:'720px'}}>
+      {/* CODEX BADGE */}
+      <div style={{marginBottom:'20px',display:'flex',alignItems:'center',gap:'12px'}}>
+        <span style={{fontSize:'7px',letterSpacing:'4px',textTransform:'uppercase' as const,color:'rgba(201,169,110,.7)',border:'1px solid rgba(201,169,110,.2)',padding:'4px 12px'}}>
+          ✦ CODEX — Capitol Personal
+        </span>
+      </div>
+
+      {/* MENIU */}
+      {menuLines.length > 0 && (
+        <div style={sectionStyle}>
+          <span style={labelStyle}>Meniu Generat</span>
+          <div style={{border:'1px solid rgba(201,169,110,.1)',padding:'16px 20px'}}>
+            {menuLines.map((line, i) => {
+              const m = line.match(/^\d+\.\s*(.+?)\s*[—–-]\s*(.+)$/);
+              if (m) {
+                return (
+                  <div key={i} style={{padding:'8px 0',borderBottom:'1px solid rgba(201,169,110,.06)',display:'flex',gap:'12px',alignItems:'baseline'}}>
+                    <span style={{fontSize:'7px',letterSpacing:'2px',color:'rgba(201,169,110,.35)',minWidth:'16px',textTransform:'uppercase' as const}}>{i+1}</span>
+                    <div>
+                      <span style={{color:'#c9a96e',fontSize:'13px',fontFamily:"'Cormorant Garamond',serif",fontWeight:400}}>{m[1].trim()}</span>
+                      <span style={{color:'#555',fontSize:'11px',marginLeft:'8px',fontStyle:'italic'}}>{m[2].trim()}</span>
+                    </div>
+                  </div>
+                );
+              }
+              return <div key={i} style={{color:'#666',fontSize:'12px',padding:'4px 0'}}>{line}</div>;
+            })}
+          </div>
+        </div>
+      )}
+
+      <div style={dividerStyle}/>
+
+      {/* POVESTE */}
+      {storyText && (
+        <div style={sectionStyle}>
+          <span style={labelStyle}>Povestea Serii</span>
+          <p style={{
+            fontFamily:"'Cormorant Garamond',serif",
+            fontSize:'15px',fontWeight:300,lineHeight:'2',
+            color:'rgba(240,235,227,.55)',
+            whiteSpace:'pre-wrap',
+            borderLeft:'2px solid rgba(201,169,110,.12)',
+            paddingLeft:'16px',
+          }}>{storyText}</p>
+        </div>
+      )}
+
+      <div style={dividerStyle}/>
+
+      {/* PROFIL SENZORIAL */}
+      {profileLines.length > 0 && (
+        <div style={sectionStyle}>
+          <span style={labelStyle}>Profil Senzorial</span>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:'8px'}}>
+            {profileLines.map((line, i) => {
+              const [key, ...rest] = line.split(':');
+              const val = rest.join(':').trim();
+              return (
+                <div key={i} style={{background:'rgba(201,169,110,.03)',border:'1px solid rgba(201,169,110,.07)',padding:'10px 14px'}}>
+                  <div style={{fontSize:'7px',letterSpacing:'2px',color:'rgba(201,169,110,.35)',textTransform:'uppercase' as const,marginBottom:'4px'}}>{key.trim()}</div>
+                  <div style={{fontSize:'12px',color:'#777',lineHeight:'1.5'}}>{val || '—'}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── CONTACTS TAB ──
 function ContactsTab({ token }: { token: string }) {
   const [items, setItems] = useState<ContactRequest[]>([]);
@@ -219,8 +328,7 @@ function ContactsTab({ token }: { token: string }) {
                 {expanded === c.id && (
                   <tr key={c.id + '-exp'}>
                     <td colSpan={8} style={{...S.td, background:'rgba(201,169,110,.02)', padding:'20px 14px', borderLeft:'2px solid rgba(201,169,110,.15)'}}>
-                      <strong style={{color:'rgba(201,169,110,.6)',fontSize:'8px',letterSpacing:'3px',textTransform:'uppercase'}}>Mesaj</strong>
-                      <p style={{marginTop:'8px',lineHeight:'1.8',color:'#888'}}>{c.message || '(fără mesaj)'}</p>
+                      <CodexMessageView message={c.message} occasion={c.occasion} />
                     </td>
                   </tr>
                 )}
