@@ -320,6 +320,31 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* PHILOSOPHY */}
+      <div style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
+        <div className="section" style={{padding:'0 48px'}}>
+          <div className="sec-label reveal">Ce ne ghidează</div>
+          <h2 className="sec-title reveal d1">Filosofia <em>Atelierului</em></h2>
+          <div className="gold-line reveal d2"></div>
+          <div className="philosophy-wrap">
+            <div className="phil-visual reveal">
+              <div className="p-ring p-ring-1"><div className="p-dot"></div></div>
+              <div className="p-ring p-ring-2"></div>
+              <div className="p-ring p-ring-3"></div>
+              <div className="p-center">A</div>
+            </div>
+            <div className="phil-right reveal">
+              <p>"Ingredientul este primul. <em>Tehnica</em> este în slujba lui. Farfuria este ultimul cuvânt."</p>
+              <div className="phil-pillars">
+                <div className="pillar"><div className="pillar-icon">⚒️</div><div className="pillar-name">Craft</div><div className="pillar-desc">Fiecare preparat este construit de la zero, cu ingrediente selectate personal.</div></div>
+                <div className="pillar"><div className="pillar-icon">🤫</div><div className="pillar-name">Discretion</div><div className="pillar-desc">Evenimentele voastre rămân ale voastre. Confidențialitate absolută.</div></div>
+                <div className="pillar"><div className="pillar-icon">✦</div><div className="pillar-name">Excellence</div><div className="pillar-desc">Nu există compromis când vine vorba de calitate — nici în ingredient, nici în execuție.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* TWO MENUS INTRO */}
       <div style={{borderTop:'1px solid #141414',padding:'80px 0'}}>
         <div className="section" style={{padding:'0 48px'}}>
@@ -342,31 +367,6 @@ export default function HomePage() {
               <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>CODEX — <em>Ritualul de Inițiere</em></h3>
               <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul Codex compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
               <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Codex →</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* PHILOSOPHY */}
-      <div style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
-        <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal">Ce ne ghidează</div>
-          <h2 className="sec-title reveal d1">Filosofia <em>Atelierului</em></h2>
-          <div className="gold-line reveal d2"></div>
-          <div className="philosophy-wrap">
-            <div className="phil-visual reveal">
-              <div className="p-ring p-ring-1"><div className="p-dot"></div></div>
-              <div className="p-ring p-ring-2"></div>
-              <div className="p-ring p-ring-3"></div>
-              <div className="p-center">A</div>
-            </div>
-            <div className="phil-right reveal">
-              <p>"Ingredientul este primul. <em>Tehnica</em> este în slujba lui. Farfuria este ultimul cuvânt."</p>
-              <div className="phil-pillars">
-                <div className="pillar"><div className="pillar-icon">⚒️</div><div className="pillar-name">Craft</div><div className="pillar-desc">Fiecare preparat este construit de la zero, cu ingrediente selectate personal.</div></div>
-                <div className="pillar"><div className="pillar-icon">🤫</div><div className="pillar-name">Discretion</div><div className="pillar-desc">Evenimentele voastre rămân ale voastre. Confidențialitate absolută.</div></div>
-                <div className="pillar"><div className="pillar-icon">✦</div><div className="pillar-name">Excellence</div><div className="pillar-desc">Nu există compromis când vine vorba de calitate — nici în ingredient, nici în execuție.</div></div>
-              </div>
             </div>
           </div>
         </div>
