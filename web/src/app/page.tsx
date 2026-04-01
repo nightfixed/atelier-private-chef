@@ -296,8 +296,8 @@ export default function HomePage() {
             <div style={{textAlign:'center',padding:'0 16px'}}>
               <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Prestabilit</div>
               <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>Meniu de <em>Degustare</em></h3>
-              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici de fine dining european. O seară gândită în detaliu, pentru tine.</p>
-              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.35em',color:'rgba(201,169,110,0.5)',textTransform:'uppercase'}}>Disponibil la rezervare →</div>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici de fine dining european. O seară gândită în detaliu, pentru tine. Meniul complet îl găsești mai jos.</p>
+              <a href="#meniu" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Vezi Meniul →</a>
             </div>
             {/* Linie separator */}
             <div className="two-menus-div" style={{background:'linear-gradient(180deg,transparent,rgba(201,169,110,0.15),transparent)'}}></div>
