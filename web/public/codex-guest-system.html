@@ -1303,37 +1303,6 @@ function navBack() {
   if (document.getElementById('s-questions').classList.contains('active')) {
     if (currentQ > 0) {
       currentQ--;
-      // restore previous answer as selection
-      const prevQ = QUESTIONS[currentQ];
-      currentSelection = answers[prevQ.id] || null;
-      delete answers[prevQ.id];
-      renderQuestion();
-      // re-highlight previously selected option after render
-      if (currentSelection) {
-        setTimeout(() => {
-          document.querySelectorAll('.option-btn, .occasion-btn').forEach(b => {
-            if (b.textContent.trim() === currentSelection ||
-                b.querySelector('.occasion-name')?.textContent === OCCASIONS.find(o=>o.id===currentSelection)?.name ||
-                b.querySelector('.occasion-name')?.textContent === PROTEINS.find(p=>p.id===currentSelection)?.name) {
-              b.classList.add('selected');
-            }
-          });
-          const ta = document.getElementById('free-ans');
-          if (ta) { ta.value = currentSelection; document.getElementById('next-btn').disabled = false; }
-        }, 50);
-      }
-    } else {
-      show('s-intro');
-    }
-  } else {
-    window.location.href = 'https://atelierprivatedining.ro';
-  }
-}
-
-function navBack() {
-  if (document.getElementById('s-questions').classList.contains('active')) {
-    if (currentQ > 0) {
-      currentQ--;
       const prevQ = QUESTIONS[currentQ];
       currentSelection = answers[prevQ.id] || null;
       delete answers[prevQ.id];
