@@ -64,6 +64,16 @@ export default function HomePage() {
 
   // ── EFFECTS ──
   useEffect(() => {
+    // Pre-fill name from Codex redirect (?nume=...)
+    const params = new URLSearchParams(window.location.search);
+    const numeParam = params.get('nume');
+    if (numeParam) {
+      setRezNume(decodeURIComponent(numeParam));
+      setTimeout(() => {
+        document.getElementById('rezervare')?.scrollIntoView({ behavior: 'smooth' });
+      }, 400);
+    }
+
     // Availability
     const months = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
     const d = new Date(); d.setMonth(d.getMonth() + 1);
