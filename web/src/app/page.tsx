@@ -285,33 +285,6 @@ export default function HomePage() {
         <div className="quote-text">"Nu gătim pentru a umple stomacul. Gătim pentru a crea <em>un moment pe care îl vei ține minte</em>."</div>
       </div>
 
-      {/* TWO MENUS INTRO */}
-      <div style={{borderTop:'1px solid #141414',padding:'80px 0'}}>
-        <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal" style={{textAlign:'center'}}>Cum funcționează Atelier</div>
-          <h2 className="sec-title reveal d1" style={{textAlign:'center'}}>Două moduri de a <em>experimenta</em></h2>
-          <div className="gold-line reveal d2" style={{margin:'0 auto 48px'}}></div>
-          <div className="reveal two-menus-grid" style={{display:'grid',gridTemplateColumns:'1fr 1px 1fr',gap:'0 60px',maxWidth:'880px',margin:'0 auto'}}>
-            {/* Card stânga: meniu prestabilit */}
-            <div style={{textAlign:'center',padding:'0 16px'}}>
-              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Prestabilit</div>
-              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>Meniu de <em>Degustare</em></h3>
-              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici de fine dining european. O seară gândită în detaliu, pentru tine. Meniul complet îl găsești mai jos.</p>
-              <a href="#meniu" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Vezi Meniul →</a>
-            </div>
-            {/* Linie separator */}
-            <div className="two-menus-div" style={{background:'linear-gradient(180deg,transparent,rgba(201,169,110,0.15),transparent)'}}></div>
-            {/* Card dreapta: Codex */}
-            <div style={{textAlign:'center',padding:'0 16px'}}>
-              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Inovativ · AI</div>
-              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>CODEX — <em>Ritualul de Inițiere</em></h3>
-              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul Codex compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
-              <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Codex →</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* STORY */}
       <div id="story" style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
         <div className="section" style={{padding:'0 48px'}}>
@@ -342,6 +315,33 @@ export default function HomePage() {
                 <div><div className="stat-n" style={{color:'var(--copper2)'}}>50<span style={{fontSize:'20px'}}>+</span></div><div className="stat-l">clienți corporate</div></div>
                 <div><div className="stat-n" style={{color:'var(--copper2)'}}>100<span style={{fontSize:'20px'}}>+</span></div><div className="stat-l">evenimente</div></div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* TWO MENUS INTRO */}
+      <div style={{borderTop:'1px solid #141414',padding:'80px 0'}}>
+        <div className="section" style={{padding:'0 48px'}}>
+          <div className="sec-label reveal" style={{textAlign:'center'}}>Cum funcționează Atelier</div>
+          <h2 className="sec-title reveal d1" style={{textAlign:'center'}}>Două moduri de a <em>experimenta</em></h2>
+          <div className="gold-line reveal d2" style={{margin:'0 auto 48px'}}></div>
+          <div className="reveal two-menus-grid" style={{display:'grid',gridTemplateColumns:'1fr 1px 1fr',gap:'0 60px',maxWidth:'880px',margin:'0 auto'}}>
+            {/* Card stânga: meniu prestabilit */}
+            <div style={{textAlign:'center',padding:'0 16px'}}>
+              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Prestabilit</div>
+              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>Meniu de <em>Degustare</em></h3>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici de fine dining european. O seară gândită în detaliu, pentru tine. Meniul complet îl găsești mai jos.</p>
+              <a href="#meniu" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Vezi Meniul →</a>
+            </div>
+            {/* Linie separator */}
+            <div className="two-menus-div" style={{background:'linear-gradient(180deg,transparent,rgba(201,169,110,0.15),transparent)'}}></div>
+            {/* Card dreapta: Codex */}
+            <div style={{textAlign:'center',padding:'0 16px'}}>
+              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Inovativ · AI</div>
+              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>CODEX — <em>Ritualul de Inițiere</em></h3>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul Codex compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
+              <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Codex →</a>
             </div>
           </div>
         </div>
