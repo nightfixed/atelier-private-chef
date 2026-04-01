@@ -77,8 +77,13 @@ const S = {
   tdStrong: {padding:'14px',borderBottom:'1px solid #111',fontSize:'13px',color:'#ccc',verticalAlign:'top' as const},
   badge: (status: string) => ({
     display:'inline-block',padding:'3px 10px',fontSize:'8px',letterSpacing:'2px',textTransform:'uppercase' as const,
-    border:`1px solid ${status==='new'?'rgba(76,175,122,.3)':status==='read'?'rgba(201,169,110,.3)':'rgba(100,100,100,.3)'}`,
-    color: status==='new'?'rgba(76,175,122,.7)':status==='read'?'rgba(201,169,110,.6)':'#444',
+    border:`1px solid ${
+      status==='new'?'rgba(76,175,122,.3)':
+      status==='accepted'?'rgba(76,175,122,.5)':
+      status==='rejected'?'rgba(200,80,80,.3)':
+      status==='read'?'rgba(201,169,110,.3)':'rgba(100,100,100,.3)'
+    }`,
+    color: status==='new'?'rgba(76,175,122,.7)':status==='accepted'?'rgba(100,220,120,.8)':status==='rejected'?'rgba(200,100,100,.7)':status==='read'?'rgba(201,169,110,.6)':'#444',
   }),
   modal: {position:'fixed' as const,inset:0,zIndex:500,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,.85)',backdropFilter:'blur(4px)'},
   modalBox: {background:'#0e0e0e',border:'1px solid #222',padding:'40px',width:'100%',maxWidth:'560px',maxHeight:'90vh',overflowY:'auto' as const},
@@ -265,6 +270,8 @@ function ContactsTab({ token }: { token: string }) {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [accepting, setAccepting] = useState<string | null>(null);
+  const [actionErr, setActionErr] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -278,23 +285,100 @@ function ContactsTab({ token }: { token: string }) {
     try { await api.updateContactStatus(id, status, token); load(); } catch {}
   }
 
-  const statusOptions = ['new', 'read', 'replied'];
+  async function acceptCodex(c: ContactRequest) {
+    setAccepting(c.id);
+    setActionErr(null);
+    try {
+      // 1. Mark this contact as accepted
+      await api.updateContactStatus(c.id, 'accepted', token);
+
+      // 2. If we have an event_date, block that day
+      if (c.event_date) {
+        const dateStr = c.event_date.substring(0, 10);
+        try {
+          // Create availability window for the day
+          const win = await api.createAvailabilityWindow({
+            date: dateStr,
+            max_guests: c.guests_count ?? 12,
+            notes: `REZERVAT — ${c.name} (CODEX)`,
+          }, token);
+          // Create a reservation tied to that window
+          const res = await api.submitReservation({
+            window_id: win.id,
+            name: c.name,
+            email: c.email,
+            guests_count: c.guests_count,
+            occasion: 'CODEX',
+            message: `Acceptat via admin CODEX. Contact ID: ${c.id}`,
+          });
+          // Confirm the reservation → marks window is_booked = true
+          await api.updateReservationStatus(res.id, 'confirmed', token);
+        } catch {
+          // Window/reservation creation failed — contact is still accepted
+        }
+
+        // 3. Auto-reject other CODEX requests for the same day
+        const sameDay = items.filter(x =>
+          x.id !== c.id &&
+          x.occasion === 'CODEX' &&
+          x.event_date?.substring(0, 10) === dateStr &&
+          !['accepted', 'rejected'].includes(x.status)
+        );
+        for (const other of sameDay) {
+          try { await api.updateContactStatus(other.id, 'rejected', token); } catch {}
+        }
+      }
+
+      load();
+    } catch (e: unknown) {
+      setActionErr(e instanceof Error ? e.message : 'Eroare la acceptare');
+    }
+    setAccepting(null);
+  }
+
+  async function rejectCodex(c: ContactRequest) {
+    setAccepting(c.id);
+    setActionErr(null);
+    try {
+      await api.updateContactStatus(c.id, 'rejected', token);
+      load();
+    } catch (e: unknown) {
+      setActionErr(e instanceof Error ? e.message : 'Eroare');
+    }
+    setAccepting(null);
+  }
+
+  const filterLabels: Record<string, string> = {
+    '': 'Toate', 'new': 'Noi', 'read': 'Citite', 'replied': 'Răspuns',
+    'accepted': 'Acceptate', 'rejected': 'Refuzate',
+  };
+
+  // Count pending CODEX requests that need a decision
+  const pendingCodex = items.filter(x => x.occasion === 'CODEX' && x.status === 'new').length;
 
   return (
     <div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:'24px'}}>
         <div>
-          <div style={S.sectionTitle}>Cereri de rezervare</div>
+          <div style={S.sectionTitle}>
+            Cereri de rezervare
+            {pendingCodex > 0 && (
+              <span style={{marginLeft:'12px',fontSize:'11px',letterSpacing:'2px',color:'rgba(201,169,110,.8)',border:'1px solid rgba(201,169,110,.3)',padding:'3px 10px',verticalAlign:'middle'}}>
+                {pendingCodex} CODEX așteaptă răspuns
+              </span>
+            )}
+          </div>
           <div style={S.sectionSub}>{items.length} cereri · click pe rând pentru detalii</div>
         </div>
-        <div style={{display:'flex',gap:'8px'}}>
-          {['','new','read','replied'].map(s => (
+        <div style={{display:'flex',gap:'8px',flexWrap:'wrap'}}>
+          {Object.keys(filterLabels).map(s => (
             <button key={s} style={{...S.btnSmall, ...(filter===s?{borderColor:'#c9a96e',color:'#c9a96e'}:{})}} onClick={() => setFilter(s)}>
-              {s === '' ? 'Toate' : s}
+              {filterLabels[s]}
             </button>
           ))}
         </div>
       </div>
+      {actionErr && <div style={S.error}>{actionErr}</div>}
       {loading ? <div style={S.emptyState}>Se încarcă...</div> : (
         <table style={S.table}>
           <thead>
@@ -307,33 +391,64 @@ function ContactsTab({ token }: { token: string }) {
           </thead>
           <tbody>
             {items.length === 0 && <tr><td colSpan={8} style={{...S.td,...S.emptyState}}>Nicio cerere</td></tr>}
-            {items.map(c => (
-              <>
-                <tr key={c.id} style={{cursor:'pointer'}} onClick={() => setExpanded(expanded === c.id ? null : c.id)}>
-                  <td style={S.tdStrong}>{c.name}</td>
-                  <td style={S.td}>{c.email}</td>
-                  <td style={S.td}>{c.occasion ?? '—'}</td>
-                  <td style={S.td}>{c.event_date ? c.event_date.substring(0,10) : '—'}</td>
-                  <td style={S.td}>{c.guests_count ?? '—'}</td>
-                  <td style={S.td}><span style={S.badge(c.status)}>{c.status}</span></td>
-                  <td style={S.td}>{new Date(c.created_at).toLocaleDateString('ro-RO')}</td>
-                  <td style={S.td}>
-                    <div style={{display:'flex',gap:'6px'}} onClick={e => e.stopPropagation()}>
-                      {statusOptions.filter(s => s !== c.status).map(s => (
-                        <button key={s} style={S.btnSmall} onClick={() => updateStatus(c.id, s)}>→ {s}</button>
-                      ))}
-                    </div>
-                  </td>
-                </tr>
-                {expanded === c.id && (
-                  <tr key={c.id + '-exp'}>
-                    <td colSpan={8} style={{...S.td, background:'rgba(201,169,110,.02)', padding:'20px 14px', borderLeft:'2px solid rgba(201,169,110,.15)'}}>
-                      <CodexMessageView message={c.message} occasion={c.occasion} />
+            {items.map(c => {
+              const isCodex = c.occasion === 'CODEX';
+              const isPending = !['accepted','rejected'].includes(c.status);
+              const isBusy = accepting === c.id;
+              return (
+                <>
+                  <tr
+                    key={c.id}
+                    style={{cursor:'pointer', background: isCodex && isPending ? 'rgba(201,169,110,.03)' : undefined}}
+                    onClick={() => setExpanded(expanded === c.id ? null : c.id)}
+                  >
+                    <td style={S.tdStrong}>
+                      {c.name}
+                      {isCodex && <span style={{marginLeft:'8px',fontSize:'7px',letterSpacing:'2px',color:'rgba(201,169,110,.5)',textTransform:'uppercase' as const}}>✦ codex</span>}
+                    </td>
+                    <td style={S.td}>{c.email}</td>
+                    <td style={S.td}>{c.occasion ?? '—'}</td>
+                    <td style={S.td}>{c.event_date ? c.event_date.substring(0,10) : '—'}</td>
+                    <td style={S.td}>{c.guests_count ?? '—'}</td>
+                    <td style={S.td}><span style={S.badge(c.status)}>{c.status}</span></td>
+                    <td style={S.td}>{new Date(c.created_at).toLocaleDateString('ro-RO')}</td>
+                    <td style={S.td}>
+                      <div style={{display:'flex',gap:'6px',flexWrap:'wrap'}} onClick={e => e.stopPropagation()}>
+                        {isCodex && isPending ? (
+                          <>
+                            <button
+                              disabled={isBusy}
+                              style={{...S.btnSmall, borderColor:'rgba(76,175,100,.5)', color:'rgba(100,200,120,.9)', opacity: isBusy ? 0.4 : 1}}
+                              onClick={() => acceptCodex(c)}
+                            >
+                              {isBusy ? '...' : '✓ Acceptă'}
+                            </button>
+                            <button
+                              disabled={isBusy}
+                              style={{...S.btnDanger, opacity: isBusy ? 0.4 : 1}}
+                              onClick={() => rejectCodex(c)}
+                            >
+                              ✕ Refuză
+                            </button>
+                          </>
+                        ) : (
+                          ['new','read','replied'].filter(s => s !== c.status).map(s => (
+                            <button key={s} style={S.btnSmall} onClick={() => updateStatus(c.id, s)}>→ {s}</button>
+                          ))
+                        )}
+                      </div>
                     </td>
                   </tr>
-                )}
-              </>
-            ))}
+                  {expanded === c.id && (
+                    <tr key={c.id + '-exp'}>
+                      <td colSpan={8} style={{...S.td, background:'rgba(201,169,110,.02)', padding:'20px 14px', borderLeft:'2px solid rgba(201,169,110,.15)'}}>
+                        <CodexMessageView message={c.message} occasion={c.occasion} />
+                      </td>
+                    </tr>
+                  )}
+                </>
+              );
+            })}
           </tbody>
         </table>
       )}
