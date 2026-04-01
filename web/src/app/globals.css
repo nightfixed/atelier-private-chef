@@ -608,6 +608,8 @@ footer{padding:80px 48px 48px;border-top:1px solid #111;text-align:center;}
   nav{padding:0 20px}.nav-links{gap:14px}
   .section{padding:70px 20px}
   .story-grid,.asezat-wrap,.biz-card,.services-grid,.gelato-grid,.sorbet-grid,.process-steps,.phil-pillars,.asezat-products,.testi-grid,.rez-wrap,.menu-prev-wrap{grid-template-columns:1fr!important}
+  .two-menus-grid{grid-template-columns:1fr!important;gap:40px 0!important}
+  .two-menus-div{display:none!important}
   .biz-card{flex-direction:column;height:auto}
   .gelato-inner{padding:0 20px}
   .sorbet-grid{grid-template-columns:1fr!important}
