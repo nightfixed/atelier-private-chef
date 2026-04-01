@@ -542,6 +542,10 @@ export default function HomePage() {
           <div className="sec-label reveal">Exemplu de meniu</div>
           <h2 className="sec-title reveal d1">Meniu de <em>Degustare</em></h2>
           <div className="gold-line reveal d2"></div>
+          <div className="reveal" style={{maxWidth:'620px',margin:'0 0 3rem',lineHeight:'2',fontSize:'1rem',color:'rgba(232,224,208,0.65)',fontStyle:'italic'}}>
+            Meniurile Atelier există în două forme: un <strong style={{color:'#c9a96e',fontStyle:'normal',fontWeight:400}}>meniu de degustare prestabilit</strong> — compus de Chef Răzvan și rafinat de-a lungul sezoanelor — și un <strong style={{color:'#c9a96e',fontStyle:'normal',fontWeight:400}}>meniu generat de Codex</strong>, compus în timp real pe baza profilului senzorial al fiecărui oaspete.{' '}
+            <a href="/codex-guest-system.html" style={{color:'#c9a96e',textDecoration:'none',borderBottom:'1px solid rgba(201,169,110,0.3)',paddingBottom:'1px'}}>Încearcă Codex →</a>
+          </div>
           <div className="menu-prev-wrap reveal">
             <div>
               <p className="menu-prev-intro">"Un meniu compus din două lumi: produsele cele mai bune ale României și ingrediente internaționale de lux, toate ușor de procurat. Fiecare curs — o decizie cu intenție."</p>
