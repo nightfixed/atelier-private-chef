@@ -366,6 +366,7 @@ export default function HomePage() {
               <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>CODEX — <em>Ritualul de Inițiere</em></h3>
               <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul Codex compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
               <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Codex →</a>
+              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'8px',letterSpacing:'0.35em',color:'rgba(201,169,110,0.35)',textTransform:'uppercase',marginTop:'1rem'}}>Exclusiv Private Dining · 2–6 persoane</div>
             </div>
           </div>
         </div>
@@ -382,7 +383,7 @@ export default function HomePage() {
               <div className="svc-num">I</div>
               <span className="svc-icon">🕯️</span>
               <h3>Private Dining</h3>
-              <div className="svc-label">Cine intime · 2–20 persoane</div>
+              <div className="svc-label">Cine intime · 2–6 persoane</div>
               <p>Meniu de degustare construit personal pentru ocazia voastră. De la amuse-bouche până la mignardises, fiecare element reflectă gusturile și momentul vostru.</p>
               <div className="svc-price">De la consultație gratuită</div>
             </div>
