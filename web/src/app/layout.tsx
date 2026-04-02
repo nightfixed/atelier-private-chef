@@ -56,6 +56,29 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+const LOCK_SCRIPT = `(function(){
+  var KEY='atelier2026',STORE='ap_preview';
+  var p=new URLSearchParams(window.location.search).get('p');
+  if(p===KEY){
+    try{localStorage.setItem(STORE,KEY);}catch(e){}
+    var u=window.location.pathname+window.location.hash;
+    window.history.replaceState({},'',u);
+    return;
+  }
+  var ok=false;try{ok=localStorage.getItem(STORE)===KEY;}catch(e){}
+  if(ok)return;
+  document.documentElement.style.visibility='hidden';
+  document.addEventListener('DOMContentLoaded',function(){
+    document.documentElement.style.visibility='';
+    document.body.style.cssText='margin:0;background:#0e0e0e;';
+    document.body.innerHTML='<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;background:#0e0e0e;font-family:Georgia,serif;">'
+      +'<div style="font-size:0.55rem;letter-spacing:0.5em;color:#c9a96e;text-transform:uppercase;margin-bottom:2rem;opacity:0.7;">Atelier Private Dining \u2014 Cluj-Napoca</div>'
+      +'<h1 style="font-size:clamp(2rem,6vw,3.5rem);font-weight:300;color:#c9a96e;letter-spacing:0.1em;margin:0 0 1.5rem;">\u00cen cur\u00e2nd</h1>'
+      +'<p style="font-size:1rem;font-weight:300;font-style:italic;color:rgba(245,240,234,0.5);max-width:380px;line-height:2;margin:0;">Site-ul este \u00een construc\u021bie.<br>Revenim cur\u00e2nd.</p>'
+      +'</div>';
+  });
+})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -64,6 +87,7 @@ export default function RootLayout({
   return (
     <html lang="ro">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: LOCK_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
