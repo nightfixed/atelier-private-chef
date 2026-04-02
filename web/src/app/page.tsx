@@ -279,6 +279,30 @@ export default function HomePage() {
         <div className="hero-bottom">Descoperă<div className="scroll-line"></div></div>
       </section>
 
+      {/* SCROLL TO BOTTOM */}
+      <button
+        onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+        title="Mergi la final"
+        style={{
+          position: 'fixed', bottom: 32, left: 32, zIndex: 100,
+          background: 'transparent', border: '1px solid rgba(201,169,110,0.2)',
+          color: 'rgba(201,169,110,0.35)', cursor: 'pointer',
+          width: 36, height: 36, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, transition: 'all .3s', padding: 0,
+        }}
+        onMouseEnter={e => {
+          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(201,169,110,0.6)';
+          (e.currentTarget as HTMLButtonElement).style.color = 'rgba(201,169,110,0.8)';
+        }}
+        onMouseLeave={e => {
+          (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(201,169,110,0.2)';
+          (e.currentTarget as HTMLButtonElement).style.color = 'rgba(201,169,110,0.35)';
+        }}
+      >
+        ↓
+      </button>
+
       {/* QUOTE 1 */}
       <div className="quote-section reveal">
         <div className="quote-text">"Nu gătim pentru a umple stomacul. Gătim pentru a crea <em>un moment pe care îl vei ține minte</em>."</div>
