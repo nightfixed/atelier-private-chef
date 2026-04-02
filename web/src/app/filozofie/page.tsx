@@ -270,17 +270,9 @@ export default function FilozofiePage() {
           {/* COLOPHON CODEX */}
           <div style={{ textAlign: 'center', marginTop: 48, paddingTop: 48, borderTop: `1px solid ${goldFaint}` }}>
             <p style={{ fontSize: '1.2rem', fontWeight: 300, letterSpacing: '0.2em', color: gold, marginBottom: 8 }}>Răzvan</p>
-            <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.45em', color: textFaint, textTransform: 'uppercase', marginBottom: 32 }}>
+            <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.45em', color: textFaint, textTransform: 'uppercase' }}>
               Chef & Fondator · Atelier Private Dining
             </p>
-            <a href="/codex-guest-system.html" style={{
-              display: 'inline-block', border: `1px solid ${goldMid}`, color: gold,
-              fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
-              letterSpacing: '0.45em', textTransform: 'uppercase',
-              padding: '12px 36px', textDecoration: 'none',
-            }}>
-              Solicită o seară
-            </a>
           </div>
 
         </div>
@@ -345,17 +337,6 @@ export default function FilozofiePage() {
                 <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.85rem', lineHeight: 1.9, color: textFaint }}>{l.sub}</p>
               </div>
             ))}
-          </div>
-
-          <div style={{ textAlign: 'center', paddingTop: 48, borderTop: `1px solid ${goldFaint}` }}>
-            <a href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Interes%20Corporativ" style={{
-              display: 'inline-block', border: `1px solid ${goldMid}`, color: gold,
-              fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
-              letterSpacing: '0.45em', textTransform: 'uppercase',
-              padding: '12px 36px', textDecoration: 'none',
-            }}>
-              Înregistrează Interesul Echipei
-            </a>
           </div>
 
         </div>
@@ -423,17 +404,6 @@ export default function FilozofiePage() {
                 <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.85rem', lineHeight: 1.9, color: textFaint }}>{item.sub}</p>
               </div>
             ))}
-          </div>
-
-          <div style={{ textAlign: 'center', paddingTop: 48, borderTop: `1px solid ${goldFaint}` }}>
-            <a href="mailto:contact@atelierprivatedining.ro?subject=Matrice%20%E2%80%94%20Identitate%20Culinara" style={{
-              display: 'inline-block', border: `1px solid ${goldMid}`, color: gold,
-              fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
-              letterSpacing: '0.45em', textTransform: 'uppercase',
-              padding: '12px 36px', textDecoration: 'none',
-            }}>
-              Solicită Matricea
-            </a>
           </div>
 
         </div>
