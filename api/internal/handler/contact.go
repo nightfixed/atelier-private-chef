@@ -14,6 +14,7 @@ type contactRepo interface {
 	CreateContactRequest(ctx context.Context, name, email string, message *string, eventDate *time.Time, guestsCount *int, occasion *string) (*repository.ContactRequest, error)
 	ListContactRequests(ctx context.Context, status string) ([]repository.ContactRequest, error)
 	UpdateContactRequestStatus(ctx context.Context, id, status string) (*repository.ContactRequest, error)
+	DeleteContactRequest(ctx context.Context, id string) error
 }
 
 // NewContactHandler handles POST /api/contact (public) and GET /api/contact (admin).
@@ -76,7 +77,7 @@ func NewContactHandler(repo contactRepo, authMiddleware func(http.Handler) http.
 	})
 }
 
-// NewContactByIDHandler handles PUT /api/contact/{id} (admin: update status).
+// NewContactByIDHandler handles PUT+DELETE /api/contact/{id} (admin only).
 func NewContactByIDHandler(repo contactRepo, authMiddleware func(http.Handler) http.Handler) http.Handler {
 	return authMiddleware(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("id")
@@ -84,27 +85,34 @@ func NewContactByIDHandler(repo contactRepo, authMiddleware func(http.Handler) h
 			writeError(w, http.StatusBadRequest, "missing id")
 			return
 		}
-		if r.Method != http.MethodPut {
-			w.Header().Set("Allow", "PUT")
+		switch r.Method {
+		case http.MethodPut:
+			var body struct {
+				Status string `json:"status"`
+			}
+			if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+				writeError(w, http.StatusBadRequest, "invalid request body")
+				return
+			}
+			cr, err := repo.UpdateContactRequestStatus(r.Context(), id, body.Status)
+			if err != nil {
+				writeError(w, http.StatusInternalServerError, err.Error())
+				return
+			}
+			if cr == nil {
+				writeError(w, http.StatusNotFound, "contact request not found")
+				return
+			}
+			writeJSON(w, http.StatusOK, cr)
+		case http.MethodDelete:
+			if err := repo.DeleteContactRequest(r.Context(), id); err != nil {
+				writeError(w, http.StatusInternalServerError, "could not delete contact request")
+				return
+			}
+			writeJSON(w, http.StatusNoContent, nil)
+		default:
+			w.Header().Set("Allow", "PUT, DELETE")
 			writeError(w, http.StatusMethodNotAllowed, "method not allowed")
-			return
 		}
-		var body struct {
-			Status string `json:"status"`
-		}
-		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-			writeError(w, http.StatusBadRequest, "invalid request body")
-			return
-		}
-		cr, err := repo.UpdateContactRequestStatus(r.Context(), id, body.Status)
-		if err != nil {
-			writeError(w, http.StatusInternalServerError, err.Error())
-			return
-		}
-		if cr == nil {
-			writeError(w, http.StatusNotFound, "contact request not found")
-			return
-		}
-		writeJSON(w, http.StatusOK, cr)
 	}))
 }

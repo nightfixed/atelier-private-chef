@@ -91,11 +91,32 @@ type CodexResponse struct {
 	Story string        `json:"story"`
 }
 
+// ArtifactRequest contains the sensory profile for generating a post-dinner artifact.
+type ArtifactRequest struct {
+	GuestName   string `json:"guest_name"`
+	ChapterNum  int    `json:"chapter_num"`
+	Date        string `json:"date"`
+	Memory      string `json:"memory"`
+	Sensation   string `json:"sensation"`
+	Rhythm      string `json:"rhythm"`
+	Element     string `json:"element"`
+	End         string `json:"end"`
+	Philosophy  string `json:"philosophy"`
+}
+
+// ArtifactResponse contains the generated artifact title, subtitle, and text.
+type ArtifactResponse struct {
+	Title    string `json:"title"`
+	Subtitle string `json:"subtitle"`
+	Text     string `json:"text"`
+}
+
 // Provider is the interface every LLM backend must implement.
 // To connect a real model, implement this interface and inject it in main.go.
 type Provider interface {
 	GenerateMenu(ctx context.Context, req MenuRequest) (*MenuResponse, error)
 	GenerateCodex(ctx context.Context, req CodexRequest) (*CodexResponse, error)
+	GenerateArtifact(ctx context.Context, req ArtifactRequest) (*ArtifactResponse, error)
 	Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error)
 }
 

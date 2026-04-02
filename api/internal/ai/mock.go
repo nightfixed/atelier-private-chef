@@ -2,6 +2,7 @@ package ai
 
 import (
 "context"
+"fmt"
 "strings"
 )
 
@@ -160,6 +161,15 @@ func (m *MockProvider) GenerateCodex(_ context.Context, req CodexRequest) (*Code
 		"Nu există rețetă standard — există o combinație gândită pentru această ocazie, pentru aceste persoane, pentru această seară. " +
 		"La final, nu vei ști exact ce ai mâncat — vei ști doar cum te-ai simțit."
 	return &CodexResponse{Menu: courses, Story: story}, nil
+}
+
+// GenerateArtifact returns a mock post-dinner artifact.
+func (m *MockProvider) GenerateArtifact(_ context.Context, req ArtifactRequest) (*ArtifactResponse, error) {
+	return &ArtifactResponse{
+		Title:    "Seara Memoriei și a Focului",
+		Subtitle: fmt.Sprintf("Capitol #%d — %s", req.ChapterNum, req.Date),
+		Text:     "Seara lui " + req.GuestName + " a început înainte de primul preparat. A început cu tăcerea dinaintea primului cuvânt, cu mirosul care a sosit înaintea gustului. Fiecare farfurie a purtat o amintire deghizată în tehnică, fiecare pauză a fost un capitol în sine. La finalul serii, nimic nu s-a terminat cu adevărat.",
+	}, nil
 }
 
 // Chat handles conversational messages about Atelier Private Dining.

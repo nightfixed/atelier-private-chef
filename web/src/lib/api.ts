@@ -53,6 +53,8 @@ export const api = {
     apiFetch(`/api/contact${status ? `?status=${encodeURIComponent(status)}` : ""}`, {}, token),
   updateContactStatus: (id: string, status: string, token: string) =>
     apiFetch(`/api/contact/${id}`, { method: "PUT", body: JSON.stringify({ status }) }, token),
+  deleteContact: (id: string, token: string) =>
+    apiFetch(`/api/contact/${id}`, { method: "DELETE" }, token),
 
   getUploadUrl: (filename: string, contentType: string, token: string) =>
     apiFetch(`/api/upload?filename=${encodeURIComponent(filename)}&content_type=${encodeURIComponent(contentType)}`, {}, token),

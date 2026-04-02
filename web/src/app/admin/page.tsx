@@ -81,9 +81,10 @@ const S = {
       status==='new'?'rgba(76,175,122,.3)':
       status==='accepted'?'rgba(76,175,122,.5)':
       status==='rejected'?'rgba(200,80,80,.3)':
-      status==='read'?'rgba(201,169,110,.3)':'rgba(100,100,100,.3)'
+      status==='read'?'rgba(201,169,110,.3)':
+      status==='archived'?'rgba(80,80,80,.2)':'rgba(100,100,100,.3)'
     }`,
-    color: status==='new'?'rgba(76,175,122,.7)':status==='accepted'?'rgba(100,220,120,.8)':status==='rejected'?'rgba(200,100,100,.7)':status==='read'?'rgba(201,169,110,.6)':'#444',
+    color: status==='new'?'rgba(76,175,122,.7)':status==='accepted'?'rgba(100,220,120,.8)':status==='rejected'?'rgba(200,100,100,.7)':status==='read'?'rgba(201,169,110,.6)':status==='archived'?'#555':'#444',
   }),
   modal: {position:'fixed' as const,inset:0,zIndex:500,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,.85)',backdropFilter:'blur(4px)'},
   modalBox: {background:'#0e0e0e',border:'1px solid #222',padding:'40px',width:'100%',maxWidth:'560px',maxHeight:'90vh',overflowY:'auto' as const},
@@ -272,6 +273,7 @@ function ContactsTab({ token }: { token: string }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [accepting, setAccepting] = useState<string | null>(null);
   const [actionErr, setActionErr] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -283,6 +285,11 @@ function ContactsTab({ token }: { token: string }) {
 
   async function updateStatus(id: string, status: string) {
     try { await api.updateContactStatus(id, status, token); load(); } catch {}
+  }
+
+  async function deleteContact(id: string) {
+    try { await api.deleteContact(id, token); load(); } catch {}
+    setDeleting(null);
   }
 
   async function acceptCodex(c: ContactRequest) {
@@ -350,7 +357,7 @@ function ContactsTab({ token }: { token: string }) {
 
   const filterLabels: Record<string, string> = {
     '': 'Toate', 'new': 'Noi', 'read': 'Citite', 'replied': 'Răspuns',
-    'accepted': 'Acceptate', 'rejected': 'Refuzate',
+    'accepted': 'Acceptate', 'rejected': 'Refuzate', 'archived': 'Arhivate',
   };
 
   // Count pending CODEX requests that need a decision
@@ -436,6 +443,10 @@ function ContactsTab({ token }: { token: string }) {
                             <button key={s} style={S.btnSmall} onClick={() => updateStatus(c.id, s)}>→ {s}</button>
                           ))
                         )}
+                        {c.status !== 'archived' && (
+                          <button style={{...S.btnSmall, borderColor:'rgba(100,100,100,.3)', color:'#555'}} onClick={() => updateStatus(c.id, 'archived')}>↓ Arhivează</button>
+                        )}
+                        <button style={S.btnDanger} onClick={() => setDeleting(c.id)}>✕ Șterge</button>
                       </div>
                     </td>
                   </tr>
@@ -451,6 +462,13 @@ function ContactsTab({ token }: { token: string }) {
             })}
           </tbody>
         </table>
+      )}
+      {deleting && (
+        <ConfirmModal
+          msg="Ești sigur că vrei să ștergi permanent această cerere? Acțiunea nu poate fi anulată."
+          onConfirm={() => deleteContact(deleting)}
+          onCancel={() => setDeleting(null)}
+        />
       )}
     </div>
   );

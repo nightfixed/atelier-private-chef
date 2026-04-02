@@ -104,6 +104,7 @@ func main() {
 	// AI — menu generator + codex ritual + chat
 	mux.Handle("/api/generate-menu", handler.NewGenerateHandler(aiProvider, herbariumRepo))
 	mux.Handle("/api/generate-codex", handler.NewCodexHandler(aiProvider))
+	mux.Handle("/api/generate-artifact", handler.NewArtifactHandler(aiProvider))
 	mux.Handle("/api/chat", handler.NewChatHandler(aiProvider))
 
 	// Upload (signed GCS PUT URL)

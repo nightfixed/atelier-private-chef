@@ -72,6 +72,19 @@ func (r *ContactRepository) ListContactRequests(ctx context.Context, status stri
 	return items, rows.Err()
 }
 
+// DeleteContactRequest removes a contact request permanently.
+func (r *ContactRepository) DeleteContactRequest(ctx context.Context, id string) error {
+	res, err := r.db.ExecContext(ctx, `DELETE FROM contact_requests WHERE id=$1`, id)
+	if err != nil {
+		return err
+	}
+	n, _ := res.RowsAffected()
+	if n == 0 {
+		return sql.ErrNoRows
+	}
+	return nil
+}
+
 // UpdateContactRequestStatus updates the status of a contact request.
 func (r *ContactRepository) UpdateContactRequestStatus(ctx context.Context, id, status string) (*ContactRequest, error) {
 	var cr ContactRequest

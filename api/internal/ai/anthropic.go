@@ -195,6 +195,59 @@ Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără exp
 	return &CodexResponse{Menu: courses, Story: strings.TrimSpace(story)}, nil
 }
 
+// GenerateArtifact calls Claude to produce a post-dinner personal artifact (title + text).
+func (p *AnthropicProvider) GenerateArtifact(ctx context.Context, req ArtifactRequest) (*ArtifactResponse, error) {
+	profile := fmt.Sprintf("Oaspete: %s\nAmintire culinară din copilărie: %s\nSenzație căutată: %s\nRitm la masă: %s\nIngredient de atracție: %s\nStare dorită la final: %s\nFilosofia personală despre o masă bună: %s",
+		req.GuestName, req.Memory, req.Sensation, req.Rhythm, req.Element, req.End, req.Philosophy)
+
+	system := fmt.Sprintf(`Ești arhivarul Codex Atelier — sistemul care documentează fiecare seară ca un capitol unic, ireplicabil.
+
+Pe baza profilului senzorial al oaspetelui, scrie un artefact post-cină în română.
+
+Răspunde STRICT în formatul:
+TITLU: [un titlu poetic de 3-6 cuvinte]
+SUBTITLU: [Capitol #%d — %s]
+TEXT: [200-250 cuvinte — text literar care evocă seara tocmai încheiată, ca un jurnal scris de un martor invizibil. Nu descrie cursuri sec. Descrie momente, stări, tranziții senzoriale. Integrează subtil detalii din profil.]`, req.ChapterNum, req.Date)
+
+	raw, err := p.call(ctx, system, profile, 1000)
+	if err != nil {
+		return nil, fmt.Errorf("artifact generation: %w", err)
+	}
+
+	title := extractLine(raw, "TITLU:")
+	subtitle := extractLine(raw, "SUBTITLU:")
+	text := extractAfter(raw, "TEXT:")
+
+	if title == "" {
+		title = "Capitol Personal"
+	}
+	if subtitle == "" {
+		subtitle = fmt.Sprintf("Capitol #%d — %s", req.ChapterNum, req.Date)
+	}
+	if text == "" {
+		text = strings.TrimSpace(raw)
+	}
+
+	return &ArtifactResponse{Title: title, Subtitle: subtitle, Text: strings.TrimSpace(text)}, nil
+}
+
+func extractLine(s, prefix string) string {
+	for _, line := range strings.Split(s, "\n") {
+		if strings.HasPrefix(strings.TrimSpace(line), prefix) {
+			return strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(line), prefix))
+		}
+	}
+	return ""
+}
+
+func extractAfter(s, prefix string) string {
+	idx := strings.Index(s, prefix)
+	if idx < 0 {
+		return ""
+	}
+	return strings.TrimSpace(s[idx+len(prefix):])
+}
+
 // Chat handles multi-turn conversation using Claude.
 func (p *AnthropicProvider) Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error) {
 	system := `Ești asistentul virtual al Atelier Private Dining, un serviciu exclusiv de private chef din Cluj-Napoca, România.
