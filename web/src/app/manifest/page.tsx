@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { CSSProperties } from 'react';
 
 export const metadata: Metadata = {
   title: 'Manifest · Atelier Private Dining',
@@ -78,48 +79,48 @@ export default function ManifestPage() {
   const serif = "'Cormorant Garamond', serif";
   const sans = "'Raleway', sans-serif";
 
-  const colStyle = (borderRight = true): React.CSSProperties => ({
+  const colStyle = (borderRight = true): CSSProperties => ({
     padding: '72px 56px 80px',
     borderRight: borderRight ? `1px solid ${goldFaint}` : 'none',
     display: 'flex',
     flexDirection: 'column',
   });
 
-  const eyebrowStyle: React.CSSProperties = {
+  const eyebrowStyle: CSSProperties = {
     fontFamily: sans, fontWeight: 200, fontSize: '0.5rem',
     letterSpacing: '0.5em', color: gold, textTransform: 'uppercase',
     opacity: 0.55, marginBottom: 32,
   };
 
-  const titleStyle: React.CSSProperties = {
+  const titleStyle: CSSProperties = {
     fontFamily: serif, fontSize: 'clamp(2.5rem, 4vw, 4rem)',
     fontWeight: 300, letterSpacing: '0.08em', color: gold,
     lineHeight: 1, marginBottom: 16,
   };
 
-  const subtitleStyle: React.CSSProperties = {
+  const subtitleStyle: CSSProperties = {
     fontFamily: serif, fontSize: '1rem', fontWeight: 300,
     fontStyle: 'italic', color: textFaint, letterSpacing: '0.1em',
     marginBottom: 48,
   };
 
-  const axiomBlockStyle: React.CSSProperties = {
+  const axiomBlockStyle: CSSProperties = {
     borderLeft: `1px solid ${goldFaint}`,
     paddingLeft: 20,
     marginBottom: 32,
   };
 
-  const axiomTitleStyle: React.CSSProperties = {
+  const axiomTitleStyle: CSSProperties = {
     fontSize: '1.05rem', fontWeight: 300, fontStyle: 'italic',
     color: gold, lineHeight: 1.4, marginBottom: 10, opacity: 0.85,
   };
 
-  const axiomBodyStyle: React.CSSProperties = {
+  const axiomBodyStyle: CSSProperties = {
     fontFamily: sans, fontWeight: 200, fontSize: '0.8rem',
     lineHeight: 1.9, color: textFaint,
   };
 
-  const ctaStyle: React.CSSProperties = {
+  const ctaStyle: CSSProperties = {
     display: 'inline-block', marginTop: 'auto', paddingTop: 48,
     fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
     letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase',
