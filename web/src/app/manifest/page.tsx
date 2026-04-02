@@ -192,6 +192,28 @@ export default function ManifestPage() {
           </p>
         </section>
 
+        {/* NOTA VERSIUNE SCURTA */}
+        <div style={{
+          textAlign: 'center', padding: '24px 24px',
+          borderBottom: `1px solid ${goldFaint}`,
+          background: 'rgba(201,169,110,0.03)',
+        }}>
+          <p style={{
+            fontFamily: sans, fontWeight: 200, fontSize: '0.75rem',
+            lineHeight: 1.9, color: textFaint,
+          }}>
+            Aceasta este versiunea condensată a celor trei concepte.{' '}
+            <a href="/filozofie" style={{
+              color: gold, textDecoration: 'none',
+              borderBottom: '1px solid rgba(201,169,110,0.3)',
+              paddingBottom: 1, transition: 'border-color .3s',
+            }}>
+              Citiți filozofia completă
+            </a>
+            {' '}— cu toate principiile, procesul și povestea din spatele fiecărei idei.
+          </p>
+        </div>
+
         {/* TRIPTIH */}
         <div style={{
           display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
