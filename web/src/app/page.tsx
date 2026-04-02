@@ -251,6 +251,7 @@ export default function HomePage() {
           <li><a href="#services">Servicii</a></li>
           {/* <li><a href="#herbarium" className="nav-herb-link">Herbarium</a></li> */}
           <li><a href="/manifest">Manifest</a></li>
+          <li><a href="/filozofie">Filozofie</a></li>
           <li><a href="#meniu">Meniu</a></li>
           {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>

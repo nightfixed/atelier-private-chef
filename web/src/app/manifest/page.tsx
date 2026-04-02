@@ -200,7 +200,7 @@ export default function ManifestPage() {
         }}>
           <p style={{
             fontFamily: sans, fontWeight: 200, fontSize: '0.75rem',
-            lineHeight: 1.9, color: textFaint,
+            lineHeight: 1.9, color: gold,
           }}>
             Aceasta este o privire de ansamblu asupra celor trei concepte.
             Pentru versiunea mai completă și detaliată, până la ultimul strop de interes,
