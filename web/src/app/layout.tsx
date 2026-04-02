@@ -57,7 +57,7 @@ export const viewport: Viewport = {
 };
 
 const LOCK_SCRIPT = `(function(){
-  var KEY='atelier2026',STORE='ap_preview';
+  var KEY='Rx7@mK9!vQ3z',STORE='ap_preview';
   var p=new URLSearchParams(window.location.search).get('p');
   if(p===KEY){
     try{localStorage.setItem(STORE,KEY);}catch(e){}
