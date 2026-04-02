@@ -414,7 +414,21 @@ export default function ManifestPage() {
 
       </main>
 
-      {/* SCROLL TO BOTTOM */}
+      {/* SCROLL BUTTONS */}
+      <a
+        href="#"
+        title="Mergi sus"
+        style={{
+          position: 'fixed', bottom: 76, left: 32, zIndex: 100,
+          background: 'transparent', border: '1px solid rgba(201,169,110,0.2)',
+          color: 'rgba(201,169,110,0.35)',
+          width: 36, height: 36, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, textDecoration: 'none',
+        }}
+      >
+        ↑
+      </a>
       <a
         href="#page-bottom"
         title="Mergi la final"
