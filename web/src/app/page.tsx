@@ -295,7 +295,7 @@ export default function HomePage() {
               <div className="story-num">R</div>
               <div className="story-icon">👨‍🍳</div>
               <h3>Răzvan</h3>
-              <div className="story-role">Chef · Fondator</div>
+              <div className="story-role">Chef · Fondator (autor)</div>
               <p className="story-text">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
               <div className="story-stats">
                 <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani fine dining</div></div>
@@ -768,7 +768,7 @@ export default function HomePage() {
         </ul>
         <div className="footer-email">exquisitefoodtravel@yahoo.com</div>
         <div className="footer-city">Cluj-Napoca · România</div>
-        <div style={{ fontSize: '7px', letterSpacing: '2px', color: '#111', fontStyle: 'italic', marginTop: 12 }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</div>
+        <div style={{ fontSize: '8px', letterSpacing: '2px', color: '#444', fontStyle: 'italic', marginTop: 12 }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</div>
         <div style={{width:'30px',height:'1px',background:'#1a1a1a',margin:'32px auto'}}></div>
         <div className="footer-copy">© {new Date().getFullYear()} Atelier Private Dining · Craft · Discretion · Excellence</div>
       </footer>

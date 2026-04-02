@@ -166,7 +166,7 @@ export default function MatriceaPage() {
       <footer className="mat-footer">
         <a href="/" className="mat-footer-logo">ATELIER</a>
         <p className="mat-footer-city">Cluj-Napoca · Romania</p>
-        <p className="mat-footer-city" style={{ marginTop: 16, opacity: 0.5, fontStyle: 'italic' }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</p>
+        <p className="mat-footer-city" style={{ marginTop: 16, opacity: 0.6, fontStyle: 'italic', fontSize: '0.65rem', letterSpacing: '0.1em' }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</p>
       </footer>
 
     </div>

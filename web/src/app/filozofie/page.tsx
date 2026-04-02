@@ -412,16 +412,18 @@ export default function FilozofiePage() {
       {/* FOOTER */}
       <footer style={{
         borderTop: '1px solid #141414', padding: '40px 48px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        textAlign: 'center',
       }}>
-        <a href="/" style={{ fontFamily: serif, fontSize: 13, letterSpacing: 4, color: 'rgba(201,169,110,0.4)', textDecoration: 'none' }}>ATELIER</a>
-        <a href="/manifest" style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.45rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.2)', textDecoration: 'none', textTransform: 'uppercase' }}>
-          ← Înapoi la Manifest
-        </a>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.45rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.2)', textTransform: 'uppercase' }}>
-          Cluj-Napoca · Romania
-        </p>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.4rem', letterSpacing: '0.25em', color: 'rgba(232,224,208,0.15)', fontStyle: 'italic', marginTop: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+          <a href="/" style={{ fontFamily: serif, fontSize: 13, letterSpacing: 4, color: 'rgba(201,169,110,0.4)', textDecoration: 'none' }}>ATELIER</a>
+          <a href="/manifest" style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.25)', textDecoration: 'none', textTransform: 'uppercase' }}>
+            ← Înapoi la Manifest
+          </a>
+          <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.25)', textTransform: 'uppercase', margin: 0 }}>
+            Cluj-Napoca · Romania
+          </p>
+        </div>
+        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.65rem', letterSpacing: '0.15em', color: 'rgba(232,224,208,0.3)', fontStyle: 'italic' }}>
           Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.
         </p>
       </footer>
