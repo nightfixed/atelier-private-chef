@@ -386,6 +386,7 @@ export default function HomePage() {
               <div className="svc-label">Cine intime · 2–6 persoane</div>
               <p>Meniu de degustare construit personal pentru ocazia voastră. De la amuse-bouche până la mignardises, fiecare element reflectă gusturile și momentul vostru.</p>
               <div className="svc-price">De la consultație gratuită</div>
+              <div className="svc-product-badge">Codex</div>
             </div>
             <div className="svc reveal d2">
               <div className="svc-num">II</div>
@@ -394,6 +395,7 @@ export default function HomePage() {
               <div className="svc-label">Team dinner · Client entertainment · 10–50 pers.</div>
               <p>Experiențe culinare pentru companii care înțeleg că o masă bună nu este un cost, ci o investiție în relații.</p>
               <div className="svc-price">Ofertă personalizată</div>
+              <div className="svc-product-badge">Breviar</div>
             </div>
             <div className="svc reveal d3">
               <div className="svc-num">III</div>
@@ -402,6 +404,7 @@ export default function HomePage() {
               <div className="svc-label">Meniu · Concept · Formare</div>
               <p>Consultanță culinară pentru restaurante, hoteluri și branduri alimentare care vor să ridice ștacheta calitativă.</p>
               <div className="svc-price">La cerere</div>
+              <div className="svc-product-badge">Matricea</div>
             </div>
           </div>
         </div>

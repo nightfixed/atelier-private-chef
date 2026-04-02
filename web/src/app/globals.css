@@ -133,6 +133,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);b
 .svc-label{font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
 .svc p{font-size:12px;color:#555;line-height:1.8;}
 .svc-price{margin-top:24px;padding-top:20px;border-top:1px solid #1a1a1a;font-size:11px;color:var(--gold);letter-spacing:2px;}
+.svc-product-badge{display:inline-block;margin-top:12px;padding:4px 14px;border:1px solid rgba(212,175,55,0.35);font-family:var(--font-serif);font-size:12px;font-style:italic;color:rgba(212,175,55,0.6);letter-spacing:3px;}
 
 /* PROCESS */
 .process-steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;}
