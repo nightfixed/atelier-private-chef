@@ -376,18 +376,18 @@ export default function ManifestPage() {
             Cluj-Napoca, 23 Martie 2026<br />
             Versiunea I — Document fondator<br /><br />
             <em>Acest manifest este proprietatea intelectuală a autorului.<br />
-            Reproducerea totală sau parțială fără acord scris este interzisă.</em>
+            Reproducerea totală sau parțială fără acord scris este © interzisă.</em>
           </p>
         </div>
 
         {/* FOOTER */}
-        <footer style={{
+        <footer id="page-bottom" style={{
           borderTop: '1px solid #1a1a1a',
           padding: '48px 40px', textAlign: 'center',
         }}>
-          <div style={{
-            fontFamily: serif, fontSize: 17, letterSpacing: 5, color: gold, marginBottom: 12,
-          }}>ATELIER</div>
+          <a href="/" style={{
+            fontFamily: serif, fontSize: 17, letterSpacing: 5, color: gold, marginBottom: 12, textDecoration: 'none', display: 'block',
+          }}>ATELIER</a>
           <div style={{
             fontFamily: sans, fontWeight: 200, fontSize: 9, letterSpacing: 3,
             color: '#333', textTransform: 'uppercase', marginBottom: 24,
@@ -413,6 +413,22 @@ export default function ManifestPage() {
         </footer>
 
       </main>
+
+      {/* SCROLL TO BOTTOM */}
+      <a
+        href="#page-bottom"
+        title="Mergi la final"
+        style={{
+          position: 'fixed', bottom: 32, left: 32, zIndex: 100,
+          background: 'transparent', border: '1px solid rgba(201,169,110,0.2)',
+          color: 'rgba(201,169,110,0.35)',
+          width: 36, height: 36, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, textDecoration: 'none',
+        }}
+      >
+        ↓
+      </a>
     </>
   );
 }

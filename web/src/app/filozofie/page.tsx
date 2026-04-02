@@ -410,7 +410,7 @@ export default function FilozofiePage() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{
+      <footer id="page-bottom" style={{
         borderTop: '1px solid #141414', padding: '40px 48px',
         textAlign: 'center',
       }}>
@@ -424,9 +424,25 @@ export default function FilozofiePage() {
           </p>
         </div>
         <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.65rem', letterSpacing: '0.15em', color: 'rgba(232,224,208,0.3)', fontStyle: 'italic' }}>
-          Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.
+          Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este © interzisă.
         </p>
       </footer>
+
+      {/* SCROLL TO BOTTOM */}
+      <a
+        href="#page-bottom"
+        title="Mergi la final"
+        style={{
+          position: 'fixed', bottom: 32, left: 32, zIndex: 100,
+          background: 'transparent', border: '1px solid rgba(201,169,110,0.2)',
+          color: 'rgba(201,169,110,0.35)',
+          width: 36, height: 36, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, textDecoration: 'none',
+        }}
+      >
+        ↓
+      </a>
 
     </div>
   );

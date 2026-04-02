@@ -163,11 +163,27 @@ export default function MatriceaPage() {
       </div>
 
       {/* FOOTER */}
-      <footer className="mat-footer">
+      <footer id="page-bottom" className="mat-footer">
         <a href="/" className="mat-footer-logo">ATELIER</a>
         <p className="mat-footer-city">Cluj-Napoca · Romania</p>
-        <p className="mat-footer-city" style={{ marginTop: 16, opacity: 0.6, fontStyle: 'italic', fontSize: '0.65rem', letterSpacing: '0.1em' }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</p>
+        <p className="mat-footer-city" style={{ marginTop: 16, opacity: 0.6, fontStyle: 'italic', fontSize: '0.65rem', letterSpacing: '0.1em' }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este © interzisă.</p>
       </footer>
+
+      {/* SCROLL TO BOTTOM */}
+      <a
+        href="#page-bottom"
+        title="Mergi la final"
+        style={{
+          position: 'fixed', bottom: 32, left: 32, zIndex: 100,
+          background: 'transparent', border: '1px solid rgba(201,169,110,0.2)',
+          color: 'rgba(201,169,110,0.35)',
+          width: 36, height: 36, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, textDecoration: 'none',
+        }}
+      >
+        ↓
+      </a>
 
     </div>
   );

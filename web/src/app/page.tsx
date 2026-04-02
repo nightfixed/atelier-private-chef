@@ -244,7 +244,7 @@ export default function HomePage() {
 
       {/* NAV */}
       <nav>
-        <div className="nav-logo">ATELIER</div>
+        <a href="/" className="nav-logo">ATELIER</a>
         <ul className="nav-links">
           <li><a href="/">Acasă</a></li>
           <li><a href="#story">Povestea</a></li>
@@ -792,7 +792,7 @@ export default function HomePage() {
         </ul>
         <div className="footer-email">exquisitefoodtravel@yahoo.com</div>
         <div className="footer-city">Cluj-Napoca · România</div>
-        <div style={{ fontSize: '8px', letterSpacing: '2px', color: '#444', fontStyle: 'italic', marginTop: 12 }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</div>
+        <div style={{ fontSize: '8px', letterSpacing: '2px', color: '#444', fontStyle: 'italic', marginTop: 12 }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este © interzisă.</div>
         <div style={{width:'30px',height:'1px',background:'#1a1a1a',margin:'32px auto'}}></div>
         <div className="footer-copy">© {new Date().getFullYear()} Atelier Private Dining · Craft · Discretion · Excellence</div>
       </footer>
