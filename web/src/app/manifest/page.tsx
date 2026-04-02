@@ -202,7 +202,7 @@ export default function ManifestPage() {
             fontFamily: sans, fontWeight: 200, fontSize: '0.75rem',
             lineHeight: 1.9, color: textFaint,
           }}>
-            Aceasta este versiunea condensată a celor trei concepte.{' '}
+            Aceasta este versiunea distilată a celor trei concepte.{' '}
             <a href="/filozofie" style={{
               color: gold, textDecoration: 'none',
               borderBottom: '1px solid rgba(201,169,110,0.3)',
