@@ -1253,6 +1253,54 @@ export default function AdminPage() {
       {/* Content */}
       <main style={{maxWidth:'1400px',margin:'0 auto',padding:'40px 32px'}}>
         <ActiveTab token={token}/>
+
+        {/* CARTE DE VIZITĂ */}
+        <div style={{marginTop:'80px',paddingTop:'48px',borderTop:'1px solid #1a1a1a'}}>
+          <div style={{fontSize:'9px',letterSpacing:'4px',color:'rgba(201,169,110,.5)',textTransform:'uppercase',marginBottom:'8px'}}>Identitate</div>
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'28px',fontWeight:300,color:'#fff',marginBottom:'32px'}}>Carte de <em>Vizită</em></div>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'2px',maxWidth:'800px',marginBottom:'24px'}}>
+            {/* Răzvan */}
+            <div style={{background:'#0a0a0a',border:'1px solid #1a1a1a',padding:'40px 32px',textAlign:'center',position:'relative'}}>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'11px',letterSpacing:'5px',color:'#c9a96e',marginBottom:'8px'}}>ATELIER</div>
+              <div style={{fontSize:'8px',letterSpacing:'4px',color:'#333',textTransform:'uppercase',marginBottom:'20px'}}>PRIVATE DINING</div>
+              <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" style={{width:'48px',height:'48px',margin:'0 auto 16px',display:'block'}}>
+                <circle cx="29" cy="29" r="27" fill="none" stroke="#c9a96e" strokeWidth="1.2"/>
+                <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#c9a96e">A</text>
+              </svg>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'28px',fontWeight:300,color:'#fff',marginBottom:'4px'}}>Răzvan</div>
+              <div style={{fontSize:'8px',letterSpacing:'4px',color:'#c9a96e',textTransform:'uppercase',marginBottom:'16px'}}>CHEF / FONDATOR</div>
+              <div style={{height:'1px',background:'linear-gradient(to right,transparent,rgba(201,169,110,.4),transparent)',marginBottom:'14px'}}></div>
+              <div style={{fontSize:'11px',color:'#888'}}>exquisitefoodtravel@yahoo.com</div>
+              <div style={{fontSize:'8px',letterSpacing:'3px',color:'#444',textTransform:'uppercase',marginTop:'6px'}}>CLUJ-NAPOCA · ROMANIA</div>
+            </div>
+            {/* Roland */}
+            <div style={{background:'#0d0a08',border:'1px solid #1a1a1a',padding:'40px 32px',textAlign:'center'}}>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'11px',letterSpacing:'5px',color:'#d09070',marginBottom:'8px'}}>ATELIER</div>
+              <div style={{fontSize:'8px',letterSpacing:'4px',color:'#333',textTransform:'uppercase',marginBottom:'20px'}}>PRIVATE DINING</div>
+              <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg" style={{width:'48px',height:'48px',margin:'0 auto 16px',display:'block'}}>
+                <circle cx="29" cy="29" r="27" fill="none" stroke="#d09070" strokeWidth="1.2"/>
+                <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#d09070">A</text>
+              </svg>
+              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:'28px',fontWeight:300,color:'#f0e0d0',marginBottom:'4px'}}>Roland</div>
+              <div style={{fontSize:'8px',letterSpacing:'4px',color:'#d09070',textTransform:'uppercase',marginBottom:'16px'}}>CHEF / PARTNER</div>
+              <div style={{height:'1px',background:'linear-gradient(to right,transparent,rgba(208,144,112,.4),transparent)',marginBottom:'14px'}}></div>
+              <div style={{fontSize:'11px',color:'#d09070'}}>exquisitefoodtravel@yahoo.com</div>
+              <div style={{fontSize:'8px',letterSpacing:'3px',color:'#d09070',textTransform:'uppercase',marginTop:'6px',opacity:.5}}>CLUJ-NAPOCA · ROMANIA</div>
+            </div>
+          </div>
+          <button
+            style={{background:'transparent',border:'1px solid rgba(201,169,110,.4)',color:'#c9a96e',padding:'10px 28px',fontFamily:"'Montserrat',sans-serif",fontSize:'9px',letterSpacing:'3px',textTransform:'uppercase',cursor:'pointer'}}
+            onClick={() => {
+              const G='#c9a96e',CU2='#d09070',CUD='#7a4830';
+              const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600"><defs><linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060606"/><stop offset="100%" stop-color="#141414"/></linearGradient><linearGradient id="rb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3a1e10"/><stop offset="100%" stop-color="#5c2e18"/></linearGradient><linearGradient id="lf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${G}" stop-opacity="0"/><stop offset="50%" stop-color="${G}" stop-opacity="1"/><stop offset="100%" stop-color="${G}" stop-opacity="0"/></linearGradient><linearGradient id="rf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${CU2}" stop-opacity="0"/><stop offset="50%" stop-color="${CU2}" stop-opacity="1"/><stop offset="100%" stop-color="${CU2}" stop-opacity="0"/></linearGradient></defs><rect x="0" y="0" width="525" height="600" fill="url(#lb)"/><rect x="525" y="0" width="525" height="600" fill="url(#rb)"/><text x="263" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${G}">ATELIER</text><text x="263" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#ffffff">Răzvan</text><text x="263" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${G}">CHEF / FONDATOR</text><rect x="163" y="382" width="200" height="0.8" fill="url(#lf)"/><text x="263" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#666">exquisitefoodtravel@yahoo.com</text><text x="788" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${CU2}">ATELIER</text><text x="788" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#f0e0d0">Roland</text><text x="788" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${CU2}">CHEF / PARTNER</text><rect x="688" y="382" width="200" height="0.8" fill="url(#rf)"/><text x="788" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="${CU2}">exquisitefoodtravel@yahoo.com</text></svg>`;
+              void CUD;
+              const a=document.createElement('a');
+              a.href='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
+              a.download='atelier-card.svg';
+              document.body.appendChild(a);a.click();document.body.removeChild(a);
+            }}
+          >↓ Descarcă Carte de Vizită SVG</button>
+        </div>
       </main>
     </div>
   );

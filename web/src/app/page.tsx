@@ -220,17 +220,6 @@ export default function HomePage() {
 
   function minDateStr(): string { const d = new Date(); d.setDate(d.getDate()+2); return d.toISOString().split('T')[0]; }
 
-  function downloadCard() {
-    const G='#c9a96e', CU2='#d09070', CUD='#7a4830';
-    const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 600"><defs><linearGradient id="lb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#060606"/><stop offset="100%" stop-color="#141414"/></linearGradient><linearGradient id="rb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3a1e10"/><stop offset="100%" stop-color="#5c2e18"/></linearGradient><linearGradient id="lf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${G}" stop-opacity="0"/><stop offset="50%" stop-color="${G}" stop-opacity="1"/><stop offset="100%" stop-color="${G}" stop-opacity="0"/></linearGradient><linearGradient id="rf" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="${CU2}" stop-opacity="0"/><stop offset="50%" stop-color="${CU2}" stop-opacity="1"/><stop offset="100%" stop-color="${CU2}" stop-opacity="0"/></linearGradient></defs><rect x="0" y="0" width="525" height="600" fill="url(#lb)"/><rect x="525" y="0" width="525" height="600" fill="url(#rb)"/><text x="263" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${G}">ATELIER</text><text x="263" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#ffffff">Răzvan</text><text x="263" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${G}">CHEF / FONDATOR</text><rect x="163" y="382" width="200" height="0.8" fill="url(#lf)"/><text x="263" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#666">exquisitefoodtravel@yahoo.com</text><text x="788" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="10" letter-spacing="6" fill="${CU2}">ATELIER</text><text x="788" y="334" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#f0e0d0">Roland</text><text x="788" y="364" text-anchor="middle" font-family="Georgia,serif" font-size="9" letter-spacing="5" fill="${CU2}">CHEF / PARTNER</text><rect x="688" y="382" width="200" height="0.8" fill="url(#rf)"/><text x="788" y="422" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="${CU2}">exquisitefoodtravel@yahoo.com</text></svg>`;
-    void CUD;
-    const a=document.createElement('a');
-    a.href='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
-    a.download='atelier-card.svg';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
   // ── RENDER ──
   return (
     <>
@@ -432,40 +421,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* TESTIMONIALS */}
-      <div style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
-        <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal">Ce spun clienții</div>
-          <h2 className="sec-title reveal d1">Experiențe <em>reale</em></h2>
-          <div className="gold-line reveal d2"></div>
-          <div className="testi-grid">
-            <div className="testi-card reveal d1">
-              <div className="testi-stars">{'★★★★★'.split('').map((s,i) => <span key={i} className="testi-star">{s}</span>)}</div>
-              <div className="testi-quote">"A fost cea mai frumoasă seară pe care am petrecut-o vreodată. Meniul a fost <em>complet personalizat</em> — parcă Răzvan ne cunoștea de ani de zile."</div>
-              <div className="testi-divider"></div>
-              <div className="testi-name">Andreea & Mihai</div>
-              <div className="testi-occasion">Aniversare · 10 ani împreună</div>
-              <div className="testi-note">Cluj-Napoca · Octombrie 2024</div>
-            </div>
-            <div className="testi-card reveal d2">
-              <div className="testi-stars">{'★★★★★'.split('').map((s,i) => <span key={i} className="testi-star">{s}</span>)}</div>
-              <div className="testi-quote">"Am organizat o cină pentru clienții noștri strategici. Toți au întrebat cine sunt chefii — nimeni nu a crezut că e posibil <em>un astfel de nivel în afara unui restaurant Michelin</em>."</div>
-              <div className="testi-divider"></div>
-              <div className="testi-name">Radu C.</div>
-              <div className="testi-occasion">Corporate · Client Entertainment</div>
-              <div className="testi-note">Director General · Noiembrie 2024</div>
-            </div>
-            <div className="testi-card reveal d3">
-              <div className="testi-stars">{'★★★★★'.split('').map((s,i) => <span key={i} className="testi-star">{s}</span>)}</div>
-              <div className="testi-quote">"Cererea în căsătorie a decurs perfect. Meniul a fost <em>o operă de artă</em>, atmosfera a fost de neuitat, iar ea a zis da."</div>
-              <div className="testi-divider"></div>
-              <div className="testi-name">Alexandru P.</div>
-              <div className="testi-occasion">Cerere în căsătorie · Seară privată</div>
-              <div className="testi-note">Cluj-Napoca · Decembrie 2024</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* TESTIMONIALS — adăugate la publicare cu testimoniale reale */}
 
       {/* HERBARIUM — ascuns temporar, de reactivat la cerere */}
       {false && <div id="herbarium" style={{borderTop:'1px solid #111',background:'#060504',position:'relative',overflow:'hidden'}}>
@@ -789,53 +745,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* CARTE DE VIZITA */}
-      <div id="card" style={{borderTop:'1px solid #111',padding:'110px 0',background:'#080808'}}>
-        <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
-          <div className="sec-label reveal">Identitate</div>
-          <div className="sec-title reveal d1">Carte de <em>Vizită</em></div>
-          <div className="gold-line reveal d2"></div>
-          <div className="biz-card reveal">
-            <div className="biz-left">
-              <div className="corner tl"></div>
-              <div className="corner br"></div>
-              <div className="bc-logo">
-                <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="29" cy="29" r="27" fill="none" stroke="#c9a96e" strokeWidth="1.2"/>
-                  <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#c9a96e">A</text>
-                </svg>
-              </div>
-              <div className="bc-brand">ATELIER</div>
-              <div className="bc-brand-sub">PRIVATE DINING</div>
-              <div className="bc-name" style={{color:'#fff'}}>Răzvan</div>
-              <div className="bc-title" style={{color:'var(--gold)'}}>CHEF / FONDATOR</div>
-              <div className="bc-line" style={{background:'linear-gradient(to right,transparent,var(--gold),transparent)'}}></div>
-              <div className="bc-email" style={{color:'#fff'}}>exquisitefoodtravel@yahoo.com</div>
-              <div className="bc-city" style={{color:'#fff'}}>CLUJ-NAPOCA · ROMANIA</div>
-            </div>
-            <div className="biz-right">
-              <div className="corner tr2"></div>
-              <div className="corner bl2"></div>
-              <div className="bc-logo">
-                <svg viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="29" cy="29" r="27" fill="none" stroke="#d09070" strokeWidth="1.2"/>
-                  <text x="29" y="40" textAnchor="middle" fontFamily="Georgia,serif" fontSize="32" fontWeight="bold" fill="#d09070">A</text>
-                </svg>
-              </div>
-              <div className="bc-brand" style={{color:'var(--copper2)'}}>ATELIER</div>
-              <div className="bc-brand-sub" style={{color:'var(--copper-dk)'}}>PRIVATE DINING</div>
-              <div className="bc-name" style={{color:'#f0e0d0'}}>Roland</div>
-              <div className="bc-title" style={{color:'var(--copper2)'}}>CHEF / PARTNER</div>
-              <div className="bc-line" style={{background:'linear-gradient(to right,transparent,var(--copper2),transparent)'}}></div>
-              <div className="bc-email" style={{color:'var(--copper2)'}}>exquisitefoodtravel@yahoo.com</div>
-              <div className="bc-city" style={{color:'var(--copper2)'}}>CLUJ-NAPOCA · ROMANIA</div>
-            </div>
-          </div>
-          <div className="dl-row">
-            <button className="btn-gold" onClick={downloadCard}>↓ DESCARCĂ CARTE DE VIZITĂ SVG</button>
-          </div>
-        </div>
-      </div>
+
 
       {/* FOOTER */}
       <footer>
