@@ -819,6 +819,7 @@
           <div class="stepper-value" id="persons-display">2 <span>pers.</span></div>
           <button class="stepper-btn" id="persons-plus" onclick="changePersons(1)">+</button>
         </div>
+        <div style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.5rem;letter-spacing:0.35em;color:rgba(201,169,110,0.4);text-transform:uppercase;margin-top:0.6rem;">2–6 persoane · exclusiv Private Dining</div>
       </div>
       <button class="btn" id="intro-cta" onclick="startRitual()">Compune Seara</button>
     </div>
@@ -1219,11 +1220,10 @@ function getDemoArtifact() {
 }
 
 function changePersons(delta) {
-  guestPersons = Math.max(1, Math.min(12, guestPersons + delta));
-  const label = guestPersons === 12 ? '12+' : String(guestPersons);
-  document.getElementById('persons-display').innerHTML = `${label} <span>pers.</span>`;
-  document.getElementById('persons-minus').disabled = guestPersons <= 1;
-  document.getElementById('persons-plus').disabled = guestPersons >= 12;
+  guestPersons = Math.max(2, Math.min(6, guestPersons + delta));
+  document.getElementById('persons-display').innerHTML = `${guestPersons} <span>pers.</span>`;
+  document.getElementById('persons-minus').disabled = guestPersons <= 2;
+  document.getElementById('persons-plus').disabled = guestPersons >= 6;
 }
 
 function scrollTop() {
@@ -1260,7 +1260,7 @@ function getSeason() {
 }
 
 function personsLabel() {
-  return guestPersons >= 12 ? '12+ persoane' : `${guestPersons} ${guestPersons === 1 ? 'persoană' : 'persoane'}`;
+  return `${guestPersons} ${guestPersons === 1 ? 'persoană' : 'persoane'}`;
 }
 
 function buildProfile() {
