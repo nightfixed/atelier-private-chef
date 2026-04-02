@@ -254,7 +254,6 @@ export default function HomePage() {
           <li><a href="#meniu">Meniu</a></li>
           {/* <li><a href="#asezat">Așezat</a></li> */}
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="/codex-guest-system.html" className="nav-compose-link">Codex</a></li>
         </ul>
       </nav>
 
@@ -386,7 +385,7 @@ export default function HomePage() {
               <div className="svc-label">Cine intime · 2–6 persoane</div>
               <p>Meniu de degustare construit personal pentru ocazia voastră. De la amuse-bouche până la mignardises, fiecare element reflectă gusturile și momentul vostru.</p>
               <div className="svc-price">De la consultație gratuită</div>
-              <div className="svc-product-badge">Codex</div>
+              <a href="/codex-guest-system.html" className="svc-product-badge svc-product-badge--link">Codex →</a>
             </div>
             <div className="svc reveal d2">
               <div className="svc-num">II</div>
@@ -395,7 +394,7 @@ export default function HomePage() {
               <div className="svc-label">Team dinner · Client entertainment · 10–50 pers.</div>
               <p>Experiențe culinare pentru companii care înțeleg că o masă bună nu este un cost, ci o investiție în relații.</p>
               <div className="svc-price">Ofertă personalizată</div>
-              <div className="svc-product-badge">Breviar</div>
+              <a href="/breviar" className="svc-product-badge svc-product-badge--link">Breviar →</a>
             </div>
             <div className="svc reveal d3">
               <div className="svc-num">III</div>
@@ -404,7 +403,7 @@ export default function HomePage() {
               <div className="svc-label">Meniu · Concept · Formare</div>
               <p>Consultanță culinară pentru restaurante, hoteluri și branduri alimentare care vor să ridice ștacheta calitativă.</p>
               <div className="svc-price">La cerere</div>
-              <div className="svc-product-badge">Matricea</div>
+              <a href="/matricea" className="svc-product-badge svc-product-badge--link">Matricea →</a>
             </div>
           </div>
         </div>
