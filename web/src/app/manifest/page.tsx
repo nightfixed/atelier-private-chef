@@ -69,6 +69,64 @@ const principles = [
 ];
 
 export default function ManifestPage() {
+  const gold = 'var(--gold)';
+  const goldFaint = 'rgba(201,169,110,0.12)';
+  const goldMid = 'rgba(201,169,110,0.4)';
+  const text = '#e8e0d0';
+  const textDim = 'rgba(232,224,208,0.65)';
+  const textFaint = 'rgba(232,224,208,0.35)';
+  const serif = "'Cormorant Garamond', serif";
+  const sans = "'Raleway', sans-serif";
+
+  const colStyle = (borderRight = true): React.CSSProperties => ({
+    padding: '72px 56px 80px',
+    borderRight: borderRight ? `1px solid ${goldFaint}` : 'none',
+    display: 'flex',
+    flexDirection: 'column',
+  });
+
+  const eyebrowStyle: React.CSSProperties = {
+    fontFamily: sans, fontWeight: 200, fontSize: '0.5rem',
+    letterSpacing: '0.5em', color: gold, textTransform: 'uppercase',
+    opacity: 0.55, marginBottom: 32,
+  };
+
+  const titleStyle: React.CSSProperties = {
+    fontFamily: serif, fontSize: 'clamp(2.5rem, 4vw, 4rem)',
+    fontWeight: 300, letterSpacing: '0.08em', color: gold,
+    lineHeight: 1, marginBottom: 16,
+  };
+
+  const subtitleStyle: React.CSSProperties = {
+    fontFamily: serif, fontSize: '1rem', fontWeight: 300,
+    fontStyle: 'italic', color: textFaint, letterSpacing: '0.1em',
+    marginBottom: 48,
+  };
+
+  const axiomBlockStyle: React.CSSProperties = {
+    borderLeft: `1px solid ${goldFaint}`,
+    paddingLeft: 20,
+    marginBottom: 32,
+  };
+
+  const axiomTitleStyle: React.CSSProperties = {
+    fontSize: '1.05rem', fontWeight: 300, fontStyle: 'italic',
+    color: gold, lineHeight: 1.4, marginBottom: 10, opacity: 0.85,
+  };
+
+  const axiomBodyStyle: React.CSSProperties = {
+    fontFamily: sans, fontWeight: 200, fontSize: '0.8rem',
+    lineHeight: 1.9, color: textFaint,
+  };
+
+  const ctaStyle: React.CSSProperties = {
+    display: 'inline-block', marginTop: 'auto', paddingTop: 48,
+    fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
+    letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase',
+    textDecoration: 'none', borderBottom: `1px solid ${goldFaint}`,
+    paddingBottom: 4, transition: 'all .3s', alignSelf: 'flex-start',
+  };
+
   return (
     <>
       {/* NAV */}
@@ -78,6 +136,251 @@ export default function ManifestPage() {
         borderBottom: '1px solid #1a1a1a', height: 64,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 48px',
+      }}>
+        <a href="/" style={{
+          fontFamily: serif, fontSize: 17,
+          letterSpacing: 5, color: gold, textDecoration: 'none',
+        }}>ATELIER</a>
+        <ul style={{ display: 'flex', gap: 28, listStyle: 'none' }}>
+          {[
+            { label: 'Acasă', href: '/' },
+            { label: 'Povestea', href: '/#story' },
+            { label: 'Servicii', href: '/#services' },
+            { label: 'Manifest', href: '/manifest' },
+            { label: 'Meniu', href: '/#meniu' },
+            { label: 'FAQ', href: '/#faq' },
+            { label: 'Codex', href: '/codex-guest-system.html' },
+          ].map(({ label, href }) => (
+            <li key={href}>
+              <a href={href} style={{
+                fontSize: 9, letterSpacing: 3,
+                color: label === 'Manifest' ? gold : label === 'Codex' ? gold : '#555',
+                textDecoration: 'none', textTransform: 'uppercase',
+                transition: '.3s',
+                ...(label === 'Codex' ? { border: '1px solid rgba(201,169,110,0.3)', padding: '6px 14px' } : {}),
+              }}>{label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <main style={{ background: '#0a0a0a', color: text, fontFamily: serif, paddingTop: 64, minHeight: '100vh' }}>
+
+        {/* HEADER */}
+        <section style={{
+          textAlign: 'center', padding: '80px 24px 64px',
+          borderBottom: `1px solid ${goldFaint}`,
+          position: 'relative',
+        }}>
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201,169,110,0.05) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+          <p style={{ ...eyebrowStyle, marginBottom: 20 }}>Atelier Private Dining</p>
+          <h1 style={{
+            fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 300,
+            letterSpacing: '0.12em', color: text, marginBottom: 16,
+          }}>Manifestul</h1>
+          <p style={{
+            fontSize: '1rem', fontWeight: 300, fontStyle: 'italic',
+            color: textFaint, letterSpacing: '0.1em',
+          }}>
+            Trei limbaje. O filozofie.
+          </p>
+        </section>
+
+        {/* TRIPTIH */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+          minHeight: 'calc(100vh - 200px)',
+        }}>
+
+          {/* ── CODEX ── */}
+          <div style={colStyle(true)}>
+            <p style={eyebrowStyle}>Cina privată · 2–6 persoane</p>
+            <h2 style={titleStyle}>CODEX</h2>
+            <p style={subtitleStyle}>Manifestul unui atelier viu</p>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Masa nu se termină când pleci. Se termină când uiți.</p>
+              <p style={axiomBodyStyle}>
+                Construim pentru memorie, nu pentru recenzie. O cină la Atelier continuă în conversația din mașină, în visul de noaptea aceea.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Oaspetele nu este client. Este co-autor.</p>
+              <p style={axiomBodyStyle}>
+                Meniul se adaptează omului, nu invers. Lectura stării, a amintirilor, a așteptărilor — aceasta este prima etapă a cinei.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Fiecare seară este un capitol. Codex-ul crește.</p>
+              <p style={axiomBodyStyle}>
+                Nu construim un restaurant. Construim un corp de cunoaștere — un manuscris viu, unic, imposibil de replicat.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Ingredientul are origine sau nu are gust.</p>
+              <p style={axiomBodyStyle}>
+                Nu cumpărăm materie primă. Cumpărăm locuri, oameni, sezoane. Originea nu este opțională. Este primul strat de gust.
+              </p>
+            </div>
+
+            <a href="/codex-guest-system.html" style={ctaStyle}>
+              Solicită o seară →
+            </a>
+          </div>
+
+          {/* ── BREVIAR ── */}
+          <div style={colStyle(true)}>
+            <p style={eyebrowStyle}>Corporate Dining · Lansare 2026</p>
+            <h2 style={titleStyle}>BREVIAR</h2>
+            <p style={subtitleStyle}>Profilul culinar al echipei</p>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Fiecare echipă are un gust pe care nu l-a gustat încă.</p>
+              <p style={axiomBodyStyle}>
+                Cartografiem gusturile, stilurile și tensiunile unui grup și le transformăm într-un meniu și un document intern.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Un meniu de echipă nu este un meniu. Este o declarație.</p>
+              <p style={axiomBodyStyle}>
+                Nu catering pasiv. O investigație gustativă activă în care echipa descoperă ceva concret despre ea însăși.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Ce rămâne după o masă de echipă nu e mâncarea. E conversația.</p>
+              <p style={axiomBodyStyle}>
+                Breviarul creează contextul în care un grup vorbește altfel. Nu despre mâncare — despre sine.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Codex profilează un individ. Breviarul profilează o echipă.</p>
+              <p style={axiomBodyStyle}>
+                Același principiu senzorial, aplicat unui organism colectiv. Livrabilul: un document fizic care rămâne în companie.
+              </p>
+            </div>
+
+            <a href="/breviar" style={ctaStyle}>
+              Înregistrează Interesul →
+            </a>
+          </div>
+
+          {/* ── MATRICEA ── */}
+          <div style={colStyle(false)}>
+            <p style={eyebrowStyle}>Consultanță · Identitate Culinară</p>
+            <h2 style={titleStyle}>MATRICEA</h2>
+            <p style={subtitleStyle}>Identitatea culinară a brandului</p>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Nu am venit să vă îmbunătățim meniul. Am venit să vă găsim gustul.</p>
+              <p style={axiomBodyStyle}>
+                Brandurile premium au identitate vizuală, verbală, sonoră. Nu au identitate culinară. Nu știu ce gust au.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Pentru un brand de lux, „bun" este o insultă.</p>
+              <p style={axiomBodyStyle}>
+                Catering standard la un eveniment VIP înseamnă că nimeni nu-și amintește ce a mâncat. Evenimentul costă — experiența nu convinge.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Livrabilul nu este o prezentare. Este un obiect.</p>
+              <p style={axiomBodyStyle}>
+                Un document fizic, legat, tipărit pe hârtie de calitate. Nu se trimite prin email. Se livrează personal. Rămâne.
+              </p>
+            </div>
+
+            <div style={axiomBlockStyle}>
+              <p style={axiomTitleStyle}>Acceptăm 1–2 proiecte pe trimestru. Nu mai mult.</p>
+              <p style={axiomBodyStyle}>
+                Fiecare Matrice e construită de Răzvan și Roland, personal. Nu delegată. Nu standardizată. Nu replicată.
+              </p>
+            </div>
+
+            <a href="/matricea" style={ctaStyle}>
+              Solicită Matricea →
+            </a>
+          </div>
+
+        </div>
+
+        {/* COLOPHON */}
+        <div style={{
+          textAlign: 'center', padding: '80px 2rem',
+          borderTop: `1px solid ${goldFaint}`,
+        }}>
+          <div style={{
+            width: 1, height: 60,
+            background: `linear-gradient(to bottom, transparent, ${gold}, transparent)`,
+            margin: '0 auto 48px',
+          }} />
+          <p style={{
+            fontSize: '1.3rem', fontWeight: 300,
+            letterSpacing: '0.2em', color: gold, marginBottom: 8,
+          }}>Răzvan & Roland</p>
+          <p style={{
+            fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
+            letterSpacing: '0.45em', color: textFaint, textTransform: 'uppercase',
+            marginBottom: 40,
+          }}>Fondatori — Atelier Private Dining · Cluj-Napoca</p>
+          <p style={{
+            fontFamily: sans, fontSize: '0.75rem', fontStyle: 'italic',
+            color: textFaint, opacity: 0.5, lineHeight: 2,
+          }}>
+            Cluj-Napoca, 23 Martie 2026<br />
+            Versiunea I — Document fondator<br /><br />
+            <em>Acest manifest este proprietatea intelectuală a autorilor.<br />
+            Reproducerea totală sau parțială fără acord scris este interzisă.</em>
+          </p>
+        </div>
+
+        {/* FOOTER */}
+        <footer style={{
+          borderTop: '1px solid #1a1a1a',
+          padding: '48px 40px', textAlign: 'center',
+        }}>
+          <div style={{
+            fontFamily: serif, fontSize: 17, letterSpacing: 5, color: gold, marginBottom: 12,
+          }}>ATELIER</div>
+          <div style={{
+            fontFamily: sans, fontWeight: 200, fontSize: 9, letterSpacing: 3,
+            color: '#333', textTransform: 'uppercase', marginBottom: 24,
+          }}>
+            Private Dining · Manifest · Gelato Artizanal
+          </div>
+          <ul style={{ display: 'flex', justifyContent: 'center', gap: 32, listStyle: 'none' }}>
+            {[
+              { label: 'Povestea', href: '/#story' },
+              { label: 'Servicii', href: '/#services' },
+              { label: 'Manifest', href: '/manifest' },
+              { label: 'Meniu', href: '/#meniu' },
+              { label: 'Rezervare', href: '/#rezervare' },
+            ].map(({ label, href }) => (
+              <li key={href}>
+                <a href={href} style={{
+                  fontSize: 9, letterSpacing: 3, color: '#444',
+                  textDecoration: 'none', textTransform: 'uppercase',
+                }}>{label}</a>
+              </li>
+            ))}
+          </ul>
+        </footer>
+
+      </main>
+    </>
+  );
+}
       }}>
         <a href="/" style={{
           fontFamily: "'Cormorant Garamond', serif", fontSize: 17,
