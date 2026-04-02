@@ -202,15 +202,17 @@ export default function ManifestPage() {
             fontFamily: sans, fontWeight: 200, fontSize: '0.75rem',
             lineHeight: 1.9, color: textFaint,
           }}>
-            Aceasta este versiunea esențializată a celor trei concepte.{' '}
+            Aceasta este o privire de ansamblu asupra celor trei concepte.
+            Pentru versiunea mai completă și detaliată, până la ultimul strop de interes,
+            o regăsiți la{' '}
             <a href="/filozofie" style={{
               color: gold, textDecoration: 'none',
               borderBottom: '1px solid rgba(201,169,110,0.3)',
               paddingBottom: 1, transition: 'border-color .3s',
             }}>
-              Citiți filozofia completă
+              secțiunea Filozofie
             </a>
-            {' '}— cu toate principiile, procesul și povestea din spatele fiecărei idei.
+            .
           </p>
         </div>
 
