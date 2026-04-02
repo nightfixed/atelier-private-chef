@@ -151,6 +151,7 @@ export default function BreviarPage() {
       <footer className="brev-footer">
         <a href="/" className="brev-footer-logo">ATELIER</a>
         <p className="brev-footer-city">Cluj-Napoca · Romania</p>
+        <p className="brev-footer-city" style={{ marginTop: 16, opacity: 0.5, fontStyle: 'italic' }}>Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.</p>
       </footer>
 
     </div>

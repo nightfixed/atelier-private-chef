@@ -375,7 +375,7 @@ export default function ManifestPage() {
           }}>
             Cluj-Napoca, 23 Martie 2026<br />
             Versiunea I — Document fondator<br /><br />
-            <em>Acest manifest este proprietatea intelectuală a autorilor.<br />
+            <em>Acest manifest este proprietatea intelectuală a autorului.<br />
             Reproducerea totală sau parțială fără acord scris este interzisă.</em>
           </p>
         </div>

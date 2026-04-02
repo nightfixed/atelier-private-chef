@@ -421,6 +421,9 @@ export default function FilozofiePage() {
         <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.45rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.2)', textTransform: 'uppercase' }}>
           Cluj-Napoca · Romania
         </p>
+        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.4rem', letterSpacing: '0.25em', color: 'rgba(232,224,208,0.15)', fontStyle: 'italic', marginTop: 12 }}>
+          Acest material este proprietatea intelectuală a autorului. Reproducerea totală sau parțială fără acord scris este interzisă.
+        </p>
       </footer>
 
     </div>
