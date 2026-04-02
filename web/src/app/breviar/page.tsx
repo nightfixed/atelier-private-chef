@@ -6,135 +6,151 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function BreviarPage() {
-  const gold = '#c9a96e';
-  const goldFaint = 'rgba(201,169,110,0.12)';
-  const text = '#e8e0d0';
-  const textDim = 'rgba(232,224,208,0.65)';
-  const textFaint = 'rgba(232,224,208,0.35)';
-  const serif = "'Cormorant Garamond', serif";
-  const sans = "'Raleway', sans-serif";
+const PASI = [
+  {
+    nr: '01',
+    titlu: 'Sesiunea de profil',
+    durata: 'O zi cu echipa',
+    desc: 'Ne întâlnim cu toți membrii echipei — individual sau în grup, în funcție de dinamică. Cartografiem gusturile, preferințele, aversiunile și asocierile senzoriale ale fiecărei persoane.',
+  },
+  {
+    nr: '02',
+    titlu: 'Analiza dinamicii de grup',
+    durata: 'Traducere senzorială',
+    desc: 'Transformăm datele individuale într-un profil colectiv. Unde se intersectează gusturile? Unde există tensiune? Ce lipsește din experiența comună a echipei?',
+  },
+  {
+    nr: '03',
+    titlu: 'Meniu colectiv + document intern',
+    durata: 'Livrabil fizic',
+    desc: 'Construim un meniu personalizat pentru echipă și un document intern — profilul senzorial al grupului — care rămâne în companie și poate ghida viitoarele experiențe.',
+  },
+];
 
+const LIVRABILE = [
+  { titlu: 'Profilul senzorial colectiv', sub: 'Harta gustativă a echipei — ce o unește, ce o diferențiază.' },
+  { titlu: 'Meniu personalizat', sub: 'Creat exclusiv pentru grupul vostru. Nu există altul identic.' },
+  { titlu: 'Document intern', sub: 'Fizic, legat, tipărit. Rămâne în companie ca referință pentru viitor.' },
+  { titlu: 'Experiență activă', sub: 'Nu catering pasiv. O masă în care echipa descoperă ceva nou despre ea însăși.' },
+];
+
+export default function BreviarPage() {
   return (
-    <div style={{ background: '#08080a', color: text, fontFamily: serif, minHeight: '100vh' }}>
+    <div className="brev-page">
 
       {/* NAV */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-        background: 'rgba(6,6,8,.98)', backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid #141414', height: 64,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 48px',
-      }}>
-        <a href="/" style={{ fontFamily: serif, fontSize: 17, letterSpacing: 5, color: gold, textDecoration: 'none' }}>ATELIER</a>
-        <a href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Corporate%20Dining" style={{
-          fontSize: 9, letterSpacing: 3, color: gold, textDecoration: 'none',
-          textTransform: 'uppercase', border: '1px solid rgba(201,169,110,0.35)',
-          padding: '8px 20px', fontFamily: sans, fontWeight: 200,
-        }}>
+      <nav className="brev-nav">
+        <a href="/" className="brev-nav-logo">ATELIER</a>
+        <a
+          href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Corporate%20Dining"
+          className="brev-nav-cta"
+        >
           Înregistrează Interesul
         </a>
       </nav>
 
-      {/* HERO — centrat, ca un manifesto */}
-      <section style={{
-        minHeight: '100vh', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '120px 24px',
-        position: 'relative', overflow: 'hidden',
-      }}>
-        {/* linie decorativă verticală */}
-        <div style={{
-          position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)',
-          width: 1, height: '100%',
-          background: `linear-gradient(transparent, ${goldFaint}, transparent)`,
-          pointerEvents: 'none',
-        }} />
-
-        <p style={{
-          fontFamily: sans, fontWeight: 200, fontSize: '0.5rem',
-          letterSpacing: '0.55em', color: gold, textTransform: 'uppercase',
-          opacity: 0.5, marginBottom: 40,
-        }}>
-          Atelier · Corporate Dining · În pregătire
-        </p>
-
-        <h1 style={{
-          fontSize: 'clamp(4rem, 12vw, 9rem)', fontWeight: 300,
-          color: text, letterSpacing: '0.06em', lineHeight: 1,
-          marginBottom: 48,
-        }}>
-          Breviarul
-        </h1>
-
-        <div style={{
-          width: 40, height: 1,
-          background: `linear-gradient(90deg, transparent, ${gold}, transparent)`,
-          marginBottom: 48, opacity: 0.4,
-        }} />
-
-        <p style={{
-          fontFamily: sans, fontWeight: 200, fontSize: '0.75rem',
-          letterSpacing: '0.35em', color: gold, textTransform: 'uppercase',
-          opacity: 0.7, marginBottom: 40,
-        }}>
-          Fiecare echipă are un gust pe care nu l-a gustat încă.
-        </p>
-
-        <p style={{
-          fontSize: '1.15rem', fontWeight: 300, lineHeight: 2,
-          color: textDim, maxWidth: 540, marginBottom: 24,
-        }}>
+      {/* HERO */}
+      <section className="brev-hero">
+        <div className="brev-hero-vline" />
+        <p className="brev-hero-eyebrow">Atelier · Corporate Dining · În pregătire</p>
+        <h1 className="brev-hero-h1">Breviarul</h1>
+        <div className="brev-hero-div" />
+        <p className="brev-hero-tag">Fiecare echipă are un gust pe care nu l-a gustat încă.</p>
+        <p className="brev-hero-p1">
           Codex profilează un individ.<br />
-          <span style={{ color: gold }}>Breviarul profilează o echipă.</span>
+          <span>Breviarul profilează o echipă.</span>
         </p>
-
-        <p style={{
-          fontSize: '1rem', fontWeight: 300, lineHeight: 2,
-          color: textFaint, maxWidth: 480, marginBottom: 80,
-        }}>
+        <p className="brev-hero-p2">
           O experiență culinară care cartografiază gusturile, stilurile și
           tensiunile unui grup — și le transformă într-un meniu și un document.
           Nimic similar nu există în România.
         </p>
-
         <a
           href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Vreau%20sa%20aflu%20mai%20mult"
-          style={{
-            display: 'inline-block',
-            border: `1px solid rgba(201,169,110,0.4)`,
-            color: gold,
-            fontFamily: sans,
-            fontWeight: 200,
-            fontSize: '0.6rem',
-            letterSpacing: '0.45em',
-            textTransform: 'uppercase',
-            padding: '14px 40px',
-            textDecoration: 'none',
-            marginBottom: 80,
-          }}
+          className="brev-hero-btn"
         >
           Înregistrează-ți Interesul
         </a>
-
-        <p style={{
-          fontFamily: sans, fontWeight: 200, fontSize: '0.45rem',
-          letterSpacing: '0.5em', color: 'rgba(201,169,110,0.2)',
-          textTransform: 'uppercase',
-        }}>
-          Lansare · 2026
-        </p>
+        <p className="brev-hero-launch">Lansare · 2026</p>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{
-        borderTop: `1px solid ${goldFaint}`, padding: '32px 48px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      }}>
-        <a href="/" style={{ fontFamily: serif, fontSize: 13, letterSpacing: 4, color: 'rgba(201,169,110,0.4)', textDecoration: 'none' }}>ATELIER</a>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.45rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.2)', textTransform: 'uppercase' }}>
-          Cluj-Napoca · Romania
+      {/* CUM FUNCTIONEAZA */}
+      <section className="brev-section">
+        <div className="brev-inner">
+          <p className="brev-eyebrow">Procesul</p>
+          <h2 className="brev-h2">Trei pași. Un singur document.</h2>
+          <p className="brev-intro-p">
+            Nu e team building. Nu e cină corporativă cu catering standard.
+            E o investigație gustativă a echipei voastre.
+          </p>
+          <div className="brev-steps">
+            {PASI.map((p) => (
+              <div key={p.nr} className="brev-step">
+                <div className="brev-step-nr">{p.nr}</div>
+                <div>
+                  <h3 className="brev-step-titlu">{p.titlu}</h3>
+                  <p className="brev-step-durata">{p.durata}</p>
+                  <p className="brev-step-desc">{p.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CE PRIMESTI */}
+      <section className="brev-section">
+        <div className="brev-inner">
+          <p className="brev-eyebrow brev-eyebrow-center">Livrabilele</p>
+          <h2 className="brev-h2 brev-h2-center">Ce primește echipa</h2>
+          <p className="brev-body-p" style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto 56px' }}>
+            Fiecare Breviar e unic. Nu există un template. Documentul reflectă exact echipa care l-a generat.
+          </p>
+          <div className="brev-deliverables">
+            {LIVRABILE.map((l, i) => (
+              <div key={i} className="brev-deliv-item">
+                <h4>{l.titlu}</h4>
+                <p>{l.sub}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PENTRU CINE */}
+      <section className="brev-section">
+        <div className="brev-inner" style={{ maxWidth: 660, textAlign: 'center' }}>
+          <p className="brev-eyebrow brev-eyebrow-center">Pentru cine</p>
+          <h2 className="brev-h2 brev-h2-center">Echipe care vor mai mult</h2>
+          <p className="brev-body-p">
+            Echipe de conducere care vor să se cunoască altfel. Companii care organizează retreats și vor o experiență memorabilă. Branduri care vor să înțeleagă cultura internă prin limbajul gustului.
+          </p>
+          <p className="brev-body-p">
+            Lucrul cu un grup întreg e complex. Acceptăm un număr limitat de grupuri pe an.
+          </p>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <div className="brev-cta">
+        <p className="brev-eyebrow brev-eyebrow-center">Disponibilitate</p>
+        <h2 className="brev-cta-h2">Suntem în faza de lansare.</h2>
+        <p className="brev-cta-p">
+          Dacă reprezentați o companie și vreți să fiți printre primele echipe care trec prin Breviar, înregistrați-vă interesul. Vom reveni cu detalii despre disponibilitate și calendar.
         </p>
+        <a
+          href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Interes%20Corporativ"
+          className="brev-cta-btn"
+        >
+          Înregistrează Interesul Echipei
+        </a>
+        <p className="brev-cta-note">contact@atelierprivatedining.ro · Lansare 2026</p>
+      </div>
+
+      {/* FOOTER */}
+      <footer className="brev-footer">
+        <a href="/" className="brev-footer-logo">ATELIER</a>
+        <p className="brev-footer-city">Cluj-Napoca · Romania</p>
       </footer>
 
     </div>

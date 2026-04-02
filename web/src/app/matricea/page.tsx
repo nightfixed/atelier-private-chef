@@ -38,133 +38,92 @@ const DOCUMENT_CONTINE = [
 ];
 
 export default function MatriceaPage() {
-  const gold = '#c9a96e';
-  const goldFaint = 'rgba(201,169,110,0.12)';
-  const goldMid = 'rgba(201,169,110,0.5)';
-  const text = '#e8e0d0';
-  const textDim = 'rgba(232,224,208,0.65)';
-  const textFaint = 'rgba(232,224,208,0.4)';
-  const serif = "'Cormorant Garamond', serif";
-  const sans = "'Raleway', sans-serif";
 
   return (
-    <div style={{ background: '#08080a', color: text, fontFamily: serif, minHeight: '100vh' }}>
+    <div className="mat-page">
 
       {/* NAV */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
-        background: 'rgba(6,6,8,.98)', backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid #141414', height: 64,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 48px',
-      }}>
-        <a href="/" style={{ fontFamily: serif, fontSize: 17, letterSpacing: 5, color: gold, textDecoration: 'none' }}>ATELIER</a>
-        <a href="/#contact" style={{
-          fontSize: 9, letterSpacing: 3, color: gold, textDecoration: 'none',
-          textTransform: 'uppercase', border: '1px solid rgba(201,169,110,0.35)',
-          padding: '8px 20px', fontFamily: sans, fontWeight: 200,
-        }}>
-          Solicită Matricea
-        </a>
+      <nav className="mat-nav">
+        <a href="/" className="mat-nav-logo">ATELIER</a>
+        <a href="/#contact" className="mat-nav-cta">Solicită Matricea</a>
       </nav>
 
       {/* HERO */}
-      <section style={{ textAlign: 'center', padding: '160px 24px 100px', maxWidth: 760, margin: '0 auto', position: 'relative' }}>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.55rem', letterSpacing: '0.55em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 32 }}>
-          Atelier · Consultanță · Identitate Culinară
-        </p>
-        <h1 style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 300, color: text, letterSpacing: '0.04em', lineHeight: 1.05, marginBottom: 8 }}>
-          Matricea
-        </h1>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.65rem', letterSpacing: '0.45em', color: gold, textTransform: 'uppercase', marginBottom: 48, opacity: 0.7 }}>
-          Nu am venit să vă îmbunătățim meniul.
-        </p>
-        <p style={{ fontSize: '1.25rem', fontWeight: 300, lineHeight: 2, color: textDim, maxWidth: 560, margin: '0 auto 16px' }}>
-          Am venit să vă găsim gustul.
-        </p>
-        <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint, maxWidth: 520, margin: '0 auto 64px' }}>
+      <section className="mat-hero">
+        <p className="mat-eyebrow">Atelier · Consultanță · Identitate Culinară</p>
+        <h1 className="mat-hero-h1">Matricea</h1>
+        <p className="mat-hero-tag">Nu am venit să vă îmbunătățim meniul.</p>
+        <p className="mat-hero-p">Am venit să vă găsim gustul.</p>
+        <p className="mat-hero-p2">
           Brandurile premium din România au identitate vizuală, verbală, sonoră.
           Nu au identitate culinară. Nu știu ce gust au.
         </p>
-        <div style={{ display: 'inline-block', width: 1, height: 60, background: `linear-gradient(${gold}, transparent)`, opacity: 0.3 }} />
+        <span className="mat-orn" />
       </section>
 
       {/* PROBLEMA */}
-      <section style={{ borderTop: `1px solid ${goldFaint}`, padding: '80px 24px' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
-          <div>
-            <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.5em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 24 }}>Problema</p>
-            <p style={{ fontSize: '1.5rem', fontWeight: 300, lineHeight: 1.7, color: text }}>
-              Când organizezi un eveniment VIP, ce servești?
-            </p>
-          </div>
-          <div>
-            <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textDim, marginBottom: 20 }}>
-              Catering standard. Meniu generic. Nimeni nu-și amintește ce a mâncat. Evenimentul costă zeci de mii de euro și experiența culinară e... bună.
-            </p>
-            <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint }}>
-              Pentru un brand de lux, „bun" e o insultă.
-            </p>
+      <section className="mat-section">
+        <div className="mat-inner">
+          <div className="mat-problem-grid">
+            <div>
+              <p className="mat-sec-label">Problema</p>
+              <h2 className="mat-problem-h3">
+                Când organizezi un eveniment VIP, ce servești?
+              </h2>
+            </div>
+            <div>
+              <p className="mat-problem-p1">
+                Catering standard. Meniu generic. Nimeni nu-și amintește ce a mâncat. Evenimentul costă zeci de mii de euro și experiența culinară e... bună.
+              </p>
+              <p className="mat-problem-p2">
+                Pentru un brand de lux, &ldquo;bun&rdquo; e o insultă.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* TITLU PROCES */}
-      <section style={{ textAlign: 'center', padding: '80px 24px 40px' }}>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.5em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 16 }}>Procesul</p>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 300, color: text, letterSpacing: '0.04em' }}>
-          Trei etape. Un singur livrabil.
-        </h2>
+      <section className="mat-section" style={{ paddingBottom: 0 }}>
+        <div className="mat-inner-wide" style={{ textAlign: 'center' }}>
+          <p className="mat-sec-label mat-sec-label-center">Procesul</p>
+          <h2 className="mat-sec-h2 mat-sec-h2-center">Trei etape. Un singur livrabil.</h2>
+        </div>
       </section>
 
       {/* ETAPE */}
-      <section style={{ padding: '40px 24px 100px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 0 }}>
-          {ETAPE.map((e, i) => (
-            <div key={e.nr} style={{
-              display: 'grid', gridTemplateColumns: '80px 1fr auto',
-              gap: 40, padding: '48px 0',
-              borderBottom: i < ETAPE.length - 1 ? `1px solid ${goldFaint}` : 'none',
-              alignItems: 'start',
-            }}>
-              <div style={{ fontFamily: serif, fontSize: '3rem', fontWeight: 300, color: 'rgba(201,169,110,0.15)', lineHeight: 1, paddingTop: 4 }}>{e.nr}</div>
+      <section className="mat-section">
+        <div className="mat-inner-wide">
+          {ETAPE.map((e) => (
+            <div key={e.nr} className="mat-etape">
+              <div className="mat-etape-nr">{e.nr}</div>
               <div>
-                <h3 style={{ fontSize: '1.4rem', fontWeight: 300, color: gold, marginBottom: 8 }}>{e.titlu}</h3>
-                <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.4em', color: goldMid, textTransform: 'uppercase', marginBottom: 20 }}>{e.durata}</p>
-                <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textDim }}>{e.desc}</p>
+                <h3 className="mat-etape-titlu">{e.titlu}</h3>
+                <p className="mat-etape-durata">{e.durata}</p>
+                <p className="mat-etape-desc">{e.desc}</p>
               </div>
-              <div style={{
-                fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.35em',
-                color: 'rgba(201,169,110,0.35)', textTransform: 'uppercase',
-                whiteSpace: 'nowrap', paddingTop: 8, maxWidth: 160, textAlign: 'right', lineHeight: 1.8,
-              }}>{e.output}</div>
+              <div className="mat-etape-output">{e.output}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* LIVRABILUL */}
-      <section style={{ borderTop: `1px solid ${goldFaint}`, padding: '100px 24px' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 64 }}>
-            <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.5em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 16 }}>Documentul</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 300, color: text, letterSpacing: '0.04em', marginBottom: 24 }}>
-              Matricea conține
-            </h2>
-            <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint, maxWidth: 480, margin: '0 auto' }}>
+      <section className="mat-section">
+        <div className="mat-inner-760">
+          <div className="mat-doc-h2-wrap">
+            <p className="mat-sec-label mat-sec-label-center">Documentul</p>
+            <h2 className="mat-sec-h2 mat-sec-h2-center" style={{ marginBottom: 24 }}>Matricea conține</h2>
+            <p className="mat-doc-intro">
               Un document fizic. Legat. Tipărit pe hârtie de calitate.
               Nu se trimite prin email. Se livrează personal.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}>
+          <div className="mat-doc-grid">
             {DOCUMENT_CONTINE.map((item, i) => (
-              <div key={i} style={{
-                padding: '40px 36px',
-                border: `1px solid ${goldFaint}`,
-                background: 'rgba(201,169,110,0.02)',
-              }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 300, color: gold, marginBottom: 16, lineHeight: 1.4 }}>{item.titlu}</h4>
-                <p style={{ fontSize: '0.9rem', fontWeight: 300, lineHeight: 1.9, color: textDim, fontFamily: sans }}>{item.sub}</p>
+              <div key={i} className="mat-doc-item">
+                <h4>{item.titlu}</h4>
+                <p>{item.sub}</p>
               </div>
             ))}
           </div>
@@ -172,67 +131,41 @@ export default function MatriceaPage() {
       </section>
 
       {/* CINE SUNTEM */}
-      <section style={{ borderTop: `1px solid ${goldFaint}`, padding: '100px 24px' }}>
-        <div style={{ maxWidth: 660, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.5em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 40 }}>De ce Atelier</p>
-          <p style={{ fontSize: '1.3rem', fontWeight: 300, lineHeight: 1.9, color: textDim, marginBottom: 32 }}>
+      <section className="mat-section">
+        <div className="mat-cine">
+          <p className="mat-sec-label mat-sec-label-center">De ce Atelier</p>
+          <p className="mat-cine-p1">
             Suntem doi oameni. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
           </p>
-          <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint, marginBottom: 16 }}>
+          <p className="mat-cine-p2">
             Răzvan și Roland, cu 18+ ani de fine dining internațional. Fiecare Matrice e construită de noi, personal — nu delegată, nu standardizată.
           </p>
-          <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint }}>
+          <p className="mat-cine-p3">
             Acceptăm 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.
           </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{
-        borderTop: `1px solid ${goldFaint}`,
-        padding: '100px 24px 120px',
-        textAlign: 'center',
-        background: 'rgba(201,169,110,0.02)',
-      }}>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.5em', color: gold, textTransform: 'uppercase', opacity: 0.6, marginBottom: 24 }}>Disponibilitate</p>
-        <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 300, color: text, letterSpacing: '0.04em', marginBottom: 24 }}>
-          Discutăm?
-        </h2>
-        <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: textFaint, maxWidth: 400, margin: '0 auto 48px' }}>
+      <div className="mat-cta">
+        <p className="mat-sec-label mat-sec-label-center">Disponibilitate</p>
+        <h2 className="mat-cta-h2">Discutăm?</h2>
+        <p className="mat-cta-p">
           Prima conversație e fără angajament. Ne interesează brandul vostru — dacă potrivirea există, construim.
         </p>
         <a
           href="mailto:contact@atelierprivatedining.ro?subject=Matrice%20%E2%80%94%20Identitate%20Culinara"
-          style={{
-            display: 'inline-block',
-            border: `1px solid ${gold}`,
-            color: gold,
-            fontFamily: sans,
-            fontWeight: 200,
-            fontSize: '0.65rem',
-            letterSpacing: '0.45em',
-            textTransform: 'uppercase',
-            padding: '16px 48px',
-            textDecoration: 'none',
-            transition: 'all .3s',
-          }}
+          className="mat-cta-btn"
         >
           Inițiați Contactul
         </a>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.5rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.25)', textTransform: 'uppercase', marginTop: 32 }}>
-          contact@atelierprivatedining.ro
-        </p>
-      </section>
+        <p className="mat-cta-email">contact@atelierprivatedining.ro</p>
+      </div>
 
       {/* FOOTER */}
-      <footer style={{
-        borderTop: `1px solid ${goldFaint}`, padding: '32px 48px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      }}>
-        <a href="/" style={{ fontFamily: serif, fontSize: 13, letterSpacing: 4, color: 'rgba(201,169,110,0.4)', textDecoration: 'none' }}>ATELIER</a>
-        <p style={{ fontFamily: sans, fontWeight: 200, fontSize: '0.45rem', letterSpacing: '0.4em', color: 'rgba(232,224,208,0.2)', textTransform: 'uppercase' }}>
-          Cluj-Napoca · Romania
-        </p>
+      <footer className="mat-footer">
+        <a href="/" className="mat-footer-logo">ATELIER</a>
+        <p className="mat-footer-city">Cluj-Napoca · Romania</p>
       </footer>
 
     </div>
