@@ -60,7 +60,8 @@ function isGibberish(text: string): boolean {
   if (t.length < 6) return false;
   const vowels = (t.match(/[aeiouăîâ]/g) || []).length;
   if (vowels / t.length < 0.10 && t.length > 7) return true;
-  if (/(.)(\1){3,}/.test(t)) return true;
+  if (/[^aeiouăîâ]{5,}/.test(t)) return true;
+  if (/(.)\1{3,}/.test(t)) return true;
   if (/(.{2,4})\1{2,}/.test(t)) return true;
   if (new Set(t).size < 4 && t.length > 8) return true;
   return false;
