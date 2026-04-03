@@ -1289,7 +1289,7 @@ function startRitual() {
   const input = document.getElementById('guest-name');
   guestName = input.value.trim();
   reservationDate = document.getElementById('reservation-date').value;
-  if (!guestName) { input.focus(); return; }
+  if (!guestName || guestName.length < 3) { input.focus(); return; }
   if (isGibberish(guestName)) {
     let errEl = document.getElementById('name-gibberish-err');
     if (!errEl) {
