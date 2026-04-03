@@ -132,13 +132,13 @@ export default function MatriceaGenerator() {
   const s = STEPS[step];
   const isLast = step === STEPS.length - 1;
 
+  const trimmedVal = current.trim();
+  const inputIsGibberish = trimmedVal.length >= 6 && isGibberish(trimmedVal);
+  const canAdvance = !!trimmedVal && !inputIsGibberish;
+
   const next = async () => {
-    const val = current.trim();
-    if (!val) return;
-    if (isGibberish(val)) {
-      setError('Vă rugăm să completați cu un răspuns clar — acesta va fi folosit pentru diagnosticul și abordarea Atelier.');
-      return;
-    }
+    const val = trimmedVal;
+    if (!val || inputIsGibberish) return;
     setError('');
     const updated = { ...answers, [s.key]: val };
     setAnswers(updated);
@@ -345,13 +345,18 @@ export default function MatriceaGenerator() {
         )}
       </div>
 
-      {error && <p style={{ fontFamily: sans, fontSize: '0.42rem', color: '#c0392b', marginTop: 12 }}>{error}</p>}
+      {inputIsGibberish && (
+        <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.92rem)', color: 'rgba(201,169,110,0.45)', fontStyle: 'italic', marginTop: 14, lineHeight: 1.7 }}>
+          Vă rugăm să completați cu un răspuns clar — acesta va fi folosit pentru diagnosticul și abordarea Atelier.
+        </p>
+      )}
+      {!inputIsGibberish && error && <p style={{ fontFamily: sans, fontSize: '0.42rem', color: '#c0392b', marginTop: 12 }}>{error}</p>}
 
       <div style={{ marginTop: 36, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <button onClick={back} style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.35em', color: step > 0 ? 'rgba(201,169,110,0.3)' : 'transparent', textTransform: 'uppercase', background: 'transparent', border: 'none', cursor: step > 0 ? 'pointer' : 'default', padding: 0 }}>
           ← Înapoi
         </button>
-        <button onClick={next} disabled={!current.trim()} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: current.trim() ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${current.trim() ? goldFaint : '#111'}`, padding: '14px 32px', cursor: current.trim() ? 'pointer' : 'default', transition: 'all 0.3s' }}>
+        <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s' }}>
           {isLast ? 'Generează diagnosticul →' : 'Continuă →'}
         </button>
       </div>
