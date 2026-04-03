@@ -55,12 +55,25 @@ interface Result {
   raw: string;
 }
 
+function stripMd(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/^#{1,3}\s*/gm, '')
+    .replace(/^---+$/gm, '')
+    .replace(/^___+$/gm, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 function parseAI(text: string): Result {
-  const lines = text.split('\n');
+  const clean = stripMd(text);
+  const lines = clean.split('\n');
   const sections: Record<string, string[]> = {};
   let cur = '';
   for (const line of lines) {
-    const m = line.match(/^([A-ZĂÎȘȚÂ][A-ZĂÎȘȚÂA-Za-zăîșțâ\s]{2,}):\s*(.*)/);
+    const m = line.match(/^([A-ZĂÎȘȚÂ][A-ZĂÎȘȚÂa-zăîșțâ\s]{2,}):\s*(.*)/);
     if (m) {
       cur = m[1].trim().toUpperCase();
       if (!sections[cur]) sections[cur] = [];
@@ -82,7 +95,7 @@ function parseAI(text: string): Result {
     meniu: get('MENIU'),
     ritualuri: get('RITUALURI', 'RITUAL'),
     intentie: get('INTENTIE', 'INTEN'),
-    raw: text,
+    raw: clean,
   };
 }
 
@@ -129,11 +142,14 @@ export default function BreviarGenerator() {
         'Generează Portretul Gustativ al acestei echipe. Include EXACT aceste 5 secțiuni în ordine:',
         'TITLU: titlul serii lor (max 7 cuvinte, poetic și specific domeniului și caracterului lor)',
         'PROFILUL: profilul gustativ al echipei — ce gusturi colective le rezonează și de ce, legat de valorile și cultura lor (2-3 propoziții)',
-        'MENIU: un concept de meniu în 3 acte. Format exact: "DESCHIDERE: [Nume act] — [Intenție 1 propoziție]" pe rând nou, "INIMA SERII: [Nume act] — [Intenție]" pe rând nou, "INCHEIEREA: [Nume act] — [Intenție]" pe rând nou',
-        'RITUALURI: 2-3 momente de ritualizare propuse în cursul serii (specifice, concrete, nu generice — legate de provocarea și realizarea echipei)',
+        'MENIU: un concept de meniu în 3 acte pe 3 rânduri separate:',
+        'DESCHIDERE: [Nume act] — [Intenție 1 propoziție]',
+        'INIMA SERII: [Nume act] — [Intenție]',
+        'INCHEIEREA: [Nume act] — [Intenție]',
+        'RITUALURI: 2 momente de ritualizare propuse în cursul serii (concrete, specifice). Format: un ritual pe rând.',
         'INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă',
         '',
-        'Răspunde DOAR cu aceste 5 secțiuni. Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.',
+        'Răspunde DOAR cu aceste 5 secțiuni. FARA formatting markdown (fără ** sau * sau # sau ---). Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.',
       ].join('\n');
 
       const res = await fetch(`${API_URL}/api/chat`, {
@@ -159,7 +175,6 @@ export default function BreviarGenerator() {
 
   const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); };
 
-  /* LOADING */
   if (loading) return (
     <div style={{ padding: '80px 40px', textAlign: 'center' }}>
       <p style={{ fontFamily: serif, fontSize: 'clamp(1.2rem,2.5vw,1.8rem)', color: goldMid, fontWeight: 300, marginBottom: 28 }}>
@@ -173,7 +188,6 @@ export default function BreviarGenerator() {
     </div>
   );
 
-  /* RESULT */
   if (result) {
     const sections = [
       { label: 'Profilul Gustativ', v: result.profilul },
@@ -182,6 +196,11 @@ export default function BreviarGenerator() {
       { label: 'Intenția Serii', v: result.intentie },
     ];
     const hasStructured = sections.some(s => s.v);
+    const emailSubject = encodeURIComponent(`Breviar — ${answers.industry || 'Echipa noastră'}`);
+    const emailBody = encodeURIComponent(
+      `Buna ziua,\n\nAm completat generatorul Portret Gustativ si as vrea sa discutam despre experienta reala pentru echipa noastra.\n\nIndustria: ${answers.industry || ''}\nCultura echipei: ${answers.culture || ''}\nRealizare colectiva: ${answers.achievement || ''}\nProvocarea actuala: ${answers.challenge || ''}\nCe dorim sa simtim: ${answers.feeling || ''}\n\nTitlu generat: ${result.titlu || ''}\n\nAstept contactul vostru.`
+    );
+
     return (
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px 80px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 48, flexWrap: 'wrap', gap: 16 }}>
@@ -207,23 +226,41 @@ export default function BreviarGenerator() {
           </div>
         )}
 
-        <div style={{ marginTop: 48, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+        {/* CE URMEAZA */}
+        <div style={{ border: '1px solid #1a1a1a', padding: '36px', marginTop: 8, marginBottom: 40 }}>
+          <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', marginBottom: 20 }}>Ce urmează</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {[
+              { nr: '01', titlu: 'Sesiunea de Profil', desc: 'O zi cu întreaga echipă — individual sau în grup. Nu suntem HR, nu facem team building. Cartografiem gusturile, aversiunile și asocierile senzoriale ale fiecărei persoane.' },
+              { nr: '02', titlu: 'Analiza Dinamică', desc: 'Transformăm datele individuale într-un profil colectiv. Unde se intersectează? Unde există tensiune? Ce lipsește din experiența comună a echipei? Această analiză durează 1-2 săptămâni.' },
+              { nr: '03', titlu: 'Construcția Experienței', desc: 'Gătim. Nu improvizăm — fiecare preparat, fiecare moment al serii este construit pe baza profilului real al echipei. Planificarea completă ia între 3-6 săptămâni de la primul contact.' },
+            ].map(({ nr, titlu, desc }) => (
+              <div key={nr} style={{ display: 'grid', gridTemplateColumns: '32px 1fr', gap: 16, alignItems: 'start' }}>
+                <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.3em', color: 'rgba(201,169,110,0.25)', margin: 0, paddingTop: 3 }}>{nr}</p>
+                <div>
+                  <p style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.2em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', marginBottom: 6 }}>{titlu}</p>
+                  <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.95rem)', color: 'rgba(232,224,208,0.4)', lineHeight: 1.8, fontWeight: 300, margin: 0 }}>{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <button onClick={reset} style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: goldMid, textTransform: 'uppercase', background: 'transparent', border: `1px solid ${goldFaint}`, padding: '14px 28px', cursor: 'pointer' }}>
-            Generează din nou
+            Generează alt portret
           </button>
-          <a href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20—%20Portret%20Gustativ%20Echipa"
-            style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.35)', textTransform: 'uppercase', border: '1px solid #1a1a1a', padding: '14px 28px', textDecoration: 'none' }}>
-            Solicită experiența reală →
+          <a href={`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`}
+            style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', border: '1px solid rgba(232,224,208,0.1)', padding: '14px 28px', textDecoration: 'none' }}>
+            Inițiem procesul real →
           </a>
         </div>
       </div>
     );
   }
 
-  /* FORM */
   return (
     <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 40px 80px' }}>
-      {/* progress bar */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 56 }}>
         <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', margin: 0, whiteSpace: 'nowrap' }}>Portret Gustativ</p>
         <div style={{ display: 'flex', gap: 4, flex: 1 }}>

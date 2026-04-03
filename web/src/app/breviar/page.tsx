@@ -155,13 +155,13 @@ export default function BreviarPage() {
             Atelier AI · Experiment · Gratuit
           </p>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.8rem,4vw,3rem)', color: '#c9a96e', fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
-            Portretul Gustativ al Echipei Tale
+            Portretul Gustativ al Echipei
           </h2>
           <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: 'clamp(0.75rem,1.5vw,0.9rem)', color: 'rgba(232,224,208,0.5)', lineHeight: 1.8, maxWidth: 520, margin: '0 auto 12px' }}>
             Fiecare echipă are un gust colectiv pe care nu l-a descoperit încă. Răspunde la 5 întrebări — Atelier construiește portretul ei gustativ: gusturile care o definesc, ritualurile care o revelează, intenția serii.
           </p>
           <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: '0.65rem', color: 'rgba(201,169,110,0.3)', fontStyle: 'italic' }}>
-            Dacă portretul rezonează, îl putem transforma într-o experiență reală pentru echipa ta.
+            Pe baza portretului real — construit într-o zi cu echipa — Atelier proiectează meniul senzorial complet al serii. Planificarea ia între 3-6 săptămâni.
           </p>
         </div>
         <BreviarGenerator />

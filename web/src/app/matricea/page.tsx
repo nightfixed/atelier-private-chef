@@ -170,13 +170,13 @@ export default function MatriceaPage() {
             Atelier AI · Experiment · Gratuit
           </p>
           <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.8rem,4vw,3rem)', color: '#c9a96e', fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
-            ADN-ul Culinar al Brandului Tău
+            Diagnosticul Culinar
           </h2>
           <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: 'clamp(0.75rem,1.5vw,0.9rem)', color: 'rgba(232,224,208,0.5)', lineHeight: 1.8, maxWidth: 520, margin: '0 auto 12px' }}>
-            Fiecare brand are un gust pe care nu l-a gustat încă. Răspunde la 5 întrebări — Atelier generează ADN-ul lui culinar: ingredientele care îl reprezintă, tehnica care rezonează cu valorile lui, ritualul de cină potrivit.
+            Atelier nu vine cu soluții prefabricate. Vine cu întrebările corecte. Răspunde la 5 întrebări despre activitatea ta — generatorul construiește o primă perspectivă asupra provocării tale culinare și a modului în care Atelier ar aborda-o.
           </p>
           <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: '0.65rem', color: 'rgba(201,169,110,0.3)', fontStyle: 'italic' }}>
-            Dacă ADN-ul rezonează, îl putem transforma într-o Matrice reală.
+            Procesul real presupune o zi la fața locului și 4-6 săptămâni de lucru. Acesta este primul pas.
           </p>
         </div>
         <MatriceaGenerator />
