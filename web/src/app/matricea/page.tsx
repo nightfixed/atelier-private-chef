@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import MatriceaGenerator from './MatriceaGenerator';
 
 export const metadata: Metadata = {
   title: 'Matricea · Identitate Culinară · Atelier',
@@ -161,6 +162,25 @@ export default function MatriceaPage() {
         </a>
         <p className="mat-cta-email">contact@atelierprivatedining.ro</p>
       </div>
+
+      {/* ── AI GENERATOR ── */}
+      <section style={{ borderTop: '1px solid #111', padding: '80px 0 0' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px 48px', textAlign: 'center' }}>
+          <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: '0.42rem', letterSpacing: '0.5em', color: 'rgba(201,169,110,0.45)', textTransform: 'uppercase', marginBottom: 16 }}>
+            Atelier AI · Experiment · Gratuit
+          </p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 'clamp(1.8rem,4vw,3rem)', color: '#c9a96e', fontWeight: 300, lineHeight: 1.2, marginBottom: 20 }}>
+            ADN-ul Culinar al Brandului Tău
+          </h2>
+          <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: 'clamp(0.75rem,1.5vw,0.9rem)', color: 'rgba(232,224,208,0.5)', lineHeight: 1.8, maxWidth: 520, margin: '0 auto 12px' }}>
+            Fiecare brand are un gust pe care nu l-a gustat încă. Răspunde la 5 întrebări — Atelier generează ADN-ul lui culinar: ingredientele care îl reprezintă, tehnica care rezonează cu valorile lui, ritualul de cină potrivit.
+          </p>
+          <p style={{ fontFamily: "'Raleway',sans-serif", fontWeight: 200, fontSize: '0.65rem', color: 'rgba(201,169,110,0.3)', fontStyle: 'italic' }}>
+            Dacă ADN-ul rezonează, îl putem transforma într-o Matrice reală.
+          </p>
+        </div>
+        <MatriceaGenerator />
+      </section>
 
       {/* FOOTER */}
       <footer id="page-bottom" className="mat-footer">
