@@ -376,7 +376,7 @@ export default function BreviarGenerator() {
         <button onClick={back} style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.35em', color: step > 0 ? 'rgba(201,169,110,0.3)' : 'transparent', textTransform: 'uppercase', background: 'transparent', border: 'none', cursor: step > 0 ? 'pointer' : 'default', padding: 0 }}>
           ← Înapoi
         </button>
-        <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s' }}>
+        <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s', pointerEvents: canAdvance ? 'auto' : 'none' }}>
           {isLast ? 'Generează Portretul →' : 'Continuă →'}
         </button>
       </div>

@@ -1356,7 +1356,22 @@ function selectOption(btn, val) {
 }
 
 function freeInput(el) {
-  document.getElementById('next-btn').disabled = el.value.trim().length < 3;
+  const val = el.value.trim();
+  const bad = val.length >= 6 && isGibberish(val);
+  const btn = document.getElementById('next-btn');
+  btn.disabled = val.length < 3 || bad;
+  let errEl = document.getElementById('gibberish-err');
+  if (bad) {
+    if (!errEl) {
+      errEl = document.createElement('p');
+      errEl.id = 'gibberish-err';
+      errEl.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:12px;line-height:1.8;';
+      el.after(errEl);
+    }
+    errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.';
+  } else if (errEl) {
+    errEl.remove();
+  }
 }
 
 function navBack() {
