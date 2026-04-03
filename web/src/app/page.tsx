@@ -61,6 +61,7 @@ export default function HomePage() {
   const [rezLoading, setRezLoading] = useState(false);
 
   const aiInputRef = useRef<HTMLInputElement>(null);
+  const aiMessagesEndRef = useRef<HTMLDivElement>(null);
 
   // ── EFFECTS ──
   useEffect(() => {
@@ -150,6 +151,11 @@ export default function HomePage() {
 
     return () => { obs.disconnect(); cObs.disconnect(); };
   }, []);
+
+  // Auto-scroll chatbot la fiecare mesaj nou
+  useEffect(() => {
+    aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [aiMessages]);
 
   // Re-run specimen observer when specimens load
   useEffect(() => {
@@ -830,6 +836,7 @@ export default function HomePage() {
           {aiMessages.map((m, i) => (
             <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{m.text}</div>
           ))}
+          <div ref={aiMessagesEndRef} />
         </div>
         <div className="ai-input-wrap">
           <input ref={aiInputRef} className="ai-input" value={aiInput} onChange={e => setAiInput(e.target.value)} placeholder="Scrieți un mesaj..." onKeyDown={e => { if(e.key==='Enter') sendAI(); }}/>
