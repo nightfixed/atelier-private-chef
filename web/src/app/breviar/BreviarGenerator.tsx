@@ -65,6 +65,9 @@ function isGibberish(text: string): boolean {
   if (/(.)\1{3,}/.test(t)) return true;
   if (/(.{2,4})\1{2,}/.test(t)) return true;
   if (new Set(t).size < 4 && t.length > 8) return true;
+  // Clustere invalide de consoane la start (bg, gf, jk etc.)
+  const validStart = /^(bl|br|cl|cr|dr|dz|fl|fr|gh|gl|gr|mr|pl|pr|ps|sc|sf|sk|sl|sm|sn|sp|st|str|sw|tr|ts|vl|vr|zb|zg|zh|zm|zv)/;
+  if (t.length >= 3 && /^[^aeiouăîâ]{2}/.test(t) && !validStart.test(t)) return true;
   return false;
 }
 
