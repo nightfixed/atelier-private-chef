@@ -57,9 +57,10 @@ interface Result {
 
 function isGibberish(text: string): boolean {
   const t = text.toLowerCase().replace(/\s+/g, '');
-  if (t.length < 6) return false;
+  if (t.length < 2) return false;
   const vowels = (t.match(/[aeiouăîâ]/g) || []).length;
-  if (vowels / t.length < 0.10 && t.length > 7) return true;
+  if (t.length <= 5 && vowels === 0) return true;
+  if (t.length > 5 && vowels / t.length < 0.10) return true;
   if (/[^aeiouăîâ]{5,}/.test(t)) return true;
   if (/(.)\1{3,}/.test(t)) return true;
   if (/(.{2,4})\1{2,}/.test(t)) return true;
@@ -135,7 +136,7 @@ export default function BreviarGenerator() {
   const isLast = step === STEPS.length - 1;
 
   const trimmedVal = current.trim();
-  const inputIsGibberish = trimmedVal.length >= 6 && isGibberish(trimmedVal);
+  const inputIsGibberish = trimmedVal.length >= 2 && isGibberish(trimmedVal);
   const canAdvance = !!trimmedVal && !inputIsGibberish;
 
   const next = async () => {
