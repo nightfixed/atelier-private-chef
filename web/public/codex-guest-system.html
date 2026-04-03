@@ -806,7 +806,8 @@
         Există doar seara dumneavoastră.
       </p>
       <div class="name-wrap">
-        <input type="text" id="guest-name" placeholder="Numele dumneavoastră" autocomplete="off" />
+        <input type="text" id="guest-name" placeholder="Numele dumneavoastră" autocomplete="off" oninput="nameInput(this)" />
+        <p id="name-gibberish-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;"></p>
       </div>
       <div class="date-wrap">
         <span class="field-label">Data rezervării</span>
@@ -1291,19 +1292,13 @@ function startRitual() {
   reservationDate = document.getElementById('reservation-date').value;
   if (!guestName || guestName.length < 3) { input.focus(); return; }
   if (isGibberish(guestName)) {
-    let errEl = document.getElementById('name-gibberish-err');
-    if (!errEl) {
-      errEl = document.createElement('p');
-      errEl.id = 'name-gibberish-err';
-      errEl.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;';
-      input.after(errEl);
-    }
-    errEl.textContent = 'Vă rugăm să completați cu un răspuns clar — acesta va fi folosit pentru a compune seara dumneavoastră.';
+    const errEl = document.getElementById('name-gibberish-err');
+    if (errEl) { errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.'; errEl.style.display = 'block'; }
     input.focus();
     return;
   }
   const errEl = document.getElementById('name-gibberish-err');
-  if (errEl) errEl.remove();
+  if (errEl) errEl.style.display = 'none';
   currentQ = 0;
   answers = {};
   show('s-questions');
@@ -1369,9 +1364,21 @@ function selectOption(btn, val) {
   setTimeout(() => nextQuestion(), 420);
 }
 
+function nameInput(el) {
+  const val = el.value.trim();
+  const bad = val.length >= 3 && isGibberish(val);
+  const errEl = document.getElementById('name-gibberish-err');
+  if (bad) {
+    errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.';
+    errEl.style.display = 'block';
+  } else {
+    errEl.style.display = 'none';
+  }
+}
+
 function freeInput(el) {
   const val = el.value.trim();
-  const bad = !!val && isGibberish(val);
+  const bad = val.length >= 3 && isGibberish(val);
   const btn = document.getElementById('next-btn');
   btn.disabled = val.length < 3 || bad;
   let errEl = document.getElementById('gibberish-err');
