@@ -54,6 +54,17 @@ interface Result {
   raw: string;
 }
 
+function isGibberish(text: string): boolean {
+  const t = text.toLowerCase().replace(/\s+/g, '');
+  if (t.length < 6) return false;
+  const vowels = (t.match(/[aeiouăîâ]/g) || []).length;
+  if (vowels / t.length < 0.10 && t.length > 7) return true;
+  if (/(.)(\1){3,}/.test(t)) return true;
+  if (/(.{2,4})\1{2,}/.test(t)) return true;
+  if (new Set(t).size < 4 && t.length > 8) return true;
+  return false;
+}
+
 function stripMd(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '$1')
@@ -104,6 +115,8 @@ export default function MatriceaGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState('');
+  const [suggestions, setSuggestions] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -119,8 +132,14 @@ export default function MatriceaGenerator() {
   const isLast = step === STEPS.length - 1;
 
   const next = async () => {
-    if (!current.trim()) return;
-    const updated = { ...answers, [s.key]: current.trim() };
+    const val = current.trim();
+    if (!val) return;
+    if (isGibberish(val)) {
+      setError('Vă rugăm să completați cu un răspuns clar — acesta va fi folosit pentru diagnosticul și abordarea Atelier.');
+      return;
+    }
+    setError('');
+    const updated = { ...answers, [s.key]: val };
     setAnswers(updated);
     if (!isLast) { setCurrent(''); setStep(p => p + 1); return; }
 
@@ -155,6 +174,23 @@ export default function MatriceaGenerator() {
       if (!res.ok) throw new Error();
       const data = await res.json();
       setResult(parseAI(data.reply));
+      // Fetch follow-up suggestions in background
+      try {
+        const suggestPrompt = [
+          `Un client din domeniul ${updated.type} apelează la consultanță culinară Atelier.`,
+          `Provocarea principală: ${updated.problem}`,
+          `Obiectiv în 6 luni: ${updated.goal}`,
+          '',
+          'Dă 3 acţiuni concrete pe care clientul le poate face intern înainte de prima noastră întâlnire, pentru a pregăti terenul.',
+          'Format: 3 rânduri separate, fiecare începe cu numărul (1., 2., 3.). Scurt, direct, fără titluri, fără markdown.',
+        ].join('\n');
+        const sr = await fetch(`${API_URL}/api/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: [{ role: 'user', content: suggestPrompt }] }),
+        });
+        if (sr.ok) { const sd = await sr.json(); setSuggestions(stripMd(sd.reply)); }
+      } catch { /* silent */ }
     } catch {
       setError('Generarea a eșuat. Încearcă din nou.');
     }
@@ -168,7 +204,7 @@ export default function MatriceaGenerator() {
     setStep(prev);
   };
 
-  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); };
+  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); setSuggestions(null); setEmailSent(false); };
 
   if (loading) return (
     <div style={{ padding: '80px 40px', textAlign: 'center' }}>
@@ -226,15 +262,61 @@ export default function MatriceaGenerator() {
           </p>
         </div>
 
+        {/* PATIENCE MESSAGING */}
+        <div style={{ border: '1px solid #141414', padding: '32px 36px', marginBottom: 40, position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '-0.55rem', left: 36, background: '#0a0a0a', padding: '0 12px' }}>
+            <span style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.25)', textTransform: 'uppercase' }}>Ce se întâmplă după</span>
+          </div>
+          <p style={{ fontFamily: serif, fontSize: 'clamp(0.88rem,1.7vw,0.97rem)', color: 'rgba(232,224,208,0.4)', lineHeight: 2, fontWeight: 300, fontStyle: 'italic', marginBottom: 16 }}>
+            Fiecare proiect Atelier este evaluat individual — nu există răspunsuri standard sau pachete prefabricate.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {[
+              'Cererea ajunge direct la Răzvan și este analizată personal — nu de un asistent.',
+              'Veți primi un răspuns în maximum 48 de ore, după prima analiză a situației voastre.',
+              'Dacă există compatibilitate, propunem o primă întâlnire la fața locului fără angajament.',
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <span style={{ fontFamily: sans, fontSize: '0.38rem', color: 'rgba(201,169,110,0.25)', minWidth: 16, paddingTop: 4, letterSpacing: '0.2em' }}>◇</span>
+                <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.93rem)', color: 'rgba(232,224,208,0.35)', lineHeight: 1.85, fontWeight: 300, margin: 0 }}>{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <button onClick={reset} style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: goldMid, textTransform: 'uppercase', background: 'transparent', border: `1px solid ${goldFaint}`, padding: '14px 28px', cursor: 'pointer' }}>
             Alt diagnostic
           </button>
-          <a href={`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`}
-            style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', border: '1px solid rgba(232,224,208,0.1)', padding: '14px 28px', textDecoration: 'none' }}>
-            Inițiem discuția reală →
-          </a>
+          {!emailSent ? (
+            <a href={`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`}
+              onClick={() => setEmailSent(true)}
+              style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', border: '1px solid rgba(232,224,208,0.1)', padding: '14px 28px', textDecoration: 'none' }}>
+              Inițiem discuția reală →
+            </a>
+          ) : (
+            <span style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(201,169,110,0.35)', textTransform: 'uppercase', border: '1px solid rgba(201,169,110,0.1)', padding: '14px 28px' }}>
+              Cerere trimisă ✓
+            </span>
+          )}
         </div>
+
+        {/* AI SUGGESTIONS — shown after email initiated */}
+        {emailSent && (
+          <div style={{ marginTop: 48, borderTop: '1px solid #111', paddingTop: 40 }}>
+            <p style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', marginBottom: 8 }}>Pregătire pentru prima întâlnire</p>
+            <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.93rem)', color: 'rgba(232,224,208,0.35)', lineHeight: 1.8, fontWeight: 300, marginBottom: 24 }}>
+              Pe baza situației descrise, câteva acțiuni interne pe care le puteți face înainte să ne întâlnim:
+            </p>
+            {suggestions ? (
+              <p style={{ fontFamily: serif, fontSize: 'clamp(0.9rem,1.8vw,1rem)', color: 'rgba(232,224,208,0.6)', lineHeight: 2, fontWeight: 300, whiteSpace: 'pre-line' }}>{suggestions}</p>
+            ) : (
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                {[0,1,2].map(i => <span key={i} className="gen-pulse-dot" style={{ animationDelay: `${i*0.22}s`, width: 6, height: 6, borderRadius: '50%', background: gold, display: 'inline-block' }} />)}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     );
   }
