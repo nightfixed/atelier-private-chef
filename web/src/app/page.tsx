@@ -47,8 +47,10 @@ export default function HomePage() {
   const [aiOpen, setAiOpen] = useState(false);
   const [aiInput, setAiInput] = useState('');
   const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>([
-    {role:'bot', text:'Bună ziua. Sunt asistentul Atelier Private Dining. Cu ce vă pot fi de folos?'}
+    {role:'bot', text:'Nu există două seri la fel la Atelier. Fiecare masă e construită de la zero — pentru tine, pentru echipa ta sau pentru brandul tău. Ce fel de experiență cauți?'}
   ]);
+  const [aiTyping, setAiTyping] = useState(false);
+  const [aiQuickUsed, setAiQuickUsed] = useState(false);
   const [show404, setShow404] = useState(false);
   // booking form
   const [rezOcazie, setRezOcazie] = useState('');
@@ -171,12 +173,13 @@ export default function HomePage() {
   // ── HANDLERS ──
   function toggleFaq(i: number) { setFaqOpen(faqOpen === i ? null : i); }
 
-  function sendAI() {
-    if (!aiInput.trim()) return;
-    const msg = aiInput.trim();
+  function sendAI(overrideMsg?: string) {
+    const msg = (overrideMsg ?? aiInput).trim();
+    if (!msg) return;
     const newMessages = [...aiMessages, {role:'user' as const, text:msg}];
     setAiMessages(newMessages);
     setAiInput('');
+    setAiTyping(true);
 
     const apiMessages = newMessages
       .filter(m => m.role === 'user' || m.role === 'bot')
@@ -185,11 +188,27 @@ export default function HomePage() {
     api.chat(apiMessages)
       .then((data: { reply?: string } | null) => {
         const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
+        setAiTyping(false);
         setAiMessages(m => [...m, {role:'bot', text:reply}]);
       })
       .catch(() => {
+        setAiTyping(false);
         setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com.'}]);
       });
+  }
+
+  function renderMessageText(text: string) {
+    // Parsează /rute ca linkuri clickabile și **bold** ca <strong>
+    const parts = text.split(/(\*\*[^*]+\*\*|\/[a-z][a-z0-9-]*(?:\.[a-z]+)?)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i} style={{color:'var(--gold)',fontWeight:600}}>{part.slice(2,-2)}</strong>;
+      }
+      if (/^\/[a-z][a-z0-9-]*(?:\.[a-z]+)?$/.test(part)) {
+        return <a key={i} href={part} style={{color:'var(--gold)',textDecoration:'underline',textUnderlineOffset:'3px'}}>{part}</a>;
+      }
+      return part;
+    });
   }
 
   async function submitRez() {
@@ -834,8 +853,33 @@ export default function HomePage() {
         <div className="ai-messages" style={{flex:1,overflowY:'auto',padding:'1rem 1.4rem',display:'flex',flexDirection:'column',gap:'0.75rem'}}>
           <div className="ai-divider">astăzi</div>
           {aiMessages.map((m, i) => (
-            <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{m.text}</div>
+            <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
           ))}
+          {/* Quick replies — apar doar după primul mesaj bot, o singură dată */}
+          {!aiQuickUsed && aiMessages.length === 1 && (
+            <div style={{display:'flex',flexDirection:'column',gap:'6px',alignSelf:'flex-start',marginTop:'4px'}}>
+              {['Cină privată', 'Eveniment corporate', 'Consultanță brand'].map(opt => (
+                <button key={opt} onClick={() => { setAiQuickUsed(true); sendAI(opt); }} style={{
+                  background:'transparent', border:'1px solid rgba(201,169,110,0.3)',
+                  color:'rgba(201,169,110,0.8)', fontFamily:"'Raleway',sans-serif",
+                  fontWeight:200, fontSize:'10px', letterSpacing:'2px',
+                  padding:'6px 14px', cursor:'pointer', textAlign:'left',
+                  transition:'all .2s', textTransform:'uppercase',
+                }}
+                onMouseEnter={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.7)')}
+                onMouseLeave={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.3)')}
+                >{opt}</button>
+              ))}
+            </div>
+          )}
+          {/* Typing indicator */}
+          {aiTyping && (
+            <div style={{alignSelf:'flex-start',background:'rgba(255,255,255,.03)',border:'1px solid rgba(201,169,110,.12)',padding:'0.7rem 1rem',display:'flex',gap:'5px',alignItems:'center'}}>
+              {[0,1,2].map(i => (
+                <div key={i} style={{width:'5px',height:'5px',borderRadius:'50%',background:'rgba(201,169,110,0.5)',animation:`ai-dot-pulse 1.2s ease-in-out ${i*0.2}s infinite`}} />
+              ))}
+            </div>
+          )}
           <div ref={aiMessagesEndRef} />
         </div>
         <div className="ai-input-wrap">
