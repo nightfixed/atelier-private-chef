@@ -47,7 +47,7 @@ export default function HomePage() {
   const [aiOpen, setAiOpen] = useState(false);
   const [aiInput, setAiInput] = useState('');
   const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>([
-    {role:'bot', text:'Bună. Sunt asistentul Atelier — nu un chatbot obișnuit, ci un sistem construit cu AI care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă. Spune-mi: ce fel de moment vrei să creezi?'}
+    {role:'bot', text:'Bună. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă. Spune-mi: ce fel de moment vrei să creezi?'}
   ]);
   const [aiTyping, setAiTyping] = useState(false);
   const [aiQuickUsed, setAiQuickUsed] = useState(false);
