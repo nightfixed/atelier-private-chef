@@ -884,7 +884,7 @@ export default function HomePage() {
         </div>
         <div className="ai-input-wrap">
           <input ref={aiInputRef} className="ai-input" value={aiInput} onChange={e => setAiInput(e.target.value)} placeholder="Scrieți un mesaj..." onKeyDown={e => { if(e.key==='Enter') sendAI(); }}/>
-          <button className="ai-send" onClick={sendAI}>→</button>
+          <button className="ai-send" onClick={() => sendAI()}>→</button>
         </div>
         <div className="ai-footer-note">Powered by Claude · Atelier Private Dining</div>
       </div>
