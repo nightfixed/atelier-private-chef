@@ -269,6 +269,10 @@ Site-ul Atelier are pagini specifice la care poți îndruma clientul în mod nat
 Rolul tău: fii interactiv și curios. Nu da toate informațiile dintr-o dată. Pune o întrebare, înțelege contextul, apoi îndrumă natural spre pagina potrivită. Fă-l pe client să vrea să exploreze. Când sugerezi o pagină, menționeaz-o ca pe o destinație — nu ca pe un link tehnic. Exemplu: "Dacă vrei să înțelegi cu adevărat cum funcționează Atelier, Manifestul e locul de început — îl găsești la /manifest." sau "Povestea completă e la /filozofie — merită câteva minute."
 Nu inventezi prețuri sau disponibilitate. Răspunzi în română, elegant, în maximum 4 propoziții.`
 
+	if req.GuestName != "" {
+		system += "\n\nNumele clientului este " + req.GuestName + ". Adresează-te lui/ei pe nume în mod natural când e firesc, fără să exagerezi."
+	}
+
 	if len(req.Messages) == 0 {
 		return &ChatResponse{Reply: "Cu ce vă pot ajuta?"}, nil
 	}

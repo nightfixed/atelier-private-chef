@@ -47,10 +47,11 @@ export default function HomePage() {
   const [aiOpen, setAiOpen] = useState(false);
   const [aiInput, setAiInput] = useState('');
   const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>([
-    {role:'bot', text:'Bună. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă. Spune-mi: ce fel de moment vrei să creezi?'}
+    {role:'bot', text:'Bună seara. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă.\n\nÎnainte de toate — spune-mi te rog prenumele tău, ca să îți pot oferi cele mai inedite experiențe.'}
   ]);
   const [aiTyping, setAiTyping] = useState(false);
   const [aiQuickUsed, setAiQuickUsed] = useState(false);
+  const [guestName, setGuestName] = useState('');
   const [show404, setShow404] = useState(false);
   // booking form
   const [rezOcazie, setRezOcazie] = useState('');
@@ -181,11 +182,16 @@ export default function HomePage() {
     setAiInput('');
     setAiTyping(true);
 
+    // First user message is the name — extract and store it
+    const isFirstMessage = !guestName && aiMessages.filter(m => m.role === 'user').length === 0;
+    const resolvedName = isFirstMessage ? msg.split(/\s+/)[0] : guestName;
+    if (isFirstMessage) setGuestName(resolvedName);
+
     const apiMessages = newMessages
       .filter(m => m.role === 'user' || m.role === 'bot')
       .map(m => ({ role: (m.role === 'bot' ? 'assistant' : 'user') as 'user' | 'assistant', content: m.text }));
 
-    api.chat(apiMessages)
+    api.chat(apiMessages, resolvedName || undefined)
       .then((data: { reply?: string } | null) => {
         const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
         setAiTyping(false);

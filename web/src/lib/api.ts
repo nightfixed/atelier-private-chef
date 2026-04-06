@@ -84,8 +84,8 @@ export const api = {
   }) =>
     apiFetch("/api/generate-codex", { method: "POST", body: JSON.stringify(body) }),
 
-  chat: (messages: { role: "user" | "assistant"; content: string }[]) =>
-    apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages }) }),
+  chat: (messages: { role: "user" | "assistant"; content: string }[], guestName?: string) =>
+    apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages, guest_name: guestName || undefined }) }),
 
   // Availability windows
   getAvailability: (token?: string) =>

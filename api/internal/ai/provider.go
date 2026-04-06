@@ -53,7 +53,8 @@ Content string `json:"content"`
 
 // ChatRequest is the payload sent to the chat endpoint.
 type ChatRequest struct {
-Messages []ChatMessage `json:"messages"`
+	Messages  []ChatMessage `json:"messages"`
+	GuestName string        `json:"guest_name,omitempty"`
 }
 
 // ChatResponse is the reply from the AI.
