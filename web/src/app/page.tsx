@@ -211,7 +211,7 @@ export default function HomePage() {
         return <strong key={i} style={{color:'var(--gold)',fontWeight:600}}>{part.slice(2,-2)}</strong>;
       }
       if (/^\/[a-z][a-z0-9-]*(?:\.[a-z]+)?$/.test(part)) {
-        return <a key={i} href={part} style={{color:'var(--gold)',textDecoration:'underline',textUnderlineOffset:'3px'}}>{part}</a>;
+        return <a key={i} href={part} target="_blank" rel="noopener noreferrer" style={{color:'var(--gold)',textDecoration:'underline',textUnderlineOffset:'3px'}}>{part}</a>;
       }
       return part;
     });
