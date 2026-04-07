@@ -868,7 +868,7 @@ export default function HomePage() {
             <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
           ))}
           {/* Quick replies — apar după ce bot-ul a răspuns la prenume (2 mesaje bot, 1 user) */}
-          {!aiQuickUsed && aiMessages.filter(m => m.role === 'bot').length === 2 && aiMessages.filter(m => m.role === 'user').length === 1 && (
+          {!aiQuickUsed && !aiTyping && aiMessages.filter(m => m.role === 'bot').length === 2 && aiMessages.filter(m => m.role === 'user').length === 1 && (
             <div style={{display:'flex',flexDirection:'column',gap:'6px',alignSelf:'flex-start',marginTop:'4px'}}>
               {['Cină privată', 'Eveniment corporate', 'Consultanță brand'].map(opt => (
                 <button key={opt} onClick={() => { setAiQuickUsed(true); sendAI(opt); }} style={{
@@ -885,7 +885,7 @@ export default function HomePage() {
             </div>
           )}
           {/* Codex shortcut — apare după 2+ mesaje user dacă discuția e despre cină privată */}
-          {aiMessages.filter(m => m.role === 'user').length >= 2 &&
+          {!aiTyping && aiMessages.filter(m => m.role === 'user').length >= 2 &&
            aiMessages.some(m => m.role === 'user' && /cin[aă]|codex|privat|sear[aă]|rezerv/i.test(m.text)) &&
            !aiMessages.some(m => m.role === 'user' && /corporate|brand|echip[aă]|breviar|matrice/i.test(m.text)) && (
             <div style={{alignSelf:'flex-start',marginTop:'8px'}}>
