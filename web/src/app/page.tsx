@@ -46,9 +46,11 @@ export default function HomePage() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [aiOpen, setAiOpen] = useState(false);
   const [aiInput, setAiInput] = useState('');
-  const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>([
-    {role:'bot', text:'Bună seara. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.'}
-  ]);
+  const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>(() => {
+    const h = new Date().getHours();
+    const salut = h >= 5 && h < 12 ? 'Bună dimineața' : h >= 12 && h < 18 ? 'Bună ziua' : h >= 18 && h < 23 ? 'Bună seara' : 'Bună noaptea';
+    return [{role:'bot', text:`${salut}. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
+  });
   const [aiTyping, setAiTyping] = useState(false);
   const [aiQuickUsed, setAiQuickUsed] = useState(false);
   const [guestName, setGuestName] = useState('');
@@ -880,6 +882,23 @@ export default function HomePage() {
                 onMouseLeave={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.3)')}
                 >{opt}</button>
               ))}
+            </div>
+          )}
+          {/* Codex shortcut — apare după 2+ mesaje user dacă discuția e despre cină privată */}
+          {aiMessages.filter(m => m.role === 'user').length >= 2 &&
+           aiMessages.some(m => m.role === 'user' && /cin[aă]|codex|privat|sear[aă]|rezerv/i.test(m.text)) &&
+           !aiMessages.some(m => m.role === 'user' && /corporate|brand|echip[aă]|breviar|matrice/i.test(m.text)) && (
+            <div style={{alignSelf:'flex-start',marginTop:'8px'}}>
+              <a href="/codex-guest-system.html" target="_blank" rel="noopener noreferrer" style={{
+                display:'inline-block', background:'transparent',
+                border:'1px solid rgba(201,169,110,0.5)', color:'var(--gold)',
+                fontFamily:"'Raleway',sans-serif", fontWeight:300,
+                fontSize:'10px', letterSpacing:'2.5px', padding:'8px 18px',
+                textDecoration:'none', textTransform:'uppercase', transition:'all .2s',
+              }}
+              onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.background='rgba(201,169,110,0.08)';}}
+              onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.background='transparent';}}
+              >✦ Începe Codex acum →</a>
             </div>
           )}
           {/* Typing indicator */}
