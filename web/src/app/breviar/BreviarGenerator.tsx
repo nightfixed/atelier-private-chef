@@ -8,7 +8,19 @@ const serif = "'Cormorant Garamond', serif";
 const sans = "'Inter', sans-serif";
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
 
-const STEPS = [
+interface Step {
+  key: string;
+  eyebrow: string;
+  question: string;
+  placeholder?: string;
+  multiline: boolean;
+  type?: 'select';
+  options?: string[];
+  minLength?: number;
+  skipGibberish?: boolean;
+}
+
+const STEPS: Step[] = [
   {
     key: 'industry',
     eyebrow: '01 · Context',
@@ -44,6 +56,39 @@ const STEPS = [
     placeholder: 'ex. că suntem cu adevărat o echipă, nu doar colegi',
     multiline: true,
   },
+  {
+    key: 'energy',
+    eyebrow: '06 · Energie',
+    question: 'Ce energie vrei să rămână după masă?',
+    multiline: false,
+    type: 'select',
+    options: ['Conectare', 'Celebrare', 'Focus', 'Relaxare'],
+  },
+  {
+    key: 'participants',
+    eyebrow: '07 · Grup',
+    question: 'Câți participanți?',
+    placeholder: 'ex. 8, 14, 20...',
+    multiline: false,
+    minLength: 1,
+    skipGibberish: true,
+  },
+  {
+    key: 'restrictions',
+    eyebrow: '08 · Dietă',
+    question: 'Există restricții alimentare în echipă?',
+    multiline: false,
+    type: 'select',
+    options: ['Nu știu', 'Nu există', 'Câteva', 'Da, multe'],
+  },
+  {
+    key: 'dynamics',
+    eyebrow: '09 · Dinamică',
+    question: 'Cum e dinamica grupului?',
+    multiline: false,
+    type: 'select',
+    options: ['Echipă nouă', 'Colegi vechi', 'Mix management + echipă', 'Cross-departamental'],
+  },
 ];
 
 interface Result {
@@ -58,6 +103,7 @@ interface Result {
 function isGibberish(text: string): boolean {
   const t = text.toLowerCase().replace(/\s+/g, '');
   if (t.length === 0) return false;
+  if (/^\d+$/.test(t)) return false;
   const vowels = (t.match(/[aeiouăîâ]/g) || []).length;
   if (vowels === 0) return true;
   if (t.length > 5 && vowels / t.length < 0.10) return true;
@@ -142,17 +188,10 @@ export default function BreviarGenerator() {
   const isLast = step === STEPS.length - 1;
 
   const trimmedVal = current.trim();
-  const inputIsGibberish = trimmedVal.length > 1 && isGibberish(trimmedVal);
-  const canAdvance = trimmedVal.length >= 2 && !inputIsGibberish;
+  const inputIsGibberish = !s.skipGibberish && trimmedVal.length > 1 && isGibberish(trimmedVal);
+  const canAdvance = trimmedVal.length >= (s.minLength ?? 2) && !inputIsGibberish;
 
-  const next = async () => {
-    const val = trimmedVal;
-    if (!val || inputIsGibberish) return;
-    setError('');
-    const updated = { ...answers, [s.key]: val };
-    setAnswers(updated);
-    if (!isLast) { setCurrent(''); setStep(p => p + 1); return; }
-
+  const generate = async (updated: Record<string, string>) => {
     setLoading(true); setError('');
     try {
       const prompt = [
@@ -165,6 +204,10 @@ export default function BreviarGenerator() {
         `- Cea mai importantă realizare colectivă: ${updated.achievement}`,
         `- Provocarea actuală: ${updated.challenge}`,
         `- Ce doresc să simtă la final: ${updated.feeling}`,
+        `- Energia dorită după masă: ${updated.energy || 'nespecificat'}`,
+        `- Număr participanți: ${updated.participants || 'nespecificat'}`,
+        `- Restricții alimentare: ${updated.restrictions || 'nespecificat'}`,
+        `- Dinamica grupului: ${updated.dynamics || 'nespecificat'}`,
         '',
         'Generează Portretul Gustativ al acestei echipe. Include EXACT aceste 5 secțiuni în ordine:',
         'TITLU: titlul serii lor (max 7 cuvinte, poetic și specific domeniului și caracterului lor)',
@@ -176,6 +219,7 @@ export default function BreviarGenerator() {
         'RITUALURI: 2 momente de ritualizare propuse în cursul serii (concrete, specifice). Format: un ritual pe rând.',
         'INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă',
         '',
+        'Adaptează recomandările de format (sharing, plated, bufet) la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.',
         'Răspunde DOAR cu aceste 5 secțiuni. FARA formatting markdown (fără ** sau * sau # sau ---). Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.',
       ].join('\n');
 
@@ -193,6 +237,7 @@ export default function BreviarGenerator() {
           `O echipă din industria ${updated.industry} (cultura: "${updated.culture}") vrea o experiență culinară Atelier.`,
           `Provoacarea lor: ${updated.challenge}`,
           `Intenția serii: ${updated.feeling}`,
+          `Energia dorită: ${updated.energy || ''}. Dinamica grupului: ${updated.dynamics || ''}.`,
           '',
           'Dă 3 idei concrete și scurte pe care echipa le poate face sau explora înainte de prima noastră întâlnire.',
           'Format: 3 rânduri separate, fiecare începe cu numărul (1., 2., 3.). Fără titluri, fără markdown.',
@@ -208,6 +253,27 @@ export default function BreviarGenerator() {
       setError('Generarea a eșuat. Încearcă din nou.');
     }
     setLoading(false);
+  };
+
+  const next = async () => {
+    const val = trimmedVal;
+    if (!val || inputIsGibberish) return;
+    setError('');
+    const updated = { ...answers, [s.key]: val };
+    setAnswers(updated);
+    if (!isLast) { setCurrent(''); setStep(p => p + 1); return; }
+    await generate(updated);
+  };
+
+  const selectAndAdvance = (val: string) => {
+    const updated = { ...answers, [s.key]: val };
+    setAnswers(updated);
+    if (step < STEPS.length - 1) {
+      setCurrent('');
+      setStep(p => p + 1);
+    } else {
+      generate(updated);
+    }
   };
 
   const back = () => {
@@ -242,7 +308,7 @@ export default function BreviarGenerator() {
     const hasStructured = sections.some(s => s.v);
     const emailSubject = encodeURIComponent(`Breviar — ${answers.industry || 'Echipa noastră'}`);
     const emailBody = encodeURIComponent(
-      `Buna ziua,\n\nAm completat generatorul Portret Gustativ si as vrea sa discutam despre experienta reala pentru echipa noastra.\n\nIndustria: ${answers.industry || ''}\nCultura echipei: ${answers.culture || ''}\nRealizare colectiva: ${answers.achievement || ''}\nProvocarea actuala: ${answers.challenge || ''}\nCe dorim sa simtim: ${answers.feeling || ''}\n\nTitlu generat: ${result.titlu || ''}\n\nAstept contactul vostru.`
+      `Buna ziua,\n\nAm completat generatorul Portret Gustativ si as vrea sa discutam despre experienta reala pentru echipa noastra.\n\nIndustria: ${answers.industry || ''}\nCultura echipei: ${answers.culture || ''}\nRealizare colectiva: ${answers.achievement || ''}\nProvocarea actuala: ${answers.challenge || ''}\nCe dorim sa simtim: ${answers.feeling || ''}\nEnergia dorita: ${answers.energy || ''}\nNumar participanti: ${answers.participants || ''}\nRestrictii alimentare: ${answers.restrictions || ''}\nDinamica grupului: ${answers.dynamics || ''}\n\nTitlu generat: ${result.titlu || ''}\n\nAstept contactul vostru.`
     );
 
     return (
@@ -364,13 +430,23 @@ export default function BreviarGenerator() {
       <p style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.45em', color: 'rgba(201,169,110,0.3)', textTransform: 'uppercase', marginBottom: 16 }}>{s.eyebrow}</p>
       <p style={{ fontFamily: serif, fontSize: 'clamp(1.5rem,3.5vw,2.4rem)', color: 'rgba(232,224,208,0.9)', fontWeight: 300, lineHeight: 1.4, marginBottom: 36 }}>{s.question}</p>
 
-      <div style={{ borderBottom: `1px solid ${current.trim() ? 'rgba(201,169,110,0.4)' : goldFaint}`, paddingBottom: 4, transition: 'border-color 0.3s' }}>
-        {s.multiline ? (
-          <textarea ref={textareaRef} className="gen-textarea" value={current} onChange={e => setCurrent(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); next(); } }} placeholder={s.placeholder} rows={3} />
-        ) : (
-          <input ref={inputRef} className="gen-input" type="text" value={current} onChange={e => setCurrent(e.target.value)} onKeyDown={e => e.key === 'Enter' && next()} placeholder={s.placeholder} />
-        )}
-      </div>
+      {s.type === 'select' ? (
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', paddingBottom: 8 }}>
+          {s.options!.map(opt => (
+            <button key={opt} onClick={() => selectAndAdvance(opt)} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.3em', color: 'rgba(232,224,208,0.6)', textTransform: 'uppercase', background: 'transparent', border: '1px solid #1e1e1e', padding: '14px 24px', cursor: 'pointer', transition: 'all 0.2s' }}>
+              {opt}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div style={{ borderBottom: `1px solid ${current.trim() ? 'rgba(201,169,110,0.4)' : goldFaint}`, paddingBottom: 4, transition: 'border-color 0.3s' }}>
+          {s.multiline ? (
+            <textarea ref={textareaRef} className="gen-textarea" value={current} onChange={e => setCurrent(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); next(); } }} placeholder={s.placeholder} rows={3} />
+          ) : (
+            <input ref={inputRef} className="gen-input" type="text" value={current} onChange={e => setCurrent(e.target.value)} onKeyDown={e => e.key === 'Enter' && next()} placeholder={s.placeholder} />
+          )}
+        </div>
+      )}
 
       {inputIsGibberish && (
         <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.92rem)', color: 'rgba(201,169,110,0.45)', fontStyle: 'italic', marginTop: 14, lineHeight: 1.7 }}>
@@ -383,9 +459,11 @@ export default function BreviarGenerator() {
         <button onClick={back} style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.35em', color: step > 0 ? 'rgba(201,169,110,0.3)' : 'transparent', textTransform: 'uppercase', background: 'transparent', border: 'none', cursor: step > 0 ? 'pointer' : 'default', padding: 0 }}>
           ← Înapoi
         </button>
-        <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s', pointerEvents: canAdvance ? 'auto' : 'none' }}>
-          {isLast ? 'Generează Portretul →' : 'Continuă →'}
-        </button>
+        {!s.type && (
+          <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s', pointerEvents: canAdvance ? 'auto' : 'none' }}>
+            {isLast ? 'Generează Portretul →' : 'Continuă →'}
+          </button>
+        )}
       </div>
     </div>
   );
