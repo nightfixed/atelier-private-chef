@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import { api } from '@/lib/api';
 
 const gold = '#c9a96e';
 const goldFaint = 'rgba(201,169,110,0.15)';
@@ -173,6 +174,10 @@ export default function BreviarGenerator() {
   const [error, setError] = useState('');
   const [suggestions, setSuggestions] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -383,15 +388,63 @@ export default function BreviarGenerator() {
             Generează alt portret
           </button>
           {!emailSent ? (
-            <a href={`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`}
-              onClick={() => setEmailSent(true)}
-              style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', border: '1px solid rgba(232,224,208,0.1)', padding: '14px 28px', textDecoration: 'none' }}>
+            <button onClick={() => setShowContactModal(true)} style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', border: '1px solid rgba(232,224,208,0.1)', padding: '14px 28px', background: 'transparent', cursor: 'pointer' }}>
               Inițiem procesul real →
-            </a>
+            </button>
           ) : (
             <span style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', color: 'rgba(201,169,110,0.35)', textTransform: 'uppercase', border: '1px solid rgba(201,169,110,0.1)', padding: '14px 28px' }}>
               Cerere trimisă ✓
             </span>
+          )}
+
+          {showContactModal && !emailSent && (
+            <div style={{ position: 'fixed', inset: 0, zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)' }} onClick={() => setShowContactModal(false)}>
+              <div style={{ background: '#0e0e0e', border: '1px solid #1a1a1a', padding: '40px', width: '100%', maxWidth: '480px' }} onClick={e => e.stopPropagation()}>
+                <p style={{ fontFamily: serif, fontSize: 'clamp(1.3rem,2.5vw,1.7rem)', color: 'rgba(232,224,208,0.9)', fontWeight: 300, marginBottom: 32, lineHeight: 1.4 }}>Cum vă numim și unde vă scriem?</p>
+                <label style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.4)', textTransform: 'uppercase' as const, display: 'block', marginBottom: 8 }}>Nume</label>
+                <input autoFocus value={contactName} onChange={e => setContactName(e.target.value)} placeholder="ex. Andrei Ionescu" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 20, boxSizing: 'border-box' as const }} />
+                <label style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.4)', textTransform: 'uppercase' as const, display: 'block', marginBottom: 8 }}>Email</label>
+                <input type="email" value={contactEmail} onChange={e => setContactEmail(e.target.value)} placeholder="ex. andrei@companie.ro" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 28, boxSizing: 'border-box' as const }} />
+                <div style={{ display: 'flex', gap: 16 }}>
+                  <button
+                    disabled={submitting || !contactName.trim() || !contactEmail.trim()}
+                    onClick={async () => {
+                      setSubmitting(true);
+                      const msg = [
+                        '[Breviar — Portret Gustativ]',
+                        `Industria: ${answers.industry}`,
+                        `Cultura echipei: ${answers.culture}`,
+                        `Realizare colectiva: ${answers.achievement}`,
+                        `Provocare: ${answers.challenge}`,
+                        `Ce vor sa simta: ${answers.feeling}`,
+                        `Energia dorita: ${answers.energy || '—'}`,
+                        `Participanti: ${answers.participants || '—'}`,
+                        `Restrictii alimentare: ${answers.restrictions || '—'}`,
+                        `Dinamica grupului: ${answers.dynamics || '—'}`,
+                        '',
+                        `Titlu portret generat: ${result?.titlu || '—'}`,
+                      ].join('\n');
+                      try {
+                        await api.submitContact({
+                          name: contactName.trim(),
+                          email: contactEmail.trim(),
+                          occasion: 'BREVIAR',
+                          message: msg,
+                          guests_count: parseInt(answers.participants || '0') || undefined,
+                        });
+                      } catch { /* silent */ }
+                      window.open(`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`, '_blank');
+                      setEmailSent(true);
+                      setShowContactModal(false);
+                      setSubmitting(false);
+                    }}
+                    style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.35em', textTransform: 'uppercase' as const, color: 'rgba(232,224,208,0.7)', border: '1px solid rgba(232,224,208,0.2)', padding: '14px 28px', background: 'transparent', cursor: 'pointer', opacity: submitting ? 0.5 : 1 }}>
+                    {submitting ? 'Se trimite...' : 'Initiem procesul →'}
+                  </button>
+                  <button onClick={() => setShowContactModal(false)} style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.3em', textTransform: 'uppercase' as const, color: 'rgba(201,169,110,0.3)', border: '1px solid rgba(201,169,110,0.1)', padding: '14px 20px', background: 'transparent', cursor: 'pointer' }}>Anuleaza</button>
+                </div>
+              </div>
+            </div>
           )}
         </div>
 

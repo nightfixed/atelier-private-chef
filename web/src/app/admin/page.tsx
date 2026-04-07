@@ -270,6 +270,7 @@ function ContactsTab({ token }: { token: string }) {
   const [items, setItems] = useState<ContactRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
   const [accepting, setAccepting] = useState<string | null>(null);
   const [actionErr, setActionErr] = useState<string | null>(null);
@@ -377,7 +378,13 @@ function ContactsTab({ token }: { token: string }) {
           </div>
           <div style={S.sectionSub}>{items.length} cereri · click pe rând pentru detalii</div>
         </div>
-        <div style={{display:'flex',gap:'8px',flexWrap:'wrap'}}>
+        <div style={{display:'flex',gap:'8px',flexWrap:'wrap',alignItems:'center'}}>
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Caută nom sau email..."
+            style={{background:'rgba(201,169,110,.03)',border:'1px solid #1a1a1a',color:'#888',padding:'6px 12px',fontFamily:"'Montserrat',sans-serif",fontSize:'11px',outline:'none',width:'180px'}}
+          />
           {Object.keys(filterLabels).map(s => (
             <button key={s} style={{...S.btnSmall, ...(filter===s?{borderColor:'#c9a96e',color:'#c9a96e'}:{})}} onClick={() => setFilter(s)}>
               {filterLabels[s]}
@@ -398,7 +405,7 @@ function ContactsTab({ token }: { token: string }) {
           </thead>
           <tbody>
             {items.length === 0 && <tr><td colSpan={8} style={{...S.td,...S.emptyState}}>Nicio cerere</td></tr>}
-            {items.map(c => {
+            {filtered.map(c => {
               const isCodex = c.occasion === 'CODEX';
               const isPending = !['accepted','rejected'].includes(c.status);
               const isBusy = accepting === c.id;
@@ -447,6 +454,10 @@ function ContactsTab({ token }: { token: string }) {
                           <button style={{...S.btnSmall, borderColor:'rgba(100,100,100,.3)', color:'#555'}} onClick={() => updateStatus(c.id, 'archived')}>↓ Arhivează</button>
                         )}
                         <button style={S.btnDanger} onClick={() => setDeleting(c.id)}>✕ Șterge</button>
+                        <a
+                          href={`mailto:${c.email}?subject=${encodeURIComponent('Atelier — în atenția ta')}&body=${encodeURIComponent(`Bună ziua, ${c.name},\n\n`)}`}
+                          style={{...S.btnSmall,borderColor:'rgba(201,169,110,.2)',color:'rgba(201,169,110,.5)',textDecoration:'none',display:'inline-block'}}
+                        >✉ Scrie</a>
                       </div>
                     </td>
                   </tr>
@@ -1167,8 +1178,91 @@ function ReservationsTab({ token }: { token: string }) {
   );
 }
 
+// ── DASHBOARD TAB ──
+function DashboardTab({ token }: { token: string }) {
+  const [stats, setStats] = useState({ newContacts: 0, pendingRes: 0, dishes: 0, herbarium: 0 });
+  const [recent, setRecent] = useState<ContactRequest[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      const [newC, allC, dishes, herb, res] = await Promise.allSettled([
+        api.getContacts(token, 'new'),
+        api.getContacts(token),
+        api.getDishes(),
+        api.getHerbarium(),
+        api.getReservations(token, 'pending'),
+      ]);
+      setStats({
+        newContacts: newC.status === 'fulfilled' ? newC.value.length : 0,
+        pendingRes:  res.status  === 'fulfilled' ? res.value.length  : 0,
+        dishes:      dishes.status === 'fulfilled' ? dishes.value.length : 0,
+        herbarium:   herb.status === 'fulfilled' ? herb.value.length : 0,
+      });
+      if (allC.status === 'fulfilled') setRecent(allC.value.slice(0, 6));
+      setLoading(false);
+    }
+    load();
+  }, [token]);
+
+  if (loading) return <div style={S.emptyState}>Se încarcă...</div>;
+
+  const cards = [
+    { label: 'Cereri Noi', value: stats.newContacts, urgent: stats.newContacts > 0 },
+    { label: 'Rezervări în Așteptare', value: stats.pendingRes, urgent: stats.pendingRes > 0 },
+    { label: 'Preparate în Meniu', value: stats.dishes, urgent: false },
+    { label: 'Specimene Herbarium', value: stats.herbarium, urgent: false },
+  ];
+
+  return (
+    <div>
+      <div style={{ marginBottom: 48 }}>
+        <div style={S.sectionTitle}>Dashboard</div>
+        <div style={S.sectionSub}>{new Date().toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(200px,1fr))', gap: 2, marginBottom: 48 }}>
+        {cards.map(({ label, value, urgent }) => (
+          <div key={label} style={{ background: urgent ? 'rgba(201,169,110,.04)' : '#0a0a0a', border: `1px solid ${urgent ? 'rgba(201,169,110,.2)' : '#111'}`, padding: '28px 24px' }}>
+            <div style={{ fontSize: '9px', letterSpacing: '3px', color: 'rgba(201,169,110,.35)', textTransform: 'uppercase' as const, marginBottom: 16 }}>{label}</div>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: '52px', fontWeight: 300, color: urgent ? 'rgba(201,169,110,.9)' : '#555', lineHeight: 1 }}>{value}</div>
+          </div>
+        ))}
+      </div>
+
+      {recent.length > 0 && (
+        <div>
+          <div style={{ fontSize: '9px', letterSpacing: '4px', color: 'rgba(201,169,110,.3)', textTransform: 'uppercase' as const, marginBottom: 20 }}>Cereri recente</div>
+          <table style={S.table}>
+            <thead><tr>
+              <th style={S.th}>Nume</th>
+              <th style={S.th}>Email</th>
+              <th style={S.th}>Ocazie</th>
+              <th style={S.th}>Status</th>
+              <th style={S.th}>Primit</th>
+            </tr></thead>
+            <tbody>
+              {recent.map(c => (
+                <tr key={c.id}>
+                  <td style={S.tdStrong}>{c.name}</td>
+                  <td style={S.td}>{c.email}</td>
+                  <td style={S.td}>{c.occasion ?? '—'}</td>
+                  <td style={S.td}><span style={S.badge(c.status)}>{c.status}</span></td>
+                  <td style={S.td}>{new Date(c.created_at).toLocaleDateString('ro-RO')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── MAIN ADMIN PAGE ──
 const TABS = [
+  { id: 'dashboard',    label: '📊 Dashboard',    component: DashboardTab },
   { id: 'contacts',     label: '📬 Solicitări',   component: ContactsTab },
   { id: 'reservations', label: '🗓 Rezervări',     component: ReservationsTab },
   { id: 'dishes',       label: '🍽 Preparate',     component: DishesTab },
@@ -1182,14 +1276,19 @@ type TabId = (typeof TABS)[number]['id'];
 export default function AdminPage() {
   const [user, setUser] = useState<import('firebase/auth').User | null>(null);
   const [token, setToken] = useState('');
-  const [tab, setTab] = useState<TabId>('contacts');
+  const [tab, setTab] = useState<TabId>('dashboard');
   const [authLoading, setAuthLoading] = useState(true);
+  const [newContactsCount, setNewContactsCount] = useState(0);
+
+  const refreshNewCount = useCallback(async (t: string) => {
+    try { const r = await api.getContacts(t, 'new'); setNewContactsCount(Array.isArray(r) ? r.length : 0); } catch {}
+  }, []);
 
   useEffect(() => {
     if (!auth) { setAuthLoading(false); return; }
     const unsub = onAuthStateChanged(auth, async (u: User | null) => {
       setUser(u);
-      if (u) { setToken(await u.getIdToken()); }
+      if (u) { const t = await u.getIdToken(); setToken(t); refreshNewCount(t); }
       setAuthLoading(false);
     });
     return () => unsub();
@@ -1237,15 +1336,21 @@ export default function AdminPage() {
           {TABS.map(t => (
             <button
               key={t.id}
-              onClick={() => setTab(t.id)}
+              onClick={() => { setTab(t.id); if (t.id === 'contacts') refreshNewCount(token); }}
               style={{
                 background:'transparent',border:'none',
                 borderBottom: tab === t.id ? '2px solid rgba(201,169,110,.7)' : '2px solid transparent',
                 color: tab === t.id ? 'rgba(201,169,110,.9)' : '#555',
                 padding:'16px 20px',fontSize:'11px',letterSpacing:'1.5px',cursor:'pointer',
-                transition:'color .2s',whiteSpace:'nowrap'
+                transition:'color .2s',whiteSpace:'nowrap',
+                display:'flex',alignItems:'center',gap:'6px',
               }}
-            >{t.label}</button>
+            >
+              {t.label}
+              {t.id === 'contacts' && newContactsCount > 0 && (
+                <span style={{background:'rgba(201,169,110,.15)',border:'1px solid rgba(201,169,110,.3)',color:'rgba(201,169,110,.9)',borderRadius:'10px',padding:'1px 7px',fontSize:'9px',letterSpacing:'1px'}}>{newContactsCount}</span>
+              )}
+            </button>
           ))}
         </div>
       </nav>
