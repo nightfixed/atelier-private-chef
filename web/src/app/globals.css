@@ -357,7 +357,7 @@ footer{padding:80px 48px 48px;border-top:1px solid #111;text-align:center;}
 .ai-trigger-name{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:#f0ebe3;margin-top:.18rem;letter-spacing:.08em;}
 .ai-trigger-dot{width:6px;height:6px;border-radius:50%;background:#4caf7a;margin-left:.3rem;flex-shrink:0;animation:pulse 2.5s ease infinite;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(76,175,122,.15)}50%{box-shadow:0 0 0 6px rgba(76,175,122,.05)}}
-.ai-panel{position:fixed;bottom:6.5rem;right:2.2rem;z-index:600;width:370px;background:#060606;border:1px solid rgba(201,169,110,.2);box-shadow:0 24px 80px rgba(0,0,0,.9);display:none;flex-direction:column;height:min(680px,calc(100vh - 8rem));}
+.ai-panel{position:fixed;bottom:6.5rem;right:2.2rem;z-index:600;width:370px;background:#060606;border:1px solid rgba(201,169,110,.2);box-shadow:0 24px 80px rgba(0,0,0,.9);display:none;flex-direction:column;height:min(680px,calc(100vh - 14rem));min-height:200px;}
 .ai-panel.open{display:flex;}
 .ai-panel-header{padding:1.4rem 1.6rem 1.2rem;border-bottom:1px solid rgba(201,169,110,.1);display:flex;justify-content:space-between;align-items:flex-start;background:linear-gradient(135deg,#0a0a0a,#100c06);}
 .ai-panel-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;letter-spacing:.2em;color:var(--gold);}

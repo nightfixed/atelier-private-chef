@@ -88,13 +88,6 @@ export default function HomePage() {
     setAvailText(m);
     setAvailSlots(slotTxt);
 
-    // Fetch specimens
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
-    fetch(apiUrl + '/api/herbarium')
-      .then(r => r.ok ? r.json() : null)
-      .then(data => { if (Array.isArray(data) && data.length > 0) setSpecimens(data.map(norm)); })
-      .catch(() => {});
-
     // Reveal animations
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
@@ -164,17 +157,6 @@ export default function HomePage() {
       aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
   }, [aiMessages, aiTyping]);
-
-  // Re-run specimen observer when specimens load
-  useEffect(() => {
-    const sObs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); sObs.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    setTimeout(() => {
-      document.querySelectorAll('.herb-spec,.herb-cat').forEach(el => sObs.observe(el));
-    }, 100);
-    return () => sObs.disconnect();
-  }, [specimens]);
 
   // ── HANDLERS ──
   function toggleFaq(i: number) { setFaqOpen(faqOpen === i ? null : i); }
