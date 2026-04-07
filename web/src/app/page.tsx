@@ -149,10 +149,10 @@ export default function HomePage() {
     return () => { obs.disconnect(); cObs.disconnect(); };
   }, []);
 
-  // Auto-scroll — doar după ce conversația a depășit schimbul inițial (nume + salut)
+  // Auto-scroll — skip only on the very first bot welcome (before user sends anything)
   useEffect(() => {
     const userCount = aiMessages.filter(m => m.role === 'user').length;
-    if (userCount < 2) return;
+    if (userCount === 0) return;
     setTimeout(() => {
       aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
