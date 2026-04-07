@@ -108,7 +108,7 @@ func main() {
 	mux.Handle("/api/chat", handler.NewChatHandler(aiProvider))
 
 	// Upload (signed GCS PUT URL)
-	mux.Handle("/api/upload", authMiddleware(handler.NewUploadHandler(gcsSigner, imagesBucket)))
+	mux.Handle("/api/upload", authMiddleware(handler.NewUploadHandler(gcsSigner, imagesBucket, cdnBaseURL)))
 
 	// Availability windows (public GET, admin POST/PUT/DELETE)
 	mux.Handle("/api/availability", handler.NewAvailabilityHandler(availabilityRepo, authMiddleware))

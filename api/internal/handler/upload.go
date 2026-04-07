@@ -11,7 +11,7 @@ import (
 
 // NewUploadHandler returns an admin-only handler that issues a signed GCS PUT URL
 // for direct browser image uploads. The caller must pass ?filename=<name>&content_type=<mime>.
-func NewUploadHandler(signer storage.Signer, bucket string) http.Handler {
+func NewUploadHandler(signer storage.Signer, bucket, cdnBaseURL string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			w.Header().Set("Allow", "GET")
@@ -43,9 +43,18 @@ func NewUploadHandler(signer storage.Signer, bucket string) http.Handler {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
+
+		var publicURL string
+		if cdnBaseURL != "" {
+			publicURL = cdnBaseURL + "/" + objectPath
+		} else {
+			publicURL = fmt.Sprintf("https://storage.googleapis.com/%s/%s", bucket, objectPath)
+		}
+
 		_ = json.NewEncoder(w).Encode(map[string]string{
 			"upload_url":  url,
 			"object_path": objectPath,
+			"public_url":  publicURL,
 		})
 	})
 }

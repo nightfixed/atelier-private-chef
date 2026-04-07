@@ -275,6 +275,15 @@ function ContactsTab({ token }: { token: string }) {
   const [accepting, setAccepting] = useState<string | null>(null);
   const [actionErr, setActionErr] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [notes, setNotes] = useState<Record<string,string>>(() => {
+    try { return JSON.parse(localStorage.getItem('atelier_contact_notes') || '{}'); } catch { return {}; }
+  });
+
+  function saveNote(id: string, text: string) {
+    const updated = { ...notes, [id]: text };
+    setNotes(updated);
+    localStorage.setItem('atelier_contact_notes', JSON.stringify(updated));
+  }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -363,6 +372,13 @@ function ContactsTab({ token }: { token: string }) {
 
   // Count pending CODEX requests that need a decision
   const pendingCodex = items.filter(x => x.occasion === 'CODEX' && x.status === 'new').length;
+
+  const filtered = items.filter(c => {
+    const matchFilter = !filter || c.status === filter;
+    const q = search.toLowerCase();
+    const matchSearch = !q || c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
 
   return (
     <div>
@@ -465,6 +481,15 @@ function ContactsTab({ token }: { token: string }) {
                     <tr key={c.id + '-exp'}>
                       <td colSpan={8} style={{...S.td, background:'rgba(201,169,110,.02)', padding:'20px 14px', borderLeft:'2px solid rgba(201,169,110,.15)'}}>
                         <CodexMessageView message={c.message} occasion={c.occasion} />
+                        <div style={{marginTop:'20px',paddingTop:'20px',borderTop:'1px solid #1a1a1a'}}>
+                          <div style={{fontSize:'8px',letterSpacing:'3px',color:'rgba(201,169,110,.3)',textTransform:'uppercase' as const,marginBottom:'8px'}}>Notă internă</div>
+                          <textarea
+                            value={notes[c.id] || ''}
+                            onChange={e => saveNote(c.id, e.target.value)}
+                            placeholder="Adaugă o notă privată... (salvată local)"
+                            style={{width:'100%',background:'rgba(255,255,255,.02)',border:'1px solid #1a1a1a',color:'#888',padding:'10px 12px',fontFamily:"'Montserrat',sans-serif",fontSize:'11px',outline:'none',resize:'vertical',minHeight:'64px',boxSizing:'border-box' as const,lineHeight:'1.7'}}
+                          />
+                        </div>
                       </td>
                     </tr>
                   )}
@@ -492,7 +517,17 @@ function DishesTab({ token }: { token: string }) {
   const [editing, setEditing] = useState<Partial<Dish> | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [err, setErr] = useState('');
+
+  async function uploadImage(file: File): Promise<string> {
+    setUploading(true);
+    try {
+      const data = await api.getUploadUrl(file.name, file.type, token);
+      await fetch(data.upload_url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+      return (data.public_url ?? data.object_path) as string;
+    } finally { setUploading(false); }
+  }
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -563,8 +598,20 @@ function DishesTab({ token }: { token: string }) {
             <input style={S.input} value={editing.description ?? ''} onChange={e => setEditing({...editing, description: e.target.value})}/>
             <label style={S.label}>Categorie</label>
             <input style={S.input} placeholder="ex. Carne · Pește · Desert" value={editing.category ?? ''} onChange={e => setEditing({...editing, category: e.target.value})}/>
-            <label style={S.label}>URL imagine</label>
-            <input style={S.input} placeholder="https://..." value={editing.image_url ?? ''} onChange={e => setEditing({...editing, image_url: e.target.value})}/>
+            <label style={S.label}>Imaginea</label>
+            <div style={{marginBottom:'16px'}}>
+              <label style={{display:'block',background:'rgba(201,169,110,.05)',border:'1px dashed rgba(201,169,110,.2)',padding:'16px',textAlign:'center' as const,cursor:'pointer',color:'rgba(201,169,110,.5)',fontSize:'10px',letterSpacing:'2px'}}>
+                {uploading ? 'Se încarcă...' : '↑ Alege fișier (jpg, png, webp)'}
+                <input type="file" accept="image/*" style={{display:'none'}} disabled={uploading} onChange={async e => {
+                  const file = e.target.files?.[0]; if (!file) return;
+                  try { const url = await uploadImage(file); setEditing(prev => prev ? {...prev, image_url: url} : prev); }
+                  catch { setErr('Upload eșuat.'); }
+                }}/>
+              </label>
+              <div style={{marginTop:'8px',fontSize:'9px',color:'#444',letterSpacing:'1px',textTransform:'uppercase' as const}}>sau URL direct:</div>
+              <input style={{...S.input,marginTop:'6px',marginBottom:'0'}} placeholder="https://..." value={editing.image_url ?? ''} onChange={e => setEditing({...editing, image_url: e.target.value})}/>
+            </div>
+            {editing.image_url && <div style={{height:'100px',background:'#111',backgroundImage:`url(${editing.image_url})`,backgroundSize:'cover',backgroundPosition:'center',marginBottom:'16px',border:'1px solid #1a1a1a'}}></div>}
             <label style={{...S.label, display:'flex', alignItems:'center', gap:'10px', cursor:'pointer'}}>
               <input type="checkbox" checked={editing.featured ?? false} onChange={e => setEditing({...editing, featured: e.target.checked})}/>
               Featured (apare în secțiunea principală)
@@ -594,6 +641,7 @@ function GalleryTab({ token }: { token: string }) {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [err, setErr] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -601,6 +649,17 @@ function GalleryTab({ token }: { token: string }) {
     setLoading(false);
   }, []);
   useEffect(() => { load(); }, [load]);
+
+  async function uploadImage(file: File): Promise<string> {
+    setUploading(true);
+    try {
+      const data = await api.getUploadUrl(file.name, file.type, token);
+      await fetch(data.upload_url, { method: 'PUT', body: file, headers: { 'Content-Type': file.type } });
+      return data.public_url as string;
+    } finally {
+      setUploading(false);
+    }
+  }
 
   async function save() {
     if (!editing?.image_url?.trim()) { setErr('URL-ul imaginii este obligatoriu.'); return; }
@@ -651,9 +710,20 @@ function GalleryTab({ token }: { token: string }) {
           <div style={S.modalBox} onClick={e => e.stopPropagation()}>
             <div style={S.modalTitle}>{editing.id ? 'Editează imagine' : 'Imagine nouă'}</div>
             {err && <div style={S.error}>{err}</div>}
-            <label style={S.label}>URL imagine *</label>
-            <input style={S.input} placeholder="https://..." value={editing.image_url ?? ''} onChange={e => setEditing({...editing, image_url: e.target.value})}/>
-            {editing.image_url && <div style={{height:'120px',background:'#111',backgroundImage:`url(${editing.image_url})`,backgroundSize:'cover',backgroundPosition:'center',marginBottom:'16px',border:'1px solid #1a1a1a'}}></div>}
+            <label style={S.label}>Imaginea *</label>
+            <div style={{marginBottom:'16px'}}>
+              <label style={{display:'block',background:'rgba(201,169,110,.05)',border:'1px dashed rgba(201,169,110,.2)',padding:'16px',textAlign:'center' as const,cursor:'pointer',color:'rgba(201,169,110,.5)',fontSize:'10px',letterSpacing:'2px'}}>
+                {uploading ? 'Se încarcă...' : '↑ Alege fișier (jpg, png, webp)'}
+                <input type="file" accept="image/*" style={{display:'none'}} disabled={uploading} onChange={async e => {
+                  const file = e.target.files?.[0]; if (!file) return;
+                  try { const url = await uploadImage(file); setEditing(prev => prev ? {...prev, image_url: url} : prev); }
+                  catch { setErr('Upload eșuat. Verificați conexiunea.'); }
+                }}/>
+              </label>
+              <div style={{marginTop:'8px',fontSize:'9px',color:'#444',letterSpacing:'1px',textTransform:'uppercase' as const}}>sau introduceți URL direct:</div>
+              <input style={{...S.input,marginTop:'6px',marginBottom:'0'}} placeholder="https://..." value={editing?.image_url ?? ''} onChange={e => setEditing({...editing, image_url: e.target.value})}/>
+            </div>
+            {editing?.image_url && <div style={{height:'120px',background:'#111',backgroundImage:`url(${editing.image_url})`,backgroundSize:'cover',backgroundPosition:'center',marginBottom:'16px',border:'1px solid #1a1a1a'}}></div>}
             <label style={S.label}>Titlu / caption</label>
             <input style={S.input} value={editing.caption ?? ''} onChange={e => setEditing({...editing, caption: e.target.value})}/>
             <label style={S.label}>Categorie</label>
@@ -938,6 +1008,119 @@ function RecipesTab({ token }: { token: string }) {
   );
 }
 
+// ── CALENDAR VIEW ──
+function CalendarView({ windows, onToggle, onDelete }: {
+  windows: AvailabilityWindow[];
+  onToggle: (w: AvailabilityWindow) => void;
+  onDelete: (id: string) => void;
+}) {
+  const [selected, setSelected] = useState<AvailabilityWindow | null>(null);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const months = Array.from({ length: 3 }, (_, i) => {
+    const d = new Date(today.getFullYear(), today.getMonth() + i, 1);
+    return { year: d.getFullYear(), month: d.getMonth() };
+  });
+
+  const windowByDate: Record<string, AvailabilityWindow> = {};
+  for (const w of windows) windowByDate[w.date] = w;
+
+  function dayColor(w?: AvailabilityWindow, isPast = false) {
+    if (!w) return { bg: '#0d0d0d', border: '#1a1a1a', text: '#333' };
+    if (isPast) return { bg: '#0d0d0d', border: '#1a1a1a', text: '#333' };
+    if (w.is_booked) return { bg: 'rgba(220,100,100,.08)', border: 'rgba(220,100,100,.25)', text: 'rgba(220,100,100,.8)' };
+    if (w.is_active) return { bg: 'rgba(76,175,122,.08)', border: 'rgba(76,175,122,.25)', text: 'rgba(76,175,122,.9)' };
+    return { bg: 'rgba(201,169,110,.04)', border: 'rgba(201,169,110,.15)', text: 'rgba(201,169,110,.4)' };
+  }
+
+  const monthNames = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+  const dayNames = ['Lu','Ma','Mi','Jo','Vi','Sâ','Du'];
+
+  return (
+    <div>
+      <div style={{display:'flex',gap:'24px',flexWrap:'wrap' as const,marginBottom:'32px'}}>
+        {months.map(({ year, month }) => {
+          const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+          const offset = firstDay === 0 ? 6 : firstDay - 1; // Mon-based
+          const daysInMonth = new Date(year, month + 1, 0).getDate();
+          const cells: (number | null)[] = [...Array(offset).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+
+          return (
+            <div key={`${year}-${month}`} style={{minWidth:'220px',flex:'1'}}>
+              <div style={{fontSize:'9px',letterSpacing:'3px',color:'rgba(201,169,110,.6)',textTransform:'uppercase' as const,marginBottom:'12px'}}>
+                {monthNames[month]} {year}
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(7,1fr)',gap:'3px'}}>
+                {dayNames.map(d => (
+                  <div key={d} style={{fontSize:'7px',color:'#333',textAlign:'center' as const,padding:'4px 0',letterSpacing:'1px'}}>{d}</div>
+                ))}
+                {cells.map((day, idx) => {
+                  if (!day) return <div key={idx}/>;
+                  const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+                  const w = windowByDate[dateStr];
+                  const isPast = new Date(year, month, day) < today;
+                  const colors = dayColor(w, isPast);
+                  const isToday = dateStr === today.toISOString().slice(0,10);
+                  return (
+                    <div key={day}
+                      onClick={() => w && !isPast && setSelected(selected?.date === w.date ? null : w)}
+                      style={{
+                        aspectRatio:'1',display:'flex',alignItems:'center',justifyContent:'center',
+                        fontSize:'9px',fontWeight: isToday ? 600 : 400,
+                        background: colors.bg,
+                        border: `1px solid ${isToday ? 'rgba(201,169,110,.5)' : colors.border}`,
+                        color: colors.text,
+                        cursor: w && !isPast ? 'pointer' : 'default',
+                        transition:'opacity .15s',
+                        borderRadius:'2px',
+                      }}>
+                      {day}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div style={{display:'flex',gap:'20px',marginBottom:'24px'}}>
+        {[
+          { bg:'rgba(76,175,122,.08)',border:'rgba(76,175,122,.25)',text:'rgba(76,175,122,.9)',label:'Disponibil' },
+          { bg:'rgba(220,100,100,.08)',border:'rgba(220,100,100,.25)',text:'rgba(220,100,100,.8)',label:'Rezervat' },
+          { bg:'rgba(201,169,110,.04)',border:'rgba(201,169,110,.15)',text:'rgba(201,169,110,.4)',label:'Inactiv' },
+        ].map(({ bg, border, text, label }) => (
+          <div key={label} style={{display:'flex',alignItems:'center',gap:'6px'}}>
+            <div style={{width:'12px',height:'12px',background:bg,border:`1px solid ${border}`,borderRadius:'2px'}}/>
+            <span style={{fontSize:'9px',color:text,letterSpacing:'1px'}}>{label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Selected day detail */}
+      {selected && (
+        <div style={{background:'rgba(201,169,110,.04)',border:'1px solid rgba(201,169,110,.15)',padding:'16px 20px',marginBottom:'24px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap' as const,gap:'12px'}}>
+          <div>
+            <div style={{fontSize:'10px',letterSpacing:'2px',color:'rgba(201,169,110,.6)',marginBottom:'4px'}}>{selected.date}</div>
+            <div style={{fontSize:'11px',color:'#888'}}>
+              {selected.start_time && selected.end_time ? `${selected.start_time} – ${selected.end_time}` : 'Fără interval orar'} &middot; max {selected.max_guests} oaspeți
+              {selected.notes ? ` · ${selected.notes}` : ''}
+            </div>
+          </div>
+          <div style={{display:'flex',gap:'8px'}}>
+            <button style={S.btnSmall} onClick={() => { onToggle(selected); setSelected(null); }}>
+              {selected.is_active ? 'Dezactivează' : 'Activează'}
+            </button>
+            <button style={S.btnDanger} onClick={() => { if (confirm('Șterge această fereastră?')) { onDelete(selected.id); setSelected(null); } }}>Șterge</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── RESERVATIONS TAB ──
 function ReservationsTab({ token }: { token: string }) {
   const [windows, setWindows] = useState<AvailabilityWindow[]>([]);
@@ -1037,42 +1220,8 @@ function ReservationsTab({ token }: { token: string }) {
 
       {loadingW ? (
         <div style={S.emptyState}>Se încarcă…</div>
-      ) : windows.length === 0 ? (
-        <div style={S.emptyState}>Nu există ferestre definite</div>
       ) : (
-        <table style={S.table}>
-          <thead><tr>
-            <th style={S.th}>Data</th>
-            <th style={S.th}>Interval Orar</th>
-            <th style={S.th}>Maxim Oaspeți</th>
-            <th style={S.th}>Note</th>
-            <th style={S.th}>Status</th>
-            <th style={S.th}></th>
-          </tr></thead>
-          <tbody>
-            {windows.map(w => (
-              <tr key={w.id}>
-                <td style={S.tdStrong}>{w.date}</td>
-                <td style={S.td}>{w.start_time && w.end_time ? `${w.start_time} – ${w.end_time}` : w.start_time || '—'}</td>
-                <td style={S.td}>{w.max_guests}</td>
-                <td style={S.td}>{w.notes || '—'}</td>
-                <td style={S.td}>
-                  <span style={{display:'inline-block',padding:'3px 10px',fontSize:'8px',letterSpacing:'2px',textTransform:'uppercase',border:`1px solid ${w.is_booked ? 'rgba(220,100,100,.3)' : w.is_active ? 'rgba(76,175,122,.3)' : '#333'}`,color:w.is_booked ? 'rgba(220,100,100,.6)' : w.is_active ? 'rgba(76,175,122,.7)' : '#555'}}>
-                    {w.is_booked ? 'Rezervat' : w.is_active ? 'Disponibil' : 'Inactiv'}
-                  </span>
-                </td>
-                <td style={{...S.td,textAlign:'right'}}>
-                  <div style={{display:'flex',gap:'8px',justifyContent:'flex-end'}}>
-                    <button style={S.btnSmall} onClick={() => toggleActive(w)}>
-                      {w.is_active ? 'Dezactivează' : 'Activează'}
-                    </button>
-                    <button style={S.btnDanger} onClick={() => deleteWindow(w.id)}>Șterge</button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <CalendarView windows={windows} onToggle={toggleActive} onDelete={deleteWindow} />
       )}
 
       {/* New window modal */}
