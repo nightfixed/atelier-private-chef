@@ -193,6 +193,15 @@ export default function HomePage() {
         setAiInput('');
         return;
       }
+    } else {
+      // For subsequent messages: if input contains letters, require min 2 letters + at least one vowel
+      const letters = msg.replace(/[^a-zA-ZăâîșțĂÂÎȘȚ]/g, '');
+      const hasVowel = /[aeiouăâîAEIOUĂÂÎ]/i.test(letters);
+      if (letters.length > 0 && (letters.length < 2 || !hasVowel)) {
+        setAiMessages(m => [...m, {role:'bot' as const, text:'Te rog să oferi un răspuns mai complet pentru a putea continua.'}]);
+        setAiInput('');
+        return;
+      }
     }
 
     const newMessages = [...aiMessages, {role:'user' as const, text:msg}];
