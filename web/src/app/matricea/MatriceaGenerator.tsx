@@ -66,8 +66,9 @@ function isGibberish(text: string): boolean {
   if (new Set(t).size < 4 && t.length > 8) return true;
   // Clustere invalide de consoane la start
   const validStart = /^(bl|br|cl|cr|dr|dz|fl|fr|gh|gl|gr|mr|pl|pr|ps|sc|sf|sk|sl|sm|sn|sp|st|str|sw|tr|ts|vl|vr|zb|zg|zh|zm|zv)/;
-  if (t.length >= 3 && /^[^aeiouăîâ]{2}/.test(t) && !validStart.test(t)) return true;
-  return false;
+  if (t.length >= 3 && /^[^aeiouăîâ]{2}/.test(t) && !validStart.test(t)) return true;  // Cuvinte scurte (3-5 litere) care se termină în combinații invalide
+  const invalidEnd = /[qwxyzj]$/;
+  if (t.length >= 3 && t.length <= 5 && invalidEnd.test(t)) return true;  return false;
 }
 
 function stripMd(text: string): string {
@@ -137,7 +138,7 @@ export default function MatriceaGenerator() {
   const isLast = step === STEPS.length - 1;
 
   const trimmedVal = current.trim();
-  const inputIsGibberish = trimmedVal.length > 6 && isGibberish(trimmedVal);
+  const inputIsGibberish = trimmedVal.length > 2 && isGibberish(trimmedVal);
   const canAdvance = trimmedVal.length >= 2 && !inputIsGibberish;
 
   const next = async () => {
