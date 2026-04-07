@@ -155,8 +155,10 @@ export default function HomePage() {
     return () => { obs.disconnect(); cObs.disconnect(); };
   }, []);
 
-  // Auto-scroll chatbot la fiecare mesaj nou
+  // Auto-scroll chatbot la fiecare mesaj nou — doar după ce userul a interacționat
   useEffect(() => {
+    const hasUserMessage = aiMessages.some(m => m.role === 'user');
+    if (!hasUserMessage) return;
     setTimeout(() => {
       aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
