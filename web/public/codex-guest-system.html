@@ -809,6 +809,10 @@
         <input type="text" id="guest-name" placeholder="Numele dumneavoastră" autocomplete="off" oninput="nameInput(this)" />
         <p id="name-gibberish-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;"></p>
       </div>
+      <div class="name-wrap">
+        <input type="email" id="guest-email" placeholder="Adresa dumneavoastră de email" autocomplete="email" />
+        <p id="email-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;">Vă rugăm să introduceți o adresă de email validă.</p>
+      </div>
       <div class="date-wrap">
         <span class="field-label">Data rezervării</span>
         <input type="date" id="reservation-date" onchange="if(this.value) document.getElementById('intro-cta').scrollIntoView({behavior:'smooth', block:'center'})" />
@@ -1129,6 +1133,7 @@ const QUESTIONS = [
 ];
 
 let guestName = '';
+let guestEmail = '';
 let reservationDate = '';
 let guestPersons = 2;
 let generatedCourses = [];
@@ -1288,7 +1293,9 @@ Filosofia personală despre o masă bună: ${answers.philosophy}`;
 
 function startRitual() {
   const input = document.getElementById('guest-name');
+  const emailInput = document.getElementById('guest-email');
   guestName = input.value.trim();
+  guestEmail = emailInput ? emailInput.value.trim() : '';
   reservationDate = document.getElementById('reservation-date').value;
   if (!guestName || guestName.length < 3) { input.focus(); return; }
   if (isGibberish(guestName)) {
@@ -1299,6 +1306,14 @@ function startRitual() {
   }
   const errEl = document.getElementById('name-gibberish-err');
   if (errEl) errEl.style.display = 'none';
+  if (!guestEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(guestEmail)) {
+    const emailErr = document.getElementById('email-err');
+    if (emailErr) emailErr.style.display = 'block';
+    emailInput && emailInput.focus();
+    return;
+  }
+  const emailErr = document.getElementById('email-err');
+  if (emailErr) emailErr.style.display = 'none';
   currentQ = 0;
   answers = {};
   show('s-questions');
@@ -1623,7 +1638,7 @@ async function rezerva() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: guestName,
-          email: 'codex@atelierprivatedining.ro',
+          email: guestEmail || 'codex@atelierprivatedining.ro',
           message,
           occasion: 'CODEX',
           event_date: reservationDate || undefined,
@@ -1643,8 +1658,11 @@ function restart() {
   document.getElementById('guest-name').value = '';
   document.getElementById('reservation-date').value = '';
   guestName = '';
+  guestEmail = '';
   reservationDate = '';
   guestPersons = 2;
+  const emailInput = document.getElementById('guest-email');
+  if (emailInput) emailInput.value = '';
   changePersons(0);
   answers = {};
   currentQ = 0;
