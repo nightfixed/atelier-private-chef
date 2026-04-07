@@ -271,7 +271,12 @@ Nu inventezi prețuri sau disponibilitate. Răspunzi în română, elegant, în 
 
 	if req.GuestName != "" {
 		system += "\n\nNumele clientului este " + req.GuestName + ". Adresează-te lui/ei pe nume în mod natural când e firesc, fără să exagerezi." +
-			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user), salută-l pe nume și menționează că poate explora Manifestul Atelier la /manifest pentru a înțelege conceptele și filozofia — formulează natural, nu ca o instrucțiune. Apoi pune o întrebare scurtă despre ce l-a adus."
+			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user), răspunde exact în această structură:" +
+			"\n1. Salut pe nume și spune că te bucuri că e aici." +
+			"\n2. Recomandă /manifest ca loc de început pentru a înțelege esența Atelier." +
+			"\n3. Adaugă o propoziție de genul: \"Dar dacă ai curiozitatea deplină și apetitul de a parcurge întreaga poveste, te invit cu drag în secțiunea /filozofie\"" +
+			"\n4. Încheie cu o întrebare scurtă: ce l-a adus — ceva pentru sine, pentru o echipă sau pentru un brand?" +
+			"\nSCRIE CĂILE EXACT: /manifest și /filozofie — fără punct sau virgulă imediat după cale."
 	}
 
 	if len(req.Messages) == 0 {
