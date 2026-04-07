@@ -138,7 +138,7 @@ export default function MatriceaGenerator() {
   const isLast = step === STEPS.length - 1;
 
   const trimmedVal = current.trim();
-  const inputIsGibberish = trimmedVal.length > 2 && isGibberish(trimmedVal);
+  const inputIsGibberish = trimmedVal.length > 1 && isGibberish(trimmedVal);
   const canAdvance = trimmedVal.length >= 2 && !inputIsGibberish;
 
   const next = async () => {
