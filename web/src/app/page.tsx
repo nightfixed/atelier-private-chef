@@ -52,7 +52,6 @@ export default function HomePage() {
     return [{role:'bot', text:`${salut}. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
   });
   const [aiTyping, setAiTyping] = useState(false);
-  const [aiQuickUsed, setAiQuickUsed] = useState(false);
   const [guestName, setGuestName] = useState('');
   const [show404, setShow404] = useState(false);
   // booking form
@@ -164,7 +163,7 @@ export default function HomePage() {
     setTimeout(() => {
       aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
-  }, [aiMessages, aiTyping, aiQuickUsed]);
+  }, [aiMessages, aiTyping]);
 
   // Re-run specimen observer when specimens load
   useEffect(() => {
@@ -867,40 +866,44 @@ export default function HomePage() {
           {aiMessages.map((m, i) => (
             <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
           ))}
-          {/* Quick replies — apar după ce bot-ul a răspuns la prenume (2 mesaje bot, 1 user) */}
-          {!aiQuickUsed && !aiTyping && aiMessages.filter(m => m.role === 'bot').length === 2 && aiMessages.filter(m => m.role === 'user').length === 1 && (
-            <div style={{display:'flex',flexDirection:'column',gap:'6px',alignSelf:'flex-start',marginTop:'4px'}}>
-              {['Cină privată', 'Eveniment corporate', 'Consultanță brand'].map(opt => (
-                <button key={opt} onClick={() => { setAiQuickUsed(true); sendAI(opt); }} style={{
-                  background:'transparent', border:'1px solid rgba(201,169,110,0.3)',
-                  color:'rgba(201,169,110,0.8)', fontFamily:"'Raleway',sans-serif",
-                  fontWeight:200, fontSize:'10px', letterSpacing:'2px',
-                  padding:'6px 14px', cursor:'pointer', textAlign:'left',
-                  transition:'all .2s', textTransform:'uppercase',
-                }}
-                onMouseEnter={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.7)')}
-                onMouseLeave={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.3)')}
-                >{opt}</button>
-              ))}
-            </div>
-          )}
-          {/* Codex shortcut — apare după 2+ mesaje user dacă discuția e despre cină privată */}
-          {!aiTyping && aiMessages.filter(m => m.role === 'user').length >= 2 &&
-           aiMessages.some(m => m.role === 'user' && /cin[aă]|codex|privat|sear[aă]|rezerv/i.test(m.text)) &&
-           !aiMessages.some(m => m.role === 'user' && /corporate|brand|echip[aă]|breviar|matrice/i.test(m.text)) && (
-            <div style={{alignSelf:'flex-start',marginTop:'8px'}}>
-              <a href="/codex-guest-system.html" target="_blank" rel="noopener noreferrer" style={{
-                display:'inline-block', background:'transparent',
-                border:'1px solid rgba(201,169,110,0.5)', color:'var(--gold)',
-                fontFamily:"'Raleway',sans-serif", fontWeight:300,
-                fontSize:'10px', letterSpacing:'2.5px', padding:'8px 18px',
-                textDecoration:'none', textTransform:'uppercase', transition:'all .2s',
-              }}
-              onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.background='rgba(201,169,110,0.08)';}}
-              onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.background='transparent';}}
-              >✦ Începe Codex acum →</a>
-            </div>
-          )}
+          {/* Acțiuni contextuale — apar după orice răspuns al bot-ului */}
+          {!aiTyping && aiMessages.length > 0 && aiMessages[aiMessages.length - 1].role === 'bot' && (() => {
+            const userMsgs = aiMessages.filter(m => m.role === 'user');
+            const hasPrivate = userMsgs.some(m => /cin[aă]|codex|privat|sear[aă]|rezerv/i.test(m.text));
+            const hasCorporate = userMsgs.some(m => /corporate|brand|echip[aă]|breviar|matrice/i.test(m.text));
+            if (hasPrivate && !hasCorporate) {
+              return (
+                <div style={{alignSelf:'flex-start',marginTop:'4px'}}>
+                  <a href="/codex-guest-system.html" target="_blank" rel="noopener noreferrer" style={{
+                    display:'inline-block', background:'transparent',
+                    border:'1px solid rgba(201,169,110,0.5)', color:'var(--gold)',
+                    fontFamily:"'Raleway',sans-serif", fontWeight:300,
+                    fontSize:'10px', letterSpacing:'2.5px', padding:'8px 18px',
+                    textDecoration:'none', textTransform:'uppercase', transition:'all .2s',
+                  }}
+                  onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.background='rgba(201,169,110,0.08)';}}
+                  onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.background='transparent';}}
+                  >✦ Începe Codex acum →</a>
+                </div>
+              );
+            }
+            return (
+              <div style={{display:'flex',flexDirection:'column',gap:'6px',alignSelf:'flex-start',marginTop:'4px'}}>
+                {['Cină privată', 'Eveniment corporate', 'Consultanță brand'].map(opt => (
+                  <button key={opt} onClick={() => sendAI(opt)} style={{
+                    background:'transparent', border:'1px solid rgba(201,169,110,0.3)',
+                    color:'rgba(201,169,110,0.8)', fontFamily:"'Raleway',sans-serif",
+                    fontWeight:200, fontSize:'10px', letterSpacing:'2px',
+                    padding:'6px 14px', cursor:'pointer', textAlign:'left' as const,
+                    transition:'all .2s', textTransform:'uppercase' as const,
+                  }}
+                  onMouseEnter={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.7)')}
+                  onMouseLeave={e=>(e.currentTarget.style.borderColor='rgba(201,169,110,0.3)')}
+                  >{opt}</button>
+                ))}
+              </div>
+            );
+          })()}
           {/* Typing indicator */}
           {aiTyping && (
             <div style={{alignSelf:'flex-start',background:'rgba(255,255,255,.03)',border:'1px solid rgba(201,169,110,.12)',padding:'0.7rem 1rem',display:'flex',gap:'5px',alignItems:'center'}}>
