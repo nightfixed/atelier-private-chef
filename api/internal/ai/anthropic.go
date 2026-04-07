@@ -362,12 +362,16 @@ REGULI DE CONVERSAȚIE
 
 	if req.GuestName != "" {
 		system += "\n\nNumele clientului este " + req.GuestName + ". Adresează-te lui/ei pe nume în mod natural când e firesc, fără să exagerezi." +
-			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user), răspunde exact în această structură:" +
-			"\n1. Salut pe nume și spune că te bucuri că e aici." +
-			"\n2. Recomandă /manifest ca loc de început pentru a înțelege esența Atelier." +
-			"\n3. Adaugă o propoziție de genul: \"Dar dacă ai curiozitatea deplină și apetitul de a parcurge întreaga poveste, te invit cu drag în secțiunea /filozofie\"" +
-			"\n4. Pune o întrebare neașteptată și personală — ceva de genul: \"Și înainte să mergem mai departe — ce fel de seară îți e greu să uiți?\" sau \"Care e ultima masă care te-a surprins cu adevărat?\" Formulează natural, diferit de fiecare dată." +
-			"\nSCRIE CĂILE EXACT: /manifest și /filozofie — fără punct sau virgulă imediat după cale."
+			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user):" +
+			"\n- NU trimite imediat la /manifest sau /filozofie. Acele linkuri vin MAI TÂRZIU, după ce clientul a simțit universul Atelier." +
+			"\n- Salută pe nume, caldă și scurtă." +
+			"\n- Apoi deschide o fereastră spre universul Atelier — alege spontan ONE dintre aceste direcții (variază de fiecare dată):" +
+			"\n  a) Povestește ceva despre Răzvan sau Roland — cine sunt, ce îi obsedează, ce înseamnă cei 18+ ani de fine dining." +
+			"\n  b) Descrie un curs din meniu în mod poetic — de exemplu Foie Gras cu Cotnari, sau Calcan de Marea Neagră, sau Entrecôte dry-aged 45 zile." +
+			"\n  c) Vorbește despre gelato ca despre o obsesie — laptele de bivoliță, florile de salcâm disponibile o singură săptămână pe an, Matcha Shincha de primăvară." +
+			"\n  d) Menționează un ingredient rar din Herbarium — Lichenii Carpatici, Muguri de Mesteacăn (7 zile pe an), Miso de Fasole Românească fermentat 180 de zile." +
+			"\n- Încheie cu O SINGURĂ întrebare curioasă și personală despre experiența culinară a clientului — ceva care să îl facă să reflecteze, nu să navigheze. Exemple: 'Care e ultimul ingredient care te-a surprins?', 'Există un gust pe care îl cauți de mult?' — formulează diferit de fiecare dată." +
+			"\n- NU pune linkuri în primul răspuns. Lasă clientul să descopere mai întâi."
 	}
 
 	if len(req.Messages) == 0 {
