@@ -157,8 +157,10 @@ export default function HomePage() {
 
   // Auto-scroll chatbot la fiecare mesaj nou
   useEffect(() => {
-    aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [aiMessages]);
+    setTimeout(() => {
+      aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }, [aiMessages, aiTyping, aiQuickUsed]);
 
   // Re-run specimen observer when specimens load
   useEffect(() => {
