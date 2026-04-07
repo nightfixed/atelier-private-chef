@@ -304,6 +304,22 @@ export default function BreviarGenerator() {
   );
 
   if (result) {
+    // After submit — show only pending screen
+    if (emailSent) return (
+      <div style={{ textAlign: 'center' as const, padding: '80px 40px' }}>
+        <div style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 32 }}>✦</div>
+        <p style={{ fontFamily: serif, fontSize: 'clamp(1.2rem,2.5vw,1.5rem)', fontWeight: 300, color: 'rgba(232,224,208,0.85)', lineHeight: 1.7, marginBottom: 16 }}>
+          Vă rugăm să aveți răbdare — acesta este un sistem inovativ<br/>care lucrează cu atenție pentru dumneavoastră.
+        </p>
+        <p style={{ fontFamily: serif, fontSize: '1rem', fontStyle: 'italic', color: 'rgba(201,169,110,0.5)', lineHeight: 1.8 }}>
+          Promitem o experiență extraordinară.
+        </p>
+        <div style={{ width: 40, height: 1, background: 'rgba(201,169,110,0.25)', margin: '32px auto' }}></div>
+        <p style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.3)', textTransform: 'uppercase' as const }}>
+          Vă vom contacta în maximum 24 de ore
+        </p>
+      </div>
+    );
     const sections = [
       { label: 'Profilul Gustativ', v: result.profilul },
       { label: 'Meniu — Conceptul în 3 Acte', v: result.meniu },
