@@ -156,10 +156,10 @@ export default function HomePage() {
     return () => { obs.disconnect(); cObs.disconnect(); };
   }, []);
 
-  // Auto-scroll chatbot la fiecare mesaj nou — doar după ce userul a interacționat
+  // Auto-scroll — doar după ce conversația a depășit schimbul inițial (nume + salut)
   useEffect(() => {
-    const hasUserMessage = aiMessages.some(m => m.role === 'user');
-    if (!hasUserMessage) return;
+    const userCount = aiMessages.filter(m => m.role === 'user').length;
+    if (userCount < 2) return;
     setTimeout(() => {
       aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
