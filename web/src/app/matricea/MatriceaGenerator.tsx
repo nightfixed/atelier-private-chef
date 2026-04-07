@@ -68,7 +68,9 @@ function isGibberish(text: string): boolean {
   const validStart = /^(bl|br|cl|cr|dr|dz|fl|fr|gh|gl|gr|mr|pl|pr|ps|sc|sf|sk|sl|sm|sn|sp|st|str|sw|tr|ts|vl|vr|zb|zg|zh|zm|zv)/;
   if (t.length >= 3 && /^[^aeiouăîâ]{2}/.test(t) && !validStart.test(t)) return true;  // Cuvinte scurte (3-5 litere) care se termină în combinații invalide
   const invalidEnd = /[qwxyzj]$/;
-  if (t.length >= 3 && t.length <= 5 && invalidEnd.test(t)) return true;  return false;
+  if (t.length >= 3 && t.length <= 5 && invalidEnd.test(t)) return true;
+  if (t.length === 2 && /^[jqwxyz]/.test(t)) return true;
+  return false;
 }
 
 function stripMd(text: string): string {
