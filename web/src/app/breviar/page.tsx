@@ -42,12 +42,7 @@ export default function BreviarPage() {
       {/* NAV */}
       <nav className="brev-nav">
         <a href="/" className="brev-nav-logo">ATELIER</a>
-        <a
-          href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Corporate%20Dining"
-          className="brev-nav-cta"
-        >
-          Înregistrează Interesul
-        </a>
+
       </nav>
 
       {/* HERO */}
@@ -66,12 +61,7 @@ export default function BreviarPage() {
           tensiunile unui grup — și le transformă într-un meniu și un document.
           Nimic similar nu există în România.
         </p>
-        <a
-          href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Vreau%20sa%20aflu%20mai%20mult"
-          className="brev-hero-btn"
-        >
-          Înregistrează-ți Interesul
-        </a>
+
         <p className="brev-hero-launch">Lansare · 2026</p>
       </section>
 
@@ -132,21 +122,7 @@ export default function BreviarPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <div className="brev-cta">
-        <p className="brev-eyebrow brev-eyebrow-center">Disponibilitate</p>
-        <h2 className="brev-cta-h2">Suntem în faza de lansare.</h2>
-        <p className="brev-cta-p">
-          Dacă reprezentați o companie și vreți să fiți printre primele echipe care trec prin Breviar, înregistrați-vă interesul. Vom reveni cu detalii despre disponibilitate și calendar.
-        </p>
-        <a
-          href="mailto:contact@atelierprivatedining.ro?subject=Breviar%20%E2%80%94%20Interes%20Corporativ"
-          className="brev-cta-btn"
-        >
-          Înregistrează Interesul Echipei
-        </a>
-        <p className="brev-cta-note">contact@atelierprivatedining.ro · Lansare 2026</p>
-      </div>
+
 
       {/* ── AI GENERATOR ── */}
       <section style={{ borderTop: '1px solid #111', padding: '80px 0 0' }}>

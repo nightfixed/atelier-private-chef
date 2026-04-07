@@ -46,7 +46,7 @@ export default function MatriceaPage() {
       {/* NAV */}
       <nav className="mat-nav">
         <a href="/" className="mat-nav-logo">ATELIER</a>
-        <a href="/#contact" className="mat-nav-cta">Solicită Matricea</a>
+
       </nav>
 
       {/* HERO */}
@@ -147,8 +147,8 @@ export default function MatriceaPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <div className="mat-cta">
+      {/* CTA — removed, action is only in the generator below */}
+      <div className="mat-cta" style={{display:'none'}}>
         <p className="mat-sec-label mat-sec-label-center">Disponibilitate</p>
         <h2 className="mat-cta-h2">Discutăm?</h2>
         <p className="mat-cta-p">
