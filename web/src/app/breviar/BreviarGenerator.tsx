@@ -433,7 +433,6 @@ export default function BreviarGenerator() {
                           guests_count: parseInt(answers.participants || '0') || undefined,
                         });
                       } catch { /* silent */ }
-                      window.open(`mailto:contact@atelierprivatedining.ro?subject=${emailSubject}&body=${emailBody}`, '_blank');
                       setEmailSent(true);
                       setShowContactModal(false);
                       setSubmitting(false);
@@ -448,20 +447,20 @@ export default function BreviarGenerator() {
           )}
         </div>
 
-        {/* AI SUGGESTIONS — shown after email initiated */}
+        {/* PENDING SCREEN — shown after submit */}
         {emailSent && (
-          <div style={{ marginTop: 48, borderTop: '1px solid #111', paddingTop: 40 }}>
-            <p style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', marginBottom: 8 }}>Idei pentru înainte de prima întâlnire</p>
-            <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.93rem)', color: 'rgba(232,224,208,0.35)', lineHeight: 1.8, fontWeight: 300, marginBottom: 24 }}>
-              Pe baza profilului vostru, câteva direcții pe care le puteți explora înainte să ne întâlnim:
+          <div style={{ textAlign: 'center' as const, padding: '60px 40px', borderTop: '1px solid #111', marginTop: 48 }}>
+            <div style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 24 }}>✦</div>
+            <p style={{ fontFamily: serif, fontSize: 'clamp(1.1rem,2.5vw,1.4rem)', fontWeight: 300, color: 'rgba(232,224,208,0.85)', lineHeight: 1.7, marginBottom: 16 }}>
+              Vă rugăm să aveți răbdare — acesta este un sistem inovativ<br/>care lucrează cu atenție pentru dumneavoastră.
             </p>
-            {suggestions ? (
-              <p style={{ fontFamily: serif, fontSize: 'clamp(0.9rem,1.8vw,1rem)', color: 'rgba(232,224,208,0.6)', lineHeight: 2, fontWeight: 300, whiteSpace: 'pre-line' }}>{suggestions}</p>
-            ) : (
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                {[0,1,2].map(i => <span key={i} className="gen-pulse-dot" style={{ animationDelay: `${i*0.22}s`, width: 6, height: 6, borderRadius: '50%', background: gold, display: 'inline-block' }} />)}
-              </div>
-            )}
+            <p style={{ fontFamily: serif, fontSize: '1rem', fontStyle: 'italic', color: 'rgba(201,169,110,0.5)', lineHeight: 1.8 }}>
+              Promitem o experiență extraordinară.
+            </p>
+            <div style={{ width: 40, height: 1, background: 'rgba(201,169,110,0.25)', margin: '32px auto' }}></div>
+            <p style={{ fontFamily: sans, fontSize: '0.42rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.3)', textTransform: 'uppercase' as const }}>
+              Vă vom contacta în maximum 24 de ore
+            </p>
           </div>
         )}
       </div>

@@ -767,62 +767,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* REZERVARE */}
-      <div id="rezervare" style={{borderTop:'1px solid #111',padding:'110px 0'}}>
-        <div style={{maxWidth:'1100px',margin:'0 auto',padding:'0 48px'}}>
-          <div className="sec-label reveal">Primul pas</div>
-          <div className="sec-title reveal d1">Rezervă o<br/><em>experiență</em></div>
-          <div className="gold-line reveal d2"></div>
-          <div className="rez-wrap reveal">
-            <div>
-              <div className="rez-intro">"Fiecare eveniment Atelier începe cu o conversație. Spuneți-ne despre seara voastră — restul este treaba noastră."</div>
-              <div className="rez-info">
-                <div className="rez-info-item"><div className="rez-info-label">Timp de răspuns</div><div className="rez-info-val">Răspundem în maximum 24 de ore</div></div>
-                <div className="rez-info-item"><div className="rez-info-label">Contact direct</div><div className="rez-info-val">exquisitefoodtravel@yahoo.com</div></div>
-                <div className="rez-info-item"><div className="rez-info-label">Disponibilitate curentă</div><div className="rez-info-val">{availText} · {availSlots}</div></div>
-                <div className="rez-info-item"><div className="rez-info-label">Locație</div><div className="rez-info-val">Cluj-Napoca & împrejurimi · România</div></div>
-              </div>
-            </div>
-            <div className="rez-div"></div>
-            <div>
-              {!rezSuccess ? (
-                <div className="rez-form">
-                  <div className="rez-row">
-                    <div className="rez-field"><div className="rez-label">Numele tău</div><input className="rez-input" value={rezNume} onChange={e=>setRezNume(e.target.value)} placeholder="Prenume și nume"/></div>
-                    <div className="rez-field"><div className="rez-label">Email</div><input className="rez-input" type="email" value={rezEmail} onChange={e=>setRezEmail(e.target.value)} placeholder="adresa@email.com"/></div>
-                  </div>
-                  <div className="rez-row">
-                    <div className="rez-field">
-                      <div className="rez-label">Ocazia</div>
-                      <select className="rez-select" value={rezOcazie} onChange={e=>setRezOcazie(e.target.value)}>
-                        <option value="">Selectează...</option>
-                        <option>Cină privată</option><option>Aniversare</option>
-                        <option>Corporate · Team dinner</option><option>Client entertainment</option>
-                        <option>Cerere în căsătorie</option><option>Altele</option>
-                      </select>
-                    </div>
-                    <div className="rez-field"><div className="rez-label">Nr. persoane</div><input className="rez-input" type="number" min="2" max="50" value={rezPersoane} onChange={e=>setRezPersoane(e.target.value)} placeholder="ex. 8"/></div>
-                  </div>
-                  <div className="rez-field"><div className="rez-label">Data preferată</div><input className="rez-input" type="date" value={rezData} onChange={e=>setRezData(e.target.value)}/></div>
-                  <div className="rez-field"><div className="rez-label">Mesaj (opțional)</div><textarea className="rez-textarea" value={rezMsg} onChange={e=>setRezMsg(e.target.value)} placeholder="Spuneți-ne mai multe despre seara voastră..."/></div>
-                  <button className="rez-submit" onClick={submitRez} disabled={rezLoading}>
-                    <span>{rezLoading ? 'Se trimite...' : 'Trimite cererea →'}</span>
-                  </button>
-                </div>
-              ) : (
-                <div className="rez-success" style={{display:'block'}}>
-                  <div className="rez-success-icon">✦</div>
-                  <div className="rez-success-text">Cererea a fost trimisă.</div>
-                  <div className="rez-success-sub">Vă vom contacta în maximum 24 de ore.</div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
       {/* FOOTER */}
       <footer>
         <div className="footer-orn"></div>
