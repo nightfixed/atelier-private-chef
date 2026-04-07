@@ -182,13 +182,25 @@ export default function HomePage() {
   function sendAI(overrideMsg?: string) {
     const msg = (overrideMsg ?? aiInput).trim();
     if (!msg) return;
+
+    // Validate name on first message — min 3 real letters with at least one vowel
+    const isFirstMessage = !guestName && aiMessages.filter(m => m.role === 'user').length === 0;
+    if (isFirstMessage) {
+      const letters = msg.replace(/[^a-zA-ZăâîșțĂÂÎȘȚ]/g, '');
+      const hasVowel = /[aeiouăâîAEIOUĂÂÎ]/i.test(letters);
+      if (letters.length < 3 || !hasVowel) {
+        setAiMessages(m => [...m, {role:'bot' as const, text:'Te rog să îmi spui numele tău real — de exemplu, „Ana" sau „Mihai". Preferăm conversații autentice.'}]);
+        setAiInput('');
+        return;
+      }
+    }
+
     const newMessages = [...aiMessages, {role:'user' as const, text:msg}];
     setAiMessages(newMessages);
     setAiInput('');
     setAiTyping(true);
 
     // First user message is the name — extract and store it
-    const isFirstMessage = !guestName && aiMessages.filter(m => m.role === 'user').length === 0;
     const resolvedName = isFirstMessage ? msg.split(/\s+/)[0] : guestName;
     if (isFirstMessage) setGuestName(resolvedName);
 
@@ -861,7 +873,7 @@ export default function HomePage() {
           </div>
           <button className="ai-close" onClick={() => setAiOpen(false)}>✕</button>
         </div>
-        <div className="ai-messages" style={{flex:1,overflowY:'auto',padding:'1rem 1.4rem',display:'flex',flexDirection:'column',gap:'0.75rem'}}>
+        <div className="ai-messages">
           <div className="ai-divider">astăzi</div>
           {aiMessages.map((m, i) => (
             <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
