@@ -54,6 +54,11 @@ var culinaryInfluences = []string{
 	"asiatică de fuziune (galangal, lemongrass, lapte de cocos, nam pla)",
 	"est-europeană rafinată (hrean, sfeclă, smântână fermentată, mărar)",
 	"iberică (pimentón afumat, manchego, romesco, migdale prăjite)",
+	"românească tradițională din Moldova (borș de pui cu tarhon, smântână de casă, mămăligă prăjită, brânză de burduf, leuștean)",
+	"românească tradițională din Ardeal (afumături ușoare, cartofi cu untură, varză călită, fasole cu costiță, papricaș)",
+	"românească tradițională din Muntenia (ciorbă acrită cu zeamă de varză, sarmale fine, mujdei de usturoi, ardei copți, miere de salcâm)",
+	"românească de sezon carpatic (ciuperci de pădure, fructe de pădure, vânat nobil, ierburi montane — urzici, lobodă, leurdă, măcriș)",
+	"românească rafinată de fine dining (ingrediente autohtone — must de struguri, vin de Dealu Mare, iaurt de oaie, cașcaval de Rucăr — cu tehnici moderne)",
 }
 
 var culinaryTechniques = []string{
