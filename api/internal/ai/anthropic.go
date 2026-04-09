@@ -74,6 +74,36 @@ var culinaryTechniques = []string{
 	"sos pan — deglazat cu vin și montat cu unt rece",
 }
 
+// codexProtagonistSeeds: one featured ingredient that must anchor and define the menu.
+// Each forces a completely different story and set of dishes.
+var codexProtagonistSeeds = []string{
+	"rădăcinoase de iarnă — păstârnac, scorțoneră, topinambur, sfeclă galbena",
+	"pește de apă dulce carpatic — știucă, somn, crap oglindă, păstrăv de munte",
+	"ciuperci sălbatice — gălbiori, hribi, pleurotus de fag, trufe negre de Dobrogea",
+	"miel de primăvară — cotlet, ficat, creier, coaste dezosate",
+	"ouă de fermă și produse lactate artizanale — brânză de burduf, lapte covăsit, zer",
+	"vânat nobil — căprioară, mistreț tânăr, iepure de câmp",
+	"leguminoase și cereale uitate — linte neagră, alac, secară, fasole borlotti",
+	"fructe de pădure și fermentate — coacăze negre, cătină, corcoduș, prune afumate",
+	"crustacee și fructe de mare — creveți tigru, scoici Saint-Jacques, caracatiță",
+	"pasăre de curte — rață Pekin, porumbel tânăr, pui de fermă cu ierburi",
+	"ierburi montane intense — leurdă, urzici tinere, măcriș sălbatic, busuioc violet",
+	"cereale și paste artizanale — gnocchi de cartofi mov, pappardelle de casă, polenta de malai",
+	"legume ardei și solanacee — ardei Florinis copt, roșii soarele, vinete la jar",
+	"fructe și conserve de sezon — gutui, mere ionatane, corcodușe, dulceață de petale",
+	"alge marine și plante acvatice — nori, kombu, sală de mare, wasabi proaspăt",
+}
+
+// codexForbiddenSeeds: overused fine-dining clichés to explicitly avoid today.
+var codexForbiddenSeeds = []string{
+	"foie gras, caviar, tartuf alb",
+	"somon, burrata, avocado",
+	"risotto, carpaccio clasic de vită, tiramisu",
+	"piure de cartofi, crem brulee, pannacotta",
+	"mousse de ciocolată, biscuit de parmezan, air de mango",
+	"tataki, tartare clasic, confit de rață",
+}
+
 type anthropicMessage struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
@@ -187,26 +217,36 @@ func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest)
 		"\nStare dorită la final: " + req.End +
 		"\nFilosofia personală despre o masă bună: " + req.Philosophy
 
-	// Random seed: pick a culinary influence + technique for this specific guest
+	// Random seeds: culinary influence + technique + protagonist ingredient + forbidden clichés
 	influence := culinaryInfluences[rand.Intn(len(culinaryInfluences))]
 	technique := culinaryTechniques[rand.Intn(len(culinaryTechniques))]
+	protagonist := codexProtagonistSeeds[rand.Intn(len(codexProtagonistSeeds))]
+	forbidden := codexForbiddenSeeds[rand.Intn(len(codexForbiddenSeeds))]
 
-	menuSystem := fmt.Sprintf(`Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
+	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
 
-Pentru această seară specifică, meniul trebuie să aibă o identitate distinctă construită în jurul:
-- Influență culinară dominantă: %s
-- Tehnică principală: %s
-Integrează aceste elemente organic, nu forțat. Ele ghidează personalitatea meniului, nu îl limitează.
+Identitatea acestui meniu este definită de trei axe obligatorii:
+1. Influență culinară dominantă: %s
+2. Tehnică principală: %s
+3. Ingredient protagonist (trebuie să apară în cel puțin 2 cursuri, central sau ca liant): %s
 
-Pe baza profilului senzorial al oaspetelui, compune un meniu personalizat de 6-7 cursuri. Fiecare curs trebuie să aibă:
-- "tip": tipul cursului (ex: Amuse-bouche, Entrée, Intermezzo, Fel principal, Pre-desert, Desert)
+INTERDICȚIE ABSOLUTĂ pentru astăzi — nu folosi deloc: %s
+Această regulă este nenegociabilă. Găsește înlocuitori mai interesanți.
+
+Construiește un meniu de 6-7 cursuri strict personalizat pe profilul oaspetelui de mai jos.
+Fiecare curs trebuie să aibă:
+- "tip": tipul cursului (Amuse-bouche / Entrée / Intermezzo / Fel principal / Pre-desert / Desert)
 - "nume": un nume poetic și evocator în română sau bilingv ro/fr
 - "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
 
-Folosește ingrediente reale, procurabile, evitând fermentații de lungă durată sau tehnici de laborator. Prioritizează ingredient carpatic + influență aleasă.
+Reguli de varietate:
+- Ingredientele principale nu se repetă între cursuri
+- Fiecare curs are un profil de gust diferit (acid, umami, dulce, amar, sărat nu apar consecutiv)
+- Tehnica aplicată variază de la curs la curs
+- Integrează subtil răspunsurile oaspetelui: dacă a ales "Surpriză", un curs trebuie să subverteze așteptările; dacă a ales "Profunzime", construiește cursuri cu evoluție gustativă
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, influence, technique)
+[{"tip":"...","nume":"...","descriere":"..."}]`, influence, technique, protagonist, forbidden)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
