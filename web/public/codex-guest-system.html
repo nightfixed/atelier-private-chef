@@ -823,6 +823,9 @@
         <input type="email" id="guest-email" placeholder="Adresa dumneavoastră de email" autocomplete="email" />
         <p id="email-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;">Vă rugăm să introduceți o adresă de email validă.</p>
       </div>
+      <div class="name-wrap">
+        <input type="tel" id="guest-phone" placeholder="Număr de telefon (opțional)" autocomplete="tel" />
+      </div>
       <div class="date-wrap">
         <span class="field-label">Data rezervării</span>
         <input type="date" id="reservation-date" onchange="if(this.value) document.getElementById('intro-cta').scrollIntoView({behavior:'smooth', block:'center'})" />
@@ -1145,6 +1148,7 @@ const QUESTIONS = [
 
 let guestName = '';
 let guestEmail = '';
+let guestPhone = '';
 let reservationDate = '';
 let guestPersons = 2;
 let generatedCourses = [];
@@ -1307,6 +1311,8 @@ function startRitual() {
   const emailInput = document.getElementById('guest-email');
   guestName = input.value.trim();
   guestEmail = emailInput ? emailInput.value.trim() : '';
+  const phoneInput = document.getElementById('guest-phone');
+  guestPhone = phoneInput ? phoneInput.value.trim() : '';
   reservationDate = document.getElementById('reservation-date').value;
   if (!guestName || guestName.length < 3) { input.focus(); return; }
   if (isGibberish(guestName)) {
@@ -1659,6 +1665,7 @@ async function rezerva() {
         body: JSON.stringify({
           name: guestName,
           email: guestEmail || 'codex@atelierprivatedining.ro',
+          phone: guestPhone || undefined,
           message,
           occasion: 'CODEX',
           event_date: reservationDate || undefined,
@@ -1679,10 +1686,13 @@ function restart() {
   document.getElementById('reservation-date').value = '';
   guestName = '';
   guestEmail = '';
+  guestPhone = '';
   reservationDate = '';
   guestPersons = 2;
   const emailInput = document.getElementById('guest-email');
   if (emailInput) emailInput.value = '';
+  const phoneInputR = document.getElementById('guest-phone');
+  if (phoneInputR) phoneInputR.value = '';
   changePersons(0);
   answers = {};
   currentQ = 0;

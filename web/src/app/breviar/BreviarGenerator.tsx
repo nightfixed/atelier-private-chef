@@ -179,6 +179,7 @@ export default function BreviarGenerator() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -399,7 +400,9 @@ export default function BreviarGenerator() {
                 <label style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.4)', textTransform: 'uppercase' as const, display: 'block', marginBottom: 8 }}>Nume</label>
                 <input autoFocus value={contactName} onChange={e => setContactName(e.target.value)} placeholder="ex. Andrei Ionescu" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 20, boxSizing: 'border-box' as const }} />
                 <label style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.4)', textTransform: 'uppercase' as const, display: 'block', marginBottom: 8 }}>Email</label>
-                <input type="email" value={contactEmail} onChange={e => setContactEmail(e.target.value)} placeholder="ex. andrei@companie.ro" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 28, boxSizing: 'border-box' as const }} />
+                <input type="email" value={contactEmail} onChange={e => setContactEmail(e.target.value)} placeholder="ex. andrei@companie.ro" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 20, boxSizing: 'border-box' as const }} />
+                <label style={{ fontFamily: sans, fontSize: '0.38rem', letterSpacing: '0.4em', color: 'rgba(201,169,110,0.4)', textTransform: 'uppercase' as const, display: 'block', marginBottom: 8 }}>Telefon <span style={{ opacity: 0.5 }}>(opțional)</span></label>
+                <input type="tel" value={contactPhone} onChange={e => setContactPhone(e.target.value)} placeholder="ex. 0745 123 456" style={{ width: '100%', background: 'rgba(201,169,110,0.03)', border: '1px solid rgba(201,169,110,0.12)', color: '#ccc', padding: '12px 16px', fontFamily: sans, fontSize: '13px', outline: 'none', marginBottom: 28, boxSizing: 'border-box' as const }} />
                 <div style={{ display: 'flex', gap: 16 }}>
                   <button
                     disabled={submitting || !contactName.trim() || !contactEmail.trim()}
@@ -423,6 +426,7 @@ export default function BreviarGenerator() {
                         await api.submitContact({
                           name: contactName.trim(),
                           email: contactEmail.trim(),
+                          phone: contactPhone.trim() || undefined,
                           occasion: 'BREVIAR',
                           message: msg,
                           guests_count: parseInt(answers.participants || '0') || undefined,

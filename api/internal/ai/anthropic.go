@@ -301,11 +301,11 @@ Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără exp
 
 	// Run menu and story generation in parallel to halve total latency.
 	var (
-		courses    []CodexCourse
-		story      string
-		menuErr    error
-		storyErr   error
-		wg         sync.WaitGroup
+		courses  []CodexCourse
+		story    string
+		menuErr  error
+		storyErr error
+		wg       sync.WaitGroup
 	)
 	wg.Add(2)
 

@@ -52,6 +52,14 @@ const STEPS = [
     placeholder: 'ex. office@brandul-vostru.ro',
     multiline: false,
   },
+  {
+    key: 'phone',
+    eyebrow: '07 · Telefon',
+    question: 'Număr de telefon? (opțional)',
+    placeholder: 'ex. 0745 123 456',
+    multiline: false,
+    optional: true,
+  },
 ];
 
 interface Result {
@@ -113,17 +121,20 @@ export default function MatriceaGenerator() {
   const s = STEPS[step];
   const isLast = step === STEPS.length - 1;
   const isEmailStep = s.key === 'email';
+  const isPhoneStep = s.key === 'phone';
 
   const trimmedVal = current.trim();
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedVal);
-  const inputIsGibberish = !isEmailStep && trimmedVal.length > 1 && isGibberish(trimmedVal);
+  const inputIsGibberish = !isEmailStep && !isPhoneStep && trimmedVal.length > 1 && isGibberish(trimmedVal);
   const canAdvance = isEmailStep
     ? isValidEmail
-    : (trimmedVal.length >= 2 && !inputIsGibberish);
+    : isPhoneStep
+      ? true
+      : (trimmedVal.length >= 2 && !inputIsGibberish);
 
   const next = async () => {
     const val = trimmedVal;
-    if (!val || inputIsGibberish) return;
+    if (!isPhoneStep && (!val || inputIsGibberish)) return;
     setError('');
     const updated = { ...answers, [s.key]: val };
     setAnswers(updated);
@@ -268,16 +279,18 @@ export default function MatriceaGenerator() {
                     `Obiectiv 6 luni: ${answers.goal || ''}`,
                     `Diferențiator perceput: ${answers.diff || ''}`,
                     `Email client: ${answers.email || '—'}`,
+                    answers.phone ? `Telefon client: ${answers.phone}` : null,
                     '',
                     `Profilul Culinar: ${result?.profilul_culinar || '—'}`,
                     `Golul Esențial: ${result?.golul_esential || '—'}`,
-                  ].join('\n');
+                  ].filter(Boolean).join('\n');
                   await fetch(`${API_URL}/api/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: answers.type || 'Anonim',
                       email: answers.email || 'matricea@atelierprivatedining.ro',
+                      phone: answers.phone || undefined,
                       occasion: 'MATRICEA',
                       message: msg,
                     }),

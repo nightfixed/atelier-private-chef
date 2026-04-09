@@ -26,6 +26,7 @@ func NewContactHandler(repo contactRepo, authMiddleware func(http.Handler) http.
 			var body struct {
 				Name        string  `json:"name"`
 				Email       string  `json:"email"`
+				Phone       string  `json:"phone"`
 				Message     *string `json:"message"`
 				EventDate   *string `json:"event_date"`
 				GuestsCount *int    `json:"guests_count"`
@@ -38,6 +39,16 @@ func NewContactHandler(repo contactRepo, authMiddleware func(http.Handler) http.
 			if strings.TrimSpace(body.Name) == "" || strings.TrimSpace(body.Email) == "" {
 				writeError(w, http.StatusBadRequest, "name and email are required")
 				return
+			}
+			// Prepend phone to message if provided so it appears in admin view.
+			if strings.TrimSpace(body.Phone) != "" {
+				phone := "Telefon: " + strings.TrimSpace(body.Phone)
+				if body.Message != nil && *body.Message != "" {
+					combined := phone + "\n" + *body.Message
+					body.Message = &combined
+				} else {
+					body.Message = &phone
+				}
 			}
 			var eventDate *time.Time
 			if body.EventDate != nil && *body.EventDate != "" {
