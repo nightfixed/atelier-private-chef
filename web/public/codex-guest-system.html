@@ -1532,7 +1532,7 @@ async function generateMenu() {
     try {
       const proteinObj = PROTEINS.find(p => p.id === answers.protein);
       const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 20000);
+      const timer = setTimeout(() => ctrl.abort(), 55000);
       const res = await fetch(API_URL + '/api/generate-codex', {
         signal: ctrl.signal,
         method: 'POST',
@@ -1558,19 +1558,20 @@ async function generateMenu() {
         const data = await res.json();
         if (data?.menu?.length) {
           const courses = data.menu.map(c => ({
-          type: c.tip || '',
-          name: c.nume || c.tip || '',
-          desc: c.descriere || ''
-        }));
+            type: c.tip || '',
+            name: c.nume || c.tip || '',
+            desc: c.descriere || ''
+          }));
           setMenu(courses);
           window._codexStory = data.story || '';
           return;
         }
       }
-    } catch(_) {}
+    } catch(err) { console.error('[Codex] generateMenu error:', err); }
   }
 
   // Backend unavailable — show demo menu
+  console.warn('[Codex] falling back to demo menu');
   setMenu(getDemoMenu());
 }
 
@@ -1640,13 +1641,15 @@ async function rezerva() {
     generatedStoryTitle ? `${generatedStoryTitle}\n${generatedStoryText}` : '(poveste nedisponibilă)',
     '',
     'PROFIL SENZORIAL:',
+    answers.avoid ? `\u26a0\ufe0f RESTRIC\u021aii: ${answers.avoid}` : null,
+    `Gust dominant: ${answers.taste || '-'}`,
     `Amintire: ${answers.memory || '-'}`,
-    `Senzație: ${answers.sensation || '-'}`,
+    `Senza\u021bie: ${answers.sensation || '-'}`,
     `Ritm: ${answers.rhythm || '-'}`,
     `Ingredient: ${answers.element || '-'}`,
     `Final dorit: ${answers.end || '-'}`,
     `Filosofie: ${answers.philosophy || '-'}`,
-  ].join('\n');
+  ].filter(l => l !== null).join('\n');
   // Save to backend
   if (API_URL && API_URL.startsWith('http')) {
     try {

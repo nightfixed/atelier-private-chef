@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strings"
+	"sync"
 )
 
 const (
@@ -291,51 +292,6 @@ Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
 		System:      menuSystem,
 		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
 	}
-	menuPayload, err := json.Marshal(menuReq)
-	if err != nil {
-		return nil, fmt.Errorf("marshal menu: %w", err)
-	}
-	menuHTTPReq, err := http.NewRequestWithContext(ctx, http.MethodPost, anthropicAPIURL, bytes.NewReader(menuPayload))
-	if err != nil {
-		return nil, fmt.Errorf("menu request: %w", err)
-	}
-	menuHTTPReq.Header.Set("x-api-key", p.apiKey)
-	menuHTTPReq.Header.Set("anthropic-version", anthropicVersion)
-	menuHTTPReq.Header.Set("content-type", "application/json")
-	menuResp, err := p.client.Do(menuHTTPReq)
-	if err != nil {
-		return nil, fmt.Errorf("menu http: %w", err)
-	}
-	defer menuResp.Body.Close()
-	menuRaw, err := io.ReadAll(menuResp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("menu read: %w", err)
-	}
-	var menuAR anthropicResponse
-	if err := json.Unmarshal(menuRaw, &menuAR); err != nil {
-		return nil, fmt.Errorf("menu unmarshal: %w", err)
-	}
-	if menuAR.Error != nil {
-		return nil, fmt.Errorf("anthropic menu error: %s", menuAR.Error.Message)
-	}
-	if len(menuAR.Content) == 0 {
-		return nil, fmt.Errorf("empty menu response")
-	}
-	menuText := menuAR.Content[0].Text
-
-	// Strip markdown fences if present
-	menuText = strings.TrimSpace(menuText)
-	if idx := strings.Index(menuText, "["); idx > 0 {
-		menuText = menuText[idx:]
-	}
-	if idx := strings.LastIndex(menuText, "]"); idx >= 0 && idx < len(menuText)-1 {
-		menuText = menuText[:idx+1]
-	}
-
-	var courses []CodexCourse
-	if err := json.Unmarshal([]byte(menuText), &courses); err != nil {
-		return nil, fmt.Errorf("parse codex menu JSON: %w (raw: %.200s)", err, menuText)
-	}
 
 	storySystem := `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
 
@@ -343,12 +299,88 @@ Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 
 
 Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără explicații.`
 
-	story, err := p.call(ctx, storySystem, profile, 800)
-	if err != nil {
-		return nil, fmt.Errorf("story generation: %w", err)
+	// Run menu and story generation in parallel to halve total latency.
+	var (
+		courses    []CodexCourse
+		story      string
+		menuErr    error
+		storyErr   error
+		wg         sync.WaitGroup
+	)
+	wg.Add(2)
+
+	go func() {
+		defer wg.Done()
+		menuPayload, err := json.Marshal(menuReq)
+		if err != nil {
+			menuErr = fmt.Errorf("marshal menu: %w", err)
+			return
+		}
+		menuHTTPReq, err := http.NewRequestWithContext(ctx, http.MethodPost, anthropicAPIURL, bytes.NewReader(menuPayload))
+		if err != nil {
+			menuErr = fmt.Errorf("menu request: %w", err)
+			return
+		}
+		menuHTTPReq.Header.Set("x-api-key", p.apiKey)
+		menuHTTPReq.Header.Set("anthropic-version", anthropicVersion)
+		menuHTTPReq.Header.Set("content-type", "application/json")
+		menuResp, err := p.client.Do(menuHTTPReq)
+		if err != nil {
+			menuErr = fmt.Errorf("menu http: %w", err)
+			return
+		}
+		defer menuResp.Body.Close()
+		menuRaw, err := io.ReadAll(menuResp.Body)
+		if err != nil {
+			menuErr = fmt.Errorf("menu read: %w", err)
+			return
+		}
+		var menuAR anthropicResponse
+		if err := json.Unmarshal(menuRaw, &menuAR); err != nil {
+			menuErr = fmt.Errorf("menu unmarshal: %w", err)
+			return
+		}
+		if menuAR.Error != nil {
+			menuErr = fmt.Errorf("anthropic menu error: %s", menuAR.Error.Message)
+			return
+		}
+		if len(menuAR.Content) == 0 {
+			menuErr = fmt.Errorf("empty menu response")
+			return
+		}
+		menuText := strings.TrimSpace(menuAR.Content[0].Text)
+		if idx := strings.Index(menuText, "["); idx > 0 {
+			menuText = menuText[idx:]
+		}
+		if idx := strings.LastIndex(menuText, "]"); idx >= 0 && idx < len(menuText)-1 {
+			menuText = menuText[:idx+1]
+		}
+		if err := json.Unmarshal([]byte(menuText), &courses); err != nil {
+			menuErr = fmt.Errorf("parse codex menu JSON: %w (raw: %.200s)", err, menuText)
+		}
+	}()
+
+	go func() {
+		defer wg.Done()
+		var err error
+		story, err = p.call(ctx, storySystem, profile, 800)
+		if err != nil {
+			storyErr = fmt.Errorf("story generation: %w", err)
+		}
+		story = strings.TrimSpace(story)
+	}()
+
+	wg.Wait()
+
+	if menuErr != nil {
+		return nil, menuErr
+	}
+	if storyErr != nil {
+		// Story failure is non-fatal — return menu without story
+		story = ""
 	}
 
-	return &CodexResponse{Menu: courses, Story: strings.TrimSpace(story)}, nil
+	return &CodexResponse{Menu: courses, Story: story}, nil
 }
 
 // GenerateArtifact calls Claude to produce a post-dinner personal artifact (title + text).
