@@ -135,6 +135,26 @@ type BreviarResponse struct {
 	Raw       string `json:"raw"`
 }
 
+// MatriceaRequest contains the brand profile answers from the Matricea generator.
+type MatriceaRequest struct {
+	Type    string `json:"type"`
+	Problem string `json:"problem"`
+	Tried   string `json:"tried"`
+	Goal    string `json:"goal"`
+	Diff    string `json:"diff"`
+	Email   string `json:"email,omitempty"`
+}
+
+// MatriceaResponse contains the generated brand culinary identity preview.
+type MatriceaResponse struct {
+	ProfilulCulinar      string `json:"profilul_culinar"`
+	GolulEsential        string `json:"golul_esential"`
+	ParametriiSenzoriali string `json:"parametrii_senzoriali"`
+	SistemulPropus       string `json:"sistemul_propus"`
+	PrimiiPasi           string `json:"primii_pasi"`
+	Raw                  string `json:"raw"`
+}
+
 // Provider is the interface every LLM backend must implement.
 // To connect a real model, implement this interface and inject it in main.go.
 type Provider interface {
@@ -142,6 +162,7 @@ type Provider interface {
 	GenerateCodex(ctx context.Context, req CodexRequest) (*CodexResponse, error)
 	GenerateArtifact(ctx context.Context, req ArtifactRequest) (*ArtifactResponse, error)
 	GenerateBreviar(ctx context.Context, req BreviarRequest) (*BreviarResponse, error)
+	GenerateMatricea(ctx context.Context, req MatriceaRequest) (*MatriceaResponse, error)
 	Chat(ctx context.Context, req ChatRequest) (*ChatResponse, error)
 }
 

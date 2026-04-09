@@ -44,13 +44,21 @@ const STEPS = [
     placeholder: 'ex. ingredientele locale, atmosfera, personalul / sau: sincer, nu știm — asta e problema',
     multiline: true,
   },
+  {
+    key: 'email',
+    eyebrow: '06 · Contact',
+    question: 'Adresa de email la care să vă trimitem diagnosticul complet?',
+    placeholder: 'ex. office@brandul-vostru.ro',
+    multiline: false,
+  },
 ];
 
 interface Result {
-  diagnostic: string;
-  diferentiator: string;
-  abordare: string;
-  livrabile: string;
+  profilul_culinar: string;
+  golul_esential: string;
+  parametrii_senzoriali: string;
+  sistemul_propus: string;
+  primii_pasi: string;
   raw: string;
 }
 
@@ -73,48 +81,7 @@ function isGibberish(text: string): boolean {
   return false;
 }
 
-function stripMd(text: string): string {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '$1')
-    .replace(/\*(.+?)\*/g, '$1')
-    .replace(/^#{1,3}\s*/gm, '')
-    .replace(/^---+$/gm, '')
-    .replace(/^___+$/gm, '')
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim();
-}
 
-function parseAI(text: string): Result {
-  const clean = stripMd(text);
-  const lines = clean.split('\n');
-  const sections: Record<string, string[]> = {};
-  let cur = '';
-  for (const line of lines) {
-    const m = line.match(/^([A-ZĂÎȘȚÂ][A-ZĂÎȘȚÂa-zăîșțâ\s]{2,}):\s*(.*)/);
-    if (m) {
-      cur = m[1].trim().toUpperCase();
-      if (!sections[cur]) sections[cur] = [];
-      if (m[2].trim()) sections[cur].push(m[2].trim());
-    } else if (cur && line.trim()) {
-      sections[cur].push(line);
-    }
-  }
-  const get = (...keys: string[]) => {
-    for (const k of keys) {
-      const found = Object.keys(sections).find(s => s.includes(k));
-      if (found) return sections[found].join('\n').trim();
-    }
-    return '';
-  };
-  return {
-    diagnostic: get('DIAGNOSTIC'),
-    diferentiator: get('DIFEREN'),
-    abordare: get('ABORDARE'),
-    livrabile: get('LIVRABILE', 'LIVRA', 'CONCRET'),
-    raw: clean,
-  };
-}
 
 export default function MatriceaGenerator() {
   const [step, setStep] = useState(0);
@@ -123,7 +90,6 @@ export default function MatriceaGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState('');
-  const [suggestions, setSuggestions] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -138,10 +104,14 @@ export default function MatriceaGenerator() {
 
   const s = STEPS[step];
   const isLast = step === STEPS.length - 1;
+  const isEmailStep = s.key === 'email';
 
   const trimmedVal = current.trim();
-  const inputIsGibberish = trimmedVal.length > 1 && isGibberish(trimmedVal);
-  const canAdvance = trimmedVal.length >= 2 && !inputIsGibberish;
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedVal);
+  const inputIsGibberish = !isEmailStep && trimmedVal.length > 1 && isGibberish(trimmedVal);
+  const canAdvance = isEmailStep
+    ? isValidEmail
+    : (trimmedVal.length >= 2 && !inputIsGibberish);
 
   const next = async () => {
     const val = trimmedVal;
@@ -153,52 +123,21 @@ export default function MatriceaGenerator() {
 
     setLoading(true); setError('');
     try {
-      const prompt = [
-        'Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.',
-        'Ești consultant culinar specializat în identitate, meniu și experiență gastronomică pentru restaurante, hoteluri și branduri alimentare.',
-        'Nu ești un consultant generic. Abordarea Atelier: nu dai rețete — construiești sisteme. Nu faci training de personal — schimbi perspectiva pentru totdeauna.',
-        '',
-        'Un potențial client ți-a dat următoarele informații:',
-        `- Tip activitate: ${updated.type}`,
-        `- Provocarea principală: ${updated.problem}`,
-        `- Experiență anterioară cu consultanță: ${updated.tried}`,
-        `- Obiectiv în 6 luni: ${updated.goal}`,
-        `- Cum cred că se diferențiază: ${updated.diff}`,
-        '',
-        'Generează un diagnostic culinar pentru această afacere. Include EXACT aceste 4 secțiuni în ordine:',
-        'DIAGNOSTIC: ce vede Atelier în această afacere — ce funcționează, ce nu funcționează, și de ce (2-3 propoziții directe, nu generice)',
-        'DIFERENTIATOR ATELIER: de ce Atelier reprezintă o alternativă diferită față de consultanța culinară clasică, specific pentru această situație (2-3 propoziții concrete — nu laudative, ci descriptive ale metodei)',
-        'ABORDARE PROPUSA: cum ar arăta procesul Atelier pentru această afacere concretă (3 pași clari, fiecare pe o linie separată, format: "1. [Etapa] — [ce presupune în 1 propoziție]")',
-        'LIVRABILE: ce rămâne după procesul Atelier — documente, sisteme, schimbări concrete (format listă, 3-4 itemi, fiecare pe linie nouă)',
-        '',
-        'Răspunde DOAR cu aceste 4 secțiuni. Limbaj direct, profesional, fără adjective inutile. FĂRĂ formatting markdown (fără ** sau * sau # sau ---). Fără introduceri sau concluzii.',
-      ].join('\n');
-
-      const res = await fetch(`${API_URL}/api/chat`, {
+      const res = await fetch(`${API_URL}/api/generate-matricea`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] }),
+        body: JSON.stringify({
+          type: updated.type || '',
+          problem: updated.problem || '',
+          tried: updated.tried || '',
+          goal: updated.goal || '',
+          diff: updated.diff || '',
+          email: updated.email || '',
+        }),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
-      setResult(parseAI(data.reply));
-      // Fetch follow-up suggestions in background
-      try {
-        const suggestPrompt = [
-          `Un client din domeniul ${updated.type} apelează la consultanță culinară Atelier.`,
-          `Provocarea principală: ${updated.problem}`,
-          `Obiectiv în 6 luni: ${updated.goal}`,
-          '',
-          'Dă 3 acţiuni concrete pe care clientul le poate face intern înainte de prima noastră întâlnire, pentru a pregăti terenul.',
-          'Format: 3 rânduri separate, fiecare începe cu numărul (1., 2., 3.). Scurt, direct, fără titluri, fără markdown.',
-        ].join('\n');
-        const sr = await fetch(`${API_URL}/api/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: [{ role: 'user', content: suggestPrompt }] }),
-        });
-        if (sr.ok) { const sd = await sr.json(); setSuggestions(stripMd(sd.reply)); }
-      } catch { /* silent */ }
+      setResult(data);
     } catch {
       setError('Generarea a eșuat. Încearcă din nou.');
     }
@@ -212,7 +151,7 @@ export default function MatriceaGenerator() {
     setStep(prev);
   };
 
-  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); setSuggestions(null); setEmailSent(false); };
+  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); setEmailSent(false); };
 
   if (loading) return (
     <div style={{ padding: '80px 40px', textAlign: 'center' }}>
@@ -245,16 +184,13 @@ export default function MatriceaGenerator() {
       </div>
     );
     const sections = [
-      { label: 'Diagnosticul Atelier', v: result.diagnostic },
-      { label: 'De ce Atelier, nu un alt consultant', v: result.diferentiator },
-      { label: 'Abordarea Propusă', v: result.abordare },
-      { label: 'Ce rămâne după proces', v: result.livrabile },
+      { label: 'Profilul Culinar', v: result.profilul_culinar },
+      { label: 'Golul Esențial', v: result.golul_esential },
+      { label: 'Parametrii Senzoriali', v: result.parametrii_senzoriali },
+      { label: 'Sistemul Propus', v: result.sistemul_propus },
+      { label: 'Primii Pași — Înainte de Prima Întâlnire', v: result.primii_pasi },
     ];
     const hasStructured = sections.some(s => s.v);
-    const emailSubject = encodeURIComponent(`Matricea — ${answers.type || 'Consultanta'}`);
-    const emailBody = encodeURIComponent(
-      `Buna ziua,\n\nAm completat diagnosticul Atelier online si as vrea sa discutam despre procesul complet.\n\nTip activitate: ${answers.type || ''}\nProvocarea principala: ${answers.problem || ''}\nObiectiv 6 luni: ${answers.goal || ''}\n\nAstept contactul vostru.`
-    );
     return (
       <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px 80px' }}>
         <div style={{ marginBottom: 48 }}>
@@ -323,15 +259,17 @@ export default function MatriceaGenerator() {
                     `Experiență anterioară: ${answers.tried || ''}`,
                     `Obiectiv 6 luni: ${answers.goal || ''}`,
                     `Diferențiator perceput: ${answers.diff || ''}`,
+                    `Email client: ${answers.email || '—'}`,
                     '',
-                    `Diagnostic generat: ${result?.diagnostic || result?.raw || '—'}`,
+                    `Profilul Culinar: ${result?.profilul_culinar || '—'}`,
+                    `Golul Esențial: ${result?.golul_esential || '—'}`,
                   ].join('\n');
                   await fetch(`${API_URL}/api/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: answers.type || 'Anonim',
-                      email: 'matricea@atelierprivatedining.ro',
+                      email: answers.email || 'matricea@atelierprivatedining.ro',
                       occasion: 'MATRICEA',
                       message: msg,
                     }),
@@ -388,7 +326,12 @@ export default function MatriceaGenerator() {
         )}
       </div>
 
-      {inputIsGibberish && (
+      {isEmailStep && trimmedVal.length > 3 && !isValidEmail && (
+        <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.92rem)', color: 'rgba(201,169,110,0.45)', fontStyle: 'italic', marginTop: 14, lineHeight: 1.7 }}>
+          Introduceți o adresă de email validă — o vom folosi pentru a vă trimite diagnosticul complet.
+        </p>
+      )}
+      {!isEmailStep && inputIsGibberish && (
         <p style={{ fontFamily: serif, fontSize: 'clamp(0.85rem,1.6vw,0.92rem)', color: 'rgba(201,169,110,0.45)', fontStyle: 'italic', marginTop: 14, lineHeight: 1.7 }}>
           Vă rugăm să completați cu un răspuns clar — diagnosticul Atelier se construiește pe datele reale ale afacerii voastre.
         </p>
@@ -400,7 +343,7 @@ export default function MatriceaGenerator() {
           ← Înapoi
         </button>
         <button onClick={next} disabled={!canAdvance} style={{ fontFamily: sans, fontSize: '0.44rem', letterSpacing: '0.4em', color: canAdvance ? gold : 'rgba(201,169,110,0.2)', textTransform: 'uppercase', background: 'transparent', border: `1px solid ${canAdvance ? goldFaint : '#111'}`, padding: '14px 32px', cursor: canAdvance ? 'pointer' : 'default', transition: 'all 0.3s', pointerEvents: canAdvance ? 'auto' : 'none' }}>
-          {isLast ? 'Generează diagnosticul →' : 'Continuă →'}
+          {isLast ? 'Generează diagnosticul →' : step === STEPS.length - 2 ? 'Ultimul pas →' : 'Continuă →'}
         </button>
       </div>
     </div>

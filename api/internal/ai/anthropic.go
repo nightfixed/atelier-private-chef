@@ -540,6 +540,146 @@ Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, dynamic, m
 	return parseBreviarText(ar.Content[0].Text), nil
 }
 
+// matriceaSectorSeeds adds variety by anchoring each generation in a specific industry angle.
+var matriceaSectorSeeds = []string{
+	"sector: fine dining independent — identitate construită pe chef, nu pe brand corporativ",
+	"sector: hotel boutique de lux — ospitalitate cu personalitate proprie, nu standardizare de lanț",
+	"sector: brand alimentar premium — produs fizic care trebuie să poarte o poveste de gust",
+	"sector: catering corporate pentru evenimente VIP — mâncarea ca instrument de reprezentare",
+	"sector: bistro urban cu ambiții de fine dining — potențial nevalorificat, identitate in formare",
+	"sector: winery sau cram cu experiențe oenoturistice — gustul vinului trebuie să trăiască și în mâncare",
+	"sector: spa sau resort cu restaurant propriu — coerența senzorială între spațiu și farfurie",
+	"sector: brand retail alimentar artizanal — de la produs la experiență culinară completă",
+}
+
+// matriceaProblemSeeds adds variety by centering the diagnostic lens on a specific tension.
+var matriceaProblemSeeds = []string{
+	"diagnostic lens: identitate culinară difuză — brandul nu știe ce gust are",
+	"diagnostic lens: meniu generic fără poveste — zece pagini, zero personalitate",
+	"diagnostic lens: inconsistență între promisiunea de brand și experiența culinară reală",
+	"diagnostic lens: prețuri subevaluate pentru calitatea oferită — brandul nu știe ce valorează",
+	"diagnostic lens: experiență fragmentată — fiecare eveniment arată diferit, nimic nu rămâne",
+	"diagnostic lens: dependență de personalul cheie — identitatea culinară moare când pleacă bucătarul",
+}
+
+// GenerateMatricea generates a brand culinary identity preview using a dedicated diagnostic prompt.
+func (p *AnthropicProvider) GenerateMatricea(ctx context.Context, req MatriceaRequest) (*MatriceaResponse, error) {
+	sector := matriceaSectorSeeds[rand.Intn(len(matriceaSectorSeeds))]
+	lens := matriceaProblemSeeds[rand.Intn(len(matriceaProblemSeeds))]
+
+	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
+Ești consultant de identitate culinară pentru branduri premium din România.
+Filozofia ta: nu îmbunătățești meniuri — construiești sisteme. Nu dai rețete — schimbi perspectiva pentru totdeauna.
+Principiul tău fundamental: "Nu am venit să vă îmbunătățim meniul. Am venit să vă găsim gustul."
+
+Pentru acest diagnostic specific, folosești următoarele filtre de analiză:
+- %s
+- %s
+Integrează aceste perspective organic — ele ascuți diagnosticul, nu îl limitează.
+
+Un potențial client îți prezintă situația afacerii sale. Generează un diagnostic de identitate culinară.
+Include EXACT aceste 5 secțiuni, în ordine, fără formatare markdown (fără ** sau * sau # sau ---):
+
+PROFILUL CULINAR: ce ești tu de fapt, văzut din exterior — un diagnostic senzorial concret al brandului (2-3 propoziții directe, specifice, fără clișee). Nu ce cred ei că sunt. Ce ești.
+
+GOLUL ESENTIAL: ce lipsește în mod fundamental — fără menajamente, fără diplomatic (1-2 propoziții dure și clare). Asta e valoarea reală a unui consultant care nu vrea să fie plăcut.
+
+PARAMETRII SENZORIALI: traducerea identității în limbaj culinar concret. 5 parametri, fiecare pe o linie separată, format "PARAMETRU: valoare specifică":
+TEMPERATURA: [rece și precision / cald și expansiv / contrast termic deliberat]
+TEXTURA: [definitoriu pentru brand în 3-5 cuvinte]
+CONTRASTUL ACTIV: [ce contrast senzorial trebuie prezent în fiecare fel]
+AMINTIREA TARGET: [ce amintire trebuie declanșată la un client VIP — specifică, concretă]
+CE NU TREBUIE SA FIE NICIODATA: [un interdicție categorică pentru identitatea culinară a brandului]
+
+SISTEMUL PROPUS: cum ar arăta procesul Atelier pentru această afacere concretă (3 pași numerotați, fiecare pe linie):
+1. [Etapa] — [ce presupune, ce produce]
+2. [Etapa] — [ce presupune, ce produce]
+3. [Etapa] — [ce presupune, ce produce]
+
+PRIMII PASI: 3 acțiuni interne concrete pe care clientul le poate face singur înainte de prima noastră întâlnire (3 rânduri, format "1. / 2. / 3." — scurt, direct, acționabil)
+
+Limbaj direct, profesional, fără adjective inutile. Specifică, nu generic. Spune lucruri pe care nu le mai aude de la nimeni.`, sector, lens)
+
+	profile := fmt.Sprintf(
+		"Tip activitate: %s\nProvocarea principală: %s\nExperiență anterioară cu consultanță: %s\nObiectiv în 6 luni: %s\nCum cred că se diferențiază: %s",
+		req.Type, req.Problem, req.Tried, req.Goal, req.Diff,
+	)
+
+	matReq := anthropicRequest{
+		Model:       anthropicModel,
+		MaxTokens:   1400,
+		Temperature: 1.0,
+		System:      system,
+		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
+	}
+	payload, err := json.Marshal(matReq)
+	if err != nil {
+		return nil, fmt.Errorf("matricea marshal: %w", err)
+	}
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, anthropicAPIURL, bytes.NewReader(payload))
+	if err != nil {
+		return nil, fmt.Errorf("matricea request: %w", err)
+	}
+	httpReq.Header.Set("x-api-key", p.apiKey)
+	httpReq.Header.Set("anthropic-version", anthropicVersion)
+	httpReq.Header.Set("content-type", "application/json")
+	resp, err := p.client.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("matricea http: %w", err)
+	}
+	defer resp.Body.Close()
+	rawBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("matricea read: %w", err)
+	}
+	var ar anthropicResponse
+	if err := json.Unmarshal(rawBytes, &ar); err != nil {
+		return nil, fmt.Errorf("matricea unmarshal: %w", err)
+	}
+	if ar.Error != nil {
+		return nil, fmt.Errorf("anthropic matricea error: %s", ar.Error.Message)
+	}
+	if len(ar.Content) == 0 {
+		return nil, fmt.Errorf("empty matricea response")
+	}
+	return parseMatriceaText(ar.Content[0].Text), nil
+}
+
+func parseMatriceaText(text string) *MatriceaResponse {
+	text = strings.NewReplacer("**", "", "*", "").Replace(text)
+	lines := strings.Split(strings.TrimSpace(text), "\n")
+	sections := map[string][]string{}
+	cur := ""
+	sectionKeys := []string{"PROFILUL CULINAR", "GOLUL ESENTIAL", "PARAMETRII SENZORIALI", "SISTEMUL PROPUS", "PRIMII PASI"}
+	for _, line := range lines {
+		matched := false
+		for _, key := range sectionKeys {
+			prefix := key + ":"
+			if strings.HasPrefix(strings.TrimSpace(strings.ToUpper(line)), prefix) {
+				cur = key
+				rest := strings.TrimSpace(line[strings.Index(strings.ToUpper(line), prefix)+len(prefix):])
+				if rest != "" {
+					sections[cur] = append(sections[cur], rest)
+				}
+				matched = true
+				break
+			}
+		}
+		if !matched && cur != "" && strings.TrimSpace(line) != "" {
+			sections[cur] = append(sections[cur], strings.TrimSpace(line))
+		}
+	}
+	get := func(k string) string { return strings.TrimSpace(strings.Join(sections[k], "\n")) }
+	return &MatriceaResponse{
+		ProfilulCulinar:      get("PROFILUL CULINAR"),
+		GolulEsential:        get("GOLUL ESENTIAL"),
+		ParametriiSenzoriali: get("PARAMETRII SENZORIALI"),
+		SistemulPropus:       get("SISTEMUL PROPUS"),
+		PrimiiPasi:           get("PRIMII PASI"),
+		Raw:                  strings.TrimSpace(text),
+	}
+}
+
 func parseBreviarText(text string) *BreviarResponse {
 	// Strip markdown
 	text = strings.NewReplacer("**", "", "*", "").Replace(text)
