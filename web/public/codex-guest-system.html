@@ -1131,8 +1131,9 @@ const QUESTIONS = [
   {
     id: 'avoid',
     type: 'free',
+    optional: true,
     text: 'Ceva ce evitați sau nu consumați?',
-    hint: 'Opțional — dar ne ajută să compunem mai precis. Scrieți "—" dacă nu aveți restricții.'
+    hint: 'Opțional — lăsați gol dacă nu aveți restricții.'
   },
   {
     id: 'philosophy',
@@ -1374,7 +1375,7 @@ function renderQuestion() {
     html += `</div>`;
   } else {
     html += `<textarea class="free-input" id="free-ans" placeholder="Scrieți liber..." oninput="freeInput(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){const b=document.getElementById('next-btn');if(!b.disabled){event.preventDefault();nextQuestion();}}"></textarea>`;
-    html += `<div class="q-nav"><button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Finalizează</button></div>`;
+    html += `<div class="q-nav"><button class="btn" id="next-btn" onclick="nextQuestion()" ${q.optional ? '' : 'disabled'}>Finalizează</button></div>`;
   }
 
   html += `</div>`;
@@ -1405,7 +1406,8 @@ function freeInput(el) {
   const val = el.value.trim();
   const bad = val.length >= 3 && isGibberish(val);
   const btn = document.getElementById('next-btn');
-  btn.disabled = val.length < 3 || bad;
+  const isOptional = QUESTIONS[currentQ] && QUESTIONS[currentQ].optional;
+  btn.disabled = (!isOptional && val.length < 3) || bad;
   let errEl = document.getElementById('gibberish-err');
   if (bad) {
     if (!errEl) {
