@@ -207,15 +207,22 @@ func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest)
 	if req.TasteProfile != "" {
 		profile += "\nProfil de gust: " + req.TasteProfile
 	}
-	if req.Avoid != "" {
-		profile += "\nDe evitat: " + req.Avoid
-	}
 	profile += "\nAmintire culinară din copilărie: " + req.Memory +
 		"\nSenzație căutată: " + req.Sensation +
 		"\nRitm la masă: " + req.Rhythm +
 		"\nIngredient de atracție: " + req.Element +
 		"\nStare dorită la final: " + req.End +
 		"\nFilosofia personală despre o masă bună: " + req.Philosophy
+
+	// Build dietary restriction block — shown as a hard rule in the system prompt
+	dietaryBlock := ""
+	if req.Avoid != "" {
+		dietaryBlock = fmt.Sprintf(`
+⛔ RESTRICȚIE ALIMENTARĂ ABSOLUTĂ — VERIFICARE OBLIGATORIE înainte de fiecare ingredient:
+Oaspetele nu consumă / evită: %s
+Această restricție se aplică TUTUROR cursurilor fără excepție. Niciun ingredient care conține sau derivă din această categorie nu poate apărea în niciun curs, nici ca ingredient principal, nici ca element decorativ, nici ca tehnică (ex: dacă se evită glutenul, nu există secară, grâu, orz, spelta, farro, cuscus, pâine, crocant din făină — nici măcar "crocant de secară"). Dacă ai dubii că un ingredient poate conține restricția, nu îl folosi.
+`, req.Avoid)
+	}
 
 	// Random seeds: culinary influence + technique + protagonist ingredient + forbidden clichés
 	influence := culinaryInfluences[rand.Intn(len(culinaryInfluences))]
@@ -224,7 +231,7 @@ func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest)
 	forbidden := codexForbiddenSeeds[rand.Intn(len(codexForbiddenSeeds))]
 
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
-
+%s
 Identitatea acestui meniu este definită de trei axe obligatorii:
 1. Influență culinară dominantă: %s
 2. Tehnică principală: %s
@@ -246,7 +253,7 @@ Reguli de varietate:
 - Integrează subtil răspunsurile oaspetelui: dacă a ales "Surpriză", un curs trebuie să subverteze așteptările; dacă a ales "Profunzime", construiește cursuri cu evoluție gustativă
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, influence, technique, protagonist, forbidden)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
