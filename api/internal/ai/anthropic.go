@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"strings"
 )
@@ -33,10 +34,39 @@ func NewAnthropicProvider(apiKey string) *AnthropicProvider {
 
 // anthropicRequest is the body sent to POST /v1/messages.
 type anthropicRequest struct {
-	Model     string              `json:"model"`
-	MaxTokens int                 `json:"max_tokens"`
-	System    string              `json:"system"`
-	Messages  []anthropicMessage  `json:"messages"`
+	Model       string             `json:"model"`
+	MaxTokens   int                `json:"max_tokens"`
+	Temperature float64            `json:"temperature,omitempty"`
+	System      string             `json:"system"`
+	Messages    []anthropicMessage `json:"messages"`
+}
+
+// culinarySeeds holds practical fine-dining influences and techniques
+// that are realistic for a private chef (no complex home fermentation).
+var culinaryInfluences = []string{
+	"japoneză (dashi, mirin, soia, yuzu, wasabi proaspăt)",
+	"franceză clasică (fond brun, beurre blanc, confit, galantine)",
+	"mediteraneană (zaatar, harissa ușoară, lămâie prezervată, capere)",
+	"nordică (afumare la rece, murături rapide, ierburi sălbatice, unt brun)",
+	"peruviană (leche de tigre, ají amarillo, quinoa prăjită, chimichurri)",
+	"georgiană (nucă, rodie, fenugreek, tkemali, adjika blândă)",
+	"marocană (chermoula, ras el hanout, curmale, sofran, portocală amară)",
+	"asiatică de fuziune (galangal, lemongrass, lapte de cocos, nam pla)",
+	"est-europeană rafinată (hrean, sfeclă, smântână fermentată, mărar)",
+	"iberică (pimentón afumat, manchego, romesco, migdale prăjite)",
+}
+
+var culinaryTechniques = []string{
+	"glazurare și lăcuire la cuptor",
+	"emulsionare la rece (vinaigrette complexe, spume fără lecitină)",
+	"confit lent în grăsime (rață, usturoi, lămâie)",
+	"afumare rapidă cu lemn aromatic (cireș, măr, stejar)",
+	"coacere en papillote cu ierburi proaspete",
+	"reducție lungă — jus concentrat și siropuri savuroase",
+	"searing la temperatură înaltă urmat de odihnă",
+	"marinare la rece peste noapte în citrice și ierburi",
+	"roasting de legume întregi la temperaturi ridicate",
+	"sos pan — deglazat cu vin și montat cu unt rece",
 }
 
 type anthropicMessage struct {
@@ -152,20 +182,65 @@ func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest)
 		"\nStare dorită la final: " + req.End +
 		"\nFilosofia personală despre o masă bună: " + req.Philosophy
 
-	menuSystem := `Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
+	// Random seed: pick a culinary influence + technique for this specific guest
+	influence := culinaryInfluences[rand.Intn(len(culinaryInfluences))]
+	technique := culinaryTechniques[rand.Intn(len(culinaryTechniques))]
+
+	menuSystem := fmt.Sprintf(`Ești chef-ul și scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
+
+Pentru această seară specifică, meniul trebuie să aibă o identitate distinctă construită în jurul:
+- Influență culinară dominantă: %s
+- Tehnică principală: %s
+Integrează aceste elemente organic, nu forțat. Ele ghidează personalitatea meniului, nu îl limitează.
 
 Pe baza profilului senzorial al oaspetelui, compune un meniu personalizat de 6-7 cursuri. Fiecare curs trebuie să aibă:
 - "tip": tipul cursului (ex: Amuse-bouche, Entrée, Intermezzo, Fel principal, Pre-desert, Desert)
 - "nume": un nume poetic și evocator în română sau bilingv ro/fr
 - "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
 
-Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`
+Folosește ingrediente reale, procurabile, evitând fermentații de lungă durată sau tehnici de laborator. Prioritizează ingredient carpatic + influență aleasă.
 
-	menuText, err := p.call(ctx, menuSystem, profile, 900)
-	if err != nil {
-		return nil, fmt.Errorf("menu generation: %w", err)
+Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
+[{"tip":"...","nume":"...","descriere":"..."}]`, influence, technique)
+
+	menuReq := anthropicRequest{
+		Model:       anthropicModel,
+		MaxTokens:   900,
+		Temperature: 1.0,
+		System:      menuSystem,
+		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
 	}
+	menuPayload, err := json.Marshal(menuReq)
+	if err != nil {
+		return nil, fmt.Errorf("marshal menu: %w", err)
+	}
+	menuHTTPReq, err := http.NewRequestWithContext(ctx, http.MethodPost, anthropicAPIURL, bytes.NewReader(menuPayload))
+	if err != nil {
+		return nil, fmt.Errorf("menu request: %w", err)
+	}
+	menuHTTPReq.Header.Set("x-api-key", p.apiKey)
+	menuHTTPReq.Header.Set("anthropic-version", anthropicVersion)
+	menuHTTPReq.Header.Set("content-type", "application/json")
+	menuResp, err := p.client.Do(menuHTTPReq)
+	if err != nil {
+		return nil, fmt.Errorf("menu http: %w", err)
+	}
+	defer menuResp.Body.Close()
+	menuRaw, err := io.ReadAll(menuResp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("menu read: %w", err)
+	}
+	var menuAR anthropicResponse
+	if err := json.Unmarshal(menuRaw, &menuAR); err != nil {
+		return nil, fmt.Errorf("menu unmarshal: %w", err)
+	}
+	if menuAR.Error != nil {
+		return nil, fmt.Errorf("anthropic menu error: %s", menuAR.Error.Message)
+	}
+	if len(menuAR.Content) == 0 {
+		return nil, fmt.Errorf("empty menu response")
+	}
+	menuText := menuAR.Content[0].Text
 
 	// Strip markdown fences if present
 	menuText = strings.TrimSpace(menuText)
