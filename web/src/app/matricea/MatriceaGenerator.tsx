@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const gold = '#c9a96e';
 const goldFaint = 'rgba(201,169,110,0.15)';
@@ -91,6 +92,13 @@ export default function MatriceaGenerator() {
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState('');
   const [emailSent, setEmailSent] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!emailSent) return;
+    const t = setTimeout(() => router.push('/'), 60000);
+    return () => clearTimeout(t);
+  }, [emailSent, router]);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 

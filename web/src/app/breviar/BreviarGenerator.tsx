@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 
 const gold = '#c9a96e';
@@ -178,6 +179,13 @@ export default function BreviarGenerator() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!emailSent) return;
+    const t = setTimeout(() => router.push('/'), 60000);
+    return () => clearTimeout(t);
+  }, [emailSent, router]);
   const [submitting, setSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
