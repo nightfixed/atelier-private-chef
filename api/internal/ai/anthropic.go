@@ -214,14 +214,43 @@ func (p *AnthropicProvider) GenerateCodex(ctx context.Context, req CodexRequest)
 		"\nStare dorită la final: " + req.End +
 		"\nFilosofia personală despre o masă bună: " + req.Philosophy
 
-	// Build dietary restriction block — shown as a hard rule in the system prompt
+	// Build dietary restriction block — shown as a hard rule in the system prompt.
+	// Detect common restriction keywords and append explicit ingredient lists so the
+	// model cannot "forget" derived sources (e.g. gluten → secară, orz; lactate → unt, smântână).
 	dietaryBlock := ""
 	if req.Avoid != "" {
+		avoid := strings.ToLower(req.Avoid)
+		extras := ""
+		if strings.ContainsAny(avoid, "gluten") || strings.Contains(avoid, "grâu") || strings.Contains(avoid, "faina") || strings.Contains(avoid, "făină") {
+			extras += "\n  • FĂRĂ GLUTEN: exclude grâu, secară, orz, speltă, farro, alac, cuscus, bulgur, pâine, orice crocant din făină, paste, sosuri îngroșate cu făină, bere."
+		}
+		if strings.Contains(avoid, "lactat") || strings.Contains(avoid, "lapte") || strings.Contains(avoid, "lactoz") || strings.Contains(avoid, "dairy") {
+			extras += "\n  • FĂRĂ LACTATE: exclude lapte, unt, smântână, frișcă, brânză (inclusiv parmezan, brie, burduf, caș), iaurt, zer, ghee, cremă de lapte, ganache, spume cu lactate."
+		}
+		if strings.Contains(avoid, "ou") || strings.Contains(avoid, "egg") {
+			extras += "\n  • FĂRĂ OUĂ: exclude ouă în orice formă (fierte, pochate, în sosuri, maioneze, bezele, cremă pâtissière, pasta proaspătă cu ou)."
+		}
+		if strings.Contains(avoid, "carne") || strings.Contains(avoid, "vegan") || strings.Contains(avoid, "vegetar") {
+			extras += "\n  • FĂRĂ CARNE/ANIMAL: exclude carne de orice tip, pește, fructe de mare, organe, slănină, gelatină animală, fond din oase."
+		}
+		if strings.Contains(avoid, "pește") || strings.Contains(avoid, "peste") || strings.Contains(avoid, "seafood") || strings.Contains(avoid, "fructe de mare") {
+			extras += "\n  • FĂRĂ PEȘTE/FRUCTE DE MARE: exclude pește, creveți, scoici, caracatiță, midii, icre, garum, nam pla, worcestershire (conține anșoa)."
+		}
+		if strings.Contains(avoid, "nucă") || strings.Contains(avoid, "nuca") || strings.Contains(avoid, "alune") || strings.Contains(avoid, "nuci") || strings.Contains(avoid, "nuts") {
+			extras += "\n  • FĂRĂ NUCI/ALUNE: exclude nuci, migdale, alune de pădure, caju, fistic, nuci pecan, nuci macadamia, tahini, ulei de nuci, praline."
+		}
+		if strings.Contains(avoid, "zahăr") || strings.Contains(avoid, "zahar") || strings.Contains(avoid, "sugar") {
+			extras += "\n  • FĂRĂ ZAHĂR ADĂUGAT: exclude zahăr alb/brun, miere, sirop de arțar, melasă, reducții dulci, caramel, glazuri dulci."
+		}
+		if extras == "" {
+			// Generic fallback for unrecognized restrictions
+			extras = fmt.Sprintf("\n  \u2022 Restrictie declarata de oaspete: \u201e%s\u201d \u2014 aplica-o strict la toate ingredientele si tehnicile.", req.Avoid)
+		}
 		dietaryBlock = fmt.Sprintf(`
-⛔ RESTRICȚIE ALIMENTARĂ ABSOLUTĂ — VERIFICARE OBLIGATORIE înainte de fiecare ingredient:
-Oaspetele nu consumă / evită: %s
-Această restricție se aplică TUTUROR cursurilor fără excepție. Niciun ingredient care conține sau derivă din această categorie nu poate apărea în niciun curs, nici ca ingredient principal, nici ca element decorativ, nici ca tehnică (ex: dacă se evită glutenul, nu există secară, grâu, orz, spelta, farro, cuscus, pâine, crocant din făină — nici măcar "crocant de secară"). Dacă ai dubii că un ingredient poate conține restricția, nu îl folosi.
-`, req.Avoid)
+⛔ RESTRICȚII ALIMENTARE ABSOLUTE — verifică FIECARE ingredient din FIECARE curs:
+%s
+Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conține restricția, nu îl folosi. Înlocuiește cu alternative sigure. Această regulă primează asupra oricărei alte instrucțiuni.
+`, extras)
 	}
 
 	// Random seeds: culinary influence + technique + protagonist ingredient + forbidden clichés
