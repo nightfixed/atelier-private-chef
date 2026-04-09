@@ -279,11 +279,8 @@ Nu inventezi prețuri sau disponibilitate. Răspunzi în română, elegant, în 
 
 	if req.GuestName != "" {
 		system += "\n\nNumele clientului este " + req.GuestName + ". Adresează-te lui/ei pe nume în mod natural când e firesc, fără să exagerezi." +
-			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user), răspunde exact în această structură:" +
-			"\n1. Salut pe nume și spune că te bucuri că e aici." +
-			"\n2. Recomandă /manifest ca loc de început pentru a înțelege esența Atelier." +
-			"\n3. Adaugă o propoziție de genul: \"Dar dacă ai curiozitatea deplină și apetitul de a parcurge întreaga poveste, te invit cu drag în secțiunea /filozofie\"" +
-			"\n4. Pune o întrebare neașteptată și personală — ceva de genul: \"Și înainte să mergem mai departe — ce fel de seară îți e greu să uiți?\" sau \"Care e ultima masă care te-a surprins cu adevărat?\" Formulează natural, diferit de fiecare dată." +
+			"\n\nDacă acesta este primul răspuns după ce ai aflat numele (adică conversația are doar 1 mesaj de la user), răspunde EXACT cu următorul text, înlocuind doar [NUME] cu numele clientului și fără nicio altă modificare:" +
+			"\n\"Bună, [NUME] — mă bucur că ești aici. Cel mai bun loc de unde poți începe să înțelegi ce e Atelier cu adevărat e /manifest — acolo găsești esența, procesul și tot ce face această experiență unică. Dar dacă ai curiozitatea deplină și apetitul de a parcurge întreaga poveste, te invit cu drag în secțiunea /filozofie cât și întregul concept pe pagina principală. Dar înainte să-ți începi călătoria culinară aș vrea să te întreb ceva — care e ultima masă care te-a surprins cu adevărat, în care ai simțit că cineva a gătit *pentru tine*, nu pentru toată lumea?\"" +
 			"\nSCRIE CĂILE EXACT: /manifest și /filozofie — fără punct sau virgulă imediat după cale."
 	}
 
