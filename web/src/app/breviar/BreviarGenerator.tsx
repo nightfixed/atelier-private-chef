@@ -78,9 +78,10 @@ const STEPS: Step[] = [
     key: 'restrictions',
     eyebrow: '08 · Dietă',
     question: 'Există restricții alimentare în echipă?',
+    placeholder: 'ex. nu există / câteva vegetariene / o alergie la nuci / nu știm încă...',
     multiline: false,
-    type: 'select',
-    options: ['Nu știu', 'Nu există', 'Câteva', 'Da, multe'],
+    minLength: 1,
+    skipGibberish: true,
   },
   {
     key: 'dynamics',
@@ -277,7 +278,7 @@ export default function BreviarGenerator() {
     // After submit — show only pending screen
     if (emailSent) return (
       <div style={{ textAlign: 'center' as const, padding: '80px 40px' }}>
-        <div style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 32 }}>✦</div>
+        <div className="star-flicker" style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 32 }}>✦</div>
         <p style={{ fontFamily: serif, fontSize: 'clamp(1.2rem,2.5vw,1.5rem)', fontWeight: 300, color: 'rgba(232,224,208,0.85)', lineHeight: 1.7, marginBottom: 16 }}>
           Vă rugăm să aveți răbdare — acesta este un sistem inovativ<br/>care lucrează cu atenție pentru dumneavoastră.
         </p>
@@ -436,7 +437,7 @@ export default function BreviarGenerator() {
         {/* PENDING SCREEN — shown after submit */}
         {emailSent && (
           <div style={{ textAlign: 'center' as const, padding: '60px 40px', borderTop: '1px solid #111', marginTop: 48 }}>
-            <div style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 24 }}>✦</div>
+            <div className="star-flicker" style={{ fontFamily: serif, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 300, color: gold, letterSpacing: '0.1em', marginBottom: 24 }}>✦</div>
             <p style={{ fontFamily: serif, fontSize: 'clamp(1.1rem,2.5vw,1.4rem)', fontWeight: 300, color: 'rgba(232,224,208,0.85)', lineHeight: 1.7, marginBottom: 16 }}>
               Vă rugăm să aveți răbdare — acesta este un sistem inovativ<br/>care lucrează cu atenție pentru dumneavoastră.
             </p>
