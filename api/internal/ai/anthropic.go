@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	anthropicAPIURL = "https://api.anthropic.com/v1/messages"
-	anthropicModel  = "claude-sonnet-4-6"
+	anthropicAPIURL  = "https://api.anthropic.com/v1/messages"
+	anthropicModel   = "claude-sonnet-4-6"
 	anthropicVersion = "2023-06-01"
 )
 
@@ -445,4 +445,131 @@ Nu inventezi prețuri sau disponibilitate. Răspunzi în română, elegant, în 
 		return nil, fmt.Errorf("empty response")
 	}
 	return &ChatResponse{Reply: ar.Content[0].Text}, nil
+}
+
+// breviarDynamicSeeds adds variety to Breviar generation — practical group dynamics + culinary format seeds.
+var breviarDynamics = []string{
+	"serving format: sharing plates în centrul mesei — fiecare atinge ce vrea, conversația se naște natural",
+	"serving format: meniu plated în 4 acte — fiecare fel vine cu o pauză intenționată de reflecție",
+	"serving format: degustare în stil izakaya — mici porții succesive, ritm alert, energie de descoperire",
+	"serving format: banchet cu fel principal comun și aperitive individuale — unitate prin diferență",
+	"serving format: meniu cu un ingredient surpriză revelat la finalul serii — curiozitate susținută",
+}
+
+var breviarMoods = []string{
+	"atmosfera serii: lumânări și liniște — spațiul vorbește, nu oamenii",
+	"atmosfera serii: muzică low-fi, nu jazz de restaurant — energie de concentrare relaxată",
+	"atmosfera serii: totul în aer liber sau semi-outdoor — deschidere și expansivitate",
+	"atmosfera serii: spațiu industrial transformat — contrast între brut și rafinat",
+	"atmosfera serii: living privat — intimitate maximă, formalitate zero",
+}
+
+// GenerateBreviar generates a team gustatory portrait using a dedicated prompt.
+func (p *AnthropicProvider) GenerateBreviar(ctx context.Context, req BreviarRequest) (*BreviarResponse, error) {
+	dynamic := breviarDynamics[rand.Intn(len(breviarDynamics))]
+	mood := breviarMoods[rand.Intn(len(breviarMoods))]
+
+	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
+Ești specialist în experiențe culinare revelatorii pentru echipe corporative.
+Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team building nu reușește.
+
+Pentru această seară specifică, folosești ca punct de plecare:
+- %s
+- %s
+Integrează aceste elemente organic în recomandările tale.
+
+Generează Portretul Gustativ al echipei. Include EXACT aceste 5 secțiuni, în ordine, fără formatare markdown (fără ** sau * sau # sau ---):
+
+TITLU: titlul serii (max 7 cuvinte, poetic și specific domeniului și caracterului echipei)
+
+PROFILUL: profilul gustativ al echipei — ce gusturi colective le rezonează și de ce, legat de valorile și cultura lor (2-3 propoziții). Fii specific, nu generic.
+
+MENIU: un concept de meniu în 3 acte (câte un rând per act):
+DESCHIDERE: [Nume act] — [Intenție 1 propoziție]
+INIMA SERII: [Nume act] — [Intenție]
+INCHEIEREA: [Nume act] — [Intenție]
+
+RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specifice, legate de provocarea și intenția echipei. Un ritual pe rând.
+
+INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă, specifică lor.
+
+Adaptează totul la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.
+Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, dynamic, mood)
+
+	profile := fmt.Sprintf(
+		"Industria: %s\nCultura echipei: %s\nCea mai importantă realizare colectivă: %s\nProvocarea actuală: %s\nCe doresc să simtă la final: %s\nEnergia dorită după masă: %s\nNumăr participanți: %s\nRestricții alimentare: %s\nDinamica grupului: %s",
+		req.Industry, req.Culture, req.Achievement, req.Challenge, req.Feeling,
+		req.Energy, req.Participants, req.Restrictions, req.Dynamics,
+	)
+
+	brevReq := anthropicRequest{
+		Model:       anthropicModel,
+		MaxTokens:   1000,
+		Temperature: 1.0,
+		System:      system,
+		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
+	}
+	payload, err := json.Marshal(brevReq)
+	if err != nil {
+		return nil, fmt.Errorf("marshal breviar: %w", err)
+	}
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, anthropicAPIURL, bytes.NewReader(payload))
+	if err != nil {
+		return nil, fmt.Errorf("breviar request: %w", err)
+	}
+	httpReq.Header.Set("x-api-key", p.apiKey)
+	httpReq.Header.Set("anthropic-version", anthropicVersion)
+	httpReq.Header.Set("content-type", "application/json")
+
+	resp, err := p.client.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("breviar http: %w", err)
+	}
+	defer resp.Body.Close()
+	rawBytes, _ := io.ReadAll(resp.Body)
+	var ar anthropicResponse
+	if err := json.Unmarshal(rawBytes, &ar); err != nil {
+		return nil, fmt.Errorf("breviar unmarshal: %w", err)
+	}
+	if ar.Error != nil {
+		return nil, fmt.Errorf("anthropic breviar error: %s", ar.Error.Message)
+	}
+	if len(ar.Content) == 0 {
+		return nil, fmt.Errorf("empty breviar response")
+	}
+	return parseBreviarText(ar.Content[0].Text), nil
+}
+
+func parseBreviarText(text string) *BreviarResponse {
+	// Strip markdown
+	text = strings.NewReplacer("**", "", "*", "").Replace(text)
+	lines := strings.Split(strings.TrimSpace(text), "\n")
+	sections := map[string][]string{}
+	cur := ""
+	for _, line := range lines {
+		for _, prefix := range []string{"TITLU:", "PROFILUL:", "MENIU:", "RITUALURI:", "INTENTIE:"} {
+			if strings.HasPrefix(strings.TrimSpace(strings.ToUpper(line)), strings.TrimSuffix(prefix, ":")+":") {
+				cur = strings.TrimSuffix(prefix, ":")
+				rest := strings.TrimSpace(line[strings.Index(strings.ToUpper(line), prefix)+len(prefix):])
+				if rest != "" {
+					sections[cur] = append(sections[cur], rest)
+				}
+				goto nextLine
+			}
+		}
+		if cur != "" && strings.TrimSpace(line) != "" {
+			sections[cur] = append(sections[cur], strings.TrimSpace(line))
+		}
+	nextLine:
+	}
+	get := func(k string) string { return strings.TrimSpace(strings.Join(sections[k], "\n")) }
+	raw := strings.TrimSpace(text)
+	return &BreviarResponse{
+		Titlu:     get("TITLU"),
+		Profilul:  get("PROFILUL"),
+		Meniu:     get("MENIU"),
+		Ritualuri: get("RITUALURI"),
+		Intentie:  get("INTENTIE"),
+		Raw:       raw,
+	}
 }

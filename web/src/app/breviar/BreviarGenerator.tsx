@@ -172,7 +172,7 @@ export default function BreviarGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState('');
-  const [suggestions, setSuggestions] = useState<string | null>(null);
+
   const [emailSent, setEmailSent] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [contactName, setContactName] = useState('');
@@ -199,61 +199,31 @@ export default function BreviarGenerator() {
   const generate = async (updated: Record<string, string>) => {
     setLoading(true); setError('');
     try {
-      const prompt = [
-        'Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.',
-        'Ești specialist în experiențe culinare revelatorii pentru echipe corporative.',
-        '',
-        'O echipă ți-a dat aceste informații:',
-        `- Industria: ${updated.industry}`,
-        `- Cultura echipei (un cuvânt): ${updated.culture}`,
-        `- Cea mai importantă realizare colectivă: ${updated.achievement}`,
-        `- Provocarea actuală: ${updated.challenge}`,
-        `- Ce doresc să simtă la final: ${updated.feeling}`,
-        `- Energia dorită după masă: ${updated.energy || 'nespecificat'}`,
-        `- Număr participanți: ${updated.participants || 'nespecificat'}`,
-        `- Restricții alimentare: ${updated.restrictions || 'nespecificat'}`,
-        `- Dinamica grupului: ${updated.dynamics || 'nespecificat'}`,
-        '',
-        'Generează Portretul Gustativ al acestei echipe. Include EXACT aceste 5 secțiuni în ordine:',
-        'TITLU: titlul serii lor (max 7 cuvinte, poetic și specific domeniului și caracterului lor)',
-        'PROFILUL: profilul gustativ al echipei — ce gusturi colective le rezonează și de ce, legat de valorile și cultura lor (2-3 propoziții)',
-        'MENIU: un concept de meniu în 3 acte pe 3 rânduri separate:',
-        'DESCHIDERE: [Nume act] — [Intenție 1 propoziție]',
-        'INIMA SERII: [Nume act] — [Intenție]',
-        'INCHEIEREA: [Nume act] — [Intenție]',
-        'RITUALURI: 2 momente de ritualizare propuse în cursul serii (concrete, specifice). Format: un ritual pe rând.',
-        'INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă',
-        '',
-        'Adaptează recomandările de format (sharing, plated, bufet) la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.',
-        'Răspunde DOAR cu aceste 5 secțiuni. FARA formatting markdown (fără ** sau * sau # sau ---). Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.',
-      ].join('\n');
-
-      const res = await fetch(`${API_URL}/api/chat`, {
+      const res = await fetch(`${API_URL}/api/generate-breviar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] }),
+        body: JSON.stringify({
+          industry: updated.industry || '',
+          culture: updated.culture || '',
+          achievement: updated.achievement || '',
+          challenge: updated.challenge || '',
+          feeling: updated.feeling || '',
+          energy: updated.energy || '',
+          participants: updated.participants || '',
+          restrictions: updated.restrictions || '',
+          dynamics: updated.dynamics || '',
+        }),
       });
       if (!res.ok) throw new Error();
-      const data = await res.json();
-      setResult(parseAI(data.reply));
-      // Fetch follow-up suggestions in background
-      try {
-        const suggestPrompt = [
-          `O echipă din industria ${updated.industry} (cultura: "${updated.culture}") vrea o experiență culinară Atelier.`,
-          `Provoacarea lor: ${updated.challenge}`,
-          `Intenția serii: ${updated.feeling}`,
-          `Energia dorită: ${updated.energy || ''}. Dinamica grupului: ${updated.dynamics || ''}.`,
-          '',
-          'Dă 3 idei concrete și scurte pe care echipa le poate face sau explora înainte de prima noastră întâlnire.',
-          'Format: 3 rânduri separate, fiecare începe cu numărul (1., 2., 3.). Fără titluri, fără markdown.',
-        ].join('\n');
-        const sr = await fetch(`${API_URL}/api/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: [{ role: 'user', content: suggestPrompt }] }),
-        });
-        if (sr.ok) { const sd = await sr.json(); setSuggestions(stripMd(sd.reply)); }
-      } catch { /* silent */ }
+      const data: { titlu: string; profilul: string; meniu: string; ritualuri: string; intentie: string; raw: string } = await res.json();
+      setResult({
+        titlu: data.titlu || '',
+        profilul: data.profilul || '',
+        meniu: data.meniu || '',
+        ritualuri: data.ritualuri || '',
+        intentie: data.intentie || '',
+        raw: data.raw || '',
+      });
     } catch {
       setError('Generarea a eșuat. Încearcă din nou.');
     }
@@ -288,7 +258,7 @@ export default function BreviarGenerator() {
     setStep(prev);
   };
 
-  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); setSuggestions(null); setEmailSent(false); };
+  const reset = () => { setStep(0); setAnswers({}); setCurrent(''); setResult(null); setError(''); setEmailSent(false); };
 
   if (loading) return (
     <div style={{ padding: '80px 40px', textAlign: 'center' }}>

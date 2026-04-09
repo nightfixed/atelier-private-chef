@@ -172,6 +172,17 @@ func (m *MockProvider) GenerateArtifact(_ context.Context, req ArtifactRequest) 
 	}, nil
 }
 
+func (m *MockProvider) GenerateBreviar(_ context.Context, req BreviarRequest) (*BreviarResponse, error) {
+	return &BreviarResponse{
+		Titlu:     fmt.Sprintf("Seara Echipei din %s", req.Industry),
+		Profilul:  "O echipă cu gusturi precise și o energie care caută autenticitate — nu spectacol. Profilul gustativ al grupului indică o preferință pentru contrast: ceva cunoscut, completat de ceva complet neașteptat.",
+		Meniu:     "DESCHIDERE: Recunoașterea — aperitive individuale care provoacă o primă conversație.\nINIMA SERII: Confluența — fel principal sharing, construit pe ingredientul care unește.\nINCHEIEREA: Memoria — un desert care lasă o singură imagine, nu mai multe gusturi.",
+		Ritualuri: "1. Fiecare participant primește un card cu o întrebare despre echipă — citit cu voce tare înainte de primul fel.\n2. La finalul serii, fiecare scrie pe hârtie un cuvânt care descrie seara — adunate și citite de chef.",
+		Intentie:  "Vor pleca știind că sunt o echipă — nu doar colegi care lucrează împreună.",
+		Raw:       "",
+	}, nil
+}
+
 // Chat handles conversational messages about Atelier Private Dining.
 func (m *MockProvider) Chat(_ context.Context, req ChatRequest) (*ChatResponse, error) {
 if len(req.Messages) == 0 {
