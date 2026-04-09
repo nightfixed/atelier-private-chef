@@ -1364,7 +1364,7 @@ function renderQuestion() {
     });
     html += `</div>`;
   } else {
-    html += `<textarea class="free-input" id="free-ans" placeholder="Scrieți liber..." oninput="freeInput(this)"></textarea>`;
+    html += `<textarea class="free-input" id="free-ans" placeholder="Scrieți liber..." oninput="freeInput(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){const b=document.getElementById('next-btn');if(!b.disabled){event.preventDefault();nextQuestion();}}"></textarea>`;
     html += `<div class="q-nav"><button class="btn" id="next-btn" onclick="nextQuestion()" disabled>Finalizează</button></div>`;
   }
 
