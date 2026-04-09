@@ -1331,7 +1331,6 @@ function startRitual() {
 }
 
 function renderQuestion() {
-  scrollTop();
   const q = QUESTIONS[currentQ];
   currentSelection = null;
   const total = QUESTIONS.length;
@@ -1380,6 +1379,7 @@ function renderQuestion() {
 
   html += `</div>`;
   document.getElementById('question-slot').innerHTML = html;
+  requestAnimationFrame(() => scrollTop());
 }
 
 function selectOption(btn, val) {
