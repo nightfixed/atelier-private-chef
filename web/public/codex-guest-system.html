@@ -468,6 +468,16 @@
     text-transform: uppercase;
     text-align: right;
   }
+  .course-type {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.42rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    opacity: 0.45;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
   .course-body {}
   .course-name {
     font-size: 1.15rem;
@@ -1490,8 +1500,9 @@ function renderMenuCourses(courses) {
     <div class="menu-course">
       <div class="course-num">${ROMAN[i] || (i+1)}</div>
       <div class="course-body">
+        ${c.type ? `<div class="course-type">${c.type}</div>` : ''}
         <div class="course-name">${c.name}</div>
-        <div class="course-desc">${c.desc}</div>
+        ${c.desc ? `<div class="course-desc">${c.desc}</div>` : ''}
       </div>
     </div>`).join('');
 }
@@ -1544,7 +1555,11 @@ async function generateMenu() {
       if (res.ok) {
         const data = await res.json();
         if (data?.menu?.length) {
-          const courses = data.menu.map(c => ({ name: c.tip, desc: c.descriere ? `${c.nume} — ${c.descriere}` : c.nume }));
+          const courses = data.menu.map(c => ({
+          type: c.tip || '',
+          name: c.nume || c.tip || '',
+          desc: c.descriere || ''
+        }));
           setMenu(courses);
           window._codexStory = data.story || '';
           return;
