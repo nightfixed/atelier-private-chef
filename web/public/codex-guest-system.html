@@ -1250,12 +1250,13 @@ function changePersons(delta) {
 function scrollTop() {
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
 }
 
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  scrollTop();
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollTop()));
 }
 
 function formatDate(dateStr) {
