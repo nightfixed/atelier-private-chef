@@ -192,6 +192,51 @@ export default function ManifestPage() {
           </p>
         </section>
 
+        {/* CREDO — declarație de poziționare, înainte de principii */}
+        <section style={{
+          maxWidth: 720, margin: '0 auto', padding: '72px 32px 64px',
+          borderBottom: `1px solid ${goldFaint}`,
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontFamily: serif, fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+            fontWeight: 300, lineHeight: 1.9, color: text,
+            opacity: 0.9, marginBottom: 36,
+          }}>
+            Nu gătesc dintr-o singură tradiție.<br />
+            Gătesc din toate deodată — cu aceeași onestitate față de fiecare.
+          </p>
+          <p style={{
+            fontFamily: sans, fontWeight: 200, fontSize: '0.82rem',
+            lineHeight: 2.1, color: textFaint, marginBottom: 28,
+          }}>
+            Tehnica franceză nu e superioară celei japoneze. Fermentarea românească nu e inferioară celei coreene.
+            Ingredientul local nu e mai nobil decât cel adus de departe — și nici invers.
+            Există doar o singură ierarhie în această bucătărie: cea a gustului adevărat.
+          </p>
+          <p style={{
+            fontFamily: sans, fontWeight: 200, fontSize: '0.82rem',
+            lineHeight: 2.1, color: textFaint, marginBottom: 28,
+          }}>
+            Fiecare farfurie este un argument. Nu pentru un curent, nu pentru o modă — ci pentru ideea că precizia și memoria
+            pot coexista pe același platou. Că umami-ul dintr-un garum de casă și grăsimea unui foie gras poartă aceeași greutate morală.
+            Că tochitură și homarul nu sunt în conflict — sunt în conversație.
+          </p>
+          <p style={{
+            fontFamily: sans, fontWeight: 200, fontSize: '0.82rem',
+            lineHeight: 2.1, color: textFaint, marginBottom: 40,
+          }}>
+            Meniul nu este o listă. Este o consecutivitate gândită: o logică a contrastului, a construcției, a rezoluției.
+            Fiecare preparat știe ce vine înainte și ce urmează după el.<br /><br />
+            Progres, în această bucătărie, nu înseamnă tehnologie.<br />
+            Înseamnă claritate.
+          </p>
+          <p style={{
+            fontFamily: serif, fontSize: '1rem', fontStyle: 'italic',
+            color: gold, opacity: 0.7, letterSpacing: '0.08em',
+          }}>— Răzvan</p>
+        </section>
+
         {/* NOTA VERSIUNE SCURTA */}
         <div style={{
           textAlign: 'center', padding: '24px 24px',
