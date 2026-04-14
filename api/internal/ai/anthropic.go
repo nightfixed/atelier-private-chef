@@ -130,7 +130,7 @@ var razvanSignatureDishes = []string{
 	"Cotlet de miel cu crustă de ierburi Provence și jus de rădăcinoase",
 	"Medalion de vânat cu sos de fructe de pădure și piure de topinambur",
 	"Căprioară cu piure de gutui și reducție de vin roșu Fetească Neagră",
-	// Deserturi
+	// Deserturi / tehnici speciale
 	"Cremă de lavandă cu granita de piersică albă și jeleu de lavandă",
 	"Salată de căpșuni cu granita de șampanie și flori comestibile",
 	"Mousse de lămâie cu unde de caramel",
@@ -139,6 +139,7 @@ var razvanSignatureDishes = []string{
 	"Parfait de cireșe cu coulis de mentă proaspătă",
 	"Sorbet de banane cu lichi prăjit și flori de lotus",
 	"Kulfi cu cocos, chilli și cremă amaretti cu ciocolată albă",
+	"Strat de caramel natural din curmale (curmale hidratate + unt + smântână, blenduit fin — devine caramel la cuptor; pe fundul farfuriei la vânat/rață sau ca desert)",
 }
 
 // codexProtagonistSeeds: one featured ingredient that must anchor and define the menu.
@@ -408,7 +409,7 @@ Coloranți & arome speciale: carbon activ pudră (ceramică neagră, cruste dram
 Trufe și premium: unt cu trufe, sos cu trufe de vară Deluxe, sos cu roșii uscate și trufe Deluxe, taglioni cu trufe.
 Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
 Condimente rare: cardamom pudră, piper cu lămâie, piper mozaic, boia afumată, chimen negru, coriandru boabe, cuișoare, vanilie de Madagascar, sare celtică, sare Maldon.
-Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn.
+Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn, curmale (folosite ca cremă/strat de caramel natural — hidratate + unt + smântână → blenduit fin → devine caramel la cuptor; merge pe fundul farfuriei sau ca garnish atât la sărat cât și la desert).
 Folosește aceste ingrediente pentru tehnici cu impact vizual și gustativ: cruste negre cu carbon activ, crunch-uri din jumări sau șorici, prezentări dramatice cu tufe de fum, sosuri cu trufe. NU trebuie să le folosești pe toate — alege 3-5 care au sens cu profilul oaspetelui și sezonul.
 
 INGREDIENTE DE SEZON DIN TRANSILVANIA — %s:
