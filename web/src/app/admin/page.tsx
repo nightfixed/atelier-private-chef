@@ -269,6 +269,7 @@ function CodexMessageView({ message, occasion }: { message?: string; occasion?: 
 function ContactsTab({ token }: { token: string }) {
   const [items, setItems] = useState<ContactRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchErr, setFetchErr] = useState<string | null>(null);
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -287,7 +288,14 @@ function ContactsTab({ token }: { token: string }) {
 
   const load = useCallback(async () => {
     setLoading(true);
-    try { setItems(await api.getContacts(token, filter)); } catch { setItems([]); }
+    setFetchErr(null);
+    try {
+      const data = await api.getContacts(token, filter);
+      setItems(Array.isArray(data) ? data : []);
+    } catch (e: unknown) {
+      setItems([]);
+      setFetchErr(e instanceof Error ? e.message : 'Eroare la încărcarea cererilor');
+    }
     setLoading(false);
   }, [token, filter]);
 
@@ -409,6 +417,12 @@ function ContactsTab({ token }: { token: string }) {
         </div>
       </div>
       {actionErr && <div style={S.error}>{actionErr}</div>}
+      {fetchErr && (
+        <div style={{...S.error, display:'flex', alignItems:'center', justifyContent:'space-between'}}>
+          <span>⚠ {fetchErr}</span>
+          <button style={S.btnSmall} onClick={load}>Reîncearcă</button>
+        </div>
+      )}
       {loading ? <div style={S.emptyState}>Se încarcă...</div> : (
         <table style={S.table}>
           <thead>
