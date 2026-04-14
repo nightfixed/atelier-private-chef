@@ -74,6 +74,71 @@ var culinaryTechniques = []string{
 	"marinare la rece peste noapte în citrice și ierburi",
 	"roasting de legume întregi la temperaturi ridicate",
 	"sos pan — deglazat cu vin și montat cu unt rece",
+	"sous-vide la temperatură precisă (pește, proteină fragilă)",
+	"tartare tăiat manual cu marinată citrusată",
+	"jeleu din fond concentrat (aspic sau agar)",
+	"sabayon montat la bain-marie (șampanie sau vin alb)",
+	"crustă aromatică (susan negru/alb, semințe, panko, ierburi uscate)",
+	"spumă (espumă) cu mixer sau sifon — fără ou, fără frișcă",
+	"granité sau sorbet savuros (șampanie, citrice, ierburi)",
+	"carpaccio glazurat cu reducție balsamic și ulei de ierburi",
+}
+
+// razvanSignatureDishes: real dishes from Razvan's signature menu (Atelier Private Dining).
+// Used as stylistic DNA — AI should create new dishes in this spirit, not copy them verbatim.
+var razvanSignatureDishes = []string{
+	// Amuse-bouche
+	"Dukkah cu vin d'orange (condiment artizanal nuci+semințe, vin macerat)",
+	"Sepia sous-vide cu icre de somon nedeshidratat și crustă de alge",
+	// Supe & Consommé
+	"Consommé limpede de rață cu paprikă afumată și pastă de nuci",
+	"Supă cremă de conopidă cu curry verde și bacon crocant",
+	"Supă japoneză udon cu creveți, alge tăiate fin și tahini",
+	// Intrări calde
+	"Foie gras cu fenicul sotat, chutney de mango și piure de tahini",
+	"Foie gras cu chutney de ceapă roșie pe ciuperci hribi crocante",
+	"Mousse de foie gras fondant cu căpșuni și vinegretă de căpșuni",
+	"Scoici Saint-Jacques cu piure fin de mazăre și vanilie",
+	"Scoici Saint-Jacques cu ratatouille de legume și fulgi de migdale",
+	"Mozzarella de bivolița cu gremolata de pătrunjel și coajă de portocală",
+	// Paste & Risotto
+	"Tortellini artizanal cu ragù lent de rață și jus de rață",
+	"Duo tagliatelle nere de sepia și spanac cu muchi de vită",
+	"Ravioli cu cremă de fructul pasiunii și sabayon de șampanie",
+	"Risotto cremă cu anșoa, praz, unt și parmezan",
+	"Linguine kamut cu creveți tiger, crab și foie gras",
+	// Pește
+	"Sashimi de biban cu perle de tapioca, wasabi și spumă de morcovi-portocală",
+	"File de biban cu emulsie de unt infuzat cu șofran și baby legume",
+	"Halibut pe jeleu de morcovi cu muguri de pin și ulei de cimbru",
+	"Somon confit cu sos de curry, radicchio și sfeclă roșie",
+	"Somon în crustă de susan negru-alb pe jeleu de morcovi și mango",
+	"Somon glazurat cu sos miso, sparanghel și roșii cherry",
+	"Somon en papillote cu gremolata, legume de sezon",
+	"Sashimi de somon pe pat de ceapă aromatizată",
+	"Rulou de somon afumat de casă cu avocado, hrean și wasabi",
+	"Char sui salmon cu pepene de iarnă și germeni de linte",
+	// Carne de pasăre
+	"Piept de rață glazurat cu sirop de Cotnar și spumă de păstârnac",
+	"Piept de rață cu jeleu de morcovi, șofran și demi-glace",
+	"Piept de rață cu cremă de dovleac, pere caramelizate și cocos",
+	"Piept de porumbel cu sos de cireșe",
+	"Confit de rață cu sos de vițel și camembert flambé",
+	"Curcan învelit în bacon cu cremă de moțele și rucola",
+	// Carne
+	"Mușchi de vită cu ambra, șofran și sos chorizo-béarnaise",
+	"Cotlet de miel cu crustă de ierburi Provence și jus de rădăcinoase",
+	"Medalion de vânat cu sos de fructe de pădure și piure de topinambur",
+	"Căprioară cu piure de gutui și reducție de vin roșu Fetească Neagră",
+	// Deserturi
+	"Cremă de lavandă cu granita de piersică albă și jeleu de lavandă",
+	"Salată de căpșuni cu granita de șampanie și flori comestibile",
+	"Mousse de lămâie cu unde de caramel",
+	"Semifreddo de tomate și busuioc (desert savuros surpriză)",
+	"Fondant de ciocolată cu vin de fructe și perle de chilli",
+	"Parfait de cireșe cu coulis de mentă proaspătă",
+	"Sorbet de banane cu lichi prăjit și flori de lotus",
+	"Kulfi cu cocos, chilli și cremă amaretti cu ciocolată albă",
 }
 
 // codexProtagonistSeeds: one featured ingredient that must anchor and define the menu.
@@ -309,6 +374,12 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	protagonist := codexProtagonistSeeds[rand.Intn(len(codexProtagonistSeeds))]
 	forbidden := codexForbiddenSeeds[rand.Intn(len(codexForbiddenSeeds))]
 
+	// Pick 3-4 signature dishes as stylistic DNA for this menu
+	sigPool := make([]string, len(razvanSignatureDishes))
+	copy(sigPool, razvanSignatureDishes)
+	rand.Shuffle(len(sigPool), func(i, j int) { sigPool[i], sigPool[j] = sigPool[j], sigPool[i] })
+	sigPick := strings.Join(sigPool[:4], "\n  • ")
+
 	// All seasonal Transylvanian ingredients for this season (shuffled for variety)
 	currentMonth := time.Now().Month()
 	season := getTransylvanianSeason(int(currentMonth))
@@ -327,6 +398,10 @@ Identitatea acestui meniu este definită de trei axe obligatorii:
 INTERDICȚIE ABSOLUTĂ pentru astăzi — nu folosi deloc: %s
 Această regulă este nenegociabilă. Găsește înlocuitori mai interesanți.
 
+ADN CULINAR ATELIER — preparate semnătură ca sursă de inspirație stilistică (NU le copia, creează variații sau combină elemente din ele):
+  • %s
+Spiritul acestor preparate: tehnici precise, contrast textural, ingrediente nobile cu ancorare locală, prezentare elegantă. Creează în același registru, nu reproduce.
+
 INGREDIENTE DIN CĂMARA ATELIERULUI — prioritizează-le creativ:
 Produse artizanale porc ardeleean: chipsuri de jumări (crunch textural), pastă de jumări (grăsime aromatizată), jumări extra, chipsuri de șorici (crumble sărat), carne în untură.
 Coloranți & arome speciale: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
@@ -340,7 +415,7 @@ INGREDIENTE DE SEZON DIN TRANSILVANIA — %s:
 Pool complet disponibil: %s
 Regulă: cel puțin 3 cursuri trebuie să ancoreze un ingredient din acest pool ca element central sau de suport.
 Combină-le cu ingredientele din cămară pentru preparate cu identitate locală și tehnică modernă.
-Exemple de combinații posibile: carbon activ + caș afumat → crustă neagră spectaculoasă; jumări + topinambur → crunch local autohton; unt cu trufe + hribi sălbatici → extaz de pădure; boia afumată + miel de munte → memorie olfactivă ardelenească.
+Exemple: carbon activ + caș afumat → crustă neagră spectaculoasă; jumări + topinambur → crunch local autohton; unt cu trufe + hribi sălbatici → extaz de pădure; boia afumată + miel de munte → memorie olfactivă ardelenească.
 
 STRUCTURA MENIULUI — obligatorie, în această ordine exactă:
 1. Amuse-bouche (un singur mușcătură, intens, surpriză — folosește ceva din cămară pentru efect dramatic)
@@ -364,7 +439,7 @@ Reguli de varietate maximă:
 - Integrează subtil răspunsurile oaspetelui: "Surpriză" → un curs subvertează așteptările; "Profunzime" → evoluție gustativă pe 3 straturi; "Nostalgie" → un ingredient arhaic reinterpretat modern
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, season, seasonalAll)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, sigPick, season, seasonalAll)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
