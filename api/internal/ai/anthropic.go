@@ -703,7 +703,7 @@ Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, b
 
 	brevReq := anthropicRequest{
 		Model:       anthropicModel,
-		MaxTokens:   1000,
+		MaxTokens:   1500,
 		Temperature: 1.0,
 		System:      system,
 		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
