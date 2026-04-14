@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 )
 
 const (
@@ -103,6 +104,54 @@ var codexForbiddenSeeds = []string{
 	"piure de cartofi, crem brulee, pannacotta",
 	"mousse de ciocolată, biscuit de parmezan, air de mango",
 	"tataki, tartare clasic, confit de rață",
+}
+
+// transylvanianSeasonalIngredients: local seasonal ingredients from Transylvania/Carpathians.
+// Rotated randomly to anchor at least one course in local terroir.
+var transylvanianSeasonalIngredients = map[string][]string{
+	"primăvară": {
+		"urzici tinere de munte", "leurdă sălbatică din pădurile Apusenilor", "măcriș de câmp",
+		"lobodă tânără", "spanac sălbatic", "ridichi de lună de la fermă",
+		"caș proaspăt de oaie din Mărginimea Sibiului", "miel de Ardeal",
+		"ouă de la găini de curte", "zer de oaie", "flori de soc",
+	},
+	"vară": {
+		"roșii de Zăpodeni crescute în câmp", "ardei Florinis din grădinile Clujului",
+		"dovlecei cu floare", "fasole verde de grădină", "castraveți de câmp",
+		"coacăze negre din Apuseni", "zmeură de munte", "afine de pădure Carpați",
+		"miere de pădure din Munții Apuseni", "brânză burduf de Sibiu",
+		"urdă de oaie", "smântână de la fermă",
+	},
+	"toamnă": {
+		"hribi din pădurile Apusenilor", "gălbiori sălbatici", "trufe negre de Ardeal",
+		"mere ionatane și golden din Bistrița", "pere de vară", "gutui de Ardeal",
+		"prune de Bistrița-Năsăud", "varză de Ardeal pentru fermentat",
+		"castane din Bihor", "nuci de Ardeal", "dovleac de Hokkaido crescut local",
+		"sfeclă roșie de câmp", "topinambur", "păstârnac de grădină",
+		"vin de Lechința sau Blaj — reducție sau gelifiere",
+	},
+	"iarnă": {
+		"varză murată de Ardeal", "sfeclă murată", "murături mixte de casă",
+		"carne în untură de Ardeal", "slănină afumată cu lemn de fag",
+		"cârnați de casă afumați", "jumări de porc ardeleene",
+		"brânză burduf maturat", "caș afumat din Mărginime",
+		"mere coapte de iarnă — ionatane sau crețești",
+		"scorțoneră și rădăcinoase de depozit", "cartofi mov de Ardeal",
+	},
+}
+
+// getTransylvanianSeason returns the current season key based on month.
+func getTransylvanianSeason(month int) string {
+	switch {
+	case month >= 3 && month <= 5:
+		return "primăvară"
+	case month >= 6 && month <= 8:
+		return "vară"
+	case month >= 9 && month <= 11:
+		return "toamnă"
+	default:
+		return "iarnă"
+	}
 }
 
 type anthropicMessage struct {
@@ -260,6 +309,17 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	protagonist := codexProtagonistSeeds[rand.Intn(len(codexProtagonistSeeds))]
 	forbidden := codexForbiddenSeeds[rand.Intn(len(codexForbiddenSeeds))]
 
+	// Pick 2-3 seasonal Transylvanian ingredients for this specific menu
+	currentMonth := time.Now().Month()
+	season := getTransylvanianSeason(int(currentMonth))
+	seasonalPool := transylvanianSeasonalIngredients[season]
+	rand.Shuffle(len(seasonalPool), func(i, j int) { seasonalPool[i], seasonalPool[j] = seasonalPool[j], seasonalPool[i] })
+	seasonalCount := 2
+	if len(seasonalPool) > 3 {
+		seasonalCount = 3
+	}
+	seasonalPick := strings.Join(seasonalPool[:seasonalCount], ", ")
+
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
 %s
 Identitatea acestui meniu este definită de trei axe obligatorii:
@@ -270,9 +330,22 @@ Identitatea acestui meniu este definită de trei axe obligatorii:
 INTERDICȚIE ABSOLUTĂ pentru astăzi — nu folosi deloc: %s
 Această regulă este nenegociabilă. Găsește înlocuitori mai interesanți.
 
-Construiește un meniu de 6-7 cursuri strict personalizat pe profilul oaspetelui de mai jos.
+ANCORARE LOCALĂ OBLIGATORIE — ingrediente de sezon din Transilvania (%s):
+Ingrediente de integrat: %s
+Cel puțin 2 cursuri trebuie să folosească unul din aceste ingrediente ca element central sau de suport.
+Acestea reprezintă identitatea culinară a locului — Apuseni, Mărginimea Sibiului, Câmpia Ardealului.
+
+STRUCTURA MENIULUI — obligatorie, în această ordine exactă:
+1. Amuse-bouche (un singur mușcătură, intens, surpriză)
+2. Entrée (primul fel propriu-zis — răcoros, acid, ușor)
+3. Intermezzo (OBLIGATORIU — sorbet, granité, spumă sau o pauză senzorială curățătoare, 3-4 ingrediente max)
+4. Fel principal (carnea sau proteina principală — complex, profund)
+5. Pre-desert (OBLIGATORIU — tranziție dulce-sărat sau acid-dulce, preparare delicată)
+6. Desert (finalul — evocator, cu reverberație lungă)
+Poți adăuga opțional un al 7-lea curs între Entrée și Intermezzo dacă profilul oaspetelui o cere.
+
 Fiecare curs trebuie să aibă:
-- "tip": tipul cursului (Amuse-bouche / Entrée / Intermezzo / Fel principal / Pre-desert / Desert)
+- "tip": tipul cursului exact din structura de mai sus
 - "nume": un nume poetic și evocator în română sau bilingv ro/fr
 - "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
 
@@ -283,7 +356,7 @@ Reguli de varietate:
 - Integrează subtil răspunsurile oaspetelui: dacă a ales "Surpriză", un curs trebuie să subverteze așteptările; dacă a ales "Profunzime", construiește cursuri cu evoluție gustativă
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, season, seasonalPick)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
@@ -577,9 +650,24 @@ func (p *AnthropicProvider) GenerateBreviar(ctx context.Context, req BreviarRequ
 	dynamic := breviarDynamics[rand.Intn(len(breviarDynamics))]
 	mood := breviarMoods[rand.Intn(len(breviarMoods))]
 
+	currentMonth := time.Now().Month()
+	bSeason := getTransylvanianSeason(int(currentMonth))
+	bSeasonalPool := make([]string, len(transylvanianSeasonalIngredients[bSeason]))
+	copy(bSeasonalPool, transylvanianSeasonalIngredients[bSeason])
+	rand.Shuffle(len(bSeasonalPool), func(i, j int) { bSeasonalPool[i], bSeasonalPool[j] = bSeasonalPool[j], bSeasonalPool[i] })
+	bSeasonalCount := 2
+	if len(bSeasonalPool) > 3 {
+		bSeasonalCount = 3
+	}
+	bSeasonalPick := strings.Join(bSeasonalPool[:bSeasonalCount], ", ")
+
 	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
 Ești specialist în experiențe culinare revelatorii pentru echipe corporative.
 Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team building nu reușește.
+
+ANCORARE LOCALĂ OBLIGATORIE — ingrediente de sezon din Transilvania (%s):
+Ingrediente de integrat natural în meniu: %s
+Cel puțin 1-2 feluri din meniu trebuie să utilizeze aceste ingrediente locale de sezon.
 
 Pentru această seară specifică, folosești ca punct de plecare:
 - %s
@@ -592,9 +680,12 @@ TITLU: titlul serii (max 7 cuvinte, poetic și specific domeniului și caracteru
 
 PROFILUL: profilul gustativ al echipei — ce gusturi colective le rezonează și de ce, legat de valorile și cultura lor (2-3 propoziții). Fii specific, nu generic.
 
-MENIU: un concept de meniu în 3 acte (câte un rând per act):
+MENIU: un concept de meniu în 5 acte (câte un rând per act, OBLIGATORIU în această ordine):
 DESCHIDERE: [Nume act] — [Intenție 1 propoziție]
+FIRST ACT: [Nume act] — [Intenție]
+INTERMEZZO (OBLIGATORIU): [Nume act] — sorbet, granité sau pauză senzorială curățătoare
 INIMA SERII: [Nume act] — [Intenție]
+PRE-DESERT (OBLIGATORIU): [Nume act] — tranziție dulce-sărat sau acid-dulce
 INCHEIEREA: [Nume act] — [Intenție]
 
 RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specifice, legate de provocarea și intenția echipei. Un ritual pe rând.
@@ -602,7 +693,7 @@ RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specific
 INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă, specifică lor.
 
 Adaptează totul la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.
-Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, dynamic, mood)
+Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, dynamic, mood)
 
 	profile := fmt.Sprintf(
 		"Industria: %s\nCultura echipei: %s\nCea mai importantă realizare colectivă: %s\nProvocarea actuală: %s\nCe doresc să simtă la final: %s\nEnergia dorită după masă: %s\nNumăr participanți: %s\nRestricții alimentare: %s\nDinamica grupului: %s",
