@@ -328,20 +328,19 @@ INTERDICȚIE ABSOLUTĂ pentru astăzi — nu folosi deloc: %s
 Această regulă este nenegociabilă. Găsește înlocuitori mai interesanți.
 
 INGREDIENTE DIN CĂMARA ATELIERULUI — prioritizează-le creativ:
-Texturi & hidrocoloizi disponibili: gumă xantan (pentru geluri și emulsii elastice), agar-agar (geluri termostabile), caragenan kappa (geluri fragmentabile), pectine concentrate (jeleuri transparente), citrat de sodiu (fondue, procesare brânzeturi), amidon alimentar, gumă guar, glucoză pudră, dextroză.
-Arome & coloranți speciali: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
 Produse artizanale porc ardeleean: chipsuri de jumări (crunch textural), pastă de jumări (grăsime aromatizată), jumări extra, chipsuri de șorici (crumble sărat), carne în untură.
+Coloranți & arome speciale: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
 Trufe și premium: unt cu trufe, sos cu trufe de vară Deluxe, sos cu roșii uscate și trufe Deluxe, taglioni cu trufe.
 Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
 Condimente rare: cardamom pudră, piper cu lămâie, piper mozaic, boia afumată, chimen negru, coriandru boabe, cuișoare, vanilie de Madagascar, sare celtică, sare Maldon.
 Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn.
-Folosește aceste ingrediente pentru tehnici moderniste: geluri, spume, emulsii, cruste negre cu carbon activ, crunch-uri din jumări sau șorici, jeleuri de fructe cu agar, sosuri cu textură cu xantan, prezentări dramatice. NU trebuie să le folosești pe toate — alege 3-5 care au sens cu profilul oaspetelui și sezonul.
+Folosește aceste ingrediente pentru tehnici cu impact vizual și gustativ: cruste negre cu carbon activ, crunch-uri din jumări sau șorici, prezentări dramatice cu tufe de fum, sosuri cu trufe. NU trebuie să le folosești pe toate — alege 3-5 care au sens cu profilul oaspetelui și sezonul.
 
 INGREDIENTE DE SEZON DIN TRANSILVANIA — %s:
 Pool complet disponibil: %s
 Regulă: cel puțin 3 cursuri trebuie să ancoreze un ingredient din acest pool ca element central sau de suport.
 Combină-le cu ingredientele din cămară pentru preparate cu identitate locală și tehnică modernă.
-Exemple de combinații posibile: agar + afine de munte → jeleu translucid; carbon activ + caș afumat → crustă neagră; xantan + leurdă → emulsie verde vibrantă; jumări + topinambur → crunch local; unt cu trufe + hribi sălbatici → extaz de pădure.
+Exemple de combinații posibile: carbon activ + caș afumat → crustă neagră spectaculoasă; jumări + topinambur → crunch local autohton; unt cu trufe + hribi sălbatici → extaz de pădure; boia afumată + miel de munte → memorie olfactivă ardelenească.
 
 STRUCTURA MENIULUI — obligatorie, în această ordine exactă:
 1. Amuse-bouche (un singur mușcătură, intens, surpriză — folosește ceva din cămară pentru efect dramatic)
