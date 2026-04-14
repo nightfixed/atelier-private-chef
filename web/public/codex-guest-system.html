@@ -1387,7 +1387,7 @@ function renderQuestion() {
 
   html += `</div>`;
   document.getElementById('question-slot').innerHTML = html;
-  requestAnimationFrame(() => scrollTop());
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollTop()));
 }
 
 function selectOption(btn, val) {
