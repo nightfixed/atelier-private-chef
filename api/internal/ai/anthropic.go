@@ -309,16 +309,13 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	protagonist := codexProtagonistSeeds[rand.Intn(len(codexProtagonistSeeds))]
 	forbidden := codexForbiddenSeeds[rand.Intn(len(codexForbiddenSeeds))]
 
-	// Pick 2-3 seasonal Transylvanian ingredients for this specific menu
+	// All seasonal Transylvanian ingredients for this season (shuffled for variety)
 	currentMonth := time.Now().Month()
 	season := getTransylvanianSeason(int(currentMonth))
-	seasonalPool := transylvanianSeasonalIngredients[season]
+	seasonalPool := make([]string, len(transylvanianSeasonalIngredients[season]))
+	copy(seasonalPool, transylvanianSeasonalIngredients[season])
 	rand.Shuffle(len(seasonalPool), func(i, j int) { seasonalPool[i], seasonalPool[j] = seasonalPool[j], seasonalPool[i] })
-	seasonalCount := 2
-	if len(seasonalPool) > 3 {
-		seasonalCount = 3
-	}
-	seasonalPick := strings.Join(seasonalPool[:seasonalCount], ", ")
+	seasonalAll := strings.Join(seasonalPool, " / ")
 
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
 %s
@@ -330,37 +327,49 @@ Identitatea acestui meniu este definită de trei axe obligatorii:
 INTERDICȚIE ABSOLUTĂ pentru astăzi — nu folosi deloc: %s
 Această regulă este nenegociabilă. Găsește înlocuitori mai interesanți.
 
-ANCORARE LOCALĂ OBLIGATORIE — ingrediente de sezon din Transilvania (%s):
-Ingrediente de integrat: %s
-Cel puțin 2 cursuri trebuie să folosească unul din aceste ingrediente ca element central sau de suport.
-Acestea reprezintă identitatea culinară a locului — Apuseni, Mărginimea Sibiului, Câmpia Ardealului.
+INGREDIENTE DIN CĂMARA ATELIERULUI — prioritizează-le creativ:
+Texturi & hidrocoloizi disponibili: gumă xantan (pentru geluri și emulsii elastice), agar-agar (geluri termostabile), caragenan kappa (geluri fragmentabile), pectine concentrate (jeleuri transparente), citrat de sodiu (fondue, procesare brânzeturi), amidon alimentar, gumă guar, glucoză pudră, dextroză.
+Arome & coloranți speciali: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
+Produse artizanale porc ardeleean: chipsuri de jumări (crunch textural), pastă de jumări (grăsime aromatizată), jumări extra, chipsuri de șorici (crumble sărat), carne în untură.
+Trufe și premium: unt cu trufe, sos cu trufe de vară Deluxe, sos cu roșii uscate și trufe Deluxe, taglioni cu trufe.
+Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
+Condimente rare: cardamom pudră, piper cu lămâie, piper mozaic, boia afumată, chimen negru, coriandru boabe, cuișoare, vanilie de Madagascar, sare celtică, sare Maldon.
+Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn.
+Folosește aceste ingrediente pentru tehnici moderniste: geluri, spume, emulsii, cruste negre cu carbon activ, crunch-uri din jumări sau șorici, jeleuri de fructe cu agar, sosuri cu textură cu xantan, prezentări dramatice. NU trebuie să le folosești pe toate — alege 3-5 care au sens cu profilul oaspetelui și sezonul.
+
+INGREDIENTE DE SEZON DIN TRANSILVANIA — %s:
+Pool complet disponibil: %s
+Regulă: cel puțin 3 cursuri trebuie să ancoreze un ingredient din acest pool ca element central sau de suport.
+Combină-le cu ingredientele din cămară pentru preparate cu identitate locală și tehnică modernă.
+Exemple de combinații posibile: agar + afine de munte → jeleu translucid; carbon activ + caș afumat → crustă neagră; xantan + leurdă → emulsie verde vibrantă; jumări + topinambur → crunch local; unt cu trufe + hribi sălbatici → extaz de pădure.
 
 STRUCTURA MENIULUI — obligatorie, în această ordine exactă:
-1. Amuse-bouche (un singur mușcătură, intens, surpriză)
-2. Entrée (primul fel propriu-zis — răcoros, acid, ușor)
-3. Intermezzo (OBLIGATORIU — sorbet, granité, spumă sau o pauză senzorială curățătoare, 3-4 ingrediente max)
-4. Fel principal (carnea sau proteina principală — complex, profund)
-5. Pre-desert (OBLIGATORIU — tranziție dulce-sărat sau acid-dulce, preparare delicată)
-6. Desert (finalul — evocator, cu reverberație lungă)
-Poți adăuga opțional un al 7-lea curs între Entrée și Intermezzo dacă profilul oaspetelui o cere.
+1. Amuse-bouche (un singur mușcătură, intens, surpriză — folosește ceva din cămară pentru efect dramatic)
+2. Entrée (răcoros, acid, ușor — ideal un ingredient de sezon local ca protagonist)
+3. Intermezzo (OBLIGATORIU — sorbet, granité sau spumă curățătoare, max 3-4 ingrediente, fără grăsimi)
+4. Fel principal (proteina principală — complex, profund, tehnica dominantă aplicată la maxim)
+5. Pre-desert (OBLIGATORIU — tranziție dulce-sărat sau acid-dulce, textură surprizătoare, 3-4 componente)
+6. Desert (finalul — evocator, reverberație lungă, poate include un element modernist din cămară)
+Poți adăuga opțional un al 7-lea curs dacă profilul oaspetelui o justifică.
 
 Fiecare curs trebuie să aibă:
-- "tip": tipul cursului exact din structura de mai sus
-- "nume": un nume poetic și evocator în română sau bilingv ro/fr
-- "descriere": 1-2 rânduri elegante despre ingrediente și tehnică
+- "tip": exact cum e scris în structura de mai sus (ex: "Amuse-bouche", "Entrée", "Intermezzo", "Fel principal", "Pre-desert", "Desert")
+- "nume": un nume poetic și evocator în română sau bilingv ro/fr, specific acestui preparat
+- "descriere": 1-2 rânduri elegante cu ingredientele reale și tehnica concretă aplicată
 
-Reguli de varietate:
-- Ingredientele principale nu se repetă între cursuri
-- Fiecare curs are un profil de gust diferit (acid, umami, dulce, amar, sărat nu apar consecutiv)
-- Tehnica aplicată variază de la curs la curs
-- Integrează subtil răspunsurile oaspetelui: dacă a ales "Surpriză", un curs trebuie să subverteze așteptările; dacă a ales "Profunzime", construiește cursuri cu evoluție gustativă
+Reguli de varietate maximă:
+- Niciun ingredient principal nu se repetă între cursuri
+- Profilul de gust variază la fiecare curs: acid, umami, dulce, amar, sărat nu apar consecutiv
+- Tehnica se schimbă de la curs la curs
+- Fiecare generare trebuie să fie complet diferită față de orice meniu anterior — explorează combinații neașteptate
+- Integrează subtil răspunsurile oaspetelui: "Surpriză" → un curs subvertează așteptările; "Profunzime" → evoluție gustativă pe 3 straturi; "Nostalgie" → un ingredient arhaic reinterpretat modern
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, season, seasonalPick)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, season, seasonalAll)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
-		MaxTokens:   900,
+		MaxTokens:   1400,
 		Temperature: 1.0,
 		System:      menuSystem,
 		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
