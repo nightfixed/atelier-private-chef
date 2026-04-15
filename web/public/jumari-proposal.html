@@ -215,11 +215,39 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 .split-label{font-size:9px;letter-spacing:2px;color:#333;text-transform:uppercase;}
 .split-value{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);font-weight:300;}
 
+/* COMBINATII */
+.comb-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:0;}
+.comb-card{padding:40px 36px;background:#0a0a0a;border:1px solid #141414;position:relative;overflow:hidden;transition:.4s;}
+.comb-card:hover{background:#0d0d0d;border-color:#222;transform:translateY(-3px);}
+.comb-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .5s;}
+.comb-card:hover::before{transform:scaleX(1);}
+.comb-card.choc{background:#0a0806;border:1px solid #1e1810;}
+.comb-card.choc::before{transform:scaleX(1);background:linear-gradient(to right,transparent,var(--copper2),transparent);}
+.comb-num{position:absolute;top:20px;right:22px;font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;opacity:.04;color:#fff;line-height:1;}
+.comb-tag{display:inline-block;font-size:7px;letter-spacing:3px;color:rgba(201,169,110,.4);border:1px solid rgba(201,169,110,.12);padding:3px 10px;margin-bottom:16px;text-transform:uppercase;}
+.comb-card.choc .comb-tag{color:rgba(208,144,112,.5);border-color:rgba(208,144,112,.2);}
+.comb-icon{font-size:30px;margin-bottom:14px;display:block;transition:transform .3s;}
+.comb-card:hover .comb-icon{transform:scale(1.1);}
+.comb-card h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:#fff;margin-bottom:6px;line-height:1.2;}
+.comb-card.choc h3{color:#f5e8d8;}
+.comb-sub{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;}
+.comb-card.choc .comb-sub{color:var(--copper2);}
+.comb-desc{font-size:12px;color:#555;line-height:1.85;margin-bottom:20px;}
+.comb-desc strong{color:#888;font-weight:500;}
+.comb-ings{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:20px;}
+.comb-ing{font-size:8px;letter-spacing:1px;color:#3a3a3a;border:1px solid #1e1e1e;padding:3px 8px;}
+.comb-note{font-size:11px;color:#333;font-style:italic;padding:12px 14px;background:#080808;border-left:2px solid rgba(201,169,110,.2);line-height:1.7;}
+.comb-card.choc .comb-note{border-left-color:rgba(208,144,112,.3);}
+.mycryo-note{background:#0c0a06;border:1px solid #1a1510;border-left:3px solid var(--copper2);padding:20px 28px;margin-bottom:4px;}
+.mycryo-note p{font-size:12px;color:#555;line-height:1.85;}
+.mycryo-note strong{color:var(--copper2);font-weight:500;}
+.mycryo-note em{color:var(--gold);font-style:normal;}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   nav{padding:0 24px;}
   .section{padding:70px 24px;}
-  .context-grid,.value-grid,.flagship-wrap,.products-grid,.products-middle,.products-bottom,.pilot-grid{grid-template-columns:1fr;}
+  .context-grid,.value-grid,.flagship-wrap,.products-grid,.products-middle,.products-bottom,.pilot-grid,.comb-grid{grid-template-columns:1fr;}
   .flagship-wrap::after{content:'';}
   table{font-size:11px;}
   .pitch-steps{grid-template-columns:1fr 1fr;}
@@ -815,6 +843,133 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- COMBINATII CU PASTE -->
+<section class="section">
+  <p class="sec-label reveal">Linia extinsă</p>
+  <h2 class="sec-title reveal d1">Paste de patiserie<br><em>întâlnesc jumara.</em></h2>
+  <div class="gold-line reveal d2"></div>
+
+  <div class="products-intro reveal d2">
+    <p>Șase combinații care nu există nicăieri. Pastele profesionale din cămara Atelier transformă jumara și șoriciul în ciocolaterie fină, glazuri acide și tartinabile de colecție.</p>
+  </div>
+
+  <div class="mycryo-note reveal d3">
+    <p><strong>Callebaut Mycryo</strong> — unt de cacao pudră. Elimină temperarea clasică: topești ciocolata la 40–45°C, lași să scadă la temperatura de lucru, adaugi <em>1% Mycryo din greutatea ciocolatei</em>, amesteci 2 minute. Strălucire perfectă, clacking la mușcătură, fără tablă de marmură.</p>
+  </div>
+
+  <div class="comb-grid" style="margin-top:4px;">
+
+    <!-- C1 -->
+    <div class="comb-card choc reveal d1">
+      <div class="comb-num">01</div>
+      <div class="comb-tag">Ciocolaterie fină · Bomboană</div>
+      <span class="comb-icon">🍒</span>
+      <h3>Jumări · Ciocolată Neagră<br>· Pastă Kirsch</h3>
+      <p class="comb-sub">Amar · Acid · Sărat</p>
+      <p class="comb-desc">Jumări învelite în ciocolată neagră 70% temperată cu Mycryo, cu un ganache concentrat de vișine (pastă Kirsch) plasat deasupra înainte de solidificare. <strong>Trei straturi de gust simultan.</strong> Variante: Irish Cream pentru whisky-caramel, Creme de Menthe pentru mentă-sărat.</p>
+      <div class="comb-ings">
+        <span class="comb-ing">Jumări mici 35g</span>
+        <span class="comb-ing">Ciocolată 70% 50g</span>
+        <span class="comb-ing">Mycryo 0.5g</span>
+        <span class="comb-ing">Pastă Kirsch 4g</span>
+        <span class="comb-ing">Maldon</span>
+      </div>
+      <p class="comb-note">Zotter (Austria) face asta cu bacon. Cu jumări e prima dată.</p>
+    </div>
+
+    <!-- C2 -->
+    <div class="comb-card reveal d2">
+      <div class="comb-num">02</div>
+      <div class="comb-tag">Glazură acidă · Crunch portocaliu</div>
+      <span class="comb-icon">🟠</span>
+      <h3>Chips Șorici<br>Glazurat cu Cătină</h3>
+      <p class="comb-sub">Acid intens · Vibrant · Portocaliu</p>
+      <p class="comb-desc">Glazură din pastă Sanddorn (cătină) + miere + oțet de mere, fixată la 60°C pe chips de șorici. <strong>Culoare portocalie naturală, aciditate vie, crunch alb.</strong> Variante cu pastă Kirsch (roșu-vișiniu) sau Birne (galben-auriu).</p>
+      <div class="comb-ings">
+        <span class="comb-ing">Chips șorici 80g</span>
+        <span class="comb-ing">Pastă Sanddorn 15g</span>
+        <span class="comb-ing">Miere 8g</span>
+        <span class="comb-ing">Oțet mere 5ml</span>
+        <span class="comb-ing">Sare de mare</span>
+      </div>
+      <p class="comb-note">Uscat la 60°C, 25–30 min — glazura se fixează, crocantul rămâne intact.</p>
+    </div>
+
+    <!-- C3 -->
+    <div class="comb-card choc reveal d1">
+      <div class="comb-num">03</div>
+      <div class="comb-tag">Ciocolată albă · Florar · Lux</div>
+      <span class="comb-icon">🌹</span>
+      <h3>Chips Șorici · Ciocolată Albă<br>· Pastă Rose</h3>
+      <p class="comb-sub">Florar · Sidefat · Piper roz</p>
+      <p class="comb-desc">Chips de șorici învelite în ciocolată albă temperată cu Mycryo, aromatizate cu pastă de trandafir. Decor: petală de trandafir uscat + bob de piper roz zdrobit. <strong>Cel mai spectaculos vizual din linie — alb sidefat mat, detalii roz.</strong></p>
+      <div class="comb-ings">
+        <span class="comb-ing">Chips șorici 40g</span>
+        <span class="comb-ing">Ciocolată albă 55g</span>
+        <span class="comb-ing">Mycryo 0.55g</span>
+        <span class="comb-ing">Pastă Rose 3g</span>
+        <span class="comb-ing">Piper roz</span>
+      </div>
+      <p class="comb-note">Doză max pastă Rose: 5–6% din ciocolată. Peste — devine artificial. 3g la 55g = 5.4%.</p>
+    </div>
+
+    <!-- C4 -->
+    <div class="comb-card reveal d2">
+      <div class="comb-num">04</div>
+      <div class="comb-tag">Tartinabil · Tablă de brânzeturi</div>
+      <span class="comb-icon">🫙</span>
+      <h3>Unsoare de Cluj<br>cu Lavandă</h3>
+      <p class="comb-sub">Florar discret · Tartinabil · Savuros</p>
+      <p class="comb-desc">Flagship-ul Atelier cu pastă Lavendel integrată direct — lavanda ca sprijin aromatic, nu ca gust dominant. <strong>Raport critic 10:1 (untură:pastă lavandă)</strong>. Pe pâine neagră prăjită cu miere de pădure deasupra.</p>
+      <div class="comb-ings">
+        <span class="comb-ing">Untură filtrată 180ml</span>
+        <span class="comb-ing">Jumări rupte 80g</span>
+        <span class="comb-ing">Pastă Lavendel 18g</span>
+        <span class="comb-ing">Usturoi copt 3 căței</span>
+        <span class="comb-ing">Sare de mare</span>
+      </div>
+      <p class="comb-note">Mai mult de 10% pastă = gust de parfum. Dozează cu precizie.</p>
+    </div>
+
+    <!-- C5 -->
+    <div class="comb-card reveal d1">
+      <div class="comb-num">05</div>
+      <div class="comb-tag">Savuros pur · Fără dulce</div>
+      <span class="comb-icon">🌰</span>
+      <h3>Pastă Jumări<br>cu Nucă Pură</h3>
+      <p class="comb-sub">Umami dublu · Tanic ușor · Profund</p>
+      <p class="comb-desc">Untură de porc emulsionată cu Pasta Pura di Noce (100% nucă, fără zahăr). Tanina ușoară a nucii taie grăsimea. <strong>Nu e dulce — e pur savuros.</strong> Merge și ca sos pentru pappardelle de casă. Variante: migdale (mai delicat) sau alune Porello (mai bogat).</p>
+      <div class="comb-ings">
+        <span class="comb-ing">Untură 120ml</span>
+        <span class="comb-ing">Pasta Pura di Noce 40g</span>
+        <span class="comb-ing">Jumări 60g</span>
+        <span class="comb-ing">Piper grosier</span>
+        <span class="comb-ing">Cimbru</span>
+      </div>
+      <p class="comb-note">Blenduit 30 secunde la incorporare — pasta de nucă e groasă, nu se amestecă singură.</p>
+    </div>
+
+    <!-- C6 -->
+    <div class="comb-card choc reveal d2">
+      <div class="comb-num">06</div>
+      <div class="comb-tag">Praline · Cadou · Accesibil</div>
+      <span class="comb-icon">🍬</span>
+      <h3>Praline · Pastă Jumări<br>· COLAC Caramel · Sare</h3>
+      <p class="comb-sub">Dulce · Sărat · Grăsime · Caramel</p>
+      <p class="comb-desc">Coajă de ciocolată cu lapte Mycryo, umplutură de pastă jumări + pastă COLAC Caramel + sare Maldon. <strong>Cel mai accesibil din linie gustativ — merge cadou oricui.</strong> 12 bucăți per cutie, 150g.</p>
+      <div class="comb-ings">
+        <span class="comb-ing">Ciocolată lapte 120g</span>
+        <span class="comb-ing">Mycryo 1.2g</span>
+        <span class="comb-ing">Pastă jumări 30g</span>
+        <span class="comb-ing">COLAC Caramel 20g</span>
+        <span class="comb-ing">Maldon 1g</span>
+      </div>
+      <p class="comb-note">Fără forme de praline? Bomboane plate pe hârtie de copt — același gust, aspect mai rustic.</p>
+    </div>
+
   </div>
 </section>
 

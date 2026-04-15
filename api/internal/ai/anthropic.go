@@ -96,6 +96,29 @@ var jumariLiniaProducts = []string{
 	"Gem de Ceapă Roșie cu Jumări (ceapă roșie caramelizată cu oțet de mere, vin Fetească Neagră, zahăr muscovado, cimbru → jumări sfărâmate adăugate la final pentru crocant; pe tablă de brânzeturi, lângă pateu, sub friptură)",
 }
 
+// atelierFlavorPastes: professional confectionery & gelato pastes stocked in the Atelier pantry.
+// Used exclusively for desserts, intermezzo, pre-desert and sauce accents — NOT for savory mains.
+var atelierFlavorPastes = []string{
+	"Pastă de Fistic Verde Bronte DOP 100% (Il Pistacchio — fistic sicilian pur, intens, fără adaosuri; pentru mousse, gelato, sauce, crustă verde)",
+	"Pastă Pură de Nucă (Il Pistacchio — nucă pură, amăruie și profundă; pentru ganache, crème, glazuri)",
+	"Pastă Pură de Migdale (Il Pistacchio — migdale albe pure; pentru marzipan fin, mousse, frangipane)",
+	"Pastă de Alune Tostate (Porello — alune Gentile trilobate italiene tostate; pentru praliné, ganache, crustă)",
+	"Pastă Rocher (COLAC — alune + ciocolată lapte caramelizată; pentru glazuri clătite, tort de casă, bomboane)",
+	"Pastă Caramel Sărat (COLAC Gezouten Karamel — caramel cu sare de mare; pentru sos, inserție, glazură sărată-dulce)",
+	"Pastă Caramel (Konditoreipaste Karamell — caramel pur dens; pentru crème caramel, sos desert, ganache)",
+	"Pastă Lavandă (Konditoreipaste Lavendel — aromă florală intensă; pentru panna cotta, gelato, crème brûlée, spumă)",
+	"Pastă Pară cu Brandy Williams (Konditoreipaste Birne — pară+brandy Williams Christ; pentru sorbet intermezzo, gelato, sos acid)",
+	"Pastă Cătină (Konditoreipaste Sanddorn — cătină nordică, acid viu citric-fructat; pentru sorbet intermezzo, glazură, coulis)",
+	"Pastă Vișine/Kirsch (Konditoreipaste Kirsch — vișine + kirsch; pour sauce dark, coulis, inserție în desert)",
+	"Pastă Fructul Pasiunii (COLAC Passievrucht — fructul pasiunii tropical, acid; pentru mousse, insert, coulis, sorbet)",
+	"Pastă Mentă (Konditoreipaste Crème de Menthe — mentă rece și curată; pentru intermezzo sorbet, ganache, sauce)",
+	"Pastă Banane (Pastarom Banana H — banane coapte, dulci-tropicale; pentru mousse, gelato, sauce, insert)",
+	"Pastă Trandafir (Konditoreipaste Rose — petale de trandafir, floral-delicat; pentru panna cotta, gelato, spumă, turkish delight)",
+	"Pastă Irish Cream (Konditoreipaste Irish Cream — whisky+smântână, cremós; pentru tiramisu reinterpretat, mousse, sauce)",
+	"Pastă Cookie (COLAC Cookie — biscuit caramelizat, vanilie; pentru crème, strat în tort, glazură)",
+	"Callebaut Mycryo (unt de cacao pudră 100% natural — crustă perfectă la carne/pește fără ulei, temperare ciocolată, aspect mat lucios; universal savuros și patiserie)",
+}
+
 // razvanSignatureDishes: real dishes from Razvan's signature menu (Atelier Private Dining).
 // Used as stylistic DNA — AI should create new dishes in this spirit, not copy them verbatim.
 var razvanSignatureDishes = []string{
@@ -407,6 +430,12 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	rand.Shuffle(len(jumariPool), func(i, j int) { jumariPool[i], jumariPool[j] = jumariPool[j], jumariPool[i] })
 	jumariBlock := strings.Join(jumariPool, "\n  • ")
 
+	// Pick 3 random flavor pastes for dessert/intermezzo inspiration
+	pastePool := make([]string, len(atelierFlavorPastes))
+	copy(pastePool, atelierFlavorPastes)
+	rand.Shuffle(len(pastePool), func(i, j int) { pastePool[i], pastePool[j] = pastePool[j], pastePool[i] })
+	pastePick := strings.Join(pastePool[:3], "\n  • ")
+
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
 %s
 Identitatea acestui meniu este definită de trei axe obligatorii:
@@ -431,6 +460,10 @@ Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
 Condimente rare: cardamom pudră, piper cu lămâie, piper mozaic, boia afumată, chimen negru, coriandru boabe, cuișoare, vanilie de Madagascar, sare celtică, sare Maldon.
 Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn, curmale (folosite ca cremă/strat de caramel natural — hidratate + unt + smântână → blenduit fin → devine caramel la cuptor; merge pe fundul farfuriei sau ca garnish atât la sărat cât și la desert).
 Folosește aceste ingrediente pentru tehnici cu impact vizual și gustativ: cruste negre cu carbon activ, crunch-uri din jumări sau șorici, prezentări dramatice cu tufe de fum, sosuri cu trufe. NU trebuie să le folosești pe toate — alege 3-5 care au sens cu profilul oaspetelui și sezonul.
+
+PASTE DE AROMATIZARE ATELIER — exclusiv pentru Intermezzo, Pre-desert și Desert (alege 1 pastă din selecția de azi):
+  • %s
+Regulă: folosește pasta selectată ca aromă dominantă sau liant în unul din cursurile dulci. Callebaut Mycryo poate fi folosit și la carne/pește pentru crustă perfectă.
 
 INGREDIENTE DE SEZON DIN TRANSILVANIA — %s:
 Pool complet disponibil: %s
@@ -460,7 +493,7 @@ Reguli de varietate maximă:
 - Integrează subtil răspunsurile oaspetelui: "Surpriză" → un curs subvertează așteptările; "Profunzime" → evoluție gustativă pe 3 straturi; "Nostalgie" → un ingredient arhaic reinterpretat modern
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, sigPick, jumariBlock, season, seasonalAll)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, sigPick, jumariBlock, pastePick, season, seasonalAll)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
@@ -771,6 +804,12 @@ func (p *AnthropicProvider) GenerateBreviar(ctx context.Context, req BreviarRequ
 	rand.Shuffle(len(bJumariPool), func(i, j int) { bJumariPool[i], bJumariPool[j] = bJumariPool[j], bJumariPool[i] })
 	bJumariPick := strings.Join(bJumariPool[:2], "\n  • ")
 
+	// Pick 1 random flavor paste for Breviar dessert note
+	bPastePool := make([]string, len(atelierFlavorPastes))
+	copy(bPastePool, atelierFlavorPastes)
+	rand.Shuffle(len(bPastePool), func(i, j int) { bPastePool[i], bPastePool[j] = bPastePool[j], bPastePool[i] })
+	bPastePick := bPastePool[0]
+
 	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
 Ești specialist în experiențe culinare revelatorii pentru echipe corporative.
 Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team building nu reușește.
@@ -805,8 +844,10 @@ RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specific
 
 INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă, specifică lor.
 
+Notă de patiserie: pasta de aromă disponibilă azi este %s — dacă se potrivește caracterului echipei, poate ancora incheierea serii.
+
 Adaptează totul la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.
-Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, bJumariPick, dynamic, mood)
+Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, bJumariPick, bPastePick, dynamic, mood)
 
 	profile := fmt.Sprintf(
 		"Industria: %s\nCultura echipei: %s\nCea mai importantă realizare colectivă: %s\nProvocarea actuală: %s\nCe doresc să simtă la final: %s\nEnergia dorită după masă: %s\nNumăr participanți: %s\nRestricții alimentare: %s\nDinamica grupului: %s",
