@@ -93,6 +93,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);b
 .products-intro{max-width:600px;margin-bottom:60px;}
 .products-intro p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:#888;line-height:1.75;font-weight:300;}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:2px;}
+.products-middle{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
 .products-bottom{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
 
 .prod{position:relative;padding:44px 36px;background:#0a0a0a;border:1px solid #141414;overflow:hidden;transition:.4s;}
@@ -199,11 +200,26 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 .footer-tag{font-size:8px;letter-spacing:4px;color:#252525;text-transform:uppercase;}
 .footer-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);margin:24px auto;}
 
+/* PILOT / NEXT STEP */
+.pilot-box{background:#0c0a06;border:1px solid #1e1810;border-top:2px solid var(--gold);padding:48px 52px;position:relative;overflow:hidden;}
+.pilot-box::after{content:'PILOT';position:absolute;bottom:-20px;right:24px;font-family:'Cormorant Garamond',serif;font-size:120px;font-weight:300;color:rgba(201,169,110,.03);line-height:1;pointer-events:none;}
+.pilot-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;margin-top:36px;}
+.pilot-terms{display:flex;flex-direction:column;gap:22px;}
+.pilot-term{display:flex;gap:20px;align-items:baseline;}
+.pt-num{font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--gold);font-weight:300;line-height:1;min-width:60px;}
+.pt-text{font-size:12px;color:#555;line-height:1.8;padding-top:10px;}
+.pt-text strong{color:#888;font-weight:500;}
+.split-card{background:#0a0806;border:1px solid #141210;padding:32px 28px;}
+.split-row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid #111;}
+.split-row:last-child{border-bottom:none;padding-bottom:0;}
+.split-label{font-size:9px;letter-spacing:2px;color:#333;text-transform:uppercase;}
+.split-value{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);font-weight:300;}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   nav{padding:0 24px;}
   .section{padding:70px 24px;}
-  .context-grid,.value-grid,.flagship-wrap,.products-grid,.products-bottom{grid-template-columns:1fr;}
+  .context-grid,.value-grid,.flagship-wrap,.products-grid,.products-middle,.products-bottom,.pilot-grid{grid-template-columns:1fr;}
   .flagship-wrap::after{content:'';}
   table{font-size:11px;}
   .pitch-steps{grid-template-columns:1fr 1fr;}
@@ -261,6 +277,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
       <p>Jumările românești sunt, <em>fără să știe nimeni</em>, produsul keto perfect — fără carbohidrați, bogate în proteine, naturale, fără niciun adaos.</p>
       <p>Occidentul plătește prețuri serioase pentru exact același lucru, numai că îl cheamă altfel: pork rinds, chicharrones, pork crackling.</p>
       <small>Produsul e același. Diferența o face ambalajul, povestea și canalul de vânzare. Atelier aduce exact asta.</small>
+      <small style="margin-top:14px;display:block;">Linia de produse va fi lansată sub brandul <em style="color:var(--gold);font-style:normal;">Așezat</em> — identitate construită în jurul ideii că mâncarea românească stă bine la masă, fără să se scuze.</small>
     </div>
     <div class="stat-grid reveal d3">
       <div class="stat-box">
@@ -294,7 +311,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <strong>Atât.</strong> Rețetă de 200 de ani pusă într-un borcan de 2026.
       </p>
       <p class="flagship-desc">
-        Borcan Weck 160ml, etichetă kraft cu font serif, sfoară de iută pe gât. 
+        Borcan Weck 200ml, etichetă kraft cu font serif, sfoară de iută pe gât. 
         <strong>Cost de producție estimat la fabrică: 14–18 lei.</strong> Preț recomandat în retail: 70–85 lei.
       </p>
       <div class="flagship-recipe">
@@ -350,7 +367,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 <!-- PRODUCTS GRID -->
 <section class="section">
   <p class="sec-label reveal">Linia completă</p>
-  <h2 class="sec-title reveal d1">Cinci produse.<br><em>Un singur ingredient.</em></h2>
+  <h2 class="sec-title reveal d1">Șapte produse.<br><em>Un singur ingredient.</em></h2>
   <div class="gold-line reveal d2"></div>
 
   <div class="products-intro reveal d2">
@@ -362,10 +379,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
     <!-- P1 -->
     <div class="prod reveal d1">
       <div class="prod-num">01</div>
-      <div class="prod-tag">Snack Premium</div>
+      <div class="prod-tag">Gustare · Snack premium</div>
       <span class="prod-icon">🫙</span>
       <h3>Jumări<br>Condimentate</h3>
-      <p class="prod-sub">Keto · Artizanal</p>
+      <p class="prod-sub">Dulci-picante · Crocante · Autentic</p>
       <p class="prod-desc">
         Jumări crocante date cu miere, boia afumată și sare de mare, intrate la cuptor 8 minute.
         <strong>Alt produs față de ce ieșea din fabrică.</strong>
@@ -395,13 +412,13 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
     <!-- P2 -->
     <div class="prod reveal d2">
       <div class="prod-num">02</div>
-      <div class="prod-tag">Condiment de finisare</div>
+      <div class="prod-tag">Condiment de presărat · Bucătărie de chef</div>
       <span class="prod-icon">🧂</span>
       <h3>Praf de Jumări<br>Afumate</h3>
-      <p class="prod-sub">Sare de Finisare · Fine-Dining</p>
+      <p class="prod-sub">Sărat · Afumat · De presărat la final</p>
       <p class="prod-desc">
-        Jumări măcinate mărunt cu sare de mare și boia afumată — se presară la final peste supă cremă, ouă ochiuri, cartofi copți sau salată. 
-        <strong>Acest produs nu există în România, nicăieri.</strong> 
+        Jumări măcinate mărunt cu sare de mare și boia afumată — se presară la final peste supă cremă, ouă ochiuri, cartofi copți sau salată.
+        <strong>Acest produs nu există în România, nicăieri.</strong>
         Borcan mic de 60g cu capac negru mat.
       </p>
       <div class="prod-ingredients">
@@ -428,21 +445,134 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
     <!-- P3 -->
     <div class="prod reveal d3">
       <div class="prod-num">03</div>
-      <div class="prod-tag">Patiserie · Cadou de lux</div>
+      <div class="prod-tag">Fermentație vie · Total inedit</div>
+      <span class="prod-icon">🧫</span>
+      <h3>Jumări<br>Lacto-Fermentate</h3>
+      <p class="prod-sub">Acid · Umami · Fermentat natural</p>
+      <p class="prod-desc">
+        Jumări scufundate în saramură de 2% sare și lăsate să fermenteze natural 5–7 zile. Bacteriile lactice produc acid și adâncime de gust — <strong>jumara iese cu o aciditate vie, o textură diferită și un gust pe care nu îl poți obține în niciun alt fel.</strong>
+        E exact ce face Noma cu legumele lor din 2010. Nimeni nu a aplicat asta pe jumări. Nicăieri în lume.
+      </p>
+      <div class="prod-ingredients">
+        <div class="prod-ingredients-label">Ce intră în ele</div>
+        <div class="prod-ing-list">
+          <span class="ing-tag">Jumări crocante</span>
+          <span class="ing-tag">Sare de mare 2%</span>
+          <span class="ing-tag">Apă filtrată</span>
+          <span class="ing-tag">Opțional: ardei iute, usturoi</span>
+        </div>
+      </div>
+      <div class="prod-economics">
+        <div class="econ-item">
+          <div class="econ-label">Cost producție</div>
+          <div class="econ-value">~10 lei</div>
+        </div>
+        <div class="econ-item">
+          <div class="econ-label">Preț de vânzare</div>
+          <div class="econ-value">55–75 lei</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="products-middle" style="margin-top:2px;">
+
+    <!-- P4 -->
+    <div class="prod featured reveal d1">
+      <div class="prod-num">04</div>
+      <div class="prod-tag">România întâlnește Japonia · Unic în lume</div>
+      <span class="prod-icon">⚫</span>
+      <h3>Gomasio<br>de Jumări</h3>
+      <p class="prod-sub">Sărat · Prăjit · De presărat</p>
+      <p class="prod-desc">
+        Gomasio e condimentul japonez din susan prăjit și sare — există de o mie de ani. Varianta noastră: <strong>jumări măcinate fin, susan negru prăjit, alge uscate și sare de mare.</strong>
+        Savuros de două ori. Se presară pe orez, pe un ou fiert moale, pe o supă, pe ce vrei. Nu există această combinație nicăieri în lume cu jumări ca bază.
+        Borcan de 70g cu capac negru, etichetă minimalistă — arată ca un produs din Tokyo, gustul e 100% de-al nostru.
+      </p>
+      <div class="prod-ingredients">
+        <div class="prod-ingredients-label">Ce intră în el</div>
+        <div class="prod-ing-list">
+          <span class="ing-tag">Jumări măcinate fin</span>
+          <span class="ing-tag">Susan negru prăjit</span>
+          <span class="ing-tag">Alge nori uscate</span>
+          <span class="ing-tag">Sare de mare</span>
+        </div>
+      </div>
+      <div class="prod-economics">
+        <div class="econ-item">
+          <div class="econ-label">Cost producție</div>
+          <div class="econ-value">~14 lei</div>
+          <div class="econ-note">per borcan 70g</div>
+        </div>
+        <div class="econ-item">
+          <div class="econ-label">Preț de vânzare</div>
+          <div class="econ-value">50–65 lei</div>
+          <div class="econ-note">per borcan 70g</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="prod featured reveal d2">
+      <div class="prod-num">05</div>
+      <div class="prod-tag">Confit lent · Produs de colecție</div>
+      <span class="prod-icon">🌿</span>
+      <h3>Jumări la Confit<br>în Grăsime de Rață cu Lavandă</h3>
+      <p class="prod-sub">Floral · Adânc · Borcan de colecție</p>
+      <p class="prod-desc">
+        Jumări gătite încet, la 80°C, în grăsime de rață — nu de porc — cu lavandă uscată, coajă de portocală și piper roz.
+        <strong>Grăsimea de rață are un gust complet diferit față de untură de porc — mai catifelat, mai complex, mai fin.</strong>
+        Jumara stă la foc mic 3 ore și absoarbe totul. Nu există acest produs nici în România, nici în altă parte.
+        Borcan Weck 100ml — tiraj limitat, produs de colecție.
+      </p>
+      <div class="prod-ingredients">
+        <div class="prod-ingredients-label">Ce intră în el</div>
+        <div class="prod-ing-list">
+          <span class="ing-tag">Jumări</span>
+          <span class="ing-tag">Grăsime de rață</span>
+          <span class="ing-tag">Lavandă uscată</span>
+          <span class="ing-tag">Coajă de portocală</span>
+          <span class="ing-tag">Piper roz</span>
+        </div>
+      </div>
+      <div class="prod-economics">
+        <div class="econ-item">
+          <div class="econ-label">Cost producție</div>
+          <div class="econ-value">~28 lei</div>
+          <div class="econ-note">per borcan 100ml</div>
+        </div>
+        <div class="econ-item">
+          <div class="econ-label">Preț de vânzare</div>
+          <div class="econ-value">95–120 lei</div>
+          <div class="econ-note">per borcan 100ml</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="products-bottom" style="margin-top:2px;">
+
+    <!-- P6 -->
+    <div class="prod featured reveal d1">
+      <div class="prod-num">06</div>
+      <div class="prod-tag">Patiserie de lux · Cadou</div>
       <span class="prod-icon">🍫</span>
-      <h3>Jumări în<br>Ciocolată Neagră</h3>
+      <h3>Jumări învelite<br>în Ciocolată Neagră</h3>
       <p class="prod-sub">Sărat · Amar · Crocant</p>
       <p class="prod-desc">
-        Jumări mici și crocante învelite în ciocolată neagră 70%, cu un praf de fleur de sel deasupra.
-        <strong>Combinația asta există în patiseria de lux din Franța și Belgia — nu există în România.</strong>
-        Cutie cadou de 80g, 12–14 bucăți, aspect de praline artizanale.
+        Jumări mici și crocante învelite în ciocolată neagră 70%, cu un praf de sare de mare cu fulgi deasupra.
+        <strong>Combinația asta există în patiseria de lux din Franța și Belgia — nu a apărut încă în România.</strong>
+        Cutie de cadou de 80g, 12–14 bucăți, aspect de bomboane artizanale de ciocolaterie.
+        Varianta cu chili afumat e pentru cine vrea ceva și mai îndrăzneț.
       </p>
       <div class="prod-ingredients">
         <div class="prod-ingredients-label">Ce intră în ele</div>
         <div class="prod-ing-list">
           <span class="ing-tag">Jumări mici crocante</span>
-          <span class="ing-tag">Ciocolată 70%</span>
-          <span class="ing-tag">Fleur de sel</span>
+          <span class="ing-tag">Ciocolată neagră 70%</span>
+          <span class="ing-tag">Sare de mare cu fulgi</span>
           <span class="ing-tag">Opțional: chili afumat</span>
         </div>
       </div>
@@ -458,57 +588,17 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
       </div>
     </div>
 
-  </div>
-
-  <div class="products-bottom" style="margin-top:2px;">
-
-    <!-- P4 -->
-    <div class="prod featured reveal d1">
-      <div class="prod-num">04</div>
-      <div class="prod-tag">Produs de autor · Inedit</div>
-      <span class="prod-icon">🫙</span>
-      <h3>Rillette de Jumări<br>cu Vin Alb</h3>
-      <p class="prod-sub">Tartinabil · Borcan · Produs de autor</p>
-      <p class="prod-desc">
-        Jumări gătite încet cu vin alb sec, piper verde zdrobit și cimbru, până devin o pastă grosieră care se întinde pe pâine.
-        <strong>Rillette e un clasic franțuzesc — nimeni nu l-a făcut vreodată cu jumări românești.</strong>
-        Borcan de 150g, se ține la frigider, se servește la temperatura camerei.
-      </p>
-      <div class="prod-ingredients">
-        <div class="prod-ingredients-label">Ce intră în el</div>
-        <div class="prod-ing-list">
-          <span class="ing-tag">Jumări</span>
-          <span class="ing-tag">Vin alb sec</span>
-          <span class="ing-tag">Piper verde</span>
-          <span class="ing-tag">Cimbru de munte</span>
-          <span class="ing-tag">Sare de mare</span>
-        </div>
-      </div>
-      <div class="prod-economics">
-        <div class="econ-item">
-          <div class="econ-label">Cost producție</div>
-          <div class="econ-value">~20 lei</div>
-          <div class="econ-note">per borcan 150g</div>
-        </div>
-        <div class="econ-item">
-          <div class="econ-label">Preț de vânzare</div>
-          <div class="econ-value">75–90 lei</div>
-          <div class="econ-note">per borcan 150g</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- P5 -->
+    <!-- P7 -->
     <div class="prod featured reveal d2">
-      <div class="prod-num">05</div>
-      <div class="prod-tag">Condiment · Brânzeturi</div>
+      <div class="prod-num">07</div>
+      <div class="prod-tag">Gem sărat · Tablă de brânzeturi</div>
       <span class="prod-icon">🧅</span>
-      <h3>Chutney de Ceapă<br>cu Jumări</h3>
-      <p class="prod-sub">Dulce · Acru · Afumat · Borcan</p>
+      <h3>Gem de Ceapă Roșie<br>cu Jumări</h3>
+      <p class="prod-sub">Dulce · Acrișor · Cu textură</p>
       <p class="prod-desc">
-        Ceapă roșie caramelizată ore întregi cu oțet de mere și zahăr brun, cu jumări sfărâmate adăugate la final.
-        Merge pe orice tablă de brânzeturi, lângă pateu, pe burger sau pe pâine neagră cu unt.
-        <strong>Nu există în România. Există în Scoția ca „caramelised onion chutney" la 40–50 lei borcanul, fără jumări.</strong>
+        Ceapă roșie caramelizată ore întregi cu oțet de mere și zahăr brun, cu jumări sfărâmate adăugate la final — rămân crocante în gem.
+        Merge pe tablă de brânzeturi, lângă pateu de casă, pe pâine neagră cu unt sau sub o friptură.
+        <strong>În Scoția se vinde un gem de ceapă simplu la 40–50 lei borcanul. Al nostru are jumări înăuntru — nu există asta nicăieri.</strong>
       </p>
       <div class="prod-ingredients">
         <div class="prod-ingredients-label">Ce intră în el</div>
@@ -671,6 +761,63 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
   </div>
 </section>
 
+<!-- NEXT STEP -->
+<section class="section">
+  <p class="sec-label reveal">Pasul următor</p>
+  <h2 class="sec-title reveal d1">Nu o viziune.<br><em>Un pilot concret.</em></h2>
+  <div class="gold-line reveal d2"></div>
+
+  <div class="pilot-box reveal d2">
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:#888;line-height:1.75;font-weight:300;max-width:700px;">
+      Propun să nu semnăm nimic și să nu investim nimic mare. Propun să <em style="color:var(--gold);font-style:normal;">testăm</em>.
+    </p>
+    <div class="pilot-grid">
+      <div class="pilot-terms">
+        <div class="pilot-term">
+          <div class="pt-num">500</div>
+          <div class="pt-text"><strong>borcane</strong> pilot de Unsoare de Cluj — 30 de zile, testăm ce se vinde și la ce preț în Cluj.</div>
+        </div>
+        <div class="pilot-term">
+          <div class="pt-num">3</div>
+          <div class="pt-text"><strong>produse lansate simultan</strong> — Unsoare de Cluj + Praf de Jumări + un al treilea ales de tine. Costul tău de producție, brandul nostru.</div>
+        </div>
+        <div class="pilot-term">
+          <div class="pt-num">5</div>
+          <div class="pt-text"><strong>restaurante din Cluj</strong> unde Atelier are relații directe — fără distribuție nouă, fără costuri de lansare, fără risc.</div>
+        </div>
+        <div class="pilot-term">
+          <div class="pt-num">30</div>
+          <div class="pt-text"><strong>de zile</strong> după care ne uităm la cifre împreună. Dacă merge, scalăm. Dacă nu, ai pierdut câteva ore de producție.</div>
+        </div>
+      </div>
+      <div class="split-card">
+        <div style="font-size:8px;letter-spacing:5px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:16px;">Model de împărțire · Discutabil</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:24px;font-weight:300;">Cum împărțim</p>
+        <div class="split-row">
+          <span class="split-label">Producție &amp; materie primă</span>
+          <span class="split-value">Tu</span>
+        </div>
+        <div class="split-row">
+          <span class="split-label">Rețete · Brand · Vânzări</span>
+          <span class="split-value">Atelier</span>
+        </div>
+        <div class="split-row">
+          <span class="split-label">Propunere inițială</span>
+          <span class="split-value">50 / 50</span>
+        </div>
+        <div class="split-row">
+          <span class="split-label">Alternativă A · Royalty rețetă</span>
+          <span class="split-value">15% din vânzări</span>
+        </div>
+        <div class="split-row">
+          <span class="split-label">Alternativă B · Private label</span>
+          <span class="split-value" style="font-size:14px;color:#666;">Brandul tău, rețetele noastre</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- QUOTE -->
 <div class="proposal-quote">
   <p class="pq-text reveal">Tu ai <em>fabrica și tonele de materie primă</em>.<br>Noi avem <em>brandul, rețetele și canalul</em>.<br>Produsul a existat dintotdeauna — ce îi lipsea era <em>o poveste bine spusă</em>.</p>
@@ -683,7 +830,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
   <div class="footer-logo">ATELIER</div>
   <div class="footer-tag">Private Dining · Cluj-Napoca</div>
   <div class="footer-line"></div>
-  <div class="footer-tag">atelierprivatedining.ro · Propunere confidențială</div>
+  <div class="footer-tag">atelierprivatedining.ro</div>
+  <div class="footer-tag" style="margin-top:8px;color:#333;">chef@atelierprivatedining.ro</div>
+  <div class="footer-line"></div>
+  <div class="footer-tag">Propunere confidențială · Cluj-Napoca · 2026</div>
 </footer>
 
 <script>

@@ -2,7 +2,10 @@
 // Swap in any real provider (OpenAI, Anthropic, Gemini) by implementing Provider.
 package ai
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 // SpecimenContext is a lightweight view of a herbarium specimen passed to the LLM.
 type SpecimenContext struct {
@@ -10,6 +13,14 @@ type SpecimenContext struct {
 	Latin  string   `json:"latin_name"`
 	DescRo string   `json:"desc_ro"`
 	Pills  []string `json:"pills,omitempty"` // taste notes
+}
+
+// RecipeContext is a lightweight view of a saved recipe passed to the LLM.
+type RecipeContext struct {
+	Title       string `json:"title"`
+	Description string `json:"description,omitempty"`
+	Ingredients string `json:"ingredients,omitempty"` // raw JSON string
+	Steps       string `json:"steps,omitempty"`       // raw JSON string
 }
 
 // MenuRequest contains the answers from the "Compune Seara" generator.
@@ -25,7 +36,8 @@ type MenuRequest struct {
 	Avoid        string            `json:"avoid,omitempty"`
 	Wish         string            `json:"wish,omitempty"`
 	Date         string            `json:"date,omitempty"`
-	Specimens    []SpecimenContext `json:"specimens"` // injected server-side from DB
+	Specimens    []SpecimenContext `json:"specimens"`         // injected server-side from DB
+	Recipes      []RecipeContext   `json:"recipes,omitempty"` // injected server-side from DB
 }
 
 // MenuCourse is one course in the generated tasting menu.
@@ -203,6 +215,20 @@ Vocea ta: caldă, poetică, elegantă — niciodată comercială.`
 		prompt += "\n- Dorință specială: " + req.Wish
 	}
 	prompt += "\n- Gazdă: " + req.HostName
+
+	if len(req.Recipes) > 0 {
+		prompt += "\n\nRETETE ATELIER (repertoriul actual al bucătăriei — folosește-le ca inspirație directă sau include-le în meniu dacă se potrivesc cu profilul oaspetelui):\n"
+		for i, r := range req.Recipes {
+			prompt += fmt.Sprintf("\n%d. %s", i+1, r.Title)
+			if r.Description != "" {
+				prompt += " — " + r.Description
+			}
+			if r.Ingredients != "" {
+				prompt += "\n   Ingrediente: " + r.Ingredients
+			}
+		}
+		prompt += "\n\nPoți folosi aceste rețete exact sau le poți adapta. Menționează în câmpul \"ingredient\" orice rețetă Atelier inclusă."
+	}
 
 	prompt += `
 

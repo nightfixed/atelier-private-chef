@@ -84,6 +84,18 @@ var culinaryTechniques = []string{
 	"carpaccio glazurat cu reducție balsamic și ulei de ierburi",
 }
 
+// jumariLiniaProducts: the 7 specialty jumări products developed for the Atelier × Așezat line.
+// Each is a technique or finished product the AI can incorporate as amuse-bouche, garnish, condiment or element.
+var jumariLiniaProducts = []string{
+	"Jumări Condimentate (cu miere de salcâm, boia afumată, sare de mare — caramelizate la cuptor 160°C/8min → dulce-picant-crocant; ideal amuse-bouche sau snack între cursuri)",
+	"Praf de Jumări Afumate (jumări deshidratate la 80°C, măcinate grosier cu sare de mare, boia afumată, piper negru → condiment de presărat pe supă cremă, ou, cartofi copți, legume, crustă de pește)",
+	"Jumări Lacto-Fermentate (saramură 2%, 5-7 zile fermentare naturală → aciditate vie, umami lactic, textură diferită; servit cu pâine neagră sau ca garnish la preparate cu carne)",
+	"Gomasio de Jumări (praf de jumări + susan negru prăjit + alge nori sfărâmate + sare de mare → condiment japonez reinterpretat cu bază de porc; pe orez, ou fiert moale, supă miso, crustă de pește)",
+	"Jumări la Confit în Grăsime de Rață cu Lavandă (confit lent 80°C/3h în grăsime de rață infuzată cu lavandă alimentară, coajă de portocală bio, piper roz → gust catifelat-floral, aperitiv de colecție)",
+	"Jumări învelite în Ciocolată Neagră 70% cu Sare Maldon (jumări crocante în ciocolată couverture temperată, finisate cu fulgi de sare sau chili afumat → patiserie de lux sărat-dulce; amuse-bouche sau pre-desert surpriză)",
+	"Gem de Ceapă Roșie cu Jumări (ceapă roșie caramelizată cu oțet de mere, vin Fetească Neagră, zahăr muscovado, cimbru → jumări sfărâmate adăugate la final pentru crocant; pe tablă de brânzeturi, lângă pateu, sub friptură)",
+}
+
 // razvanSignatureDishes: real dishes from Razvan's signature menu (Atelier Private Dining).
 // Used as stylistic DNA — AI should create new dishes in this spirit, not copy them verbatim.
 var razvanSignatureDishes = []string{
@@ -389,6 +401,12 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	rand.Shuffle(len(seasonalPool), func(i, j int) { seasonalPool[i], seasonalPool[j] = seasonalPool[j], seasonalPool[i] })
 	seasonalAll := strings.Join(seasonalPool, " / ")
 
+	// Jumari Linia products for pantry block
+	jumariPool := make([]string, len(jumariLiniaProducts))
+	copy(jumariPool, jumariLiniaProducts)
+	rand.Shuffle(len(jumariPool), func(i, j int) { jumariPool[i], jumariPool[j] = jumariPool[j], jumariPool[i] })
+	jumariBlock := strings.Join(jumariPool, "\n  • ")
+
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
 %s
 Identitatea acestui meniu este definită de trei axe obligatorii:
@@ -405,6 +423,8 @@ Spiritul acestor preparate: tehnici precise, contrast textural, ingrediente nobi
 
 INGREDIENTE DIN CĂMARA ATELIERULUI — prioritizează-le creativ:
 Produse artizanale porc ardeleean: chipsuri de jumări (crunch textural), pastă de jumări (grăsime aromatizată), jumări extra, chipsuri de șorici (crumble sărat), carne în untură.
+LINIA JUMĂRI — produse de atelier pentru integrare creativă în meniu (alege 1-2 maxim per meniu, cele mai relevante pentru profil și sezon):
+  • %s
 Coloranți & arome speciale: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
 Trufe și premium: unt cu trufe, sos cu trufe de vară Deluxe, sos cu roșii uscate și trufe Deluxe, taglioni cu trufe.
 Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
@@ -440,7 +460,7 @@ Reguli de varietate maximă:
 - Integrează subtil răspunsurile oaspetelui: "Surpriză" → un curs subvertează așteptările; "Profunzime" → evoluție gustativă pe 3 straturi; "Nostalgie" → un ingredient arhaic reinterpretat modern
 
 Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
-[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, sigPick, season, seasonalAll)
+[{"tip":"...","nume":"...","descriere":"..."}]`, dietaryBlock, influence, technique, protagonist, forbidden, sigPick, jumariBlock, season, seasonalAll)
 
 	menuReq := anthropicRequest{
 		Model:       anthropicModel,
@@ -745,6 +765,12 @@ func (p *AnthropicProvider) GenerateBreviar(ctx context.Context, req BreviarRequ
 	}
 	bSeasonalPick := strings.Join(bSeasonalPool[:bSeasonalCount], ", ")
 
+	// Pick 2 random jumari products for Breviar pantry note
+	bJumariPool := make([]string, len(jumariLiniaProducts))
+	copy(bJumariPool, jumariLiniaProducts)
+	rand.Shuffle(len(bJumariPool), func(i, j int) { bJumariPool[i], bJumariPool[j] = bJumariPool[j], bJumariPool[i] })
+	bJumariPick := strings.Join(bJumariPool[:2], "\n  • ")
+
 	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
 Ești specialist în experiențe culinare revelatorii pentru echipe corporative.
 Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team building nu reușește.
@@ -752,6 +778,9 @@ Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team
 ANCORARE LOCALĂ OBLIGATORIE — ingrediente de sezon din Transilvania (%s):
 Ingrediente de integrat natural în meniu: %s
 Cel puțin 1-2 feluri din meniu trebuie să utilizeze aceste ingrediente locale de sezon.
+
+LINIA JUMĂRI — produse artizanale disponibile pentru integrare creativă (alege max 1, dacă se potrivește cu grupul):
+  • %s
 
 Pentru această seară specifică, folosești ca punct de plecare:
 - %s
@@ -777,7 +806,7 @@ RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specific
 INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă, specifică lor.
 
 Adaptează totul la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.
-Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, dynamic, mood)
+Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, bJumariPick, dynamic, mood)
 
 	profile := fmt.Sprintf(
 		"Industria: %s\nCultura echipei: %s\nCea mai importantă realizare colectivă: %s\nProvocarea actuală: %s\nCe doresc să simtă la final: %s\nEnergia dorită după masă: %s\nNumăr participanți: %s\nRestricții alimentare: %s\nDinamica grupului: %s",

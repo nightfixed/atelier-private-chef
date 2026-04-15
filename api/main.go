@@ -102,7 +102,7 @@ func main() {
 	mux.Handle("/api/herbarium/{id}", handler.NewHerbariumSpecimenByIDHandler(herbariumRepo, authMiddleware))
 
 	// AI — menu generator + codex ritual + chat
-	mux.Handle("/api/generate-menu", handler.NewGenerateHandler(aiProvider, herbariumRepo))
+	mux.Handle("/api/generate-menu", handler.NewGenerateHandler(aiProvider, herbariumRepo, recipeRepo))
 	mux.Handle("/api/generate-codex", handler.NewCodexHandler(aiProvider))
 	mux.Handle("/api/generate-artifact", handler.NewArtifactHandler(aiProvider))
 	mux.Handle("/api/generate-breviar", handler.NewBreviarHandler(aiProvider))
