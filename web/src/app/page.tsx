@@ -49,7 +49,7 @@ export default function HomePage() {
   const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>(() => {
     const h = new Date().getHours();
     const salut = h < 12 ? 'Bună dimineața' : h < 18 ? 'Bună ziua' : 'Bună seara';
-    return [{role:'bot', text:`${salut}. Sunt asistentul Atelier — nu doar un chatbot obișnuit, ci un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
+    return [{role:'bot', text:`${salut}. Nu sunt doar un chatbot obișnuit — sunt ceva mai mult, un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă, se construiește împreună.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
   });
   const [aiTyping, setAiTyping] = useState(false);
   const [guestName, setGuestName] = useState('');
