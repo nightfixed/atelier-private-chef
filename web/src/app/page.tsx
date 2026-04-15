@@ -313,7 +313,7 @@ export default function HomePage() {
           <h1 className="hero-title">Atelier</h1>
           <div className="hero-cursive">Private Dining</div>
           <div className="hero-div"><span></span><i>✦</i><span></span></div>
-          <p className="hero-desc">Experiențe culinare private · Chef Răzvan & Roland · 18+ ani fine dining</p>
+          <p className="hero-desc">Experiențe culinare private · Chef Răzvan & Roland · 18+ ani bucătărie modernă și fine dining</p>
         </div>
         <div className="hero-bottom">Descoperă<div className="scroll-line"></div></div>
       </section>
