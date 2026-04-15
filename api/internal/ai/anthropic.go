@@ -456,6 +456,7 @@ LINIA JUMĂRI — produse de atelier pentru integrare creativă în meniu (alege
   • %s
 Coloranți & arome speciale: carbon activ pudră (ceramică neagră, cruste dramatice, sosuri negre), aromă de fum pudră (afumat fără foc), aromă de porc prăjit pudră (umami intens), curcuma (galben viu).
 Trufe și premium: unt cu trufe, sos cu trufe de vară Deluxe, sos cu roșii uscate și trufe Deluxe, taglioni cu trufe.
+Sosuri de bază profesionale: Knorr Sos Lemon-Butter (bază profesională de unt cu lămâie — rapidă, consistentă, ideală ca velouté ușor pentru pește, fructe de mare, legume la abur, scoici, sparanghel, halibut; poate fi îmbogățit cu capere, ierburi, șofran sau zest de portocală).
 Lactate artizanale: brânză burduf, urdă, brânză de vaci, unt clarificat.
 Condimente rare: cardamom pudră, piper cu lămâie, piper mozaic, boia afumată, chimen negru, coriandru boabe, cuișoare, vanilie de Madagascar, sare celtică, sare Maldon.
 Alte ingrediente: pesmet Panko, pesto Genovese, fasole neagră, kumquat, andive, cartofi dulci, pepene galben, miere de pădure, zahăr de mesteacăn, curmale (folosite ca cremă/strat de caramel natural — hidratate + unt + smântână → blenduit fin → devine caramel la cuptor; merge pe fundul farfuriei sau ca garnish atât la sărat cât și la desert).
@@ -845,6 +846,7 @@ RITUALURI: 2 momente de ritualizare propuse în cursul serii. Concrete, specific
 INTENTIE: ce va rămâne din această seară în memoria echipei — 1 propoziție memorabilă, specifică lor.
 
 Notă de patiserie: pasta de aromă disponibilă azi este %s — dacă se potrivește caracterului echipei, poate ancora incheierea serii.
+Sos de bază disponibil: Knorr Lemon-Butter — bază profesională de unt cu lămâie, ideală pentru pește, fructe de mare, sparanghel; poate fi accent în inima serii dacă meniul gravitează spre această direcție.
 
 Adaptează totul la numărul de participanți și dinamica grupului. Ține cont de restricțiile alimentare.
 Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, bSeasonalPick, bJumariPick, bPastePick, dynamic, mood)

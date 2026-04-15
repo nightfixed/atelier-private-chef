@@ -36,6 +36,10 @@ body{background:var(--dark);color:#f0ebe3;font-family:'Montserrat',sans-serif;ov
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);backdrop-filter:blur(16px);border-bottom:1px solid #1a1a1a;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;}
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:5px;color:var(--gold);text-decoration:none;}
 .nav-sub{font-size:8px;letter-spacing:4px;color:#333;text-transform:uppercase;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{font-size:7px;letter-spacing:3px;color:#666;text-decoration:none;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+@media(max-width:900px){.nav-links{display:none;}}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;position:relative;overflow:hidden;}
@@ -118,7 +122,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);b
 .prod-ing-list{display:flex;flex-wrap:wrap;gap:6px;}
 .ing-tag{font-size:8px;letter-spacing:1px;color:#3a3a3a;border:1px solid #1e1e1e;padding:3px 8px;}
 .prod-economics{border-top:1px solid #1a1a1a;padding-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.econ-item{}
+.econ-item{display:flex;flex-direction:column;}
 .econ-label{font-size:7px;letter-spacing:2px;color:#2a2a2a;text-transform:uppercase;margin-bottom:4px;}
 .econ-value{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);font-weight:300;}
 .prod.featured .econ-value{color:var(--copper2);}
@@ -258,12 +262,22 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">ATELIER</a>
+  <a href="#hero" class="nav-logo">ATELIER</a>
+  <nav class="nav-links">
+    <a href="#s-context">Context</a>
+    <a href="#s-flagship">Flagship</a>
+    <a href="#s-produse">Produse</a>
+    <a href="#s-piata">Piața</a>
+    <a href="#s-canal">Canal</a>
+    <a href="#s-parteneriat">Parteneriat</a>
+    <a href="#s-pilot">Pilot</a>
+    <a href="#s-combinatii">Combinații</a>
+  </nav>
   <span class="nav-sub">Propunere Parteneriat · Linia Jumări</span>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-rings">
@@ -295,7 +309,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 
 <!-- CONTEXT -->
 <div style="max-width:1100px;margin:0 auto;">
-<section class="section">
+<section class="section" id="s-context">
   <p class="sec-label reveal">Contextul</p>
   <h2 class="sec-title reveal d1">Aceeași materie primă.<br><em>Prețuri complet diferite.</em></h2>
   <div class="gold-line reveal d2"></div>
@@ -329,7 +343,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 </section>
 
 <!-- FLAGSHIP PRODUCT -->
-<section style="padding:0 48px 0;max-width:1100px;margin:0 auto;">
+<section style="padding:0 48px 0;max-width:1100px;margin:0 auto;" id="s-flagship">
   <div class="flagship-wrap reveal">
     <div class="flagship-left">
       <span class="flagship-label">Produsul Flagship · No. 01</span>
@@ -389,11 +403,45 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         </div>
       </div>
     </div>
+    <!-- SVG MOCKUP BORCAN -->
+    <div style="display:flex;justify-content:center;align-items:center;padding:24px 0 0;">
+      <svg width="320" height="340" viewBox="0 0 320 340" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:1;">
+        <!-- Capac -->
+        <rect x="80" y="28" width="160" height="22" rx="6" fill="#3a2a14" stroke="#6b4f22" stroke-width="1.5"/>
+        <rect x="90" y="22" width="140" height="12" rx="4" fill="#2e2010" stroke="#5a4018" stroke-width="1"/>
+        <!-- Inel capac -->
+        <rect x="88" y="48" width="144" height="8" rx="2" fill="#1a1206" stroke="rgba(201,169,110,.6)" stroke-width="1.2"/>
+        <!-- Corp borcan -->
+        <path d="M70 58 Q60 62 58 90 L52 260 Q50 280 68 285 L252 285 Q270 280 268 260 L262 90 Q260 62 250 58 Z" fill="#1c1a14" stroke="rgba(201,169,110,.55)" stroke-width="1.8"/>
+        <!-- Reflexie sticla -->
+        <path d="M78 70 Q72 90 70 130 L68 220" stroke="rgba(255,255,255,.12)" stroke-width="10" stroke-linecap="round"/>
+        <path d="M84 72 Q80 100 79 150" stroke="rgba(255,255,255,.06)" stroke-width="4" stroke-linecap="round"/>
+        <!-- Eticheta -->
+        <rect x="72" y="110" width="176" height="130" rx="3" fill="#f5f0e8" opacity="1"/>
+        <!-- Linie aurie eticheta sus -->
+        <rect x="72" y="110" width="176" height="4" fill="#c9a96e"/>
+        <!-- Linie aurie eticheta jos -->
+        <rect x="72" y="237" width="176" height="4" fill="#c9a96e"/>
+        <!-- Text eticheta -->
+        <text x="160" y="138" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#666" letter-spacing="4">AȘEZAT</text>
+        <text x="160" y="162" text-anchor="middle" font-family="Georgia,serif" font-size="17" fill="#1a1008" font-style="italic">Unsoare</text>
+        <text x="160" y="183" text-anchor="middle" font-family="Georgia,serif" font-size="17" fill="#1a1008" font-style="italic">de Cluj</text>
+        <line x1="100" y1="196" x2="220" y2="196" stroke="#c9a96e" stroke-width="1"/>
+        <text x="160" y="213" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#777" letter-spacing="1">cu jumări</text>
+        <text x="160" y="229" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#999" letter-spacing="2">200 ml</text>
+        <!-- Sfoara -->
+        <path d="M110 110 Q160 95 210 110" stroke="#8B6914" stroke-width="1.8" fill="none" stroke-dasharray="3,2"/>
+        <!-- Fund borcan -->
+        <ellipse cx="160" cy="285" rx="96" ry="10" fill="#1a1812" stroke="rgba(201,169,110,.35)" stroke-width="1.2"/>
+        <!-- Umbra -->
+        <ellipse cx="160" cy="332" rx="75" ry="7" fill="rgba(0,0,0,.5)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
 <!-- PRODUCTS GRID -->
-<section class="section">
+<section class="section" id="s-produse">
   <p class="sec-label reveal">Linia completă</p>
   <h2 class="sec-title reveal d1">Șapte produse.<br><em>Un singur ingredient.</em></h2>
   <div class="gold-line reveal d2"></div>
@@ -654,7 +702,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 </section>
 
 <!-- MARKET COMPARISON -->
-<section class="section">
+<section class="section" id="s-piata">
   <p class="sec-label reveal">Piața</p>
   <h2 class="sec-title reveal d1">Același produs.<br><em>Prețuri diferite.</em></h2>
   <div class="gold-line reveal d2"></div>
@@ -727,8 +775,56 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
   </div>
 </section>
 
+<!-- CANAL DE VANZARE -->
+<section class="section" id="s-canal">
+  <p class="sec-label reveal">Canalul</p>
+  <h2 class="sec-title reveal d1">Unde se vinde.<br><em>Concret.</em></h2>
+  <div class="gold-line reveal d2"></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;" class="reveal d2">
+
+    <div style="padding:32px 28px;background:#0a0a0a;border:1px solid #141414;border-top:2px solid var(--gold);">
+      <div style="font-size:8px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;">Canal 1 · Local Cluj</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:300;margin-bottom:18px;line-height:1.2;">Retail premium<br>+ HoReCa</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--gold);">&#8212;</span><strong style="color:#777;">5 restaurante</strong> din Cluj cu care Atelier are relații directe — comandă constant</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--gold);">&#8212;</span><strong style="color:#777;">Delicatesuri premium</strong> — La Bottega, Carrefour Market select, Picard</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--gold);">&#8212;</span><strong style="color:#777;">Târguri &amp; pop-up</strong> — Piața de Crăciun Cluj, Untold, Electric Castle (stand de produse)</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--gold);">&#8212;</span><strong style="color:#777;">Cadouri corporate</strong> — cutii de lux pentru firme, sezonul IV + Crăciun</li>
+      </ul>
+    </div>
+
+    <div style="padding:32px 28px;background:#0a0a0a;border:1px solid #141414;border-top:2px solid var(--copper2);">
+      <div style="font-size:8px;letter-spacing:4px;color:var(--copper2);text-transform:uppercase;margin-bottom:16px;">Canal 2 · Online RO</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:300;margin-bottom:18px;line-height:1.2;">eMAG + Magazin<br>propriu</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--copper2);">&#8212;</span><strong style="color:#777;">eMAG Marketplace</strong> — cea mai rapidă intrare în online RO, trafic existent</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--copper2);">&#8212;</span><strong style="color:#777;">atelierprivatedining.ro/shop</strong> — marjă cea mai bună, control complet, experiență de brand</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--copper2);">&#8212;</span><strong style="color:#777;">Glovo / Bolt Food</strong> — livrare rapidă în Cluj, produse la borcan, target: cine pregătește o tablă de brânzeturi</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:var(--copper2);">&#8212;</span>Instagram direct — generare de cerere prin conținut vizual, comandă prin DM în faza pilot</li>
+      </ul>
+    </div>
+
+    <div style="padding:32px 28px;background:#0a0806;border:1px solid #1e1810;border-top:2px solid rgba(201,169,110,.4);">
+      <div style="font-size:8px;letter-spacing:4px;color:rgba(201,169,110,.5);text-transform:uppercase;margin-bottom:16px;">Canal 3 · Export EU</div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:300;margin-bottom:18px;line-height:1.2;">Amazon.de<br>+ Private Label</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:rgba(201,169,110,.4);">&#8212;</span><strong style="color:#777;">Amazon.de Marketplace</strong> — pork rinds / crackling căutați cu volum mare; autorizația de export EU deja o ai</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:rgba(201,169,110,.4);">&#8212;</span><strong style="color:#777;">Private label pentru branduri keto occidentale</strong> — ei au canalul, tu ai producția la cost imbatabil</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:rgba(201,169,110,.4);">&#8212;</span><strong style="color:#777;">Delicatessen speciality shops</strong> — magazine de produse est-europene din Germania, Austria, UK</li>
+        <li style="font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;"><span style="position:absolute;left:0;color:rgba(201,169,110,.4);">&#8212;</span>Horizon: distribuitor specializat keto EU — nu-i nevoie de el în faza pilot, dar există în faza 2</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="margin-top:4px;padding:22px 28px;background:#090909;border:1px solid #141414;border-left:2px solid var(--gold);" class="reveal d3">
+    <p style="font-size:12px;color:#555;line-height:1.85;"><strong style="color:#888;">Ordinea logică:</strong> Local Cluj (pilot Mai–Iunie 2026) → Online RO (Iulie 2026) → Amazon.de + private label (Q4 2026 sau Q1 2027). Nu sărim etape — fiecare canal validează produsul pentru următorul.</p>
+  </div>
+</section>
+
 <!-- PARTENERIAT -->
-<section class="section">
+<section class="section" id="s-parteneriat">
   <p class="sec-label reveal">Parteneriatul</p>
   <h2 class="sec-title reveal d1">Ce aduce fiecare.<br><em>Zero suprapunere.</em></h2>
   <div class="gold-line reveal d2"></div>
@@ -790,20 +886,20 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 </section>
 
 <!-- NEXT STEP -->
-<section class="section">
+<section class="section" id="s-pilot">
   <p class="sec-label reveal">Pasul următor</p>
   <h2 class="sec-title reveal d1">Nu o viziune.<br><em>Un pilot concret.</em></h2>
   <div class="gold-line reveal d2"></div>
 
   <div class="pilot-box reveal d2">
     <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:#888;line-height:1.75;font-weight:300;max-width:700px;">
-      Propun să nu semnăm nimic și să nu investim nimic mare. Propun să <em style="color:var(--gold);font-style:normal;">testăm</em>.
+      Propun să nu semnăm nimic și să nu investim nimic mare. Propun să <em style="color:var(--gold);font-style:normal;">testăm</em> — <em style="color:var(--gold);font-style:normal;">Mai–Iunie 2026</em>.
     </p>
     <div class="pilot-grid">
       <div class="pilot-terms">
         <div class="pilot-term">
           <div class="pt-num">500</div>
-          <div class="pt-text"><strong>borcane</strong> pilot de Unsoare de Cluj — 30 de zile, testăm ce se vinde și la ce preț în Cluj.</div>
+          <div class="pt-text"><strong>borcane</strong> pilot de Unsoare de Cluj — <em style="color:var(--gold);">Mai 2026</em>, 30 de zile, testăm ce se vinde și la ce preț în Cluj.</div>
         </div>
         <div class="pilot-term">
           <div class="pt-num">3</div>
@@ -815,7 +911,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         </div>
         <div class="pilot-term">
           <div class="pt-num">30</div>
-          <div class="pt-text"><strong>de zile</strong> după care ne uităm la cifre împreună. Dacă merge, scalăm. Dacă nu, ai pierdut câteva ore de producție.</div>
+          <div class="pt-text"><strong>de zile</strong> după care ne uităm la cifre împreună — <em style="color:var(--gold);">1 Iunie 2026</em>. Dacă merge, scalăm. Dacă nu, ai pierdut câteva ore de producție.</div>
         </div>
       </div>
       <div class="split-card">
@@ -847,7 +943,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 </section>
 
 <!-- COMBINATII CU PASTE -->
-<section class="section">
+<section class="section" id="s-combinatii">
   <p class="sec-label reveal">Linia extinsă</p>
   <h2 class="sec-title reveal d1">Paste de patiserie<br><em>întâlnesc jumara.</em></h2>
   <div class="gold-line reveal d2"></div>
@@ -877,6 +973,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">Pastă Kirsch 4g</span>
         <span class="comb-ing">Maldon</span>
       </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~18 lei</div><div class="econ-note">cutie 80g</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">85–100 lei</div></div>
+      </div>
       <p class="comb-note">Zotter (Austria) face asta cu bacon. Cu jumări e prima dată.</p>
     </div>
 
@@ -894,6 +994,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">Miere 8g</span>
         <span class="comb-ing">Oțet mere 5ml</span>
         <span class="comb-ing">Sare de mare</span>
+      </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~10 lei</div><div class="econ-note">pungă 80g</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">45–60 lei</div></div>
       </div>
       <p class="comb-note">Uscat la 60°C, 25–30 min — glazura se fixează, crocantul rămâne intact.</p>
     </div>
@@ -913,6 +1017,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">Pastă Rose 3g</span>
         <span class="comb-ing">Piper roz</span>
       </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~20 lei</div><div class="econ-note">cutie 80g</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">90–110 lei</div></div>
+      </div>
       <p class="comb-note">Doză max pastă Rose: 5–6% din ciocolată. Peste — devine artificial. 3g la 55g = 5.4%.</p>
     </div>
 
@@ -930,6 +1038,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">Pastă Lavendel 18g</span>
         <span class="comb-ing">Usturoi copt 3 căței</span>
         <span class="comb-ing">Sare de mare</span>
+      </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~18 lei</div><div class="econ-note">borcan 200ml</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">70–85 lei</div></div>
       </div>
       <p class="comb-note">Mai mult de 10% pastă = gust de parfum. Dozează cu precizie.</p>
     </div>
@@ -949,6 +1061,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">Piper grosier</span>
         <span class="comb-ing">Cimbru</span>
       </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~22 lei</div><div class="econ-note">borcan 180ml</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">75–90 lei</div></div>
+      </div>
       <p class="comb-note">Blenduit 30 secunde la incorporare — pasta de nucă e groasă, nu se amestecă singură.</p>
     </div>
 
@@ -967,6 +1083,10 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         <span class="comb-ing">COLAC Caramel 20g</span>
         <span class="comb-ing">Maldon 1g</span>
       </div>
+      <div class="prod-economics" style="margin-top:16px;">
+        <div class="econ-item"><div class="econ-label">Cost producție</div><div class="econ-value">~25 lei</div><div class="econ-note">cutie 12 buc</div></div>
+        <div class="econ-item"><div class="econ-label">Preț vânzare</div><div class="econ-value">100–120 lei</div></div>
+      </div>
       <p class="comb-note">Fără forme de praline? Bomboane plate pe hârtie de copt — același gust, aspect mai rustic.</p>
     </div>
 
@@ -975,8 +1095,11 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 
 <!-- QUOTE -->
 <div class="proposal-quote">
-  <p class="pq-text reveal">Tu ai <em>fabrica și tonele de materie primă</em>.<br>Noi avem <em>brandul, rețetele și canalul</em>.<br>Produsul a existat dintotdeauna — ce îi lipsea era <em>o poveste bine spusă</em>.</p>
-  <p class="pq-attr reveal d2">Atelier Private Dining · Cluj-Napoca · 2026</p>
+  <p class="pq-text reveal">500 de borcane.<br><em>Mai 2026.</em><br>Restul îl decidem împreună pe <em>1 Iunie</em>.</p>
+  <p class="pq-attr reveal d2" style="margin-bottom:28px;">Atelier Private Dining · Cluj-Napoca</p>
+  <div class="reveal d3" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="mailto:chef@atelierprivatedining.ro" style="display:inline-block;border:1px solid rgba(201,169,110,.3);padding:12px 32px;font-size:9px;letter-spacing:4px;color:var(--gold);text-decoration:none;text-transform:uppercase;transition:background .3s,border-color .3s;" onmouseover="this.style.background='rgba(201,169,110,.08)';this.style.borderColor='rgba(201,169,110,.6)'" onmouseout="this.style.background='';this.style.borderColor='rgba(201,169,110,.3)'">chef@atelierprivatedining.ro</a>
+  </div>
 </div>
 
 </div><!-- end max-width wrapper -->
