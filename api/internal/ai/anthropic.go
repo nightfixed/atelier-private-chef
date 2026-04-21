@@ -209,6 +209,9 @@ var razvanSignatureDishes = []string{
 	"Panna cotta cu lapte de cereale (corn flakes cold infusion 20min, filtrat prin tifon) — topping caramel sărat, petale de corn flakes caramelizate cu unt brun",
 	"Gelato cu lapte de pufarini infuzat la rece 12-15min (amidonul natural îngroașă laptele), procesare cold method cu Briogel și glucoză atomizată — servit cu pufarini glazurați caramel sărat deasupra",
 	"Popcorn de trufe (popcorn artizanal cu ulei de trufe și parmezan fin ras) ca garnit/crunch pentru farfurii cu foie gras sau bisque",
+	// Pogacea Atelier — bread service / pre-amuse / cheese course
+	"Pogacea Atelier: aluat dospit laminat cu untură de porc + untură de gâscă infuzată cimbru-ienupăr, jumări tocate fin, cenușă de fag Herbarium (textură și afumat cald) — glazură de gălbenuș cu miso de fasole borlotti fermentat 6 luni, topping Maldon, praf de jumări uscate, chimen negru; servită caldă pe piatră de râu la 60°C (pre-amuse, bread service sau cheese course)",
+	"Pogacea Pădurii (variațiunea carpatică): baza pogacei Atelier + rășină de molid în aluat, glazură finală de untură de gâscă-sirop de rășină-miere de brad aplicată post-coacere la 60°C strict, topping ace de molid tocate fin (max 30min înainte) — servită pe felie de lemn de brad cu cetină uscată încălzită care eliberează aromă la masă",
 }
 
 // codexProtagonistSeeds: one featured ingredient that must anchor and define the menu.
