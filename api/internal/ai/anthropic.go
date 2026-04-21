@@ -82,6 +82,15 @@ var culinaryTechniques = []string{
 	"spumă (espumă) cu mixer sau sifon — fără ou, fără frișcă",
 	"granité sau sorbet savuros (șampanie, citrice, ierburi)",
 	"carpaccio glazurat cu reducție balsamic și ulei de ierburi",
+	"spherification de bază (alginat + clorură de calciu) — caviar fluid din orice lichid",
+	"compresare la vid (vacuum sealer) — fructe sau legume devin translucide și dense în lichid aromatic",
+	"aluat cristal translucid (amidon de grâu + tapioca + apă clocotită) — gătit la abur devine transparent",
+	"dashi de parmezan (coajă Reggiano infuzată la 85°C 1 oră — lichid limpede auriu, umami pur)",
+	"fermentare lacto-salină (saramură 2% neiodată, temperature camerei 5-7 zile) — aciditate vie și umami lactic",
+	"gătire în lut sau sare — ingredient învelit etanș, gătit în propriul abur la temperaturi constante",
+	"praf / pudră din ingredient deshidratat (Thermomix viteză 10 — nori, ciuperci, piele de pește)",
+	"piure Robuchon (25% unt față de cartofi, pasare dublă prin sită, laptele la 78°C exact — textură velours chaud)",
+	"cold infusion în lapte (cereale, ierburi, flori — 12-20 min la rece, filtrat prin tifon, pentru gelato sau panna cotta)",
 }
 
 // jumariLiniaProducts: the 7 specialty jumări products developed for the Atelier × Așezat line.
@@ -175,6 +184,31 @@ var razvanSignatureDishes = []string{
 	"Sorbet de banane cu lichi prăjit și flori de lotus",
 	"Kulfi cu cocos, chilli și cremă amaretti cu ciocolată albă",
 	"Strat de caramel natural din curmale (curmale hidratate + unt + smântână, blenduit fin — devine caramel la cuptor; pe fundul farfuriei la vânat/rață sau ca desert)",
+	// NOI menu — dialogul româno-japonez (meniu 8 cursuri)
+	"Nigiri de mămăligă compresată acidulată cu oțet de mere, icre de știucă, gel de cătină și cristal Maldon (arată japonez, gustă românesc)",
+	"Crispy hrișcă prăjită cu mousse de crap afumat local, hrean de Turda și fir de mărar",
+	"Con de piele de somon uscată crocantă cu burduf bătut cu unt brun, miere de pădure și nucă prăjită",
+	"Granita de lapte de pufuleți cu spumă de hrean de Turda și ulei de cătină (pufuleții glazurați cu miere se topesc în granita în 60 secunde — clientul mănâncă imediat)",
+	"Somon sous-vide 47°C cu piure Robuchon de bisque de crustacee, lemon butter montat, con de piele cu smântână fermentată și icre de știucă",
+	"Ou parfait 63°C pe piure Robuchon cu unt de trufe, hribi sotați în unt brun-noisette și voal de praf de nori cernut",
+	"Foie gras de gâscă nigiri pe mămăligă compresată, miere de pădure caramelizată live cu blowtorch la masă, gel de cătină și garum de fasole",
+	// PRESIUNE menu — 8 tipuri de presiune ca tehnici
+	"Caviar de ulei de cătină prin spherification de bază (gravitație 0 bar) pe gel de iaurt de oaie răcit cu praf de sare afumată — sferele se formează singure căzând liber",
+	"Pepene galben compressat la vid în apă de trandafiri (0.8 bar, 5 min) — devine translucid portocaliu intens ca sashimi, cu prosciutto San Daniele 24 luni, pastă de fistic Bronte și o singură picătură de balsamic 25 ani",
+	"Dim sum cristal de vițel cu tartare de mușchiuleț crud și unt de trufe în aluat translucid la abur (1.2 bar) — umplutura se vede prin aluat, dashi de parmezan turnat la masă din ibric",
+	"Consommé de garum cu sfeclă lacto-cristalizată, gel de miso de fasole neagră și ulei de cimbru fermentat (presiune biologică — luni de transformare)",
+	// Sushi reinterpretat — 6 concepte
+	"Nigiri de hrișcă compresată cu crap sălbatic ceviche marinat în acid de măceșe și gel translucid din același fruct",
+	"Gunkan maki de mămăligă cu icre de știucă și smântână fermentată, bandă din piele de crap uscată la 80°C/2h (înlocuitor de nori — crăpă identic la mușcătură)",
+	"Uramaki de mămăligă cu brânză de burduf și sfeclă fermentată lacto — secțiunea transversală roșu-alb-galben (tricolor natural involuntar)",
+	"Temaki de mămăligă crocantă cu hribi sotați și gălbenuș sous-vide 63°C care curge la mușcătură — clientul ține conul în mână",
+	// Top 5 rețete absolute
+	"Ceapă arsă în lut la jar 3 ore — exteriorul carbonizat negru, interiorul auriu caramelizat în propriul abur (110-115°C intern); deschisă la masă cu cuțit, servită cu sos miso-unt brun-noisette și spumă de parmezan",
+	"Pasta di ricci — aluat de spaghettoni cu 80g icre de arici (zero apă adăugată, culoare portocaliu profund), sos crud de arici emulsionat cu unt rece la max 58°C (peste 62°C se coagulează), icre crude deasupra — același ingredient în 3 stări simultan",
+	// Gelato & deserturi speciale
+	"Panna cotta cu lapte de cereale (corn flakes cold infusion 20min, filtrat prin tifon) — topping caramel sărat, petale de corn flakes caramelizate cu unt brun",
+	"Gelato cu lapte de pufarini infuzat la rece 12-15min (amidonul natural îngroașă laptele), procesare cold method cu Briogel și glucoză atomizată — servit cu pufarini glazurați caramel sărat deasupra",
+	"Popcorn de trufe (popcorn artizanal cu ulei de trufe și parmezan fin ras) ca garnit/crunch pentru farfurii cu foie gras sau bisque",
 }
 
 // codexProtagonistSeeds: one featured ingredient that must anchor and define the menu.
