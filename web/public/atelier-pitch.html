@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — Conceptul Complet</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #c9a96e;
+    --gold2: #e8d098;
+    --dark: #08080a;
+    --dark2: #0e0e0e;
+    --dark3: #141414;
+    --text: #e8e0d0;
+    --text-dim: rgba(232,224,208,0.65);
+    --text-faint: rgba(232,224,208,0.35);
+    --gold-faint: rgba(201,169,110,0.12);
+    --gold-mid: rgba(201,169,110,0.4);
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Raleway', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: var(--serif);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1, h2, h3, h4 { font-weight: 300; line-height: 1.15; }
+  .eyebrow {
+    font-family: var(--sans);
+    font-weight: 200;
+    font-size: 0.5rem;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .section-title em { color: var(--gold); font-style: italic; }
+  .gold-rule {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 40px;
+  }
+  p { font-size: 1.05rem; font-weight: 300; line-height: 2; color: var(--text-dim); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 40px; }
+  .section { padding: 100px 0; border-top: 1px solid var(--gold-faint); }
+  .section:first-child { border-top: none; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(6,6,8,.97); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--dark3);
+    height: 56px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+  }
+  .nav-logo { font-family: var(--serif); font-size: 15px; letter-spacing: 5px; color: var(--gold); text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: #444; text-decoration: none; text-transform: uppercase; transition: color .3s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 40%, #1a1206 0%, var(--dark) 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(201,169,110,.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(201,169,110,.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-label {
+    font-family: var(--sans); font-weight: 200; font-size: 0.5rem;
+    letter-spacing: 0.6em; color: var(--gold); text-transform: uppercase;
+    opacity: 0.6; margin-bottom: 32px; display: block;
+  }
+  .hero-title {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 300; color: var(--text);
+    letter-spacing: 0.08em; line-height: 1; margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-family: var(--sans); font-weight: 200; font-size: 0.7rem;
+    letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase;
+    margin-bottom: 48px; opacity: 0.8;
+  }
+  .hero-desc {
+    font-size: 1.2rem; font-weight: 300; line-height: 2;
+    color: var(--text-dim); max-width: 560px; margin: 0 auto 56px;
+  }
+  .hero-tagline {
+    font-size: 1rem; font-weight: 300; font-style: italic;
+    color: var(--text-faint); border-top: 1px solid var(--gold-faint);
+    padding-top: 32px; margin-top: 8px;
+  }
+
+  /* ── TOC ── */
+  .toc-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px;
+  }
+  .toc-item {
+    border: 1px solid var(--gold-faint); padding: 24px 20px;
+    text-decoration: none; transition: all .3s; background: rgba(201,169,110,.02);
+  }
+  .toc-item:hover { background: rgba(201,169,110,.05); border-color: var(--gold-mid); }
+  .toc-num { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: var(--gold-mid); text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .toc-label { font-size: 1rem; font-weight: 300; color: var(--text); }
+
+  /* ── PROBLEMA ── */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+  .problem-card {
+    padding: 40px 32px; border: 1px solid var(--gold-faint);
+    background: rgba(255,255,255,.01);
+  }
+  .problem-card.bad { border-left: 2px solid rgba(180,60,60,0.3); }
+  .problem-card.good { border-left: 2px solid rgba(201,169,110,0.4); }
+  .problem-card-label { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+  .problem-card.bad .problem-card-label { color: rgba(200,80,80,0.6); }
+  .problem-card.good .problem-card-label { color: var(--gold); }
+  .problem-card p { font-size: 0.95rem; }
+
+  /* ── PRODUSE ── */
+  .product { margin-bottom: 2px; }
+  .product-header {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 40px; padding: 56px 0; border-top: 1px solid var(--gold-faint);
+    align-items: start;
+  }
+  .product-nr { font-size: 4rem; font-weight: 300; color: rgba(201,169,110,0.1); line-height: 1; }
+  .product-name { font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--gold); margin-bottom: 8px; }
+  .product-tagline { font-family: var(--sans); font-size: 0.55rem; letter-spacing: 0.45em; color: var(--gold-mid); text-transform: uppercase; margin-bottom: 24px; }
+  .product-desc { font-size: 1rem; color: var(--text-dim); margin-bottom: 32px; }
+  .product-flow { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+  .flow-step { display: flex; gap: 20px; align-items: flex-start; }
+  .flow-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid var(--gold-mid); display: flex; align-items: center; justify-content: center;
+    font-family: var(--sans); font-size: 8px; color: var(--gold); flex-shrink: 0; margin-top: 2px;
+  }
+  .flow-text { font-size: 0.9rem; color: var(--text-dim); font-family: var(--sans); font-weight: 300; line-height: 1.8; }
+  .flow-text strong { color: var(--text); font-weight: 400; }
+  .product-output {
+    margin-top: 40px; padding: 24px 28px;
+    border: 1px solid rgba(201,169,110,0.2);
+    background: rgba(201,169,110,0.03);
+  }
+  .output-label { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; display: block; }
+  .output-text { font-size: 0.95rem; color: var(--text-dim); font-style: italic; }
+
+  /* ── FILOZOFIE ── */
+  .mirror-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+  .mirror-card { padding: 40px 28px; border: 1px solid var(--gold-faint); text-align: center; }
+  .mirror-icon { font-size: 2rem; margin-bottom: 20px; display: block; opacity: 0.7; }
+  .mirror-product { font-size: 1.3rem; font-weight: 300; color: var(--gold); margin-bottom: 8px; }
+  .mirror-label { font-family: var(--sans); font-size: 9px; letter-spacing: 2px; color: var(--text-faint); text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .mirror-desc { font-size: 0.9rem; color: var(--text-faint); font-family: var(--sans); font-weight: 200; line-height: 1.8; }
+
+  /* ── TECH ── */
+  .tech-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 48px; }
+  .tech-card { padding: 32px 28px; border: 1px solid var(--gold-faint); }
+  .tech-icon { font-size: 1.4rem; margin-bottom: 16px; display: block; }
+  .tech-name { font-size: 1.1rem; font-weight: 300; color: var(--text); margin-bottom: 8px; }
+  .tech-desc { font-size: 0.85rem; color: var(--text-faint); font-family: var(--sans); font-weight: 200; line-height: 1.9; }
+
+  /* ── UNICITATE ── */
+  .unique-list { margin-top: 48px; display: flex; flex-direction: column; gap: 2px; }
+  .unique-item { display: grid; grid-template-columns: 48px 1fr; gap: 24px; padding: 32px 0; border-top: 1px solid var(--gold-faint); align-items: start; }
+  .unique-check { font-size: 1.2rem; color: var(--gold); opacity: 0.7; padding-top: 2px; }
+  .unique-text h4 { font-size: 1.1rem; font-weight: 300; color: var(--text); margin-bottom: 8px; }
+  .unique-text p { font-size: 0.9rem; }
+
+  /* ── BUSINESS ── */
+  .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+  .biz-card { padding: 36px 24px; border: 1px solid var(--gold-faint); }
+  .biz-segment { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; display: block; }
+  .biz-product { font-size: 1.2rem; font-weight: 300; color: var(--text); margin-bottom: 12px; }
+  .biz-target { font-size: 0.85rem; color: var(--text-faint); font-family: var(--sans); font-weight: 200; line-height: 1.9; }
+  .biz-note { margin-top: 16px; font-family: var(--sans); font-size: 8px; letter-spacing: 2px; color: var(--gold-mid); text-transform: uppercase; }
+
+  /* ── ECHIPA ── */
+  .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 48px; }
+  .team-card { padding: 48px 36px; border: 1px solid var(--gold-faint); }
+  .team-name { font-size: 2.5rem; font-weight: 300; color: var(--gold); margin-bottom: 8px; }
+  .team-role { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: var(--text-faint); text-transform: uppercase; margin-bottom: 24px; display: block; }
+  .team-bio { font-size: 0.9rem; color: var(--text-dim); line-height: 2; }
+  .team-stat { display: flex; gap: 32px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--gold-faint); }
+  .stat-n { font-size: 2rem; font-weight: 300; color: var(--gold); line-height: 1; }
+  .stat-l { font-family: var(--sans); font-size: 8px; letter-spacing: 2px; color: var(--text-faint); text-transform: uppercase; margin-top: 4px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center; padding: 100px 40px 120px;
+    background: rgba(201,169,110,0.02);
+    border-top: 1px solid var(--gold-faint);
+  }
+  .cta-btn {
+    display: inline-block; margin-top: 40px;
+    border: 1px solid var(--gold); color: var(--gold);
+    font-family: var(--sans); font-weight: 200; font-size: 0.6rem;
+    letter-spacing: 0.45em; text-transform: uppercase;
+    padding: 16px 48px; text-decoration: none; transition: all .3s;
+  }
+  .cta-btn:hover { background: rgba(201,169,110,0.08); }
+
+  /* ── QUOTE ── */
+  .quote-block {
+    padding: 80px 0; text-align: center;
+  }
+  .quote-text { font-size: clamp(1.2rem, 3vw, 1.8rem); font-style: italic; font-weight: 300; color: var(--text-dim); max-width: 640px; margin: 0 auto; line-height: 1.8; }
+  .quote-text em { color: var(--gold); font-style: normal; }
+  .quote-src { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: var(--text-faint); text-transform: uppercase; margin-top: 24px; display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--dark3); padding: 40px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo { font-family: var(--serif); font-size: 14px; letter-spacing: 5px; color: rgba(201,169,110,0.35); }
+  .footer-info { font-family: var(--sans); font-size: 8px; letter-spacing: 3px; color: #333; text-transform: uppercase; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .container { padding: 0 24px; }
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .problem-grid, .mirror-grid, .biz-grid, .team-grid, .tech-grid, .toc-grid { grid-template-columns: 1fr; }
+    .product-header { grid-template-columns: 1fr; gap: 16px; }
+    .product-nr { font-size: 2.5rem; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ATELIER</a>
+  <ul class="nav-links">
+    <li><a href="#conceptul">Conceptul</a></li>
+    <li><a href="#produse">Produsele</a></li>
+    <li><a href="#tehnologie">Tehnologie</a></li>
+    <li><a href="#business">Business</a></li>
+    <li><a href="#echipa">Echipa</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-label">Cluj-Napoca · România · Fine Dining · AI</span>
+    <h1 class="hero-title">Atelier</h1>
+    <div class="hero-sub">Private Dining · Corporate · Consultanță</div>
+    <p class="hero-desc">
+      Primul ecosistem culinar din România care combină experiența fine dining cu inteligența artificială pentru a crea experiențe personalizate, unice și ireplicabile.
+    </p>
+    <p class="hero-tagline">
+      "Experiența nu este mâncarea. Este oglinda pe care o ții în fața clientului."
+    </p>
+  </div>
+</section>
+
+<!-- CUPRINS -->
+<div class="container">
+  <div class="section">
+    <span class="eyebrow">Ce vei găsi în acest document</span>
+    <h2 class="section-title">Structura <em>prezentării</em></h2>
+    <div class="gold-rule"></div>
+    <div class="toc-grid">
+      <a href="#conceptul" class="toc-item">
+        <span class="toc-num">01</span>
+        <div class="toc-label">Conceptul & Problema Rezolvată</div>
+      </a>
+      <a href="#produse" class="toc-item">
+        <span class="toc-num">02</span>
+        <div class="toc-label">Cele Trei Produse</div>
+      </a>
+      <a href="#filozofie" class="toc-item">
+        <span class="toc-num">03</span>
+        <div class="toc-label">Filozofia Unificatoare</div>
+      </a>
+      <a href="#tehnologie" class="toc-item">
+        <span class="toc-num">04</span>
+        <div class="toc-label">Tehnologia din Spate</div>
+      </a>
+      <a href="#unicitate" class="toc-item">
+        <span class="toc-num">05</span>
+        <div class="toc-label">De ce e Unic în România</div>
+      </a>
+      <a href="#business" class="toc-item">
+        <span class="toc-num">06</span>
+        <div class="toc-label">Modelul de Business</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPTUL -->
+<div id="conceptul" class="container">
+  <div class="section">
+    <span class="eyebrow">01 · Conceptul</span>
+    <h2 class="section-title">Ce este <em>Atelier</em>?</h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:620px; margin-bottom: 32px;">
+      Atelier este un <strong style="color:var(--text)">serviciu de private dining</strong> bazat în Cluj-Napoca, operat de doi chefi cu peste 30 de ani de experiență combinată în fine dining. Dar Atelier nu este un restaurant — și nici un simplu serviciu de catering.
+    </p>
+    <p style="max-width:620px; margin-bottom: 64px;">
+      Atelier este un <strong style="color:var(--text)">ecosistem culinar complet</strong>, cu trei produse distincte adresate unor segmente diferite, toate conectate printr-o filozofie comună și o infrastructură tehnologică proprie bazată pe inteligență artificială.
+    </p>
+
+    <div class="quote-block">
+      <p class="quote-text">"Piața de fine dining din România oferă restaurante bune. <em>Noi oferim ceva ce restaurantele nu pot oferi:</em> o experiență construită exclusiv pentru tine, imposibil de reprodus."</p>
+    </div>
+
+    <div style="margin-top: 64px;">
+      <span class="eyebrow">Problema pe care o rezolvăm</span>
+      <h3 style="font-size: 1.8rem; font-weight: 300; color: var(--text); margin-bottom: 32px;">Industria are o problemă de <em>memorie</em></h3>
+      <div class="problem-grid">
+        <div class="problem-card bad">
+          <span class="problem-card-label">Situația actuală</span>
+          <p>Restaurantele premium din România servesc același meniu la toți clienții. Evenimentele corporate sunt catering standard — toată lumea uită a doua zi. Brandurile de lux organizează evenimente VIP cu mâncare de bufet. Nimeni nu tratează masa ca pe un instrument de cunoaștere.</p>
+        </div>
+        <div class="problem-card good">
+          <span class="problem-card-label">Soluția Atelier</span>
+          <p>Fiecare experiență Atelier este construită de la zero, pe baza unui profil generat prin AI. Meniuri unice per individ, per echipă sau per brand. Documente fizice care rămân. Experiențe pe care clienții le povestesc ani de zile — pentru că sunt ale lor, nu ale unui restaurant.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUSE -->
+<div id="produse" class="container">
+  <div class="section">
+    <span class="eyebrow">02 · Produsele</span>
+    <h2 class="section-title">Trei produse. <em>Un ecosistem.</em></h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:580px;">
+      Atelier nu vinde un singur serviciu. Vinde trei produse distincte, fiecare adresând un segment de piață diferit — dar toate construite pe aceeași filozofie și aceeași infrastructură AI.
+    </p>
+
+    <!-- CODEX -->
+    <div class="product">
+      <div class="product-header">
+        <div class="product-nr">I</div>
+        <div>
+          <div class="product-name">Codex</div>
+          <div class="product-tagline">Private Dining · 2–6 persoane · Ritual de Inițiere</div>
+          <p class="product-desc">
+            Codex este produsul flagship al Atelier — un sistem AI care profilează un individ prin 7 întrebări senzoriale și compune un meniu de degustare unic, imposibil de reprodus. Fiecare seară devine un capitol dintr-o carte scrisă exclusiv despre oaspete.
+          </p>
+          <div class="product-flow">
+            <div class="flow-step">
+              <div class="flow-dot">1</div>
+              <div class="flow-text"><strong>Chestionarul senzorial</strong> — oaspetele răspunde la 7 întrebări despre amintiri culinare, senzații, ritmuri, ingrediente, filozofie personală. Nu sunt întrebări despre mâncare — sunt întrebări despre identitate.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">2</div>
+              <div class="flow-text"><strong>Generarea meniului</strong> — sistemul AI (Claude Anthropic) procesează profilul și compune un meniu de degustare de 6-9 cursuri, cu ingrediente carpatice rare și tehnici de fine dining internațional. Niciun meniu nu se repetă exact.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">3</div>
+              <div class="flow-text"><strong>Cina privată</strong> — Răzvan și Roland gătesc la domiciliul oaspetelui sau într-un spațiu privat. Pregătire, servire, curățenie inclusă. Oaspetele nu face nimic în afara bucuriei.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">4</div>
+              <div class="flow-text"><strong>Artefactul literar</strong> — la final, oaspetele primește un document generat de AI: povestea serii sale, scrisă ca un capitol dintr-o carte. Titlu, subtitlu, text literar de 250 de cuvinte. Un suvenir imposibil de obținut altundeva.</div>
+            </div>
+          </div>
+          <div class="product-output">
+            <span class="output-label">Ce primește clientul</span>
+            <p class="output-text">Un meniu unic de degustare + o seară executată la nivel fine dining + un artefact literar personalizat generat de AI — povestea serii sale, tipărită, semnată.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BREVIAR -->
+    <div class="product">
+      <div class="product-header">
+        <div class="product-nr">II</div>
+        <div>
+          <div class="product-name">Breviarul</div>
+          <div class="product-tagline">Corporate Dining · 4–10 persoane · "Fiecare echipă are un gust pe care nu l-a gustat încă."</div>
+          <p class="product-desc">
+            Breviarul este Codex aplicat la o echipă. Dacă Codex profilează un individ, Breviarul profilează colectivul — tensiunile, confluențele, diferențele de stil dintr-o echipă — și le transformă într-un meniu și un document fizic. Nu există niciun alt produs similar în România.
+          </p>
+          <div class="product-flow">
+            <div class="flow-step">
+              <div class="flow-dot">1</div>
+              <div class="flow-text"><strong>Cu 1-2 săptămâni înainte</strong> — fiecare participant primește un link cu 6 întrebări. Jumătate senzoriale (ca la Codex), jumătate comportamental-profesionale: cum iei decizii sub presiune? ce risc ți se pare acceptabil? ce amintire profesională te-a format?</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">2</div>
+              <div class="flow-text"><strong>AI procesează colectiv</strong> — sistemul generează Harta Echipei (unde se intersectează și unde se ciocnesc oamenii), un meniu construit pe tensiunile și convergența grupului, și Carduri de Insight — câte un card la fiecare curs cu un insight despre grup, generat din date reale.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">3</div>
+              <div class="flow-text"><strong>Cina de echipă</strong> — o masă în care oamenii sunt curioși despre propriile date, nu vorbesc despre job. Conversația e transformată organic.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">4</div>
+              <div class="flow-text"><strong>Breviarul Colectiv</strong> — un document fizic, tipărit elegant, livrat echipei: cartografia senzorial-comportamentală a grupului. Fiecare participant primește și profilul individual.</div>
+            </div>
+          </div>
+          <div class="product-output">
+            <span class="output-label">Ce primește clientul corporate</span>
+            <p class="output-text">Profil individual per participant + Breviar Colectiv (document fizic al echipei) + o cină în care echipa se vede pe sine altfel. Un CEO va arăta Breviarul la board-ul următor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATRICEA -->
+    <div class="product">
+      <div class="product-header">
+        <div class="product-nr">III</div>
+        <div>
+          <div class="product-name">Matricea</div>
+          <div class="product-tagline">Consultanță Brand · "Nu am venit să vă îmbunătățim meniul. Am venit să vă găsim gustul."</div>
+          <p class="product-desc">
+            Matricea este un produs de consultanță strategică: Atelier construiește identitatea culinară a unui brand premium — documentată, sistematizată, replicabilă. Targetul sunt brandurile de lux din România (hoteluri, producători de vin/spirits, real estate premium) care au identitate vizuală și verbală, dar nu știu ce gust au.
+          </p>
+          <div class="product-flow">
+            <div class="flow-step">
+              <div class="flow-dot">1</div>
+              <div class="flow-text"><strong>Cartografierea</strong> — o sesiune de jumătate de zi cu echipa cheie a brandului. Nu interviuri de marketing. Exerciții senzoriale reale: materiale, mirosuri, texturi, temperaturi. Răzvan și Roland nu pun întrebări — pun obiecte pe masă și urmăresc reacțiile.</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">2</div>
+              <div class="flow-text"><strong>Analiza</strong> — valorile brandului traduse în limbaj senzorial precis: la ce temperatură este brandul? Ce textură? Ce contrast activează? Ce NU trebuie să fie niciodată?</div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-dot">3</div>
+              <div class="flow-text"><strong>Matricea — livrabilul</strong> — un document fizic, legat, de înaltă calitate. Conține: 3-5 preparate semnătură care incarnează identitatea brandului, principii de asociere, traducere sezonieră, Codexul Brandului (biblia culinară internă).</div>
+            </div>
+          </div>
+          <div class="product-output">
+            <span class="output-label">Ce primește brandul</span>
+            <p class="output-text">Un produs intelectual unic — nu catering, nu consultanță standard. Identitatea culinară a brandului lor, documentată și livrată fizic. Relație pe termen lung: brandurile revin trimestrial să actualizeze Matricea.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILOZOFIE -->
+<div id="filozofie" class="container">
+  <div class="section">
+    <span class="eyebrow">03 · Filozofia</span>
+    <h2 class="section-title">Oglinda <em>ținută în față</em></h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:600px; margin-bottom: 48px;">
+      Toate trei produsele urmează aceeași filozofie fundamentală: <strong style="color:var(--text)">experiența nu este mâncarea — este oglinda pe care o ții în fața clientului.</strong> Mâncarea este vehiculul. Revelația este produsul real.
+    </p>
+    <div class="mirror-grid">
+      <div class="mirror-card">
+        <span class="mirror-icon">🪞</span>
+        <div class="mirror-product">Codex</div>
+        <span class="mirror-label">Oglinda individului</span>
+        <p class="mirror-desc">Îi spune unui invitat cine este el la masă. Preferințele, amintirile, ritmul, filozofia — toate reflectate într-un meniu unic.</p>
+      </div>
+      <div class="mirror-card">
+        <span class="mirror-icon">🪞</span>
+        <div class="mirror-product">Breviarul</div>
+        <span class="mirror-label">Oglinda echipei</span>
+        <p class="mirror-desc">Îi spune unei echipe cine sunt împreună. Tensiunile, convergențele, dinamica reală — vizibilă pentru prima dată.</p>
+      </div>
+      <div class="mirror-card">
+        <span class="mirror-icon">🪞</span>
+        <div class="mirror-product">Matricea</div>
+        <span class="mirror-label">Oglinda brandului</span>
+        <p class="mirror-desc">Îi spune unui brand ce gust are. Identitatea senzorială — documentată, sistematizată, replicabilă la orice eveniment.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEHNOLOGIE -->
+<div id="tehnologie" class="container">
+  <div class="section">
+    <span class="eyebrow">04 · Tehnologia</span>
+    <h2 class="section-title">Infrastructura <em>din spate</em></h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:600px; margin-bottom: 48px;">
+      Atelier nu este un concept manual. Are o infrastructură tehnologică completă, construită de la zero, care automatizează procesele-cheie și permite scalarea fără a crește echipa.
+    </p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <span class="tech-icon">🧠</span>
+        <div class="tech-name">AI · Claude Anthropic</div>
+        <p class="tech-desc">Sistemul de generare a meniurilor și artefactelor literare folosește Claude (Anthropic) — unul dintre cele mai avansate modele AI disponibile. Prompturile sunt calibrate cu luni de experiență culinară reală, ingrediente specifice și tehnici de fine dining.</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">⚙️</span>
+        <div class="tech-name">Backend · Go + Cloud Run</div>
+        <p class="tech-desc">API-ul Atelier este scris în Go și rulează pe Google Cloud Run — scalabil automat, fără costuri fixe de server. Baza de date PostgreSQL pe Cloud SQL gestionează rezervările, profilurile și istoricul.</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">🌐</span>
+        <div class="tech-name">Frontend · Next.js</div>
+        <p class="tech-desc">Site-ul atelierprivatedining.ro este construit în Next.js cu export static — rapid, SEO-optimizat, deploy automat prin GitHub Actions la fiecare commit.</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">💬</span>
+        <div class="tech-name">Chatbot AI integrat</div>
+        <p class="tech-desc">Fiecare vizitator al site-ului este întâmpinat de un asistent AI care înțelege contextul, prezintă produsul potrivit și ghidează clientul spre experiența corectă — fără să trimită la email din prima secundă.</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">🔐</span>
+        <div class="tech-name">Autentificare · Firebase</div>
+        <p class="tech-desc">Panoul de administrare — rezervări, arhivare, gestionare conținut — este protejat prin Firebase Authentication. Accesibil doar Răzvan și Roland.</p>
+      </div>
+      <div class="tech-card">
+        <span class="tech-icon">📦</span>
+        <div class="tech-name">Deploy automat · GitHub Actions</div>
+        <p class="tech-desc">Orice modificare la cod se deployează automat — site pe GitHub Pages, API pe Cloud Run. Zero intervenție manuală pentru publicare. Sistem de CI/CD complet funcțional.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UNICITATE -->
+<div id="unicitate" class="container">
+  <div class="section">
+    <span class="eyebrow">05 · Unicitate</span>
+    <h2 class="section-title">De ce nu există <em>altundeva</em>?</h2>
+    <div class="gold-rule"></div>
+    <div class="unique-list">
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Singurul private dining cu AI în România</h4>
+          <p>Niciun alt serviciu de private chef din România nu folosește AI pentru a genera meniuri personalizate. Codex nu este o funcționalitate — este produsul central.</p>
+        </div>
+      </div>
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Profilare senzorială — inexistentă în piață</h4>
+          <p>Ideea de a profila un client prin întrebări despre identitate (nu preferințe culinare banale) și a traduce acel profil într-un meniu este un concept inventat de Atelier. Nu există template, nu există precedent local.</p>
+        </div>
+      </div>
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Artefactul literar — unicat absolut</h4>
+          <p>Niciun restaurant sau serviciu culinar din lume nu generează un document literar personalizat ca suvenir al serii. Povestea serii tale, scrisă de AI, este un produs fără echivalent.</p>
+        </div>
+      </div>
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Corporate dining cu profilare colectivă — nemaivăzut în România</h4>
+          <p>Breviarul tratează o masă corporativă ca pe un instrument de cunoaștere a echipei. Nicio companie de team-building, nicio agenție de catering nu oferă un document fizic al dinamicii de grup generat prin AI și experiență culinară.</p>
+        </div>
+      </div>
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Identitate culinară de brand — piață neexploatată</h4>
+          <p>Brandurile premium din România investesc în identitate vizuală, verbală, sonoră. Nicio agenție, niciun consultant nu construiește identitate culinară sistematizată. Matricea creează o categorie nouă de servicii.</p>
+        </div>
+      </div>
+      <div class="unique-item">
+        <div class="unique-check">✦</div>
+        <div class="unique-text">
+          <h4>Scalabil cu 2 oameni</h4>
+          <p>Infrastructura tehnologică permite operarea întregului ecosistem de doi oameni: chestionarele sunt automatizate, documentele sunt generate de sistem, rezervările sunt gestionate digital. Atelier poate crește revenue fără a crește echipa proporțional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUSINESS -->
+<div id="business" class="container">
+  <div class="section">
+    <span class="eyebrow">06 · Business</span>
+    <h2 class="section-title">Modelul de <em>business</em></h2>
+    <div class="gold-rule"></div>
+    <p style="max-width:600px; margin-bottom: 48px;">
+      Atelier operează pe trei fluxuri de revenue distincte, cu frecvențe și valori diferite. Modelul e conceput să fie sustenabil cu o echipă mică, cu potențial de scalare prin produs, nu prin personal.
+    </p>
+    <div class="biz-grid">
+      <div class="biz-card">
+        <span class="biz-segment">Segment I · Recurring</span>
+        <div class="biz-product">Codex · Private Dining</div>
+        <p class="biz-target">Persoane fizice premium, cupluri, grupuri mici 2–6 persoane. Cine intime, aniversări, cereri în căsătorie, business dinners private. Frecvență: săptămânală.</p>
+        <div class="biz-note">↗ Revenue principal · volum mare · ticket mediu</div>
+      </div>
+      <div class="biz-card">
+        <span class="biz-segment">Segment II · High Value</span>
+        <div class="biz-product">Breviarul · Corporate</div>
+        <p class="biz-target">Companii medii și mari, echipe de management, HR, team-building. 4–10 participanți per eveniment. Frecvență: lunară (clienți diferiți) sau trimestrială (același client).</p>
+        <div class="biz-note">↗ Ticket ridicat · relații pe termen lung</div>
+      </div>
+      <div class="biz-card">
+        <span class="biz-segment">Segment III · Premium</span>
+        <div class="biz-product">Matricea · Consultanță</div>
+        <p class="biz-target">Branduri premium: hoteluri de lux, producători vin/spirits, real estate premium, retail de lux. 1–2 proiecte per trimestru. Livrabil fizic + eveniment pilot opțional.</p>
+        <div class="biz-note">↗ Cel mai ridicat ticket · parteneriat strategic</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 64px;">
+      <span class="eyebrow">Fezabilitate · 2 oameni</span>
+      <h3 style="font-size: 1.6rem; font-weight: 300; color: var(--text); margin-bottom: 32px;">De ce funcționează cu o echipă mică</h3>
+      <div class="problem-grid">
+        <div class="problem-card good">
+          <span class="problem-card-label">Ce e automatizat</span>
+          <p>Chestionarele Codex și Breviar — complet digitale și automatizate. Generarea meniului — AI instant. Artefactul literar — AI instant. Documentele finale — generate de sistem. Rezervările — formular digital + backend. Deploy site — automat la fiecare commit.</p>
+        </div>
+        <div class="problem-card good">
+          <span class="problem-card-label">Ce fac Răzvan și Roland</span>
+          <p>Gătesc. Selectează ingredientele. Execută evenimentele. Calibrează prompturile AI pe baza experienței reale. Construiesc relațiile cu clienții corporativi și brandurile. Tot ce necesită prezență umană și expertiză culinară reală.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ECHIPA -->
+<div id="echipa" class="container">
+  <div class="section">
+    <span class="eyebrow">07 · Echipa</span>
+    <h2 class="section-title">Oamenii din <em>spatele mesei</em></h2>
+    <div class="gold-rule"></div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-name">Răzvan</div>
+        <span class="team-role">Chef · Fondator · Arhitectul conceptului</span>
+        <p class="team-bio">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filozofie culinară. Ingredientele carpatice rare, tehnicile de fermentare proprie și prompturile AI calibrate cu ani de experiență sunt inima fiecărui meniu Atelier. Autorul conceptului Codex, Breviar și Matrice.</p>
+        <div class="team-stat">
+          <div><div class="stat-n">18+</div><div class="stat-l">ani fine dining</div></div>
+          <div><div class="stat-n">200+</div><div class="stat-l">meniuri unice</div></div>
+          <div><div class="stat-n">2</div><div class="stat-l">branduri create</div></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-name">Roland</div>
+        <span class="team-role">Chef · Partner · Execuție tehnică</span>
+        <p class="team-bio">Cu o carieră construită în restaurante de top din România, Roland aduce precizie tehnică și un simț al echilibrului care completează viziunea Atelierului. Responsabil de execuția la nivel internațional a fiecărei cine, de mise en place și de standardul de calitate care face fiecare eveniment ireproșabil.</p>
+        <div class="team-stat">
+          <div><div class="stat-n">15+</div><div class="stat-l">ani experiență</div></div>
+          <div><div class="stat-n">100+</div><div class="stat-l">evenimente</div></div>
+          <div><div class="stat-n">50+</div><div class="stat-l">clienți corporate</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div style="max-width: 560px; margin: 0 auto;">
+    <span class="eyebrow" style="display:block; text-align:center;">Contact</span>
+    <h2 class="section-title" style="text-align:center;">Vrei să discutăm?</h2>
+    <p style="text-align:center; margin-top: 16px;">
+      Fie că ești un potențial client, un investitor sau un colaborator — prima conversație e fără angajament. Atelier e construit pentru oameni care înțeleg că experiențele remarcabile nu se întâmplă din greșeală.
+    </p>
+    <div style="text-align:center;">
+      <a href="mailto:contact@atelierprivatedining.ro" class="cta-btn">Inițiați Contactul →</a>
+    </div>
+    <p style="text-align:center; margin-top: 32px; font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.4em; color: rgba(201,169,110,0.3); text-transform: uppercase;">
+      atelierprivatedining.ro · Cluj-Napoca · România
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ATELIER</div>
+  <div class="footer-info">Craft · Discretion · Excellence · © 2026</div>
+</footer>
+
+</body>
+</html>
