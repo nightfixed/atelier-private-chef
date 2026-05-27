@@ -58,14 +58,19 @@ export const viewport: Viewport = {
 
 const LOCK_SCRIPT = `(function(){
   var KEY='aRx7km9Qz3vT',STORE='ap_preview';
+  // Blochează imediat orice flash de conținut — style injectat în <head> înainte ca body să existe
+  var ls=document.createElement('style');
+  ls.textContent='html{background:#0e0e0e!important}body{opacity:0!important;transition:none!important}';
+  document.head.appendChild(ls);
+  function unlock(){ls.remove();}
   var p=new URLSearchParams(window.location.search).get('p');
   if(p===KEY){
     try{localStorage.setItem(STORE,KEY);}catch(e){}
     window.history.replaceState({},'',window.location.pathname+window.location.hash);
-    return;
+    unlock();return;
   }
   var ok=false;try{ok=localStorage.getItem(STORE)===KEY;}catch(e){}
-  if(ok)return;
+  if(ok){unlock();return;}
   function showOverlay(){
     var el=document.createElement('div');
     el.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#0e0e0e;z-index:2147483647;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;font-family:Georgia,serif;';
@@ -73,6 +78,7 @@ const LOCK_SCRIPT = `(function(){
       +'<h1 style="font-size:clamp(2rem,6vw,3.5rem);font-weight:300;color:#c9a96e;letter-spacing:0.1em;margin:0 0 1.5rem;">\u00cen cur\u00e2nd</h1>'
       +'<p style="font-size:1rem;font-weight:300;font-style:italic;color:rgba(245,240,234,0.5);max-width:380px;line-height:2;margin:0;">Site-ul este \u00een construc\u021bie.<br>Revenim cur\u00e2nd.</p>';
     document.body.appendChild(el);
+    ls.textContent='body{overflow:hidden}';
   }
   if(document.body){showOverlay();}
   else{document.addEventListener('DOMContentLoaded',showOverlay);}
