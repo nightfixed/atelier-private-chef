@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propunere Parteneriat · Atelier × Așezat · Linia Jumări</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#c9a96e;--gold2:#e8d098;--copper:#d09070;--dark:#0e0e0e;--linen:#f5f0ea;}
+body{background:var(--dark);color:#f0ebe3;font-family:'Montserrat',sans-serif;overflow-x:hidden;max-width:860px;margin:0 auto;padding:48px 32px 80px;}
+
+/* HEADER */
+.header{border-bottom:1px solid #1a1a1a;padding-bottom:36px;margin-bottom:52px;}
+.header-label{font-size:8px;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,88px);font-weight:300;color:#fff;line-height:.95;margin-bottom:8px;}
+.header h1 em{color:var(--gold);font-style:italic;}
+.header-sub{font-family:'Cormorant Garamond',serif;font-size:20px;color:#777;font-style:italic;margin-bottom:28px;}
+.header-meta{display:flex;gap:24px;flex-wrap:wrap;}
+.meta-badge{font-size:8px;letter-spacing:3px;color:#444;border:1px solid #1e1e1e;padding:6px 14px;text-transform:uppercase;}
+.meta-badge strong{color:var(--gold);}
+
+/* SECTIONS */
+.sec{margin-bottom:52px;padding-bottom:52px;border-bottom:1px solid #141414;}
+.sec:last-child{border-bottom:none;}
+.sec-label{font-size:8px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.sec h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:6px;}
+.sec h2 em{font-style:italic;color:var(--gold);}
+.gold-line{width:50px;height:1px;background:var(--gold);margin:16px 0 28px;}
+.sec p{font-size:13px;color:#666;line-height:1.9;margin-bottom:14px;}
+.sec p strong{color:#999;font-weight:500;}
+.sec p em{color:var(--gold);font-style:normal;}
+
+/* KEY STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin:28px 0;}
+.stat-box{padding:22px 18px;background:#0a0a0a;border:1px solid #1a1a1a;text-align:center;}
+.stat-box:first-child{border-top:2px solid var(--gold);}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:var(--gold);line-height:1;}
+.stat-l{font-size:8px;letter-spacing:2px;color:#333;margin-top:5px;text-transform:uppercase;line-height:1.5;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:24px 0;}
+th{font-size:8px;letter-spacing:3px;color:#333;text-transform:uppercase;padding:10px 12px;border-bottom:1px solid #1a1a1a;text-align:left;}
+td{font-size:12px;color:#555;padding:13px 12px;border-bottom:1px solid #111;vertical-align:middle;}
+tr:hover td{background:#090909;color:#888;}
+tr.hl td{color:#c9a96e;}
+.t-gold{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);}
+.t-copper{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--copper);}
+.t-green{font-size:9px;letter-spacing:2px;color:rgba(76,175,122,.6);font-weight:600;}
+.t-dim{color:#333;font-size:9px;letter-spacing:2px;}
+
+/* PRODUCT CARDS */
+.prod-grid{display:flex;flex-direction:column;gap:2px;margin:24px 0;}
+.prod-card{background:#0a0a0a;border:1px solid #141414;border-left:2px solid var(--gold);padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;}
+.prod-card.featured{background:#0c0a06;border:1px solid #1e1810;border-left:2px solid var(--copper);}
+.prod-card.featured .prod-name{color:#f5e8d8;}
+.prod-num{font-size:7px;letter-spacing:3px;color:#2a2a2a;text-transform:uppercase;margin-bottom:6px;}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#fff;margin-bottom:4px;line-height:1.2;}
+.prod-tag{font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.prod-card.featured .prod-tag{color:var(--copper);}
+.prod-desc{font-size:12px;color:#555;line-height:1.8;}
+.prod-desc strong{color:#888;font-weight:500;}
+.prod-desc em{color:var(--gold);font-style:normal;}
+.prod-card.featured .prod-desc em{color:var(--copper);}
+.prod-right{text-align:right;min-width:140px;}
+.prod-cost{font-size:9px;letter-spacing:1px;color:#2a2a2a;text-transform:uppercase;margin-bottom:2px;}
+.prod-price{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);font-weight:300;}
+.prod-card.featured .prod-price{color:var(--copper);}
+.prod-mult{font-size:9px;letter-spacing:2px;color:rgba(76,175,122,.5);margin-top:4px;}
+.prod-nutr{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;}
+.nutr-pill{font-size:8px;letter-spacing:1px;color:#333;border:1px solid #1a1a1a;padding:3px 8px;}
+
+/* HIGHLIGHT */
+.hl{color:#e8c97a;font-weight:500;font-style:normal;}
+
+/* TWOBOX */
+.twobox{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:24px 0;}
+.box{background:#0a0a0a;border:1px solid #141414;padding:28px 28px;}
+.box.gold{border-top:2px solid var(--gold);}
+.box.copper{border-top:2px solid var(--copper);}
+.box-label{font-size:8px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.box.copper .box-label{color:var(--copper);}
+.box h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;font-weight:300;margin-bottom:14px;line-height:1.2;}
+.box h3 em{font-style:italic;color:var(--gold);}
+.box.copper h3 em{color:var(--copper);}
+.box p{font-size:12px;color:#555;line-height:1.8;margin-bottom:10px;}
+.box p strong{color:#888;font-weight:500;}
+.box ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.box ul li{font-size:12px;color:#555;padding-left:18px;position:relative;line-height:1.6;}
+.box ul li::before{content:'—';position:absolute;left:0;color:var(--gold);font-size:10px;}
+.box.copper ul li::before{color:var(--copper);}
+.box ul li strong{color:#888;font-weight:500;}
+
+/* SPLIT TERMS */
+.split-card{background:#0c0a06;border:1px solid #1e1810;padding:28px 32px;margin:24px 0;}
+.split-row{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px solid #111;}
+.split-row:last-child{border-bottom:none;}
+.split-label{font-size:9px;letter-spacing:2px;color:#333;text-transform:uppercase;}
+.split-value{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);}
+
+/* NOTE BOX */
+.note{padding:18px 22px;background:#090909;border:1px solid #141414;border-left:2px solid rgba(201,169,110,.3);margin:20px 0;}
+.note p{font-size:12px;color:#555;line-height:1.8;}
+.note p strong{color:#888;}
+.note p em{color:var(--gold);font-style:normal;}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:16px;margin:20px 0;}
+.step{display:flex;gap:18px;align-items:baseline;}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--gold);font-weight:300;line-height:1;min-width:52px;opacity:.6;}
+.step-text{font-size:12px;color:#555;line-height:1.8;padding-top:8px;}
+.step-text strong{color:#888;font-weight:500;}
+
+/* FOOTER */
+footer{margin-top:60px;padding-top:36px;border-top:1px solid #1a1a1a;text-align:center;}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:6px;color:var(--gold);}
+.footer-tag{font-size:8px;letter-spacing:4px;color:#252525;margin-top:6px;text-transform:uppercase;}
+
+@media(max-width:600px){
+  body{padding:28px 20px 60px;}
+  .stat-row{grid-template-columns:1fr 1fr;}
+  .twobox{grid-template-columns:1fr;}
+  .prod-card{grid-template-columns:1fr;}
+  .prod-right{text-align:left;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <p class="header-label">Propunere Parteneriat Confidențial · Atelier × Așezat · 2026</p>
+  <h1>Jumări<br><em>reinterpretat.</em></h1>
+  <p class="header-sub">Aceeași materie primă. Prețuri complet diferite.</p>
+  <div class="header-meta">
+    <div class="meta-badge"><strong>Zero</strong> carbohidrați</div>
+    <div class="meta-badge"><strong>100%</strong> natural</div>
+    <div class="meta-badge">Piață keto <strong>+40%/an</strong></div>
+    <div class="meta-badge">Marjă <strong>3–8×</strong> față de vrac</div>
+    <div class="meta-badge">Fabricant · <strong>Vințu de Jos, Alba</strong></div>
+  </div>
+</div>
+
+
+<!-- 1. CONTEXTUL -->
+<div class="sec">
+  <p class="sec-label">Contextul</p>
+  <h2>Aceeași materie primă.<br><em>Prețuri complet diferite.</em></h2>
+  <div class="gold-line"></div>
+
+  <p>Jumările românești sunt, fără să știe nimeni, produsul keto perfect — fără carbohidrați, bogate în proteine, naturale, fără niciun adaos. Occidentul plătește prețuri serioase pentru exact același lucru, numai că îl cheamă altfel: <strong>pork rinds, chicharrones, pork crackling</strong>.</p>
+  <p>Produsul e același. Diferența o face ambalajul, povestea și canalul de vânzare. <em>Atelier aduce exact asta.</em></p>
+  <p>Linia de produse va fi lansată sub brandul <em>Așezat</em> — identitate construită în jurul ideii că mâncarea românească stă bine la masă, fără să se scuze.</p>
+
+  <div class="stat-row">
+    <div class="stat-box"><div class="stat-n">3–8×</div><div class="stat-l">Marjă față de<br>vânzare vrac</div></div>
+    <div class="stat-box"><div class="stat-n">+40%</div><div class="stat-l">Creștere anuală<br>piață keto EU</div></div>
+    <div class="stat-box"><div class="stat-n">0g</div><div class="stat-l">Carbohidrați în<br>jumări pure</div></div>
+    <div class="stat-box"><div class="stat-n">~55g</div><div class="stat-l">Proteină/100g<br>produs finit</div></div>
+  </div>
+</div>
+
+
+<!-- 2. PIATA -->
+<div class="sec">
+  <p class="sec-label">Piața</p>
+  <h2>Același produs.<br><em>Prețuri diferite.</em></h2>
+  <div class="gold-line"></div>
+
+  <table>
+    <thead>
+      <tr><th>Produs</th><th>Piață</th><th>Gramaj</th><th>Preț</th><th>/ 100g</th><th>vs. Vrac</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Jumări vrac</td><td>Piață agro-alimentară RO</td><td>500g</td><td>~25 lei</td><td style="color:#444;font-family:'Cormorant Garamond',serif;font-size:17px;">5 lei</td><td class="t-dim">—</td></tr>
+      <tr><td>Drăgan / Aldis / Cărnești</td><td>Carrefour / Mega Image RO</td><td>200–250g</td><td>18–26 lei</td><td style="color:#555;font-family:'Cormorant Garamond',serif;font-size:17px;">8–12 lei</td><td class="t-dim">1.6–2.4×</td></tr>
+      <tr><td>Mariflor · Jumări</td><td>Retail România</td><td>200g</td><td>17.99 lei</td><td style="color:#555;font-family:'Cormorant Garamond',serif;font-size:17px;">~9 lei</td><td class="t-dim">1.8×</td></tr>
+      <tr><td>Petry · Jumări</td><td>Retail România</td><td>100g</td><td>26.90 lei</td><td style="color:#555;font-family:'Cormorant Garamond',serif;font-size:17px;">26.9 lei</td><td class="t-dim">5.4×</td></tr>
+      <tr class="hl"><td><strong>Unsoare de Cluj · Atelier</strong></td><td>Retail premium / HoReCa / Online</td><td>200ml</td><td class="t-copper">47 lei</td><td class="t-copper">~37 lei</td><td class="t-green">7× ↑</td></tr>
+      <tr><td>Epic Pork Rinds</td><td>Whole Foods SUA</td><td>70g</td><td>$6.49 (~30 lei)</td><td class="t-gold">~43 lei</td><td class="t-green">8.6× ↑</td></tr>
+      <tr><td>Awfully Posh Crackling</td><td>Sainsbury's UK</td><td>40g</td><td>£2.50 (~16 lei)</td><td class="t-gold">~40 lei</td><td class="t-green">8× ↑</td></tr>
+      <tr><td>Pork Crackling bio</td><td>Kaufland Germania</td><td>60g</td><td>€2.99 (~15 lei)</td><td class="t-gold">~25 lei</td><td class="t-green">5× ↑</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <p><strong>Pe scurt:</strong> produsul tău, cu o etichetă în engleză pe care scrie <em>"Carpathian Pork Crackling · Zero Carb · Natural"</em>, se vinde în Germania și UK de 5–8 ori mai scump față de ce iei acum pe vrac. Fără să schimbi rețeta. Fără să schimbi producția.</p>
+  </div>
+
+  <div class="twobox">
+    <div class="box gold">
+      <div class="box-label">De ce Drăgan / Petry / Mariflor nu sunt concurenți</div>
+      <h3>Clienți diferiți.<br><em>Motive diferite de cumpărare.</em></h3>
+      <p>Clientul care cumpără borcanul de 22 lei și clientul care cumpără Așezat la 47 lei <strong>nu sunt același om și nu cumpără din același motiv.</strong></p>
+      <p>Drăgan, Aldis, Petry, Mariflor nu au o poveste. Nu au un design. Nu sunt cadou. Nu intră pe o tablă de brânzeturi la o cină privată. <strong>Sunt mâncare. Așezat e altceva.</strong></p>
+    </div>
+    <div class="box copper">
+      <div class="box-label">Cei trei piloni ai prețului premium</div>
+      <ul>
+        <li><strong>Design</strong> — borcan Weck, etichetă kraft, font serif, sfoară de iută. Oamenii fotografiază produsul și îl postează.</li>
+        <li><strong>Poveste</strong> — „Rețetă de 200 de ani. Usturoi copt 40 de minute. Cimbru de munte." Prețul e plătit cu plăcere.</li>
+        <li><strong>Canal</strong> — fine dining, coșuri cadou corporate, export premium în DACH. Petry sau Mariflor nu vând acolo.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- 3. PRODUSUL FLAGSHIP -->
+<div class="sec">
+  <p class="sec-label">Produsul Flagship · No. 01</p>
+  <h2>Unsoare de Cluj<br><em>cu jumări</em></h2>
+  <div class="gold-line"></div>
+
+  <p>Untură de porc trasă fin, jumări rupte grosier cu mâna, usturoi copt 40 de minute în folie, cimbru de munte și sare de mare. <strong>Atât.</strong> Rețetă de 200 de ani pusă într-un borcan de 2026.</p>
+  <p>Borcan Weck 200ml, etichetă kraft cu font serif, sfoară de iută pe gât. <strong>Cost de producție estimat: 22–28 lei.</strong> Preț recomandat retail: 47 lei.</p>
+
+  <div class="twobox">
+    <div class="box gold">
+      <div class="box-label">Ce îl face unic</div>
+      <ul>
+        <li><strong>Usturoi copt 40 de minute</strong> — devine dulce, caramelizat. Nicio fabrică din RO nu face asta.</li>
+        <li><strong>Jumări rupte cu mâna</strong> — textură neuniformă. Mașina face uniformitate. Mâna face caracter.</li>
+        <li><strong>Cimbru de munte</strong> — ulei esențial de 3–4× mai concentrat decât varianta comercială.</li>
+        <li><strong>Rețetă de 200+ ani</strong> — autenticitatea reală nu se fabrică. Nimeni din concurență nu o poate copia.</li>
+      </ul>
+    </div>
+    <div class="box copper">
+      <div class="box-label">Cifre</div>
+      <ul>
+        <li><strong>~16 lei</strong> — cost materie primă per borcan</li>
+        <li><strong>47 lei</strong> — preț recomandat retail premium</li>
+        <li><strong>4.7×</strong> — multiplicator față de vrac</li>
+        <li><strong>6–9 luni</strong> — termen valabilitate pasteurizat sigilat</li>
+        <li><strong>0</strong> — concurenți direcți pe piața din România</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <p>Nu există niciun produs în România care să combine untură artizanală + jumări rupte manual + usturoi copt lent + cimbru de munte într-un borcan Weck cu etichetă kraft. Nici în Europa nu există echivalentul direct. <em>Produsul e unic — nu ca marketing, ci ca fapt verificabil.</em></p>
+  </div>
+</div>
+
+
+<!-- 4. LINIA COMPLETA -->
+<div class="sec">
+  <p class="sec-label">Linia completă</p>
+  <h2>Șapte produse.<br><em>Un singur ingredient.</em></h2>
+  <div class="gold-line"></div>
+  <p>Toate se pot face cu ce ai deja în fabrică. Diferența nu e în producție — e în ce scriem pe borcan și cui îl vindem.</p>
+
+  <div class="prod-grid">
+
+    <div class="prod-card featured">
+      <div>
+        <div class="prod-num">P1 · Flagship</div>
+        <div class="prod-name">Unsoare de Cluj cu Jumări</div>
+        <div class="prod-tag">Tartinabil · Borcan Weck 200ml</div>
+        <p class="prod-desc">Untură + jumări rupte manual + usturoi copt + cimbru de munte. Rețetă de 200 de ani. <em>Produs unic în lume.</em></p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~55g proteină</span><span class="nutr-pill">~560 kcal</span><span class="nutr-pill">~29g grăsimi</span><span class="nutr-pill">~4g glucide</span><span class="nutr-pill">per 100g</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~22 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">47 lei</div>
+        <div class="prod-mult">7× vs. vrac</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">P2</div>
+        <div class="prod-name">Praf de Jumări Afumate</div>
+        <div class="prod-tag">Condiment · Borcan 60g</div>
+        <p class="prod-desc">Jumări măcinate fin cu sare de mare și boia afumată — se presară la final. <span class="hl">Nu există în România, nicăieri.</span></p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~62g proteină</span><span class="nutr-pill">~590 kcal</span><span class="nutr-pill">~31g grăsimi</span><span class="nutr-pill">~2g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~8 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">35–45 lei</div>
+        <div class="prod-mult">5–6× vs. vrac</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">P3</div>
+        <div class="prod-name">Jumări Lacto-Fermentate</div>
+        <div class="prod-tag">Fermentație vie · Borcan Weck 150g · Lanț frigorific</div>
+        <p class="prod-desc">Tehnica Noma aplicată pe jumări. Fermentate natural 5–7 zile. <span class="hl">Nimeni nu a făcut asta nicăieri în lume.</span> HoReCa + online RO.</p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~42g proteină</span><span class="nutr-pill">~420 kcal</span><span class="nutr-pill">~24g grăsimi</span><span class="nutr-pill">~1g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~10 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">55–75 lei</div>
+        <div class="prod-mult">Produs unic</div>
+      </div>
+    </div>
+
+    <div class="prod-card featured">
+      <div>
+        <div class="prod-num">P4 · Top pick</div>
+        <div class="prod-name">Gomasio de Jumări</div>
+        <div class="prod-tag">România × Japonia · Borcan 70g</div>
+        <p class="prod-desc">Condiment japonez de 1000 de ani reconstruit cu jumări + susan negru prăjit + alge nori. <span class="hl">Nu există această combinație nicăieri în lume.</span></p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~48g proteină</span><span class="nutr-pill">~540 kcal</span><span class="nutr-pill">~35g grăsimi</span><span class="nutr-pill">~6g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~14 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">50–65 lei</div>
+        <div class="prod-mult">4–5× vs. vrac</div>
+      </div>
+    </div>
+
+    <div class="prod-card featured">
+      <div>
+        <div class="prod-num">P5</div>
+        <div class="prod-name">Confit cu Lavandă în Grăsime de Rață</div>
+        <div class="prod-tag">Produs de colecție · Borcan Weck 100ml</div>
+        <p class="prod-desc">Jumări gătite la 80°C în grăsime de rață cu lavandă, coajă de portocală și piper roz. Nu există nici în RO, nici altundeva.</p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~30g proteină</span><span class="nutr-pill">~680 kcal</span><span class="nutr-pill">~58g grăsimi</span><span class="nutr-pill">~0g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~28 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">95–120 lei</div>
+        <div class="prod-mult">Tiraj limitat</div>
+      </div>
+    </div>
+
+    <div class="prod-card featured">
+      <div>
+        <div class="prod-num">P6</div>
+        <div class="prod-name">Jumări învelite în Ciocolată Neagră</div>
+        <div class="prod-tag">Cadou · Cutie 80g · 12–14 bucăți</div>
+        <p class="prod-desc">Jumări mici crocante în ciocolată 70% cu fulgi de sare. <span class="hl">Zotter (Austria) face asta cu bacon. Cu jumări e prima dată.</span></p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~31g proteină</span><span class="nutr-pill">~540 kcal</span><span class="nutr-pill">~39g grăsimi</span><span class="nutr-pill">~16g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~22 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">80–95 lei</div>
+        <div class="prod-mult">4× vs. vrac</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">P7</div>
+        <div class="prod-name">Gem de Ceapă Roșie cu Jumări</div>
+        <div class="prod-tag">Tablă de brânzeturi · Borcan 200g</div>
+        <p class="prod-desc">Ceapă caramelizată cu oțet de mere, zahăr brun și jumări sfărâmate crocante la final. În Scoția se vinde un gem simplu la 40–50 lei. Al nostru are jumări — nu există asta nicăieri.</p>
+        <div class="prod-nutr">
+          <span class="nutr-pill">~6g proteină</span><span class="nutr-pill">~185 kcal</span><span class="nutr-pill">~4g grăsimi</span><span class="nutr-pill">~34g glucide</span>
+        </div>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Cost producție</div>
+        <div class="prod-price">~16 lei</div>
+        <div class="prod-cost" style="margin-top:12px;">Preț vânzare</div>
+        <div class="prod-price">55–70 lei</div>
+        <div class="prod-mult">4–5× vs. vrac</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- 5. INOVATII -->
+<div class="sec">
+  <p class="sec-label">Linia viitorului</p>
+  <h2>Patru inovații care<br><em>nu există în România.</em></h2>
+  <div class="gold-line"></div>
+  <p>Aceeași materie primă. Utilaje pe care le ai deja pentru trei din patru produse. Potențial de scalare europeană.</p>
+
+  <div class="prod-grid">
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">I1 · Fitness &amp; Keto</div>
+        <div class="prod-name">Praf Proteic din Jumări</div>
+        <div class="prod-tag">Pork Rind Protein Flour · 250g / 500g vacuum</div>
+        <p class="prod-desc">Jumări uscate și măcinate fin — ingredient keto care înlocuiește pesmetul și făina. <span class="hl">~67g proteină/100g, 0g carbohidrați.</span> Pe Amazon.de nu există echivalent românesc. Zero concurență.</p>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Amazon.de</div>
+        <div class="prod-price">25–35€/kg</div>
+        <div class="prod-mult">Marjă netă ~30–40%</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">I2 · Pack Sport</div>
+        <div class="prod-name">Pack Atletic 25g · 50g</div>
+        <div class="prod-tag">Macros clare pe față · Sală · Glovo post-workout</div>
+        <p class="prod-desc">Aceleași jumări, ambalaj complet diferit. Pungi individuale cu tabel nutrițional mare pe față. <em>25g pack: ~14g proteină · 0g carbs · ~130 kcal.</em> Target: recepție sală, automate fitness, eMAG.</p>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Marjă</div>
+        <div class="prod-price">2–3×</div>
+        <div class="prod-mult">Zero cost adițional</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">I3 · HoReCa &amp; Export</div>
+        <div class="prod-name">Osânză Premium pentru Gătit</div>
+        <div class="prod-tag">Premium Cooking Lard · Borcan 500ml–1L</div>
+        <p class="prod-desc">Grăsime de porc clarificată și filtrată, cu etichetă EN/DE. La Fortnum &amp; Mason Londra se vinde cu <em>8–12£ / 500ml</em>. În România în format premium: inexistent.</p>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Fortnum &amp; Mason</div>
+        <div class="prod-price">8–12£</div>
+        <div class="prod-mult">0 concurenți RO premium</div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div>
+        <div class="prod-num">I4 · Tradiție</div>
+        <div class="prod-name">Pogăci cu Jumări · Kit pentru Acasă</div>
+        <div class="prod-tag">Borcan osânză + jumări · Rețeta pe etichetă</div>
+        <p class="prod-desc">Borcan cu osânză moale + jumări mărunțite. Pe etichetă rețeta completă. Clientul face singur acasă — experiența e a lui, povestea e a ta. <strong>Merge la diaspora, magazine premium, online tot anul.</strong></p>
+      </div>
+      <div class="prod-right">
+        <div class="prod-cost">Investiție</div>
+        <div class="prod-price">Zero</div>
+        <div class="prod-mult">Ancora emoțională a liniei</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- 6. CE ADUCE FIECARE -->
+<div class="sec">
+  <p class="sec-label">Parteneriat</p>
+  <h2>Ce aduce fiecare<br><em>la masă.</em></h2>
+  <div class="gold-line"></div>
+
+  <div class="twobox">
+    <div class="box gold">
+      <div class="box-label">Atelier aduce</div>
+      <h3>Brand, rețete,<br><em>canale de vânzare.</em></h3>
+      <ul>
+        <li><strong>Brandul Așezat</strong> — identitate, design, poveste construită</li>
+        <li><strong>Rețetele</strong> — toate cele 7 produse + 4 inovații, testate</li>
+        <li><strong>Canalele</strong> — HoReCa, retail premium, online, export DACH</li>
+        <li><strong>Ambalajele</strong> — borcan Weck, etichetă kraft, design complet</li>
+        <li><strong>Marketingul</strong> — fotografii, copywriting, prezentări</li>
+        <li><strong>Clienții</strong> — relații deja existente cu restaurante și distribuitori</li>
+      </ul>
+    </div>
+    <div class="box copper">
+      <div class="box-label">Fabrica aduce</div>
+      <h3>Producție, autorizații,<br><em>capacitate de scalare.</em></h3>
+      <ul>
+        <li><strong>Materia primă</strong> — jumări, untură, piele, osânză</li>
+        <li><strong>Producția</strong> — utilaje existente, linie funcțională</li>
+        <li><strong>Autorizațiile EU</strong> — deja obținute, export în 7 țări</li>
+        <li><strong>Capacitatea</strong> — scalare rapidă fără investiții majore</li>
+        <li><strong>Logistica</strong> — depozitare, ambalare în volum</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- 7. PROPUNERE CONCRETA -->
+<div class="sec">
+  <p class="sec-label">Propunerea concretă</p>
+  <h2>Pilot de 3 luni.<br><em>Zero risc pentru fabrică.</em></h2>
+  <div class="gold-line"></div>
+
+  <p>Nu cerem nicio investiție inițială. Propunem un pilot cu un singur produs — Unsoarea de Cluj — produs în tiraje mici, vândut prin canalele Atelier, cu împărțire clară a venitului.</p>
+
+  <div class="split-card">
+    <div class="split-row"><div class="split-label">Durata pilot</div><div class="split-value">3 luni calendaristice</div></div>
+    <div class="split-row"><div class="split-label">Volum inițial</div><div class="split-value">50–100 borcane / lună</div></div>
+    <div class="split-row"><div class="split-label">Produsul pilot</div><div class="split-value">Unsoare de Cluj · Weck 200ml</div></div>
+    <div class="split-row"><div class="split-label">Preț vânzare recomandat</div><div class="split-value">47 lei / borcan</div></div>
+    <div class="split-row"><div class="split-label">Split propus</div><div class="split-value">Fabrica: cost producție + 30% din profit net · Atelier: 70% din profit net</div></div>
+    <div class="split-row"><div class="split-label">Decizie extindere</div><div class="split-value">La 90 de zile, pe baza vânzărilor reale</div></div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-text"><strong>Săptămânile 1–2:</strong> Degustare și ajustare rețetă împreună. Stabilirea compoziției finale, a borcanului și etichetei.</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-text"><strong>Săptămânile 3–4:</strong> Prima producție pilot (50 borcane). Fotografii, materiale de prezentare.</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-text"><strong>Luna 2:</strong> Lansare în primele canale — 2–3 restaurante premium + online. Feedback real de la clienți.</div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-text"><strong>Luna 3:</strong> Evaluare. Dacă merge — extindere la linia completă și discuție despre producție la scară.</div></div>
+  </div>
+
+  <div class="note">
+    <p><strong>Riscul fabricii în pilot:</strong> costul materiei prime pentru 50–100 borcane (~800–1600 lei). Atât. Dacă nu se vinde nimic, pierderea e neglijabilă față de ce se produce zilnic în fabrică. Dacă merge — avem o linie nouă cu marjă de 4–7×.</p>
+  </div>
+</div>
+
+
+<!-- 8. DE CE ACUM -->
+<div class="sec">
+  <p class="sec-label">De ce acum</p>
+  <h2>Fereastra e<br><em>deschisă.</em></h2>
+  <div class="gold-line"></div>
+
+  <div class="twobox">
+    <div class="box gold">
+      <div class="box-label">Tendințe care converg acum</div>
+      <ul>
+        <li><strong>Mișcarea keto / carnivore</strong> — +40%/an în Europa. Jumările sunt produsul perfect: 0g carbs, natural, proteine mari.</li>
+        <li><strong>Return to animal fats</strong> — în UK și DACH, osânza și untura premium sunt trendy. Fortnum &amp; Mason vinde deja.</li>
+        <li><strong>„Made in Romania" ca activ</strong> — autenticitatea românească e căutată. Nu e o scuză. E un argument de vânzare.</li>
+        <li><strong>Amazon DACH pentru food</strong> — logistica FBA permite export fără distribuitor local. Zero investiție inițială în export.</li>
+      </ul>
+    </div>
+    <div class="box copper">
+      <div class="box-label">Ce se întâmplă dacă așteptăm</div>
+      <ul>
+        <li>Piața keto din EU crește. Primii care intră cu un produs serios câștigă reputația și primele review-uri.</li>
+        <li>Amazon penalizează produsele noi — un listing cu 0 review-uri concurează greu cu unul cu 200.</li>
+        <li>Brandul Așezat se construiește acum. Peste 2 ani, cineva o va face. Mai bine noi.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">ATELIER × AȘEZAT</div>
+  <div class="footer-tag">Propunere Confidențială · Linia Jumări · 2026</div>
+  <div style="width:1px;height:36px;background:linear-gradient(to bottom,#c9a96e,transparent);margin:20px auto;"></div>
+  <p style="font-size:11px;color:#333;line-height:1.8;">Acest document conține informații confidențiale. Nu se distribuie fără acordul Atelier.</p>
+</footer>
+
+</body>
+</html>
