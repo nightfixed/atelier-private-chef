@@ -247,6 +247,17 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 .mycryo-note strong{color:var(--copper2);font-weight:500;}
 .mycryo-note em{color:var(--gold);font-style:normal;}
 
+/* NUTRITION */
+.prod-nutrition{border-top:1px solid #1a1a1a;padding-top:16px;margin-top:16px;}
+.nutr-label{font-size:7px;letter-spacing:3px;color:#2a2a2a;text-transform:uppercase;margin-bottom:10px;}
+.nutr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+.nutr-item{text-align:center;padding:8px 4px;background:#080808;border:1px solid #111;}
+.nutr-val{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);font-weight:300;line-height:1;}
+.prod.featured .nutr-val{color:var(--copper2);}
+.nutr-name{font-size:7px;letter-spacing:1px;color:#2a2a2a;margin-top:4px;text-transform:uppercase;}
+.nutr-pkg{margin-top:6px;font-size:8px;letter-spacing:2px;color:#333;text-align:center;padding:5px 8px;border:1px solid #111;border-left:2px solid rgba(201,169,110,.2);}
+.prod.featured .nutr-pkg{border-left-color:rgba(208,144,112,.3);}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   nav{padding:0 24px;}
@@ -279,7 +290,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
     <a href="#s-pilot">Pilot</a>
     <a href="#s-faq">Rezumat</a>
   </nav>
-  <span class="nav-sub">Propunere Parteneriat · Max Savor × Atelier · Linia Așezat</span>
+  <span class="nav-sub">Propunere Parteneriat · Atelier × Așezat · Linia Jumări</span>
 </nav>
 
 <!-- HERO -->
@@ -326,8 +337,6 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
       <p>Occidentul plătește prețuri serioase pentru exact același lucru, numai că îl cheamă altfel: pork rinds, chicharrones, pork crackling.</p>
       <small>Produsul e același. Diferența o face ambalajul, povestea și canalul de vânzare. Atelier aduce exact asta.</small>
       <small style="margin-top:14px;display:block;">Linia de produse va fi lansată sub brandul <em style="color:var(--gold);font-style:normal;">Așezat</em> — identitate construită în jurul ideii că mâncarea românească stă bine la masă, fără să se scuze.</small>
-      <small style="margin-top:10px;display:block;padding:10px 14px;background:#060504;border-left:2px solid rgba(201,169,110,.25);">Propunere adresată exclusiv <strong style="color:#888;">Max Savor</strong> — prima și singura fabrică din România autorizată exclusiv pentru procesare grăsimi animale și jumări. <em style="color:#555;">Infrastructura există. Povestea și canalul lipsesc.</em></small>
-      <small style="margin-top:10px;display:block;padding:10px 14px;background:#060504;border-left:2px solid rgba(201,169,110,.25);">Propunere adresată exclusiv <strong style="color:#888;">Max Savor</strong> — prima și singura fabrică din România autorizată exclusiv pentru procesare grăsimi animale și jumări. <em style="color:#555;">Infrastructura există. Povestea și canalul lipsesc.</em></small>
     </div>
     <div class="stat-grid reveal d3">
       <div class="stat-box">
@@ -711,7 +720,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
         </div>
         <div style="display:flex;gap:12px;align-items:baseline;">
           <span style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);min-width:28px;">2</span>
-          <p style="font-size:12px;color:#444;line-height:1.6;"><strong style="color:#666;">Etichetă cu origine</strong> — „Produs în Ardeal · Vințu de Jos, Alba" pe etichetă crește valoarea percepută imediat, fără costuri de certificare. Max Savor are deja autorizații EU și exportă în 7 țări — originea e un activ, nu o poveste.</p>
+          <p style="font-size:12px;color:#444;line-height:1.6;"><strong style="color:#666;">Etichetă cu origine</strong> — „Produs în Ardeal · Vințu de Jos, Alba" pe etichetă crește valoarea percepută imediat, fără costuri de certificare. Fabrica are deja autorizații EU și exportă în 7 țări — originea e un activ, nu o poveste.</p>
         </div>
         <div style="display:flex;gap:12px;align-items:baseline;">
           <span style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);min-width:28px;">3</span>
@@ -771,6 +780,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-note">Amazon.de echiv: 6–10€</div>
         </div>
       </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~55g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~560</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~29g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~4g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 100g · Pungă kraft cu fereastră</div>
+      </div>
       <div style="display:flex;justify-content:center;padding:22px 0 4px;opacity:.9;">
         <svg width="160" height="178" viewBox="0 0 160 178" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="40" y="14" width="80" height="12" rx="3.5" fill="#3a2a14" stroke="#5a4018" stroke-width="1"/>
@@ -826,6 +845,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-note">Amazon.de echiv: 5–8€</div>
         </div>
       </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~62g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~590</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~31g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~2g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 60g · Borcan mat cu capac negru</div>
+      </div>
       <div style="display:flex;justify-content:center;padding:22px 0 4px;opacity:.9;">
         <svg width="160" height="178" viewBox="0 0 160 178" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="40" y="14" width="80" height="12" rx="3.5" fill="#1a1a1a" stroke="#5a4018" stroke-width="1"/>
@@ -879,6 +908,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-value">55–75 lei</div>
           <div class="econ-note">nicio referință EU — produs unic</div>
         </div>
+      </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~42g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~420</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~24g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~1g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 150g · Borcan Weck · Lanț frigorific</div>
       </div>
       <div style="margin-top:14px;padding:10px 14px;background:#060504;border-left:2px solid #7a5a20;">
         <p style="font-size:10px;color:#555;line-height:1.7;"><strong style="color:#777;">Shelf-life:</strong> Produs viu cu fermentație activă — necesită lanț frigorific. Termen: <strong style="color:#666;">30–45 zile la frigider</strong>. Nu este potrivit pentru export sau stoc lung fără refrigerare. Canal recomandat: HoReCa local + online RO cu livrare 24h.</p>
@@ -942,6 +981,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-note">per borcan 70g</div>
         </div>
       </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~48g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~540</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~35g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~6g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 70g · Borcan negru mat · Tokyo blend</div>
+      </div>
       <div style="display:flex;justify-content:center;padding:22px 0 4px;opacity:.9;">
         <svg width="160" height="178" viewBox="0 0 160 178" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="40" y="14" width="80" height="12" rx="3.5" fill="#0a0a0a" stroke="#5a4018" stroke-width="1"/>
@@ -998,6 +1047,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-value">95–120 lei</div>
           <div class="econ-note">per borcan 100ml</div>
         </div>
+      </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~30g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~680</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~58g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~0g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 100ml · Borcan Weck colecție · Tiraj limitat</div>
       </div>
       <div style="margin-top:14px;padding:10px 14px;background:#060504;border-left:2px solid #7a5a20;">
         <p style="font-size:10px;color:#555;line-height:1.7;"><strong style="color:#777;">Shelf-life:</strong> Necesită pasteurizare în borcan Weck etanș (water bath 82°C / 30 min) pentru producție comercială. Pasteurizat sigilat: <strong style="color:#666;">6–9 luni</strong> la loc răcoros. Nepasteurizat: 2–3 săptămâni la frigider — neviabil pentru distribuție sau export.</p>
@@ -1062,6 +1121,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-note">Zotter (AT) echiv: 9–14€</div>
         </div>
       </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~22g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~540</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~37g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~27g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 80g · Cutie cadou · 12–14 bucăți</div>
+      </div>
       <div style="display:flex;justify-content:center;padding:22px 0 4px;opacity:.9;">
         <svg width="160" height="178" viewBox="0 0 160 178" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="28" y="52" width="104" height="90" rx="3" fill="#1a0e08" stroke="rgba(201,169,110,.38)" stroke-width="1.1"/>
@@ -1116,6 +1185,16 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
           <div class="econ-value">55–70 lei</div>
           <div class="econ-note">Mackays (SCO) echiv: 6–9€</div>
         </div>
+      </div>
+      <div class="prod-nutrition">
+        <div class="nutr-label">Valori nutriționale · per 100g</div>
+        <div class="nutr-grid">
+          <div class="nutr-item"><div class="nutr-val">~6g</div><div class="nutr-name">Proteină</div></div>
+          <div class="nutr-item"><div class="nutr-val">~185</div><div class="nutr-name">kcal</div></div>
+          <div class="nutr-item"><div class="nutr-val">~4g</div><div class="nutr-name">Grăsimi</div></div>
+          <div class="nutr-item"><div class="nutr-val">~34g</div><div class="nutr-name">Glucide</div></div>
+        </div>
+        <div class="nutr-pkg">Ambalaj · 200g · Borcan</div>
       </div>
       <div style="display:flex;justify-content:center;padding:22px 0 4px;opacity:.9;">
         <svg width="160" height="178" viewBox="0 0 160 178" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1832,7 +1911,7 @@ footer{border-top:1px solid #141414;padding:48px;text-align:center;}
 
   <div class="value-grid reveal d2">
     <div class="value-card you">
-      <div class="vc-label">Max Savor · Vințu de Jos, Alba</div>
+      <div class="vc-label">Fabricant · Vințu de Jos, Alba</div>
       <p class="vc-title">Capacitate &<br>Materie Primă</p>
       <ul class="vc-list">
         <li><strong>Prima și singura fabrică din România</strong> autorizată exclusiv pentru procesare grăsimi animale și jumări — monopol de facto pe segment</li>
