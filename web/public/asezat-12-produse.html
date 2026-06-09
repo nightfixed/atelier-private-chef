@@ -224,6 +224,332 @@
       color: #2a2a2a;
       text-transform: uppercase;
     }
+
+    /* SALES STRATEGY */
+    .strategy-section {
+      margin-top: 100px;
+      padding-top: 60px;
+      border-top: 1px solid var(--border);
+    }
+    .strategy-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .strategy-header .sec-label {
+      font-size: 9px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 20px;
+    }
+    .strategy-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .strategy-header h2 em { color: var(--gold); font-style: italic; }
+    .strategy-header p {
+      font-size: 13px;
+      color: #444;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* CHANNEL GRID */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 600px) { .channel-grid { grid-template-columns: 1fr; } }
+    .channel-card {
+      padding: 30px 28px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .channel-card.primary { border-top: 2px solid var(--gold); }
+    .channel-num {
+      font-size: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      color: #1a1a1a;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .channel-card.primary .channel-num { color: rgba(201,169,110,.15); }
+    .channel-name {
+      font-size: 14px;
+      color: #777;
+      font-weight: 400;
+      margin-bottom: 6px;
+      letter-spacing: .5px;
+    }
+    .channel-card.primary .channel-name { color: var(--gold); }
+    .channel-sub {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      margin-bottom: 16px;
+    }
+    .channel-desc {
+      font-size: 12px;
+      color: #444;
+      line-height: 1.8;
+    }
+    .channel-desc strong { color: #555; font-weight: 400; }
+    .channel-products {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .ch-prod {
+      font-size: 9px;
+      padding: 2px 8px;
+      background: #0a0a0a;
+      border: 1px solid #1c1c1c;
+      color: #333;
+      letter-spacing: .5px;
+    }
+    .channel-card.primary .ch-prod { border-color: rgba(201,169,110,.15); color: rgba(201,169,110,.4); }
+    .channel-margin {
+      margin-top: 16px;
+      font-size: 11px;
+      color: #2a2a2a;
+      letter-spacing: 1px;
+    }
+    .channel-card.primary .channel-margin { color: rgba(201,169,110,.3); }
+
+    /* TIMELINE */
+    .timeline {
+      margin-bottom: 48px;
+    }
+    .timeline-title {
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      opacity: .6;
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      margin-bottom: 2px;
+    }
+    .tl-period {
+      padding: 18px 16px;
+      background: #0a0a0a;
+      border: 1px solid #141414;
+      text-align: center;
+    }
+    .tl-period .tl-label {
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      margin-bottom: 4px;
+    }
+    .tl-period .tl-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      color: #333;
+      line-height: 1;
+    }
+    .tl-item.active .tl-period { border-color: rgba(201,169,110,.2); }
+    .tl-item.active .tl-period .tl-val { color: var(--gold); }
+    .tl-content {
+      padding: 18px 20px;
+      background: #0a0a0a;
+      border: 1px solid #141414;
+    }
+    .tl-item.active .tl-content { border-color: rgba(201,169,110,.1); }
+    .tl-content h4 {
+      font-size: 13px;
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .tl-item.active .tl-content h4 { color: #888; }
+    .tl-content p {
+      font-size: 12px;
+      color: #383838;
+      line-height: 1.7;
+    }
+    .tl-item.active .tl-content p { color: #444; }
+    .tl-content .tl-kpi {
+      margin-top: 10px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .kpi {
+      font-size: 10px;
+      color: rgba(201,169,110,.35);
+      letter-spacing: 1px;
+    }
+
+    /* PRICING TABLE */
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 48px;
+      font-size: 12px;
+    }
+    .pricing-table th {
+      text-align: left;
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      padding: 12px 16px;
+      border-bottom: 1px solid #141414;
+      font-weight: 400;
+    }
+    .pricing-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #0f0f0f;
+      color: #444;
+      vertical-align: top;
+    }
+    .pricing-table tr:hover td { background: #0a0a0a; }
+    .pricing-table .prod-name { color: #666; }
+    .pricing-table .price-fab { color: #333; }
+    .pricing-table .price-retail { color: var(--gold); opacity: .7; }
+    .pricing-table .margin-x { color: #2a2a2a; }
+    .pricing-table .canal { color: #333; font-size: 10px; }
+
+    /* CONTENT STRATEGY */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 600px) { .content-grid { grid-template-columns: 1fr; } }
+    .content-card {
+      padding: 24px 22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .content-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+      opacity: .4;
+    }
+    .content-type {
+      font-size: 11px;
+      color: #555;
+      font-weight: 400;
+      margin-bottom: 8px;
+      letter-spacing: .5px;
+    }
+    .content-desc {
+      font-size: 11px;
+      color: #333;
+      line-height: 1.7;
+    }
+    .content-viral {
+      margin-top: 10px;
+      font-size: 10px;
+      color: rgba(201,169,110,.3);
+      font-style: italic;
+    }
+
+    /* EXPORT BOX */
+    .export-box {
+      padding: 36px 40px;
+      background: #080808;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      margin-bottom: 48px;
+    }
+    .export-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: #fff;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+    .export-box h3 em { color: var(--gold); }
+    .export-box .export-sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      margin-bottom: 24px;
+    }
+    .export-markets {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) { .export-markets { grid-template-columns: repeat(2,1fr); } }
+    .market-cell {
+      padding: 16px 12px;
+      background: #0a0a0a;
+      border: 1px solid #141414;
+      text-align: center;
+    }
+    .market-flag { font-size: 20px; margin-bottom: 6px; }
+    .market-name { font-size: 10px; color: #444; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .market-note { font-size: 10px; color: #2a2a2a; line-height: 1.5; }
+    .export-desc {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .export-desc strong { color: #555; font-weight: 400; }
+
+    /* BIG NUMBER */
+    .big-numbers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 600px) { .big-numbers { grid-template-columns: 1fr; } }
+    .big-num-cell {
+      padding: 28px 24px;
+      background: #0a0a0a;
+      border: 1px solid #141414;
+      text-align: center;
+    }
+    .big-num-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      color: var(--gold);
+      opacity: .5;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .big-num-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #2a2a2a; margin-bottom: 6px; }
+    .big-num-desc { font-size: 11px; color: #333; line-height: 1.6; }
+
+    /* CONCLUSION */
+    .conclusion-box {
+      padding: 40px 44px;
+      background: #080808;
+      border: 1px solid rgba(201,169,110,.1);
+      margin-bottom: 48px;
+    }
+    .conclusion-box p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 2.5vw, 22px);
+      color: #777;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+    .conclusion-box p em { color: var(--gold); font-style: italic; }
+    .conclusion-box p strong { color: #999; font-style: normal; font-weight: 400; }
   </style>
 </head>
 <body>
@@ -874,6 +1200,453 @@
   </div>
 </div>
 
+
+<!-- SALES & MARKETING STRATEGY -->
+<div class="strategy-section">
+
+  <div class="strategy-header">
+    <span class="sec-label">Strategie de vânzări & marketing</span>
+    <h2>Tu produci.<br><em>Noi vindem.</em></h2>
+    <p>Tot ce urmează e un plan gândit până la detaliu — canale, prețuri, conținut, export, timeline. Fabricii îi rămâne un singur lucru de făcut: să producă. Restul e rezolvat.</p>
+    <div class="gold-line"></div>
+  </div>
+
+
+  <!-- BIG NUMBERS -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Potențialul în cifre</div>
+  <div class="big-numbers">
+    <div class="big-num-cell">
+      <div class="big-num-val">12</div>
+      <div class="big-num-label">Produse lansabile</div>
+      <div class="big-num-desc">Din aceeași materie primă. Fără investiții majore noi în echipamente.</div>
+    </div>
+    <div class="big-num-cell">
+      <div class="big-num-val">5×</div>
+      <div class="big-num-label">Marjă față de vrac</div>
+      <div class="big-num-desc">Același kilogram de porc — de 5 ori mai mult per unitate vândută cu brand și ambalaj.</div>
+    </div>
+    <div class="big-num-cell">
+      <div class="big-num-val">7</div>
+      <div class="big-num-label">Canale de distribuție</div>
+      <div class="big-num-desc">De la supermarket și HoReCa la export direct și abonamente online.</div>
+    </div>
+  </div>
+
+
+  <!-- CHANNELS -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Canale de distribuție · Prioritizate</div>
+  <div class="channel-grid">
+
+    <div class="channel-card primary">
+      <div class="channel-num">01</div>
+      <div class="channel-name">HoReCa Premium Cluj & național</div>
+      <div class="channel-sub">Start imediat · Fără intermediar</div>
+      <p class="channel-desc">Restaurantele fine dining și bistro-urile premium din Cluj cumpără constant produse de calitate. <strong>Nu negociază prețul dacă produsul e consistent.</strong> Un restaurant care comandă Glacée de Porc, Rillettes și Untură Afumată lunar = contract recurent de 300–800 lei/lună. 10 restaurante = 3.000–8.000 lei/lună fără niciun cost de marketing.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Glacée de Porc</span>
+        <span class="ch-prod">Rillettes</span>
+        <span class="ch-prod">Untură Afumată</span>
+        <span class="ch-prod">Grill Fat</span>
+        <span class="ch-prod">Pork Belly Bites</span>
+      </div>
+      <div class="channel-margin">Marjă: ×4–5 · Comenzi lunare recurente</div>
+    </div>
+
+    <div class="channel-card primary">
+      <div class="channel-num">02</div>
+      <div class="channel-name">eMAG Marketplace</div>
+      <div class="channel-sub">Cea mai rapidă intrare online · Trafic existent</div>
+      <p class="channel-desc">eMAG are 11M+ vizitatori lunari. Nu trebuie construit trafic — există deja. Categoriile <em>„produse tradiționale"</em> și <em>„alimente bio/naturale"</em> sunt în creștere. <strong>Un listing bun cu fotografii profesionale și descriere corectă bate orice competitor existent.</strong> Comision eMAG: 8–15%. Restul rămâne.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Ghee de Porc</span>
+        <span class="ch-prod">Pesmet de Porc</span>
+        <span class="ch-prod">Pork Popcorn</span>
+        <span class="ch-prod">Supă de Oase</span>
+        <span class="ch-prod">Grill Fat</span>
+        <span class="ch-prod">Făină Proteică</span>
+      </div>
+      <div class="channel-margin">Marjă netă: ×3.5–4.5 · Volume scalabil</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">03</div>
+      <div class="channel-name">Magazine Specialty Food</div>
+      <div class="channel-sub">Delicatese · Bio · Produse artizanale</div>
+      <p class="channel-desc">Magazine ca Sano Vita, Naturalia, La Deux, piețe artizanale premium (Piața Unirii Cluj, piețe de weekend București). Clientul care intră în aceste magazine caută exact ce producem — proveniență clară, ingrediente curate, produs neobișnuit. <strong>Prețul raft poate fi cu 20–30% mai mare decât online.</strong></p>
+      <div class="channel-products">
+        <span class="ch-prod">Rillettes cu Trufă</span>
+        <span class="ch-prod">Untură Maturată</span>
+        <span class="ch-prod">Pastă Picantă</span>
+        <span class="ch-prod">Glacée de Porc</span>
+      </div>
+      <div class="channel-margin">Marjă: ×3–4 · Imagine de brand puternică</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">04</div>
+      <div class="channel-name">Shop Online Propriu</div>
+      <div class="channel-sub">Marjă maximă · Control complet · Brand</div>
+      <p class="channel-desc">Website simplu (Shopify sau WooCommerce, 50–100€/lună) + Instagram ca motor de trafic. <strong>Marja cea mai bună — zero comision intermediar.</strong> Funcționează prin comenzi minime (coș de 3–5 produse) și abonamente lunare pentru clienți fideli. Livrare prin Fan Courier sau Cargus, integrare automată.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Toate produsele</span>
+        <span class="ch-prod">Bundle-uri cadou</span>
+        <span class="ch-prod">Abonament lunar</span>
+      </div>
+      <div class="channel-margin">Marjă: ×5–6 · Relație directă cu clientul</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">05</div>
+      <div class="channel-name">Coșuri Cadou Corporate</div>
+      <div class="channel-sub">B2B · Sezonier · Marjă foarte bună</div>
+      <p class="channel-desc">Companii care oferă coșuri cadou de Crăciun / Paște angajaților și partenerilor. Un coș cu 4–5 produse premium (Rillettes Trufă + Ghee + Pesmet + Pork Popcorn + Grill Fat) poate fi vândut la <strong>200–350 lei</strong> companiei, cu cost de producție de 60–80 lei. Comenzi de 50–500 coșuri odată.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Rillettes cu Trufă</span>
+        <span class="ch-prod">Ghee de Porc</span>
+        <span class="ch-prod">Pesmet Premium</span>
+        <span class="ch-prod">Pork Popcorn</span>
+      </div>
+      <div class="channel-margin">Marjă: ×3.5–5 · Comenzi sezoniere mari</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">06</div>
+      <div class="channel-name">Magazine Sport & Nutriție</div>
+      <div class="channel-sub">Protein · Keto · Fitness</div>
+      <p class="channel-desc">Magazine ca Myprotein România, Fitday, Nutrimax sau orice magazin de suplimente. <strong>Făina Proteică și Pork Popcorn sunt produse perfect poziționate pentru acest canal.</strong> Clientul de fitness plătește fără ezitare 50–70 lei pentru o pungă de proteină dacă storytelling-ul e corect și macros sunt clare pe etichetă.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Făină Proteică de Porc</span>
+        <span class="ch-prod">Pork Popcorn</span>
+        <span class="ch-prod">Pesmet de Porc</span>
+      </div>
+      <div class="channel-margin">Marjă: ×4–5 · Clientul nu negociază</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">07</div>
+      <div class="channel-name">Glovo / Bolt Food</div>
+      <div class="channel-sub">Livrare rapidă Cluj · Conversie pe impuls</div>
+      <p class="channel-desc">Pentru produse care pot fi livrate la temperatură ambientală (Pork Popcorn, Pesmet, Pastă Picantă, Ghee). <strong>Target: cine pregătește o tablă de brânzeturi sau o seară acasă și vrea ceva special la 30 minute distanță.</strong> Comision 25–30%, dar volumul și frecvența compensează.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Pork Popcorn</span>
+        <span class="ch-prod">Pastă Picantă</span>
+        <span class="ch-prod">Ghee de Porc</span>
+        <span class="ch-prod">Grill Fat</span>
+      </div>
+      <div class="channel-margin">Marjă: ×2.5–3.5 · Vizibilitate + volum</div>
+    </div>
+
+    <div class="channel-card">
+      <div class="channel-num">08</div>
+      <div class="channel-name">Amazon DE / UK · Export Direct</div>
+      <div class="channel-sub">Piața keto occidentală · Prețuri 3–5×</div>
+      <p class="channel-desc">Amazon.de are 300M+ vizitatori lunari. Categoriile <em>pork rinds, bone broth, lard</em> sunt în creștere accelerată. <strong>Același produs vândut în Germania la 8–14€ față de 15–20 lei în România.</strong> FBA (Fulfilled by Amazon) — trimite paleta la depozitul Amazon, ei livrează. Nu trebuie gestionat nimic individual.</p>
+      <div class="channel-products">
+        <span class="ch-prod">Pork Popcorn</span>
+        <span class="ch-prod">Ghee de Porc</span>
+        <span class="ch-prod">Supă de Oase</span>
+        <span class="ch-prod">Făină Proteică</span>
+        <span class="ch-prod">Pesmet de Porc</span>
+      </div>
+      <div class="channel-margin">Marjă: ×6–10 · Piața cu cel mai mare potențial</div>
+    </div>
+
+  </div>
+
+
+  <!-- CONTENT STRATEGY -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Strategie de conținut · Ce creăm și unde</div>
+  <div class="content-grid">
+
+    <div class="content-card">
+      <div class="content-icon">📱</div>
+      <div class="content-type">Instagram Reels · TikTok</div>
+      <p class="content-desc">Video scurt (15–30 sec): procesul de producție al fiecărui produs — ghee clarificându-se, pork popcorn expandând la 200°C, rillettes fierbând 4 ore. Procesul <em>e</em> conținutul. Zero costuri de producție sofisticate — un telefon și lumină naturală.</p>
+      <p class="content-viral">„Știai că șoriciul se expandează ca popcornul?" = viral garantat</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-icon">🍽️</div>
+      <div class="content-type">Rețete · YouTube · Blog</div>
+      <p class="content-desc">Fiecare produs are 3–5 rețete naturale în jurul lui. Cotlet de pui pânat în pesmet de porc. Ou ochiuri cu pork popcorn. Pâine cu untură afumată și roșii. Conținut evergreen — o rețetă postată acum generează trafic timp de ani.</p>
+      <p class="content-viral">SEO puternic: „rețete keto porc românesc" = trafic organic gratuit</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-icon">📦</div>
+      <div class="content-type">Seeding · Influenceri food</div>
+      <p class="content-desc">Un pachet de 5 produse (cost: 80–120 lei) trimis unui creator de food content cu 30k+ urmăritori. Un singur Reel bun înseamnă 50.000–200.000 views. La 10 creatoricontactați, 3–4 postează. ROI imposibil de obținut altfel.</p>
+      <p class="content-viral">Borcanul Weck cu sfoară de iută = se fotografiază singur</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-icon">💬</div>
+      <div class="content-type">Comunități keto / carnivore</div>
+      <p class="content-desc">Grupuri Facebook și Reddit cu sute de mii de membri activi în RO și diaspora. Postezi un produs nou cu macros clare = zeci de comenzi din primul post, fără nici un cost de publicitate. Această audiență e loială și recomandă activ.</p>
+      <p class="content-viral">„70g proteină din porc românesc, 0 carbohidrați" = vândut din primul comentariu</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-icon">📰</div>
+      <div class="content-type">PR · Presă food & lifestyle</div>
+      <p class="content-desc">Publicații ca Savoarea, revista Gustos, bloguri culinare mari. Un articol de tip <em>„primul ghee de porc românesc"</em> sau <em>„bone broth din Ardeal"</em> nu costă nimic dacă produsul e cu adevărat unic — și toate cele 12 produse sunt.</p>
+      <p class="content-viral">Unicitatea e argumentul — zero alt competitor în RO</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-icon">🎁</div>
+      <div class="content-type">Email Marketing · Abonamente</div>
+      <p class="content-desc">Lista de email construită din primele comenzi online. Un email lunar cu un produs nou sau o rețetă + link comandă. Cost: zero. Rată de conversie a email marketingului: 3–5×  mai mare decât social media pentru comenzi repetate.</p>
+      <p class="content-viral">Clientul care cumpără o dată, cumpără de 3–4 ori/an dacă e ținut în contact</p>
+    </div>
+
+  </div>
+
+
+  <!-- LAUNCH TIMELINE -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Plan de lansare · Luna 1 → Luna 12</div>
+  <div class="timeline">
+
+    <div class="tl-item active">
+      <div class="tl-period"><div class="tl-label">Luna</div><div class="tl-val">1–2</div></div>
+      <div class="tl-content">
+        <h4>Pilot local Cluj — 3 produse · 500 unități totale</h4>
+        <p>Lansare cu <strong>Unsoare de Cluj</strong> (flagship), <strong>Pork Popcorn</strong> (snack accesibil, rotație rapidă) și <strong>Ghee de Porc</strong> (audiență keto). Distribuție: 5 restaurante + eMAG + Instagram direct. Obiectiv: validat prețul, validat cererea, validat ce produs se vinde primul. Zero risc — dacă nu merge, ai pierdut câteva ore de producție.</p>
+        <div class="tl-kpi">
+          <span class="kpi">Target: 500 unități vândute</span>
+          <span class="kpi">3 canale active</span>
+          <span class="kpi">Primele recenzii online</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item active">
+      <div class="tl-period"><div class="tl-label">Luna</div><div class="tl-val">3–4</div></div>
+      <div class="tl-content">
+        <h4>Extindere sortiment + primele magazine specialty</h4>
+        <p>Adăugat în portofoliu: <strong>Pesmet de Porc</strong>, <strong>Pastă Picantă</strong>, <strong>Supă de Oase</strong>. Intrare în 2–3 magazine de delicatese din Cluj și București. Primele pachete de seeding trimise la 5 creatoriInstagram food. Fotografii profesionale pentru toate produsele — 1 sesiune foto, o zi, costul se amortizează în primul an.</p>
+        <div class="tl-kpi">
+          <span class="kpi">6 produse active</span>
+          <span class="kpi">Magazine specialty</span>
+          <span class="kpi">Seeding 5 influenceri</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period"><div class="tl-label">Luna</div><div class="tl-val">5–6</div></div>
+      <div class="tl-content">
+        <h4>Online propriu + magazin sport + coșuri cadou Paște</h4>
+        <p>Lansare shop online propriu (Shopify, 3 zile implementare). Canal sport/fitness cu Făina Proteică și Pork Popcorn. Primul sezon de coșuri cadou (Paște) — 50–100 coșuri corporate la 150–200 lei/coș. Primele comenzi internaționale prin DHL direct din site (diaspora română din Germania, Austria, UK).</p>
+        <div class="tl-kpi">
+          <span class="kpi">Shop online activ</span>
+          <span class="kpi">Canal fitness</span>
+          <span class="kpi">Coșuri cadou Paște</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period"><div class="tl-label">Luna</div><div class="tl-val">7–9</div></div>
+      <div class="tl-content">
+        <h4>Amazon DE/UK + private label occidental</h4>
+        <p>One-pager produs în EN/DE trimis la 20 importatori și branduri specialty food din Germania, Austria, UK. Listare produse pe Amazon.de prin FBA. Contactat potențiali clienți private label: branduri keto occidentale care vor să vândă <em>„Romanian Pork Rinds Premium"</em> sub numele lor. Tu furnizezi, ei vând la 3–5× prețul tău de ieșire.</p>
+        <div class="tl-kpi">
+          <span class="kpi">Amazon DE live</span>
+          <span class="kpi">20 contacte export</span>
+          <span class="kpi">Primul contract private label</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-period"><div class="tl-label">Luna</div><div class="tl-val">10–12</div></div>
+      <div class="tl-content">
+        <h4>Rillettes cu Trufă (ediție limitată Crăciun) + scalare</h4>
+        <p>Lansare Rillettes cu Trufă în octombrie — produs sezonier premium, tiraj anunțat (ex: 200 borcane), precomandă online. Coșuri cadou corporate Crăciun — sezonul cel mai mare. Review complet: ce produs a mers cel mai bine, ce canal a dat cel mai bun ROI, ce se scalează în anul 2. La finalul lunii 12: toate cele 12 produse cel puțin testate, 3–4 cu vânzări recurente stabile.</p>
+        <div class="tl-kpi">
+          <span class="kpi">12 produse lansate</span>
+          <span class="kpi">Coșuri cadou Crăciun</span>
+          <span class="kpi">Review + plan Anul 2</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- PRICING TABLE -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Structura de preț · Canal principal recomandat</div>
+  <table class="pricing-table">
+    <thead>
+      <tr>
+        <th>Produs</th>
+        <th>Cost fabrică</th>
+        <th>Preț raft / online</th>
+        <th>Marjă</th>
+        <th>Canal principal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="prod-name">Ghee de Porc · 200ml</td>
+        <td class="price-fab">~7.5 lei</td>
+        <td class="price-retail">36–48 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">eMAG · Shop propriu · Amazon DE</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Pesmet de Porc · 150g</td>
+        <td class="price-fab">~6.5 lei</td>
+        <td class="price-retail">30–40 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">eMAG · Magazine sport · Amazon DE</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Untură Afumată · 200ml</td>
+        <td class="price-fab">~8 lei</td>
+        <td class="price-retail">38–52 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">HoReCa · Magazine specialty · Shop</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Glacée de Porc · 100ml</td>
+        <td class="price-fab">~12 lei</td>
+        <td class="price-retail">52–68 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">HoReCa exclusiv · Chefi</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Pastă Picantă · 80g</td>
+        <td class="price-fab">~7 lei</td>
+        <td class="price-retail">34–46 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">eMAG · Shop propriu · Glovo</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Supă de Oase · 250ml</td>
+        <td class="price-fab">~8 lei</td>
+        <td class="price-retail">24–34 lei</td>
+        <td class="margin-x">×3.5</td>
+        <td class="canal">eMAG · Magazine bio · Abonament</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Pork Belly Bites · 150g</td>
+        <td class="price-fab">~10 lei</td>
+        <td class="price-retail">45–62 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">HoReCa · Specialty · Cadou</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Untură Maturată · 150ml</td>
+        <td class="price-fab">~7 lei</td>
+        <td class="price-retail">32–45 lei</td>
+        <td class="margin-x">×5</td>
+        <td class="canal">Specialty food · Export FR/ES</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Grill Fat · 250g</td>
+        <td class="price-fab">~8 lei</td>
+        <td class="price-retail">32–45 lei</td>
+        <td class="margin-x">×4.5</td>
+        <td class="canal">eMAG · Sezon BBQ · Amazon DE</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Pork Popcorn · 40g</td>
+        <td class="price-fab">~2.5 lei</td>
+        <td class="price-retail">15–20 lei</td>
+        <td class="margin-x">×7</td>
+        <td class="canal">eMAG · Sport · Glovo · Amazon DE</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Rillettes cu Trufă · 100g</td>
+        <td class="price-fab">~16 lei</td>
+        <td class="price-retail">90–120 lei</td>
+        <td class="margin-x">×6</td>
+        <td class="canal">Specialty · Cadou corporate · Export FR</td>
+      </tr>
+      <tr>
+        <td class="prod-name">Făină Proteică · 250g</td>
+        <td class="price-fab">~14 lei</td>
+        <td class="price-retail">45–60 lei</td>
+        <td class="margin-x">×3.5</td>
+        <td class="canal">Magazine sport · Amazon DE (30–40€/kg)</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- EXPORT -->
+  <div class="export-box">
+    <h3>Exportul —<br><em>cel mai mare multiplicator.</em></h3>
+    <div class="export-sub">De ce piața occidentală e prioritatea anului 2</div>
+    <div class="export-markets">
+      <div class="market-cell">
+        <div class="market-flag">🇩🇪</div>
+        <div class="market-name">Germania</div>
+        <div class="market-note">Piața keto #1 în EU. Pork rinds la 8–14€/80g. Diaspora română 800k+ persoane.</div>
+      </div>
+      <div class="market-cell">
+        <div class="market-flag">🇦🇹</div>
+        <div class="market-name">Austria</div>
+        <div class="market-note">Schmalz (untură) e produs cultural. Piața premium mică dar cu preț ridicat.</div>
+      </div>
+      <div class="market-cell">
+        <div class="market-flag">🇬🇧</div>
+        <div class="market-name">UK</div>
+        <div class="market-note">Pork crackling e snack național. Branduri ca Awfully Posh vând la 12€/80g.</div>
+      </div>
+      <div class="market-cell">
+        <div class="market-flag">🇫🇷</div>
+        <div class="market-name">Franța</div>
+        <div class="market-note">Rillettes e produs cultural. Rillettes cu trufă — piața naturală. Export direct posibil.</div>
+      </div>
+    </div>
+    <p class="export-desc">
+      Max Savor exportă deja în 7 țări — infrastructura de export există. <strong>Nu trebuie construit nimic nou.</strong> Trebuie adăugat doar produsul ambalat și etichetat corect pe același flux de export existent. Un container de Pork Popcorn la 8€/80g în Germania față de 18 lei în România înseamnă o diferență de <strong>5–6× la același cost de producție</strong>. Primul pas: un one-pager în EN/DE cu specificații tehnice, certificări disponibile și prețuri de ieșire — trimis la 20 importatori și branduri specialty food din DACH și UK. Când apare un interes serios, negociem împreună.
+    </p>
+  </div>
+
+
+  <!-- WHAT FACTORY DOES / WHAT WE DO -->
+  <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:20px;">Împărțirea responsabilităților</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:48px;">
+    <div style="padding:28px;background:#0a0a0a;border:1px solid #141414;border-top:2px solid #222;">
+      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#333;margin-bottom:16px;">Fabrica produce</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Materie primă: porc, grăsime, oase, șorici</li>
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Procesare conform rețetelor stabilite</li>
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Ambalare în borcanele/pungile specificate</li>
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Certificări sanitare (deja existente)</li>
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Energie la cost redus (fotovoltaic)</li>
+        <li style="font-size:12px;color:#3a3a3a;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:#2a2a2a;">—</span>Consistența produsului pe loturi</li>
+      </ul>
+    </div>
+    <div style="padding:28px;background:#0a0a0a;border:1px solid rgba(201,169,110,.15);border-top:2px solid var(--gold);">
+      <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(201,169,110,.4);margin-bottom:16px;">Noi aducem</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Rețetele finale și procesele exacte</li>
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Brand, design ambalaj, etichetare</li>
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Canale de distribuție și relații cu clienții</li>
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Conținut foto/video pentru toate produsele</li>
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Strategie online, eMAG, Amazon, export</li>
+        <li style="font-size:12px;color:#555;padding-left:16px;position:relative;"><span style="position:absolute;left:0;color:var(--gold);opacity:.4;">—</span>Contactele HoReCa și magazinele specialty</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- CONCLUSION -->
+  <div class="conclusion-box">
+    <p>
+      Fabrica face ce face cel mai bine: <em>produce</em>. Noi facem ce facem cel mai bine: <em>vindem</em>.<br>
+      <strong>Nu există niciun alt producător de porc din România care are în același timp materia primă, autorizările, infrastructura de export și un partener cu strategie completă de piață.</strong><br>
+      Aceasta nu e o idee. E un plan gata de executat, <em>cu prima livrare posibilă în 30 de zile.</em>
+    </p>
+  </div>
+
+</div>
+<!-- END STRATEGY -->
 
 <footer>
   12 produse · Toate din porc românesc · Niciunul pe raftul din România
