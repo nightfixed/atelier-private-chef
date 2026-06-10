@@ -108,12 +108,18 @@
     }
     .product.highlight .product-title .subtitle { color: var(--gold); opacity: .7; }
     .price-tag {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-dim);
-      letter-spacing: 1px;
-      white-space: nowrap;
-      padding-top: 6px;
+      padding-top: 4px;
+      text-align: right;
+      line-height: 1.5;
     }
+    .price-fmt { font-size: 10px; color: #383838; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; justify-content: flex-end; margin-bottom: 2px; }
+    .pv { font-size: 13px; letter-spacing: .5px; }
+    .pv.gold { color: rgba(201,169,110,.75); }
+    .pv.dim { color: #444; font-size: 12px; }
+    .pw { font-size: 9px; color: #2e2e2e; letter-spacing: 1px; text-transform: uppercase; }
 
     /* MACROS */
     .macros {
@@ -571,7 +577,7 @@
       <h2>Ghee de Porc</h2>
       <div class="subtitle">Clarified Pork Butter · Untură Purificată</div>
     </div>
-    <div class="price-tag">Borcan 200ml · 36–48 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 200ml</div><div class="price-row"><span class="pv gold">36–48 lei</span><span class="pw">specialty · Weck · brand · poveste</span></div><div class="price-row"><span class="pv dim">22–28 lei</span><span class="pw">supermarket · capac metalic · volum</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -622,7 +628,7 @@
       <h2>Pesmet de Porc</h2>
       <div class="subtitle">Pork Panko · Pesmet Fără Gluten</div>
     </div>
-    <div class="price-tag">Pungă 150g · 30–40 lei</div>
+    <div class="price-tag"><div class="price-fmt">Pungă 150g</div><div class="price-row"><span class="pv gold">30–40 lei</span><span class="pw">specialty · pungă kraft · brand</span></div><div class="price-row"><span class="pv dim">18–24 lei</span><span class="pw">supermarket · pungă generică · volum</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -674,7 +680,7 @@
       <h2>Untură Afumată</h2>
       <div class="subtitle">Smoked Lard · Grăsime Aromată la Rece</div>
     </div>
-    <div class="price-tag">Borcan 200ml · 38–52 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 200ml</div><div class="price-row"><span class="pv gold">38–52 lei</span><span class="pw">specialty · fag real · Weck · terroir</span></div><div class="price-row"><span class="pv dim">24–32 lei</span><span class="pw">supermarket · aromă fum · capac standard</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în format premium în România</div>
@@ -726,7 +732,7 @@
       <h2>Glacée de Porc</h2>
       <div class="subtitle">Fond Concentrat · Jus de Viande Réduit</div>
     </div>
-    <div class="price-tag">Borcan 100ml · 52–68 lei · HoReCa</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 100ml</div><div class="price-row"><span class="pv gold">52–68 lei</span><span class="pw">HoReCa · fine dining · 12–16h fierbere</span></div><div class="price-row"><span class="pv dim">32–42 lei</span><span class="pw">supply restaurante · comandă volum</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent pe raft în România</div>
@@ -780,7 +786,7 @@
       <h2>Pastă Picantă de Jumări</h2>
       <div class="subtitle">Tartinabilă Asian-Style · Pork Gochujang</div>
     </div>
-    <div class="price-tag">Borcan 80g · 34–46 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 80g</div><div class="price-row"><span class="pv gold">34–46 lei</span><span class="pw">specialty · ardei naturali · brand</span></div><div class="price-row"><span class="pv dim">20–26 lei</span><span class="pw">supermarket · pasteurizat industrial</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -836,7 +842,7 @@
       <h2>Supă de Oase</h2>
       <div class="subtitle">Bone Broth Premium · Concentrat Natural</div>
     </div>
-    <div class="price-tag">Sticlă 250ml · 24–34 lei</div>
+    <div class="price-tag"><div class="price-fmt">Sticlă 250ml</div><div class="price-row"><span class="pv gold">24–34 lei</span><span class="pw">specialty · 18–24h fierbere · sticlă</span></div><div class="price-row"><span class="pv dim">15–20 lei</span><span class="pw">supermarket · fierbere 4–6h · PET</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în format premium în România</div>
@@ -900,7 +906,7 @@
       <h2>Pork Belly Bites</h2>
       <div class="subtitle">Cuburi Piept de Porc Glazurat · Aperitiv Premium</div>
     </div>
-    <div class="price-tag">Cutie 150g · 45–62 lei</div>
+    <div class="price-tag"><div class="price-fmt">Cutie 150g</div><div class="price-row"><span class="pv gold">45–62 lei</span><span class="pw">specialty · glazură artizanală · cutie premium</span></div><div class="price-row"><span class="pv dim">28–38 lei</span><span class="pw">supermarket · glazură standard · pungă</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în format artizanal în România</div>
@@ -953,7 +959,7 @@
       <h2>Untură Maturată</h2>
       <div class="subtitle">Aged Lard · Manteca Românească</div>
     </div>
-    <div class="price-tag">Borcan 150ml · 32–45 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 150ml</div><div class="price-row"><span class="pv gold">32–45 lei</span><span class="pw">specialty · 30–60 zile maturare · Weck</span></div><div class="price-row"><span class="pv dim">20–28 lei</span><span class="pw">supermarket · nematurată · capac twist</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -1005,7 +1011,7 @@
       <h2>Grill Fat</h2>
       <div class="subtitle">Grăsime Aromată pentru Grătar · Grillschmalz</div>
     </div>
-    <div class="price-tag">Borcan 250g · 32–45 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 250g</div><div class="price-row"><span class="pv gold">32–45 lei</span><span class="pw">specialty · ierburi proaspete · brand</span></div><div class="price-row"><span class="pv dim">20–26 lei</span><span class="pw">supermarket · extracte aromate · generic</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în format premium în România</div>
@@ -1059,7 +1065,7 @@
       <h2>Pork Popcorn</h2>
       <div class="subtitle">Șorici Pufos · Snack Premium Instant</div>
     </div>
-    <div class="price-tag">Pungă 40g · 15–20 lei</div>
+    <div class="price-tag"><div class="price-fmt">Pungă 40g</div><div class="price-row"><span class="pv gold">15–20 lei</span><span class="pw">specialty · N₂ · pungă metalizată · brand</span></div><div class="price-row"><span class="pv dim">10–14 lei</span><span class="pw">supermarket · pungă standard · volum</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în format premium / ambalat în România</div>
@@ -1114,7 +1120,7 @@
       <h2>Rillettes cu Trufă</h2>
       <div class="subtitle">Rillettes de Porc × Truffe Noire · Ediție Limitată</div>
     </div>
-    <div class="price-tag">Borcan 100g · 90–120 lei · Tiraj limitat</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 100g · tiraj limitat</div><div class="price-row"><span class="pv gold">90–120 lei</span><span class="pw">fine dining · 3g trufă reală/100g · Weck</span></div><div class="price-row"><span class="pv dim">55–70 lei</span><span class="pw">delicatesen · fără trufă · borcan standard</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -1133,7 +1139,7 @@
     </div>
     <div class="section-block">
       <div class="section-label">Cum se produce</div>
-      <p class="section-text">Carne de porc (ceafă + burtă în proporție 60/40) se gătește la foc mic în propria grăsime timp de 4–5 ore până se desface complet. Se zdrobește cu furculița (nu se mixează — textura rillettes e grosieră), se amestecă cu trufa neagră rasă (3g trufă/100g produs), sare, piper alb, cimbru. Se toarnă în borcane Weck 100ml cu grăsime deasupra pentru protecție. Se sterilizează.</p>
+      <p class="section-text">Carne de porc (ceafă + burtă în proporție 60/40) se gătește la foc mic în propria grăsime timp de 4–5 ore până se desface complet. Se zdrobește cu furculița (nu se mixează — textura rillettes e grosieră), se amestecă cu trufa neagră rasă (3g trufă/100g produs), sare, piper alb, cimbru. Se toarnă în borcane<svg style="display:inline-block;vertical-align:middle;margin:0 3px 2px 1px;opacity:.6;" width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="1" width="8" height="2" rx="1" fill="#c9a96e"/><rect x="2" y="3" width="10" height="1.5" rx=".5" fill="rgba(201,169,110,.5)"/><path d="M1.5 4.5 Q1 5.5 1 7 L1 14.5 Q1 16 2.5 16.5 L11.5 16.5 Q13 16 13 14.5 L13 7 Q13 5.5 12.5 4.5 Z" fill="rgba(201,169,110,.08)" stroke="rgba(201,169,110,.45)" stroke-width="1"/><ellipse cx="7" cy="16.5" rx="4.5" ry=".8" fill="rgba(201,169,110,.15)"/></svg>Weck 100ml cu grăsime deasupra pentru protecție. Se sterilizează.</p>
       <div class="ing-list">
         <span class="ing-tag">Carne porc (ceafă + burtă)</span>
         <span class="ing-tag">Trufă neagră rasă</span>
@@ -1168,7 +1174,7 @@
       <h2>Făină Proteică de Porc</h2>
       <div class="subtitle">Pork Protein Flour · Fitness &amp; Keto</div>
     </div>
-    <div class="price-tag">Pungă 250g · 45–60 lei · Amazon.de 30–40€/kg</div>
+    <div class="price-tag"><div class="price-fmt">Pungă 250g</div><div class="price-row"><span class="pv gold">45–60 lei</span><span class="pw">specialty · vacuum · macros clare · brand</span></div><div class="price-row"><span class="pv dim">28–38 lei</span><span class="pw">magazin nutriție · pungă generică · volum</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România din porc românesc</div>
@@ -1220,7 +1226,7 @@
       <h2>Whipped Lard</h2>
       <div class="subtitle">Untură Bătută cu Usturoi & Ierburi · Tartinabilă Premium</div>
     </div>
-    <div class="price-tag">Borcan 150ml · 32–42 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 150ml</div><div class="price-row"><span class="pv gold">32–42 lei</span><span class="pw">specialty · bătut cu mixer · ierburi proaspete</span></div><div class="price-row"><span class="pv dim">20–26 lei</span><span class="pw">supermarket · untură standard neprelucrată</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent în România</div>
@@ -1274,7 +1280,7 @@
       <h2>Măduvă de Os de Porc</h2>
       <div class="subtitle">Bone Marrow Spread · Ingredient de Fine Dining în Borcan</div>
     </div>
-    <div class="price-tag">Borcan 100g · 52–72 lei</div>
+    <div class="price-tag"><div class="price-fmt">Borcan 100g</div><div class="price-row"><span class="pv gold">52–72 lei</span><span class="pw">fine dining · fleur de sel · usturoi confit · Weck</span></div><div class="price-row"><span class="pv dim">35–46 lei</span><span class="pw">delicatesen · fără echivalent în supermarket standard</span></div></div>
   </div>
 
   <div class="unavailable">Inexistent premium în România · Produs consacrat în fine dining occidental</div>
