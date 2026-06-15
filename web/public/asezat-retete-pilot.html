@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linia Așezat · 3 Rețete Pilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #c9a96e;
+      --gold2: #e8d098;
+      --bg: #0c0c0c;
+      --card: #0f0f0f;
+      --card2: #0d0b08;
+      --border: #1a1a1a;
+      --border2: #1e1810;
+      --text: #aaa;
+      --text-dim: #555;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.75;
+      padding: 0 0 100px;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 90px 24px 72px;
+      border-bottom: 1px solid var(--border);
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .header-eyebrow {
+      font-size: 8px;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      opacity: .7;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 6vw, 74px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.0;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+    h1 em { color: var(--gold); font-style: italic; }
+    .header-cursive {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(16px, 2vw, 22px);
+      color: #888;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+    .header-note {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: .5px;
+      line-height: 1.9;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .header-note em { color: var(--gold); font-style: normal; }
+    .gold-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto;
+      opacity: .35;
+    }
+
+    /* TOC */
+    .toc {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      max-width: 820px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 28px 40px;
+      text-decoration: none;
+      border-right: 1px solid var(--border);
+      transition: background .2s;
+      flex: 1;
+    }
+    .toc a:last-child { border-right: none; }
+    .toc a:hover { background: #111; }
+    .toc-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--gold);
+      font-weight: 300;
+      line-height: 1;
+    }
+    .toc-label {
+      font-size: 7px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #444;
+      text-align: center;
+    }
+    .toc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: #777;
+      font-weight: 300;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* WRAPPER */
+    .wrapper {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* RETETA BLOCK */
+    .reteta {
+      padding: 72px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reteta-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+    .reteta-eyebrow {
+      font-size: 8px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      opacity: .6;
+    }
+    .reteta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .reteta h2 em { color: var(--gold); font-style: italic; }
+    .reteta-sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .5;
+      margin-bottom: 16px;
+    }
+    .reteta-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: #666;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .reteta-nr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 100px;
+      font-weight: 300;
+      color: rgba(201,169,110,.06);
+      line-height: 1;
+      text-align: right;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    /* BODY */
+    .reteta-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    /* INGREDIENTE */
+    .bloc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 28px 28px;
+    }
+    .bloc.featured {
+      background: var(--card2);
+      border-color: var(--border2);
+    }
+    .bloc-label {
+      font-size: 7px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .ing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .ing-list li {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 9px 0;
+      border-bottom: 1px solid #111;
+      line-height: 1.5;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .ing-list li:last-child { border-bottom: none; }
+    .ing-list li strong { color: #888; font-weight: 500; }
+    .ing-list li em { color: var(--gold); font-style: normal; font-size: 11px; text-align: right; flex-shrink: 0; }
+    .ing-note {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: #080808;
+      border-left: 2px solid rgba(201,169,110,.15);
+      font-size: 10px;
+      color: #3a3a3a;
+      line-height: 1.7;
+    }
+    .ing-note strong { color: #555; }
+
+    /* PASI */
+    .pasi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pas {
+      display: flex;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid #111;
+      align-items: flex-start;
+    }
+    .pas:last-child { border-bottom: none; }
+    .pas-nr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      color: var(--gold);
+      font-weight: 300;
+      line-height: 1;
+      min-width: 24px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .pas-text {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.75;
+    }
+    .pas-text strong { color: #777; font-weight: 500; }
+    .pas-text em { color: var(--gold); font-style: normal; }
+
+    /* DEVICE TAG */
+    .device {
+      display: inline-block;
+      font-size: 7px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid rgba(201,169,110,.18);
+      color: rgba(201,169,110,.5);
+      padding: 2px 8px;
+      margin-left: 6px;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    /* DETALII BAR */
+    .detalii-bar {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .detaliu {
+      background: #080808;
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+    }
+    .detaliu-label {
+      font-size: 7px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #2a2a2a;
+      margin-bottom: 6px;
+    }
+    .detaliu-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 300;
+      line-height: 1.2;
+    }
+    .detaliu-val.dim { color: #444; }
+    .detaliu-sub {
+      font-size: 9px;
+      color: #333;
+      margin-top: 3px;
+      letter-spacing: .5px;
+    }
+
+    /* NOTA CHEIE */
+    .nota-cheie {
+      margin-top: 24px;
+      padding: 18px 22px;
+      background: #090909;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--gold);
+    }
+    .nota-cheie p {
+      font-size: 11px;
+      color: #444;
+      line-height: 1.85;
+    }
+    .nota-cheie p strong { color: #666; }
+
+    /* FULL WIDTH BLOC */
+    .reteta-body.full { grid-template-columns: 1fr; }
+
+    /* FINAL */
+    .final-section {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .final-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .final-section h3 em { color: var(--gold); font-style: italic; }
+    .final-section p {
+      font-size: 12px;
+      color: #444;
+      line-height: 1.9;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .logica-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 32px;
+      text-align: left;
+    }
+    .logica-item {
+      padding: 24px 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .logica-nr {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      color: var(--gold);
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 10px;
+      opacity: .5;
+    }
+    .logica-titlu {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: #fff;
+      font-weight: 300;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .logica-desc {
+      font-size: 11px;
+      color: #444;
+      line-height: 1.75;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      letter-spacing: 6px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      opacity: .4;
+    }
+    .footer-tag {
+      font-size: 8px;
+      letter-spacing: 3px;
+      color: #2a2a2a;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 640px) {
+      .toc { flex-direction: column; }
+      .toc a { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; justify-content: flex-start; gap: 16px; padding: 18px 24px; }
+      .reteta-header { grid-template-columns: 1fr; }
+      .reteta-nr { display: none; }
+      .reteta-body { grid-template-columns: 1fr; }
+      .detalii-bar { grid-template-columns: 1fr 1fr; }
+      .logica-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Linia Așezat · Produse Pilot</div>
+  <h1>Trei rețete.<br><em>Un singur ingredient.</em></h1>
+  <p class="header-cursive">Pornitoare din aceeași fabrică, pentru trei tipuri de client.</p>
+  <p class="header-note">
+    Retetele de mai jos sunt adaptate la echipamentele existente în Atelier —
+    <em>Thermomix TM6</em>, <em>Miele H2861-1B</em> și <em>Ninja Airfryer</em>.
+    Fiecare produs se poate face în aceeași zi de producție, cu materie primă din aceeași sursă.
+  </p>
+  <div class="gold-rule"></div>
+</header>
+
+<nav class="toc">
+  <a href="#r1">
+    <span class="toc-num">01</span>
+    <span class="toc-label">Familiar — elevat</span>
+    <span class="toc-name">Unsoare<br>de Cluj</span>
+  </a>
+  <a href="#r2">
+    <span class="toc-num">02</span>
+    <span class="toc-label">Familiar — altă lume</span>
+    <span class="toc-name">Untură<br>Afumată</span>
+  </a>
+  <a href="#r3">
+    <span class="toc-num">03</span>
+    <span class="toc-label">Complet nou</span>
+    <span class="toc-name">Pastă Picantă<br>de Jumări</span>
+  </a>
+</nav>
+
+<div class="wrapper">
+
+  <!-- ============================================================ -->
+  <!-- REȚETA 1 -->
+  <!-- ============================================================ -->
+  <div class="reteta" id="r1">
+    <div class="reteta-header">
+      <div>
+        <div class="reteta-eyebrow">Rețeta 01 · Familiar, dar altfel</div>
+        <h2>Unsoare<br><em>de Cluj</em></h2>
+        <div class="reteta-sub">Untură cu usturoi copt · Cimbru · Boia afumată</div>
+        <p class="reteta-intro">
+          Unsoarea există în fiecare casă ardeleană. Versiunea asta nu — usturoiul copt transformă mușcătura în dulceață, cimbrul proaspăt adaugă un strat aromatic pe care nicio unsoare de piață nu îl are.
+        </p>
+      </div>
+      <div class="reteta-nr">01</div>
+    </div>
+
+    <div class="reteta-body">
+      <div class="bloc">
+        <div class="bloc-label">Ingrediente — borcan 300ml</div>
+        <ul class="ing-list">
+          <li><span>Untură de porc topită</span><em>500g</em></li>
+          <li><span>Cap usturoi întreg (căței cu tot)</span><em>1 buc · ~35g</em></li>
+          <li><span>Cimbru proaspăt</span><em>3 crenguțe</em></li>
+          <li><span>Boia afumată <strong>Pimentón de La Vera</strong></span><em>½ linguriță</em></li>
+          <li><span>Sare fină</span><em>1 linguriță</em></li>
+          <li><span>Piper negru proaspăt măcinat</span><em>½ linguriță</em></li>
+          <li><span>Ulei de măsline (pentru usturoi)</span><em>½ linguriță</em></li>
+        </ul>
+        <div class="ing-note">
+          <strong>Notă cantitate:</strong> Din 500g untură ies 1 borcan de 300ml după evaporarea apei în infuzare. Dacă produci în lot, înmulțești toate proporțiile egal — usturoiul la 1kg untură = 2 capete.
+        </div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-label">Procedura pas cu pas</div>
+        <div class="pasi-list">
+          <div class="pas">
+            <div class="pas-nr">1</div>
+            <div class="pas-text">
+              <strong>Usturoi copt</strong> <span class="device">Miele H2861-1B</span><br>
+              Taie capul de usturoi în jumătate orizontal. Picură ulei, învelește în folie de aluminiu. Coace la <em>180°C convecție · 35–40 minute</em> — până când cățeii sunt moi și ușor caramelizați la margini. Lasă să se răcească 10 minute, stoarce pasta direct din coji.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">2</div>
+            <div class="pas-text">
+              <strong>Infuzare untură</strong> <span class="device">Thermomix TM6</span><br>
+              Pune untura topită în bol. Adaugă pasta de usturoi copt, sarea, piperul, boia. Setează <em>70°C · Viteză 2 · 5 minute</em> — aromele intră în grăsime fără să fiarbă.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">3</div>
+            <div class="pas-text">
+              <strong>Cimbru</strong> — adaugă în ultimul minut al infuzării. Nu mai devreme, altfel devine amar.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">4</div>
+            <div class="pas-text">
+              <strong>Filtrare și turnare</strong><br>
+              Filtrează prin sită fină direct în borcane sterilizate. Lasă să se răcească 20 minute la temperatura camerei, apoi frigider. Solidifică alb-gălbui, cu pasta de usturoi suspendată uniform.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalii-bar">
+      <div class="detaliu">
+        <div class="detaliu-label">Valabilitate</div>
+        <div class="detaliu-val">3–4 săpt.</div>
+        <div class="detaliu-sub">frigider · 6 luni congelat</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Format recomandat</div>
+        <div class="detaliu-val">Borcan 300ml</div>
+        <div class="detaliu-sub">Weck sau Le Parfait cu capac etanș</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Preț pilot Cluj</div>
+        <div class="detaliu-val">55–70 lei</div>
+        <div class="detaliu-sub">comparativ: unsoare simplă 8–12 lei/borcan</div>
+      </div>
+    </div>
+
+    <div class="nota-cheie">
+      <p><strong>De reținut la producție:</strong> Untura trebuie să fie complet topită și la temperatura camerei când intră în Thermomix — dacă e prea rece, se solidifică pe lame înainte de infuzare. Pasta de usturoi copt trebuie să fie fără coji — stoarce cu fermitate, cojile rămân în sită la filtrare oricum, dar cu cât intri cu mai puțin reziduu, cu atât pasta finală e mai fină.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- REȚETA 2 -->
+  <!-- ============================================================ -->
+  <div class="reteta" id="r2">
+    <div class="reteta-header">
+      <div>
+        <div class="reteta-eyebrow">Rețeta 02 · Familiar — altă lume</div>
+        <h2>Untură<br><em>Afumată</em></h2>
+        <div class="reteta-sub">Aromă de fum Givaudan QL 19636 · Boia afumată · Fără afumătoare</div>
+        <p class="reteta-intro">
+          Afumătura clasică lasă urme de gust aspru și culoare închisă. Varianta asta dă aroma de fum natural fără nicio afumătoare — pudra Givaudan acționează în grăsime caldă, la temperatura de infuzare, și lasă un profil curat, rotund, cu o notă de lemn dulce.
+        </p>
+      </div>
+      <div class="reteta-nr">02</div>
+    </div>
+
+    <div class="reteta-body">
+      <div class="bloc featured">
+        <div class="bloc-label">Ingrediente — borcan 300ml</div>
+        <ul class="ing-list">
+          <li><span>Untură de porc topită</span><em>500g</em></li>
+          <li>
+            <span><strong>Aromă de fum Givaudan QL 19636</strong></span>
+            <em>1,5g exacte</em>
+          </li>
+          <li><span>Boia afumată Pimentón de La Vera</span><em>1 linguriță</em></li>
+          <li><span>Sare fină</span><em>1 linguriță</em></li>
+          <li><span>Piper negru</span><em>½ linguriță</em></li>
+        </ul>
+        <div class="ing-note">
+          <strong>Dozaj critic — Givaudan QL 19636:</strong> 0,3% din greutatea unturii = 1,5g la 500g. Folosește cântarul de precizie al Thermomix sau un cântar separat. Vârful unui cuțit de masă, bine grămădit, sunt aproximativ 1,5g — dar nu ghici, cântărește. Sub 1g nu simți nimic, peste 3g devine chimică.
+        </div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-label">Procedura pas cu pas</div>
+        <div class="pasi-list">
+          <div class="pas">
+            <div class="pas-nr">1</div>
+            <div class="pas-text">
+              <strong>Aduci untura la temperatură</strong> <span class="device">Thermomix TM6</span><br>
+              Pune untura topită în bol. Setează <em>60°C · Viteză 2 · 3 minute</em> — temperatura uniformă e esențială pentru dispersia pudrei.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">2</div>
+            <div class="pas-text">
+              <strong>Cântărești pudra de fum</strong><br>
+              <em>1,5g exacte</em> de Givaudan QL 19636. Cântărește separat înainte să pornești aparatul — nu adăugi din mers.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">3</div>
+            <div class="pas-text">
+              <strong>Incorporare</strong> <span class="device">Thermomix TM6</span><br>
+              Oprește aparatul. Adaugă pudra de fum + boia + sare + piper. Setează <em>60°C · Viteză 3 · 2 minute</em> — dispersie uniformă fără cocoloașe.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">4</div>
+            <div class="pas-text">
+              <strong>Gustă înainte să torni</strong><br>
+              Cu o linguriță mică, după 2 minute de răcire. Dacă vrei mai intens, mai adaugă <em>0,5g pudră</em>, amestecă 30 de secunde. Nu adăuga mai mult de o dată — aroma continuă să se dezvolte în borcan.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">5</div>
+            <div class="pas-text">
+              <strong>Filtrare și turnare</strong><br>
+              Sită fină în borcane sterilizate. Răcire 20 minute, apoi frigider. Solidifică cu o tentă ușor gălbuie față de untura simplă.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalii-bar">
+      <div class="detaliu">
+        <div class="detaliu-label">Valabilitate</div>
+        <div class="detaliu-val">3–4 săpt.</div>
+        <div class="detaliu-sub">frigider · 6 luni congelat</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Format recomandat</div>
+        <div class="detaliu-val">Borcan 300ml</div>
+        <div class="detaliu-sub">același borcan ca Unsoarea de Cluj</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Preț pilot Cluj</div>
+        <div class="detaliu-val">60–75 lei</div>
+        <div class="detaliu-sub">cost pudră Givaudan la 1,5g: &lt;0,25 lei/borcan</div>
+      </div>
+    </div>
+
+    <div class="nota-cheie">
+      <p><strong>Diferența față de afumarea clasică:</strong> Afumarea tradițională lasă compuși de gudron și culoare brună — vizibil și greu de controlat. Pudra Givaudan QL 19636 dă aroma de fum natural fără niciun reziduu vizibil, fără culoare închisă, fără variație de lot la lot. <strong>Același gust de fiecare dată.</strong> Nu înlocuiești afumătura clasică cu asta — faci un produs diferit, mai pur, mai controlat, pentru un client diferit.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- REȚETA 3 -->
+  <!-- ============================================================ -->
+  <div class="reteta" id="r3">
+    <div class="reteta-header">
+      <div>
+        <div class="reteta-eyebrow">Rețeta 03 · Complet nou</div>
+        <h2>Pastă Picantă<br><em>de Jumări</em></h2>
+        <div class="reteta-sub">Tartinabilă · Chili fermentat · Usturoi copt · Influențe asiatice</div>
+        <p class="reteta-intro">
+          Jumările lui, transformate în ceva complet nou. Nu e o rețetă românească — e un produs de nișă care nu există nicăieri pe piața locală. Se pune pe pâine prăjită, în sandvișuri, ca marinadă, ca sos de înmuiat. Clientul keto îl cumpără pentru valorile nutriționale. Pasionatul de mâncare îl cumpără pentru gust.
+        </p>
+      </div>
+      <div class="reteta-nr">03</div>
+    </div>
+
+    <div class="reteta-body">
+      <div class="bloc">
+        <div class="bloc-label">Ingrediente — borcan 200ml</div>
+        <ul class="ing-list">
+          <li><span>Jumări (bine scurse de grăsime)</span><em>250g</em></li>
+          <li><span>Usturoi copt (din Rețeta 01)</span><em>3–4 căței</em></li>
+          <li><span>Pastă chili fermentat <strong>(gochujang sau harissa)</strong></span><em>1 linguriță</em></li>
+          <li><span>Sos de soia Kikkoman</span><em>1 linguriță</em></li>
+          <li><span>Ghimbir proaspăt ras</span><em>½ linguriță</em></li>
+          <li><span>Miere (pentru echilibru)</span><em>1 linguriță</em></li>
+          <li><span>Grăsime de la jumări</span><em>1 lingură</em></li>
+          <li><span>Sare</span><em>după gust</em></li>
+        </ul>
+        <div class="ing-note">
+          <strong>Flexibilitate:</strong> Gochujang dă o picantă fermentată mai rotundă, cu profunzime; harissa e mai directă și cu note florale. Ambele merg — depinde de profil. Testează cu câte o versiune din fiecare în faza pilot.
+        </div>
+      </div>
+
+      <div class="bloc">
+        <div class="bloc-label">Procedura pas cu pas</div>
+        <div class="pasi-list">
+          <div class="pas">
+            <div class="pas-nr">1</div>
+            <div class="pas-text">
+              <strong>Jumări — uscare rapidă</strong> <span class="device">Ninja Airfryer</span><br>
+              Dacă jumările nu sunt deja crocante, pune-le la <em>180°C · 5 minute</em>. Se usucă excesul de grăsime și se blendează mai bine — pasta iese mai puțin uleioasă.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">2</div>
+            <div class="pas-text">
+              <strong>Blendare — textură grosieră</strong> <span class="device">Thermomix TM6</span><br>
+              Pune jumările calde + usturoiul copt + pasta de chili + sos de soia + ghimbirul + mierea + grăsimea. Pornește: <em>Viteză 5 · 10 secunde</em>. Se văd bucăți — nu e o cremă fină, e o pastă cu caracter.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">3</div>
+            <div class="pas-text">
+              <strong>Gustă și ajustezi</strong><br>
+              Sare + chili după preferință. Dacă vrei mai fin: <em>Viteză 7 · 5 secunde</em> în plus. Nu mai mult — pasta devine prea omogenă și pierde textura care o face interesantă.
+            </div>
+          </div>
+          <div class="pas">
+            <div class="pas-nr">4</div>
+            <div class="pas-text">
+              <strong>Turnare în borcane</strong><br>
+              Direct din bol, cu o spatulă. Apasă bine în borcan să nu rămână bule de aer. Suprafața netezită cu dosul lingurii. Frigider imediat.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalii-bar">
+      <div class="detaliu">
+        <div class="detaliu-label">Valabilitate</div>
+        <div class="detaliu-val">10–14 zile</div>
+        <div class="detaliu-sub">frigider, borcan sterilizat etanș</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Format recomandat</div>
+        <div class="detaliu-val">Borcan 200ml</div>
+        <div class="detaliu-sub">borcan scund cu capac larg — se scoate ușor cu cuțitul</div>
+      </div>
+      <div class="detaliu">
+        <div class="detaliu-label">Preț pilot Cluj</div>
+        <div class="detaliu-val">45–60 lei</div>
+        <div class="detaliu-sub">zero echivalent pe piața locală</div>
+      </div>
+    </div>
+
+    <div class="nota-cheie">
+      <p><strong>De ce funcționează pe piață:</strong> Pasta de jumări aromatizată nu există în format artizanal în România. Cel mai apropiat produs e slănina cu boia — complet altceva. Segmentul keto o cumpără pentru proteina densă și zero carbohidrați. Restaurantele o cumpără ca element de asamblat tăvi de aperitive. Online-ul o cumpără pentru că arată bine în fotografie și are o poveste clară. <strong>Trei motive de cumpărare dintr-o singură rețetă.</strong></p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LOGICA FINALĂ -->
+  <!-- ============================================================ -->
+  <div class="final-section">
+    <h3>De ce <em>aceste 3</em> mai întâi.</h3>
+    <p>Nu au fost alese la întâmplare. Fiecare îndeplinește un rol diferit în pilot — unul convinge prin familiaritate, unul prin noutate, unul prin funcționalitate. Împreună acoperă trei segmente de client fără să se canibalizeze.</p>
+    <div class="logica-grid">
+      <div class="logica-item">
+        <div class="logica-nr">01</div>
+        <div class="logica-titlu">Unsoarea de Cluj<br><em style="color:var(--gold);font-style:italic;">Ancora emoțională</em></div>
+        <p class="logica-desc">Produsul prin care proprietarul fabricii înțelege că parteneriatul e serios. Familiar, fără risc, dar cu o diferențiere clară față de orice altă unsoare de pe piață.</p>
+      </div>
+      <div class="logica-item">
+        <div class="logica-nr">02</div>
+        <div class="logica-titlu">Untura Afumată<br><em style="color:var(--gold);font-style:italic;">Diferențiatorul tehnic</em></div>
+        <p class="logica-desc">Demonstrează capacitatea de inovație fără investiții noi. Aceeași untură, o singură pudră, un produs complet diferit. Introduce Givaudan ca furnizor în producție.</p>
+      </div>
+      <div class="logica-item">
+        <div class="logica-nr">03</div>
+        <div class="logica-titlu">Pasta Picantă<br><em style="color:var(--gold);font-style:italic;">Nișa fără concurență</em></div>
+        <p class="logica-desc">Cel mai curajos produs din pilot. Testează dacă piața din Cluj cumpără și ceva cu adevărat nou — nu doar familiar elevat. Dacă merge, deschide linia de paste tartinabile.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end wrapper -->
+
+<footer>
+  <div class="footer-logo">AȘEZAT</div>
+  <div class="footer-tag" style="margin-bottom:6px;">Linia de produse premium din porc · Max Savor · Vințu de Jos</div>
+  <div class="footer-tag">Document intern · Rețete pilot · Iunie 2026</div>
+</footer>
+
+</body>
+</html>
