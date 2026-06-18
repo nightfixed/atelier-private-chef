@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prețuri Pilot — Așezat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a96e;
+    --copper: #b87333;
+    --bg: #0e0e0e;
+    --bg2: #0a0a0a;
+    --bg3: #080808;
+    --border: #1a1a1a;
+    --border2: #141414;
+    --text: #555;
+    --text2: #777;
+    --text3: #333;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .header-label {
+    font-size: 8px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 54px);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .header-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .header-sub {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.5px;
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  /* PRODUS CARD */
+  .produs {
+    margin-bottom: 4px;
+    border: 1px solid var(--border2);
+  }
+
+  .produs-header {
+    padding: 32px 40px 24px;
+    border-bottom: 1px solid var(--border2);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  .produs-num {
+    font-size: 8px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .produs-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  .produs-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .produs-format {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .lot-info {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .lot-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .lot-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* BODY GRID */
+  .produs-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .col {
+    padding: 28px 32px;
+  }
+
+  .col + .col {
+    border-left: 1px solid var(--border2);
+  }
+
+  .col-label {
+    font-size: 7px;
+    letter-spacing: 4px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  /* COST TABLE */
+  .cost-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .cost-table tr {
+    border-bottom: 1px solid #111;
+  }
+
+  .cost-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .cost-table td {
+    padding: 8px 0;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.5;
+    vertical-align: middle;
+  }
+
+  .cost-table td.val {
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 12px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .cost-table tr.total td {
+    font-size: 12px;
+    color: var(--text2);
+    padding-top: 12px;
+    border-top: 1px solid #222;
+    border-bottom: none;
+  }
+
+  .cost-table tr.total td.val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--gold);
+  }
+
+  .cost-table tr.total td.sub {
+    font-size: 9px;
+    color: var(--text3);
+  }
+
+  /* PRET BOXES */
+  .pret-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pret-box {
+    padding: 16px 18px;
+    background: var(--bg3);
+    border: 1px solid #111;
+  }
+
+  .pret-box.highlight {
+    background: #0c0a06;
+    border-color: rgba(201,169,110,.2);
+    border-left: 2px solid var(--gold);
+  }
+
+  .pret-canal {
+    font-size: 7px;
+    letter-spacing: 3px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .pret-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  .pret-sub {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  .pret-marja {
+    font-size: 10px;
+    color: #3a3a3a;
+    margin-top: 6px;
+  }
+
+  .pret-marja strong {
+    color: #4a4a4a;
+  }
+
+  /* MARJA COL */
+  .marja-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .marja-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid #111;
+  }
+
+  .marja-row:last-child {
+    border-bottom: none;
+  }
+
+  .marja-label {
+    font-size: 11px;
+    color: var(--text);
+  }
+
+  .marja-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: var(--gold);
+  }
+
+  .marja-val.copper {
+    color: var(--copper);
+  }
+
+  /* FOOTER NOTE */
+  .produs-note {
+    padding: 16px 32px;
+    background: var(--bg3);
+    border-top: 1px solid var(--border2);
+    font-size: 10px;
+    color: var(--text3);
+    font-style: italic;
+  }
+
+  .produs-note strong {
+    color: var(--text2);
+    font-style: normal;
+  }
+
+  /* SUMAR */
+  .sumar {
+    margin-top: 4px;
+    padding: 36px 40px;
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-top: 2px solid var(--gold);
+  }
+
+  .sumar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .sumar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .sumar-item {
+    padding: 20px 18px;
+    background: var(--bg3);
+    border: 1px solid #111;
+  }
+
+  .sumar-item-label {
+    font-size: 7px;
+    letter-spacing: 3px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .sumar-item-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .sumar-item-sub {
+    font-size: 9px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  /* DOC FOOTER */
+  .doc-footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border2);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text3);
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .footer-date {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #222;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .wrapper { padding: 48px 20px 80px; }
+    .produs-body { grid-template-columns: 1fr; }
+    .col + .col { border-left: none; border-top: 1px solid var(--border2); }
+    .col { padding: 22px 20px; }
+    .produs-header { flex-direction: column; align-items: flex-start; }
+    .lot-info { text-align: left; }
+    .sumar-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">Așezat · Pilot · Calcul prețuri</div>
+    <h1 class="header-title">Costuri reale.<br><em>Prețuri clare.</em></h1>
+    <p class="header-sub">Calcul pe costurile efective de producție — ingrediente, ambalaj, etichetă. Prețurile propuse pentru HoReCa și consumatorul final sunt orientative și se ajustează după feedback din teren.</p>
+  </div>
+
+  <!-- PRODUS 1 -->
+  <div class="produs" style="border-top: 2px solid var(--gold);">
+    <div class="produs-header">
+      <div>
+        <div class="produs-num">Produs 01 · Unsoare</div>
+        <div class="produs-title">Unsoare<br><em>de Cluj</em></div>
+        <div class="produs-format">2 borcane × 250g · dintr-un lot de 500g unsoare</div>
+      </div>
+      <div class="lot-info">
+        <div class="lot-val">13,68 lei</div>
+        <div class="lot-label">cost / borcan 250g</div>
+      </div>
+    </div>
+
+    <div class="produs-body">
+      <div class="col">
+        <div class="col-label">Costuri ingrediente + ambalaj</div>
+        <table class="cost-table">
+          <tr>
+            <td>Unsoare 500g</td>
+            <td class="val">9,90 lei</td>
+          </tr>
+          <tr>
+            <td>Usturoi copt + condimente</td>
+            <td class="val">2,00 lei</td>
+          </tr>
+          <tr>
+            <td>2 borcane × 7,50 lei</td>
+            <td class="val">15,00 lei</td>
+          </tr>
+          <tr>
+            <td>2 etichete × 0,23 lei</td>
+            <td class="val">0,46 lei</td>
+          </tr>
+          <tr class="total">
+            <td><strong>Total lot (2 borcane)</strong></td>
+            <td class="val">27,36 lei</td>
+          </tr>
+          <tr class="total">
+            <td class="sub">Cost per borcan 250g</td>
+            <td class="val">13,68 lei</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="col">
+        <div class="col-label">Prețuri propuse</div>
+        <div class="pret-grid">
+          <div class="pret-box">
+            <div class="pret-canal">HoReCa · Revânzător</div>
+            <div class="pret-val">27 lei</div>
+            <div class="pret-sub">borcan 250g · multiplicator ×2</div>
+            <div class="pret-marja">Profit brut: <strong>13,32 lei / borcan</strong></div>
+          </div>
+          <div class="pret-box highlight">
+            <div class="pret-canal">Consumator final</div>
+            <div class="pret-val">34 lei</div>
+            <div class="pret-sub">borcan 250g · multiplicator ×2,5</div>
+            <div class="pret-marja">Profit brut: <strong>20,32 lei / borcan</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="col-label">Marje pe lot de 2 borcane</div>
+        <div class="marja-grid">
+          <div class="marja-row">
+            <div class="marja-label">Cost total lot</div>
+            <div class="marja-val" style="color:var(--text2);">27,36 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit HoReCa (2 × 27 lei)</div>
+            <div class="marja-val">54 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut HoReCa</div>
+            <div class="marja-val">26,64 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit consumator (2 × 34 lei)</div>
+            <div class="marja-val">68 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut final</div>
+            <div class="marja-val copper">40,64 lei</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:4px;"></div>
+
+  <!-- PRODUS 2 -->
+  <div class="produs" style="border-top: 2px solid var(--copper);">
+    <div class="produs-header" style="background:#0a0806;border-bottom-color:#1e1810;">
+      <div>
+        <div class="produs-num" style="color:var(--copper);">Produs 02 · Untură afumată</div>
+        <div class="produs-title">Untură afumată<br><em style="color:var(--copper);">clarificată</em></div>
+        <div class="produs-format">2 borcane × 250g · dintr-un lot de 500g unsoare</div>
+      </div>
+      <div class="lot-info">
+        <div class="lot-val" style="color:var(--copper);">13,38 lei</div>
+        <div class="lot-label">cost / borcan 250g</div>
+      </div>
+    </div>
+
+    <div class="produs-body" style="background:#0a0806;">
+      <div class="col" style="border-right-color:#1e1810;">
+        <div class="col-label">Costuri ingrediente + ambalaj</div>
+        <table class="cost-table">
+          <tr>
+            <td>Unsoare 500g</td>
+            <td class="val">9,90 lei</td>
+          </tr>
+          <tr>
+            <td>Pudră fum Givaudan + condimente</td>
+            <td class="val">1,40 lei</td>
+          </tr>
+          <tr>
+            <td>2 borcane × 7,50 lei</td>
+            <td class="val">15,00 lei</td>
+          </tr>
+          <tr>
+            <td>2 etichete × 0,23 lei</td>
+            <td class="val">0,46 lei</td>
+          </tr>
+          <tr class="total">
+            <td><strong>Total lot (2 borcane)</strong></td>
+            <td class="val">26,76 lei</td>
+          </tr>
+          <tr class="total">
+            <td class="sub">Cost per borcan 250g</td>
+            <td class="val">13,38 lei</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="col" style="border-right-color:#1e1810;">
+        <div class="col-label">Prețuri propuse</div>
+        <div class="pret-grid">
+          <div class="pret-box" style="background:#080604;border-color:#1a1208;">
+            <div class="pret-canal">HoReCa · Revânzător</div>
+            <div class="pret-val" style="color:var(--copper);">27 lei</div>
+            <div class="pret-sub">borcan 250g · multiplicator ×2</div>
+            <div class="pret-marja">Profit brut: <strong>13,62 lei / borcan</strong></div>
+          </div>
+          <div class="pret-box" style="background:#0c0a06;border-color:rgba(184,115,51,.25);border-left:2px solid var(--copper);">
+            <div class="pret-canal">Consumator final</div>
+            <div class="pret-val" style="color:var(--copper);">33 lei</div>
+            <div class="pret-sub">borcan 250g · multiplicator ×2,5</div>
+            <div class="pret-marja">Profit brut: <strong>19,62 lei / borcan</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="col-label">Marje pe lot de 2 borcane</div>
+        <div class="marja-grid">
+          <div class="marja-row">
+            <div class="marja-label">Cost total lot</div>
+            <div class="marja-val" style="color:var(--text2);">26,76 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit HoReCa (2 × 27 lei)</div>
+            <div class="marja-val" style="color:var(--copper);">54 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut HoReCa</div>
+            <div class="marja-val" style="color:var(--copper);">27,24 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit consumator (2 × 33 lei)</div>
+            <div class="marja-val" style="color:var(--copper);">66 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut final</div>
+            <div class="marja-val copper">39,24 lei</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:4px;"></div>
+
+  <!-- PRODUS 3 -->
+  <div class="produs" style="border-top: 2px solid rgba(201,169,110,.5);">
+    <div class="produs-header">
+      <div>
+        <div class="produs-num">Produs 03 · Pastă tartinabilă</div>
+        <div class="produs-title">Pastă picantă<br><em>de jumări</em></div>
+        <div class="produs-format">2 borcane × 200g · lot ~430g produs finit</div>
+      </div>
+      <div class="lot-info">
+        <div class="lot-val">18,50 lei</div>
+        <div class="lot-label">cost / borcan 200g</div>
+      </div>
+    </div>
+
+    <div class="produs-body">
+      <div class="col">
+        <div class="col-label">Costuri ingrediente + ambalaj</div>
+        <table class="cost-table">
+          <tr>
+            <td>364g pastă jumări Petry</td>
+            <td class="val">17,64 lei</td>
+          </tr>
+          <tr>
+            <td>21g usturoi copt</td>
+            <td class="val">0,63 lei</td>
+          </tr>
+          <tr>
+            <td>18g harissa</td>
+            <td class="val">1,80 lei</td>
+          </tr>
+          <tr>
+            <td>Sos soia + miere + ghimbir</td>
+            <td class="val">1,46 lei</td>
+          </tr>
+          <tr>
+            <td>2 borcane × 7,50 lei</td>
+            <td class="val">15,00 lei</td>
+          </tr>
+          <tr>
+            <td>2 etichete × 0,23 lei</td>
+            <td class="val">0,46 lei</td>
+          </tr>
+          <tr class="total">
+            <td><strong>Total lot (2 borcane)</strong></td>
+            <td class="val">36,99 lei</td>
+          </tr>
+          <tr class="total">
+            <td class="sub">Cost per borcan 200g</td>
+            <td class="val">18,50 lei</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="col">
+        <div class="col-label">Prețuri propuse</div>
+        <div class="pret-grid">
+          <div class="pret-box">
+            <div class="pret-canal">HoReCa · Revânzător</div>
+            <div class="pret-val">37 lei</div>
+            <div class="pret-sub">borcan 200g · multiplicator ×2</div>
+            <div class="pret-marja">Profit brut: <strong>18,50 lei / borcan</strong></div>
+          </div>
+          <div class="pret-box highlight">
+            <div class="pret-canal">Consumator final</div>
+            <div class="pret-val">46 lei</div>
+            <div class="pret-sub">borcan 200g · multiplicator ×2,5</div>
+            <div class="pret-marja">Profit brut: <strong>27,50 lei / borcan</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="col-label">Marje pe lot de 2 borcane</div>
+        <div class="marja-grid">
+          <div class="marja-row">
+            <div class="marja-label">Cost total lot</div>
+            <div class="marja-val" style="color:var(--text2);">36,99 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit HoReCa (2 × 37 lei)</div>
+            <div class="marja-val">74 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut HoReCa</div>
+            <div class="marja-val">37,01 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Venit consumator (2 × 46 lei)</div>
+            <div class="marja-val">92 lei</div>
+          </div>
+          <div class="marja-row">
+            <div class="marja-label">Profit brut final</div>
+            <div class="marja-val copper">55,01 lei</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:4px;"></div>
+
+  <!-- SUMAR -->
+  <div class="sumar">
+    <div class="sumar-title">Sumar · 3 produse, 6 borcane</div>
+    <div class="sumar-grid">
+      <div class="sumar-item">
+        <div class="sumar-item-label">Cost total producție</div>
+        <div class="sumar-item-val">91,11 lei</div>
+        <div class="sumar-item-sub">6 borcane · toate 3 produsele</div>
+      </div>
+      <div class="sumar-item">
+        <div class="sumar-item-label">Venit total HoReCa</div>
+        <div class="sumar-item-val">182 lei</div>
+        <div class="sumar-item-sub">2×27 + 2×27 + 2×37 lei</div>
+      </div>
+      <div class="sumar-item">
+        <div class="sumar-item-label">Profit brut HoReCa</div>
+        <div class="sumar-item-val">90,89 lei</div>
+        <div class="sumar-item-sub">marjă medie ×2</div>
+      </div>
+      <div class="sumar-item" style="background:#0c0a06;border-color:rgba(201,169,110,.2);border-left:2px solid var(--gold);">
+        <div class="sumar-item-label">Profit brut consumator final</div>
+        <div class="sumar-item-val">134,89 lei</div>
+        <div class="sumar-item-sub">din cost 91,11 lei → venit 226 lei</div>
+      </div>
+    </div>
+
+    <div style="margin-top:4px;padding:18px 20px;background:var(--bg3);border:1px solid #111;font-size:11px;color:var(--text3);line-height:1.8;font-style:italic;">
+      <strong style="color:var(--text2);font-style:normal;">Notă:</strong> Prețurile nu includ manoperă, utilități, transport și timp de preparare. Sunt bazate exclusiv pe costul ingredientelor și ambalajului din prima serie pilot. La volum, costul borcanului și etichetei scade semnificativ.
+    </div>
+  </div>
+
+  <!-- DOC FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-brand">Așezat</div>
+    <div class="footer-date">Calcul pilot · Iunie 2026 · Uz intern</div>
+  </div>
+
+</div>
+</body>
+</html>
