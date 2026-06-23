@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ASEZAT — Conserve artizanale din porc, preparate cu rabdare in Transilvania.">
-  <meta property="og:title" content="ASEZAT — Mestesug din Porc, Pus la Borcan">
-  <title>ASEZAT — Mestesug din Porc, Pus la Borcan</title>
+  <meta name="description" content="AȘEZAT — Conserve artizanale din porc, preparate cu răbdare în Transilvania. Meșteșug pus la borcan.">
+  <link rel="canonical" href="https://atelierprivatedining.ro/asezat/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AȘEZAT — Meșteșug din Porc, Pus la Borcan">
+  <meta property="og:description" content="Conserve artizanale din porc, preparate cu răbdare în Transilvania. Slănină afumată, tobă de casă, jumări tradiționale.">
+  <meta property="og:url" content="https://atelierprivatedining.ro/asezat/">
+  <meta property="og:image" content="https://atelierprivatedining.ro/asezat/og-image.jpg">
+  <meta property="og:locale" content="ro_RO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AȘEZAT — Meșteșug din Porc, Pus la Borcan">
+  <meta name="twitter:description" content="Conserve artizanale din porc, preparate cu răbdare în Transilvania.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23b8751a'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23f7f0e4' font-family='Georgia,serif' font-weight='700'%3EA%3C/text%3E%3C/svg%3E">
+  <title>AȘEZAT — Meșteșug din Porc, Pus la Borcan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
@@ -305,6 +315,32 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
   .contact-grid{gap:36px}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "name": "AȘEZAT",
+  "description": "Conserve artizanale din porc, preparate cu răbdare în Transilvania.",
+  "url": "https://atelierprivatedining.ro/asezat/",
+  "logo": "https://atelierprivatedining.ro/asezat/og-image.jpg",
+  "sameAs": [],
+  "brand": {
+    "@type": "Organization",
+    "name": "Atelier Private Dining",
+    "url": "https://atelierprivatedining.ro"
+  },
+  "offers": {
+    "@type": "AggregateOffer",
+    "priceCurrency": "RON",
+    "offerCount": "3",
+    "offers": [
+      {"@type":"Offer","name":"Tobă de Casă Artizanală","price":"42","priceCurrency":"RON"},
+      {"@type":"Offer","name":"Slănină Afumată Marinată","price":"38","priceCurrency":"RON"},
+      {"@type":"Offer","name":"Pateu de Porc Artizan","price":"37","priceCurrency":"RON"}
+    ]
+  }
+}
+</script>
 </head>
 <body>
 
@@ -628,9 +664,9 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
       </div>
       <div class="fu fu-d2">
         <form class="cf" id="contact-form" onsubmit="submitForm(event)">
-          <input type="text" placeholder="Numele sau firma ta" required>
-          <input type="email" placeholder="Adresa de email" required>
-          <select required>
+          <input type="text" name="name" placeholder="Numele sau firma ta" required>
+          <input type="email" name="email" placeholder="Adresa de email" required>
+          <select name="occasion" required>
             <option value="" disabled selected>Tipul colabor&#259;rii</option>
             <option>Restaurant / Bistro / HoReCa</option>
             <option>Magazine fine food / delicatessen</option>
@@ -639,7 +675,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
             <option>Individ / Comand&#259; personal&#259;</option>
             <option>Altceva</option>
           </select>
-          <textarea placeholder="Spune-ne ce cau&#539;i sau cum putem colabora"></textarea>
+          <textarea name="message" placeholder="Spune-ne ce cau&#539;i sau cum putem colabora"></textarea>
           <button type="submit" class="btn-send">Trimite mesajul</button>
         </form>
         <div id="form-ok"><p>Mul&#539;umim. Revenim &icirc;n cel mai scurt timp.</p></div>
@@ -692,7 +728,28 @@ function openMnav(){document.getElementById('mnav').classList.add('open');docume
 function closeMnav(){document.getElementById('mnav').classList.remove('open');document.body.style.overflow='';}
 
 /* CONTACT */
-function submitForm(e){e.preventDefault();document.getElementById('contact-form').style.display='none';document.getElementById('form-ok').style.display='block';}
+var _API='__API_URL__';
+function submitForm(e){
+  e.preventDefault();
+  var f=document.getElementById('contact-form');
+  var btn=f.querySelector('button[type="submit"]');
+  var name=f.querySelector('[name="name"]').value;
+  var email=f.querySelector('[name="email"]').value;
+  var occasion=f.querySelector('[name="occasion"]').value;
+  var message=f.querySelector('[name="message"]').value;
+  btn.disabled=true; btn.textContent='Se trimite...';
+  fetch(_API+'/api/contact',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:name,email:email,occasion:occasion,message:message||null})
+  }).then(function(r){
+    f.style.display='none';
+    document.getElementById('form-ok').style.display='block';
+  }).catch(function(){
+    btn.disabled=false; btn.textContent='Trimite mesajul';
+    alert('A apărut o eroare. Încearcă din nou sau scrie-ne direct.');
+  });
+}
 
 /* SMOOTH ANCHOR */
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
