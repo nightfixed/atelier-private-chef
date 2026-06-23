@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prima comandă AȘEZAT — cum funcționează procesul pilot, pașii concreți și ce primești.">
+  <link rel="canonical" href="https://atelierprivatedining.ro/asezat/pilot/">
+  <meta property="og:title" content="Comandă Pilot — AȘEZAT">
+  <meta property="og:description" content="Prima comandă fără risc. Înțelege procesul, alege produsele, primești borcanele.">
+  <meta property="og:url" content="https://atelierprivatedining.ro/asezat/pilot/">
+  <meta property="og:image" content="https://atelierprivatedining.ro/asezat/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23b8751a'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23f7f0e4' font-family='Georgia,serif' font-weight='700'%3EA%3C/text%3E%3C/svg%3E">
+  <title>Comandă Pilot — AȘEZAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --parch:#f7f0e4;--parch2:#ede3d0;--parch3:#e3d5bb;
+      --ink:#1a0d04;--ink2:#3d2510;--ink3:#5c3a1e;
+      --amber:#b8751a;--amberB:#d4901f;--amberP:rgba(184,117,26,.1);
+      --terra:#8b3012;
+      --line:rgba(184,117,26,.18);
+      --serif:'Playfair Display',Georgia,serif;
+      --cormo:'Cormorant Garamond',Georgia,serif;
+      --sans:'DM Sans',-apple-system,sans-serif;
+      --max:1100px;--g:clamp(24px,5vw,72px);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--parch);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 40px;background:var(--parch);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 2px 20px rgba(26,13,4,.06)}
+    .nav-brand{font-family:var(--serif);font-size:15px;letter-spacing:.12em;color:var(--ink)}
+    .nav-right{display:flex;align-items:center;gap:28px}
+    .nav-back{font-size:11px;letter-spacing:.1em;color:var(--ink3);font-family:var(--sans);transition:color .2s}
+    .nav-back:hover{color:var(--amber)}
+    .nav-cta{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:#fff;background:var(--amber);padding:11px 22px;transition:background .2s}
+    .nav-cta:hover{background:var(--amberB)}
+
+    /* HERO */
+    .pilot-hero{padding:100px var(--g) 80px;max-width:var(--max);margin:0 auto}
+    .sl{font-size:8.5px;letter-spacing:.48em;text-transform:uppercase;color:var(--amber);font-weight:500;font-family:var(--sans);opacity:.7;margin-bottom:16px}
+    .pilot-hero h1{font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:24px}
+    .pilot-hero h1 em{font-style:italic;color:var(--amber)}
+    .pilot-hero .intro{font-family:var(--cormo);font-style:italic;font-size:clamp(18px,2.2vw,24px);color:var(--ink2);max-width:640px;line-height:1.7;margin-bottom:48px}
+    .rule{width:48px;height:1px;background:var(--amber);margin-bottom:48px;opacity:.5}
+
+    /* STEPS */
+    .steps-wrap{max-width:var(--max);margin:0 auto;padding:0 var(--g) 100px}
+    .step{display:grid;grid-template-columns:80px 1fr;gap:0 40px;padding:52px 0;border-top:1px solid var(--line);position:relative}
+    .step:last-child{border-bottom:1px solid var(--line)}
+    .step-num{font-family:var(--serif);font-size:72px;font-weight:700;color:var(--amber);opacity:.15;line-height:1;margin-top:-8px}
+    .step-body{}
+    .step-tag{font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);font-family:var(--sans);opacity:.65;margin-bottom:12px}
+    .step-title{font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--ink);margin-bottom:16px;line-height:1.2}
+    .step-text{font-size:14px;color:var(--ink2);line-height:1.85;max-width:560px}
+    .step-detail{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+    .step-pill{font-size:10px;letter-spacing:.08em;font-family:var(--sans);color:var(--ink3);border:1px solid var(--line);padding:6px 14px}
+    .step-note{margin-top:16px;font-size:12px;font-family:var(--cormo);font-style:italic;color:var(--ink3)}
+
+    /* WHAT YOU GET */
+    .get-wrap{background:var(--parch2);padding:80px var(--g)}
+    .get-inner{max-width:var(--max);margin:0 auto}
+    .get-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
+    .get-item{background:var(--parch);padding:36px 32px}
+    .get-icon{font-size:28px;margin-bottom:16px;line-height:1}
+    .get-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:10px}
+    .get-desc{font-size:13px;color:var(--ink2);line-height:1.75}
+
+    /* CTA FINAL */
+    .cta-final{background:var(--terra);padding:100px var(--g);text-align:center}
+    .cta-final h2{font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:700;color:rgba(247,240,228,.92);margin-bottom:16px;line-height:1.2}
+    .cta-final p{font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2vw,22px);color:rgba(247,240,228,.65);margin-bottom:48px;line-height:1.7}
+    .cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-primary{font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--terra);background:rgba(247,240,228,.92);padding:16px 36px;transition:background .2s}
+    .btn-primary:hover{background:#fff}
+    .btn-secondary{font-size:10px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:rgba(247,240,228,.8);border:1px solid rgba(247,240,228,.3);padding:16px 36px;transition:border-color .2s,color .2s}
+    .btn-secondary:hover{border-color:rgba(247,240,228,.7);color:rgba(247,240,228,.95)}
+
+    /* FOOTER */
+    footer{padding:32px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);font-size:11px;color:var(--ink3);letter-spacing:.06em;flex-wrap:wrap;gap:16px}
+
+    /* FADE */
+    .fu{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+    .fu.vis{opacity:1;transform:none}
+    .fu-d1{transition-delay:.12s}
+    .fu-d2{transition-delay:.22s}
+    .fu-d3{transition-delay:.32s}
+
+    @media(max-width:768px){
+      nav{padding:16px 20px}
+      .pilot-hero{padding:80px 20px 60px}
+      .steps-wrap{padding:0 20px 80px}
+      .step{grid-template-columns:1fr;gap:8px}
+      .step-num{font-size:48px;margin-bottom:4px}
+      .get-grid{grid-template-columns:1fr}
+      .cta-final{padding:72px 20px}
+      footer{padding:24px 20px;flex-direction:column;align-items:flex-start;gap:12px}
+      .get-wrap{padding:60px 20px}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/asezat/" class="nav-brand">AȘEZAT</a>
+  <div class="nav-right">
+    <a href="/asezat/" class="nav-back">← Înapoi</a>
+    <a href="/asezat/#contact" class="nav-cta">Contactează-ne</a>
+  </div>
+</nav>
+
+<div class="pilot-hero">
+  <div class="sl fu">Prima comandă</div>
+  <h1 class="fu fu-d1">Comanda <em>pilot</em> —<br>fără surprize.</h1>
+  <div class="rule fu fu-d2"></div>
+  <p class="intro fu fu-d2">Înainte să devenim parteneri pe termen lung, vrem să te convingi singur. Procesul e simplu, transparent, și poți opri oricând.</p>
+</div>
+
+<div class="steps-wrap">
+
+  <div class="step fu">
+    <div class="step-num">01</div>
+    <div class="step-body">
+      <div class="step-tag">Primul pas</div>
+      <h2 class="step-title">Trimiți o cerere</h2>
+      <p class="step-text">Completezi formularul de contact sau ne scrii pe WhatsApp. Ne spui ce tip de unitate ai, ce produse te interesează și aproximativ câte borcane cauți.</p>
+      <div class="step-detail">
+        <span class="step-pill">Formular de contact</span>
+        <span class="step-pill">WhatsApp direct</span>
+        <span class="step-pill">Răspuns în 24h lucrătoare</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step fu fu-d1">
+    <div class="step-num">02</div>
+    <div class="step-body">
+      <div class="step-tag">Discuție</div>
+      <h2 class="step-title">Vorbim 15 minute</h2>
+      <p class="step-text">Un apel scurt sau o conversație scrisă în care stabilim ce produse se potrivesc nevoii tale, cantitățile minime și logistica livrării. Fără prezentări formale, fără PowerPoint.</p>
+      <div class="step-detail">
+        <span class="step-pill">Telefon sau WhatsApp</span>
+        <span class="step-pill">15–20 minute</span>
+        <span class="step-pill">Fără angajament</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="step fu fu-d2">
+    <div class="step-num">03</div>
+    <div class="step-body">
+      <div class="step-tag">Ofertă</div>
+      <h2 class="step-title">Primești o ofertă scrisă</h2>
+      <p class="step-text">Prețuri clare, cantități, termen de livrare, și documentele necesare — fișă tehnică, declarație de conformitate, lot trasat. Nimic ascuns.</p>
+      <div class="step-detail">
+        <span class="step-pill">Preț per borcan</span>
+        <span class="step-pill">Termen livrare</span>
+        <span class="step-pill">Fișă tehnică produs</span>
+        <span class="step-pill">Declarație conformitate EU</span>
+      </div>
+      <p class="step-note">Oferta este valabilă 14 zile calendaristice.</p>
+    </div>
+  </div>
+
+  <div class="step fu fu-d1">
+    <div class="step-num">04</div>
+    <div class="step-body">
+      <div class="step-tag">Comandă pilot</div>
+      <h2 class="step-title">Prima livrare</h2>
+      <p class="step-text">Confirmi comanda, plătești la livrare sau cu factură cu termen, și primești borcanele. Poți folosi calculatorul nostru de costuri înainte să decizi.</p>
+      <div class="step-detail">
+        <span class="step-pill">Plată la livrare sau factură</span>
+        <span class="step-pill">Livrare în Transilvania</span>
+        <span class="step-pill">Min. 12 borcane / produs</span>
+      </div>
+      <p class="step-note">
+        <a href="/asezat-calculator.html" style="color:var(--amber);border-bottom:1px solid var(--amberP)">→ Calculează costurile înainte</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="step fu fu-d2">
+    <div class="step-num">05</div>
+    <div class="step-body">
+      <div class="step-tag">Feedback &amp; continuare</div>
+      <h2 class="step-title">Tu decizi ce urmează</h2>
+      <p class="step-text">După pilot vorbim din nou. Dacă produsele se vând și clienții tăi le cer, stabilim un ritm de comenzi regulate. Dacă nu se potrivesc — niciun angajament, nicio presiune.</p>
+      <div class="step-detail">
+        <span class="step-pill">Frecvență la alegere</span>
+        <span class="step-pill">Cantități flexibile</span>
+        <span class="step-pill">Etichetare personalizată la volum</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="get-wrap">
+  <div class="get-inner">
+    <div class="sl fu">Ce primești</div>
+    <h2 class="fu fu-d1" style="font-family:var(--serif);font-size:clamp(24px,4vw,40px);font-weight:700;color:var(--ink);margin-top:12px">Cu fiecare comandă pilot</h2>
+    <div class="get-grid">
+      <div class="get-item fu fu-d1">
+        <div class="get-icon">◎</div>
+        <div class="get-title">Produse cu lot trasat</div>
+        <p class="get-desc">Fiecare borcan are număr de lot, dată producție și trasabilitate completă. Știi exact ce pui pe raft sau în farfurie.</p>
+      </div>
+      <div class="get-item fu fu-d2">
+        <div class="get-icon">◎</div>
+        <div class="get-title">Documentație completă</div>
+        <p class="get-desc">Fișă tehnică, declarație de conformitate EU, compoziție și alergeni declarați. Tot ce are nevoie o bucătărie sau un magazin serios.</p>
+      </div>
+      <div class="get-item fu fu-d3">
+        <div class="get-icon">◎</div>
+        <div class="get-title">O poveste de spus</div>
+        <p class="get-desc">Materiale de prezentare — text, origine ingrediente, procesul de producție — pe care le poți folosi cu clienții tăi.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-final">
+  <h2>Gata să începem?</h2>
+  <p>Primii parteneri pilot obțin priorități și condiții speciale.<br>Cantitățile din primul lot sunt limitate.</p>
+  <div class="cta-buttons">
+    <a href="/asezat/#contact" class="btn-primary">Trimite o cerere</a>
+    <a href="/asezat-calculator.html" class="btn-secondary">Calculează costurile</a>
+  </div>
+</div>
+
+<footer>
+  <span>&copy; 2026 AȘEZAT &nbsp;&middot;&nbsp; Cluj-Napoca, Transilvania</span>
+  <a href="/asezat/" style="color:var(--amber)">← Înapoi la site</a>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}}),{threshold:.07});
+document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

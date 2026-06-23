@@ -17,6 +17,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23b8751a'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23f7f0e4' font-family='Georgia,serif' font-weight='700'%3EA%3C/text%3E%3C/svg%3E">
   <title>AȘEZAT — Meșteșug din Porc, Pus la Borcan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -154,6 +155,18 @@ h2 em{color:var(--amber);font-style:italic}
 .coming-items{display:flex;flex-wrap:wrap;gap:10px}
 .c-pill{font-size:11px;letter-spacing:.1em;color:var(--ink2);font-family:var(--sans);border:1px solid var(--line);padding:8px 16px;transition:border-color .2s,color .2s,background .2s}
 .c-pill:hover{border-color:var(--amber);color:var(--amber);background:var(--amberP)}
+
+
+/* FAQ */
+.faq-list{max-width:720px;margin-top:48px}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:24px 0;font-family:var(--serif);font-size:17px;font-weight:400;color:var(--ink);background:none;border:none;cursor:pointer;text-align:left;gap:24px;transition:color .2s}
+.faq-q:hover{color:var(--amber)}
+.faq-icon{font-size:20px;font-weight:300;color:var(--amber);flex-shrink:0;transition:transform .25s;font-family:var(--sans);line-height:1}
+.faq-q[aria-expanded="true"] .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a.open{max-height:200px}
+.faq-a p{font-size:14px;color:var(--ink2);line-height:1.85;padding-bottom:24px}
 
 /* STATEMENT */
 #statement{background:var(--terra);padding:100px var(--g);overflow:hidden;max-width:100%}
@@ -353,6 +366,8 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
     <li><a href="#procesul">Procesul</a></li>
     <li><a href="#parteneriate">Parteneriate</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="/asezat-calculator.html" style="color:var(--amber)">Calculator</a></li>
+    <li><a href="/asezat/pilot/">Pilot</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Comand&#259; pilot</a>
   <div class="nav-burger" id="burger" onclick="openMnav()">
@@ -367,6 +382,8 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
   <a href="#procesul" onclick="closeMnav()">Procesul</a>
   <a href="#parteneriate" onclick="closeMnav()">Parteneriate</a>
   <a href="#contact" onclick="closeMnav()">Contact</a>
+  <a href="/asezat-calculator.html" style="color:var(--amber)">Calculator costuri</a>
+  <a href="/asezat/pilot/">Cum funcționează pilotul</a>
 </div>
 
 <section id="hero">
@@ -608,7 +625,11 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
     <div class="sl fu">Colabor&#259;ri</div>
     <h2 class="fu fu-d1">Parteneriate B2B</h2>
     <div class="rule fu fu-d2"></div>
-    <p class="fu fu-d2" style="font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2vw,22px);color:var(--ink2);max-width:560px;margin-bottom:60px;line-height:1.7">Lucrăm cu cei care înțeleg că un borcan spune o poveste &mdash; și că povestea aceea merită raftul potrivit.</p>
+    <p class="fu fu-d2" style="font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2vw,22px);color:var(--ink2);max-width:560px;margin-bottom:36px;line-height:1.7">Lucrăm cu cei care înțeleg că un borcan spune o poveste &mdash; și că povestea aceea merită raftul potrivit.</p>
+    <a href="/asezat-calculator.html" class="fu fu-d2" style="display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:12px 24px;margin-bottom:60px;transition:background .2s,color .2s" onmouseover="this.style.background='var(--amberP)'" onmouseout="this.style.background='transparent'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Calculează costurile comenzii
+    </a>
     <div class="tiers">
       <div class="tier ft fu">
         <div class="tier-tag">HoReCa</div>
@@ -648,6 +669,61 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
           <span>EU certified</span>
         </div>
         <a href="#contact" class="tier-cta">Hai s&#259; vorbim</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="background:var(--parch2)" id="faq">
+  <div class="wrap">
+    <div class="sl fu">Întrebări frecvente</div>
+    <h2 class="fu fu-d1">Ce vrei să știi</h2>
+    <div class="rule fu fu-d2"></div>
+    <div class="faq-list">
+      <div class="faq-item fu fu-d1">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Care este cantitatea minimă de comandă?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Pentru restaurante și HoReCa, minimul este <strong>12 borcane per produs</strong>. Pentru retail și delicatessen, <strong>24 borcane per referință</strong>. Pentru comenzi individuale sau cadou, cantitățile sunt mai flexibile — scrie-ne și vedem.</p>
+        </div>
+      </div>
+      <div class="faq-item fu fu-d2">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Cât timp se păstrează produsele?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Termenul de valabilitate este de <strong>12 luni</strong> de la data producției, în condiții de depozitare la temperatura camerei, ferit de lumină directă. Odată deschis, borcanul se păstrează la frigider și se consumă în 3–5 zile.</p>
+        </div>
+      </div>
+      <div class="faq-item fu fu-d3">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Livrați în toată țara?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Momentan livrăm preponderent <strong>în Transilvania și Cluj-Napoca</strong>. Pentru comenzi mari sau parteneri din alte zone, livrarea se poate organiza — discutăm în funcție de volum. Export și livrare internațională sunt disponibile pentru cantități MOQ.</p>
+        </div>
+      </div>
+      <div class="faq-item fu fu-d3">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Putem pune logo-ul nostru pe borcan?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p><strong>Da</strong>, oferim etichetare personalizată pentru partenerii B2B la comenzi de volum. Poți alege să apară brandul tău, brandul AȘEZAT sau ambele. Discutăm detaliile după prima comandă pilot.</p>
+        </div>
+      </div>
+      <div class="faq-item fu fu-d4">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Produsele sunt certificate? Ce acte există?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Producția se face într-o <strong>fabrică certificată EU</strong>, cu ștampilă ovală valabilă, declarație de conformitate și trasabilitate completă pe loturi. Toate documentele necesare pentru HoReCa sau export sunt disponibile la cerere.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -768,6 +844,14 @@ function submitForm(e){
     btn.disabled=false; btn.textContent='Trimite mesajul';
     alert('A apărut o eroare. Încearcă din nou sau scrie-ne direct.');
   });
+}
+
+/* FAQ */
+function toggleFaq(btn){
+  var expanded=btn.getAttribute('aria-expanded')==='true';
+  btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+  var a=btn.nextElementSibling;
+  a.classList.toggle('open', !expanded);
 }
 
 /* SMOOTH ANCHOR */
