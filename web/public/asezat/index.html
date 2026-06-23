@@ -50,6 +50,7 @@ a{color:inherit;text-decoration:none}
 #hero{min-height:100vh;background:var(--parch2);display:grid;grid-template-rows:1fr auto;align-items:center;position:relative;overflow:hidden;padding-top:100px}
 #hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(184,117,26,.055) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
 #steam{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.hero-bg-word{position:absolute;right:-5vw;bottom:-8vh;font-family:var(--serif);font-size:clamp(180px,32vw,440px);font-weight:700;color:rgba(184,117,26,.055);line-height:1;letter-spacing:-.02em;pointer-events:none;user-select:none;z-index:1;transform:rotate(-8deg);white-space:nowrap}
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;padding:0 var(--g);max-width:var(--max);margin:0 auto;width:100%}
 .hero-sup{font-size:9px;letter-spacing:.52em;text-transform:uppercase;color:var(--amber);font-weight:500;font-family:var(--sans);margin-bottom:36px;opacity:0;animation:hIn .6s ease 1s forwards}
 .hero-title{font-family:var(--serif);font-size:clamp(52px,10vw,138px);font-weight:700;line-height:.88;color:var(--ink);letter-spacing:.04em;overflow:hidden}
@@ -103,7 +104,7 @@ h2 em{color:var(--amber);font-style:italic}
 .story-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
 .story-left{padding:110px var(--g);display:flex;flex-direction:column;justify-content:center;background:var(--ink);position:relative}
 .story-left::after{content:'';position:absolute;top:110px;right:0;bottom:110px;width:1px;background:rgba(247,240,228,.07)}
-.story-num{font-family:var(--serif);font-size:clamp(120px,14vw,200px);font-weight:700;color:rgba(247,240,228,.04);line-height:1;margin-bottom:-40px;user-select:none}
+.story-num{font-family:var(--serif);font-size:clamp(160px,20vw,280px);font-weight:700;color:rgba(247,240,228,.05);line-height:1;margin-bottom:-60px;user-select:none;letter-spacing:-.02em}
 .story-quote{font-family:var(--cormo);font-style:italic;font-size:clamp(18px,2.2vw,28px);color:rgba(247,240,228,.88);line-height:1.45;font-weight:300;margin-bottom:28px}
 .story-quote em{color:var(--amberB);font-style:normal}
 .story-attr{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(247,240,228,.28);font-family:var(--sans)}
@@ -114,13 +115,19 @@ h2 em{color:var(--amber);font-style:italic}
 
 /* PRODUSE */
 #produse{background:var(--parch)}
-.prod-intro{font-family:var(--cormo);font-style:italic;font-size:clamp(14px,1.5vw,18px);color:var(--ink2);line-height:1.65;max-width:640px;margin-bottom:0;padding:24px 0 0;border-left:3px solid var(--terra);padding-left:24px}.products-list{margin-top:48px}
+.ing-showcase{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:36px;background:var(--parch3);padding:28px 32px}
+.ing-s-item{display:flex;flex-direction:column;padding:0 28px}
+.ing-s-item:first-child{padding-left:0}
+.ing-s-origin{font-size:7.5px;letter-spacing:.45em;text-transform:uppercase;color:var(--terra);font-weight:500;font-family:var(--sans);margin-bottom:5px}
+.ing-s-name{font-family:var(--serif);font-size:clamp(16px,2vw,24px);font-weight:700;color:var(--ink);line-height:1.1}
+.ing-s-sep{font-family:var(--serif);font-size:28px;color:rgba(184,117,26,.3);padding:0 4px;align-self:center;font-weight:300}
+.prod-intro{font-family:var(--cormo);font-style:italic;font-size:clamp(13px,1.3vw,16px);color:var(--ink2);line-height:1.65;max-width:620px;margin-bottom:0;padding:0 0 0 20px;border-left:2px solid var(--terra)}.products-list{margin-top:48px}
 .prow{display:grid;grid-template-columns:72px 1fr 220px;align-items:start;gap:0 48px;padding:52px 0;border-top:1px solid var(--line);position:relative}
 .prow::before{content:'';position:absolute;left:-24px;right:-24px;top:0;bottom:0;background:var(--terraP);opacity:0;transition:opacity .3s;pointer-events:none}
 .prow:hover::before{opacity:1}
 .prow:last-of-type{border-bottom:1px solid var(--line)}
-.p-num{font-family:var(--serif);font-size:clamp(40px,5vw,60px);font-weight:700;color:rgba(184,117,26,.12);line-height:1;padding-top:6px;transition:color .3s;user-select:none}
-.prow:hover .p-num{color:rgba(184,117,26,.26)}
+.p-num{font-family:var(--serif);font-size:clamp(60px,8vw,110px);font-weight:700;color:rgba(184,117,26,.1);line-height:.85;padding-top:0;transition:color .3s;user-select:none;margin-top:-12px}
+.prow:hover .p-num{color:rgba(139,48,18,.22)}
 .p-tag{font-size:8px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);font-weight:500;margin-bottom:12px;font-family:var(--sans)}
 .p-name{font-family:var(--serif);font-size:clamp(18px,2vw,26px);font-weight:700;color:var(--ink);line-height:1.15;margin-bottom:10px}
 .p-sub{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:16px;font-family:var(--sans)}
@@ -139,9 +146,12 @@ h2 em{color:var(--amber);font-style:italic}
 .c-pill:hover{border-color:var(--amber);color:var(--amber);background:var(--amberP)}
 
 /* STATEMENT */
-#statement{background:var(--terra);padding:100px var(--g);text-align:center;overflow:hidden}
+#statement{background:var(--terra);padding:100px var(--g);overflow:hidden;max-width:100%}
 .st-label{font-size:8.5px;letter-spacing:.48em;text-transform:uppercase;color:rgba(247,240,228,.45);font-family:var(--sans);font-weight:500;margin-bottom:40px}
-.st-text{font-family:var(--serif);font-size:clamp(22px,4vw,52px);font-weight:700;line-height:1.1;color:rgba(247,240,228,.92);max-width:860px;margin:0 auto}
+.st-text{font-family:var(--serif);font-size:clamp(20px,3.5vw,44px);font-weight:700;line-height:1.2;color:rgba(247,240,228,.92);max-width:760px;margin:0 auto;text-align:left}
+.st-big{display:inline-block;font-size:clamp(52px,10vw,130px);font-weight:700;line-height:.9;color:rgba(247,240,228,.12);letter-spacing:-.01em}
+.st-italic{display:inline-block;font-style:italic;font-weight:400;font-family:var(--cormo);font-size:clamp(36px,6vw,88px);color:rgba(247,240,228,.9);line-height:1}
+.st-small{display:block;font-size:clamp(14px,1.6vw,20px);font-weight:300;color:rgba(247,240,228,.5);margin-top:12px;font-family:var(--cormo);font-style:italic;max-width:460px}
 .st-text em{color:var(--amberB);font-style:italic;display:inline-block}
 .st-after{margin-top:44px;font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(247,240,228,.3);font-family:var(--sans)}
 
@@ -207,7 +217,7 @@ h2 em{color:var(--amber);font-style:italic}
 
 /* FOOTER */
 footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflow:hidden}
-.footer-giant{font-family:var(--serif);font-size:clamp(80px,16vw,200px);font-weight:700;color:rgba(247,240,228,.04);line-height:.8;letter-spacing:.06em;padding:32px var(--g) 0;user-select:none;white-space:nowrap}
+.footer-giant{font-family:var(--serif);font-size:clamp(80px,16vw,200px);font-weight:700;color:rgba(247,240,228,.06);line-height:.8;letter-spacing:.06em;padding:32px var(--g) 0;user-select:none;white-space:nowrap}
 .footer-bottom{padding:36px var(--g) 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
 .footer-id{font-family:var(--serif);font-size:15px;font-weight:700;letter-spacing:.22em;color:var(--amber);margin-bottom:4px}
 .footer-tagline{font-family:var(--cormo);font-style:italic;font-size:13px;color:rgba(247,240,228,.3)}
@@ -276,6 +286,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 
 <section id="hero">
   <canvas id="steam"></canvas>
+  <div class="hero-bg-word">PORC.</div>
   <div class="hero-inner">
     <p class="hero-sup">Cluj-Napoca &middot; Transilvania &middot; Rom&acirc;nia</p>
     <h1 class="hero-title">
@@ -373,7 +384,18 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
     <div class="sl fu">Linia de Borcane</div>
     <h2 class="fu fu-d1">Produsele noastre</h2>
     <div class="rule fu fu-d2"></div>
-    <p class="prod-intro fu fu-d2">Baz&#259; rom&acirc;neasc&#259; autentic&#259; &mdash; untur&#259; de porc, jum&#259;ri, s&#259;nz&#259;iene. Reinterpretat&#259; cu ingrediente alese cu grij&#259;: boia afumat&#259; din Ungaria, harissa tunisian&#259;, sos de soia japonez, miere local&#259;, arom&#259; natural&#259; de fum Givaudan. Nu e fuz&#259;. E respect fa&#539;&#259; de materia prim&#259; &#351;i curiozitate fa&#539;&#259; de lume.</p>
+    <div class="ing-showcase fu fu-d2">
+      <div class="ing-s-item"><span class="ing-s-origin">TRANSILVANIA</span><span class="ing-s-name">Untur&#259; de porc</span></div>
+      <div class="ing-s-sep">+</div>
+      <div class="ing-s-item"><span class="ing-s-origin">UNGARIA</span><span class="ing-s-name">Boia afumat&#259;</span></div>
+      <div class="ing-s-sep">+</div>
+      <div class="ing-s-item"><span class="ing-s-origin">TUNISIA</span><span class="ing-s-name">Harissa</span></div>
+      <div class="ing-s-sep">+</div>
+      <div class="ing-s-item"><span class="ing-s-origin">JAPONIA</span><span class="ing-s-name">Sos soia</span></div>
+      <div class="ing-s-sep">+</div>
+      <div class="ing-s-item"><span class="ing-s-origin">HIMALAYA</span><span class="ing-s-name">Sare roz</span></div>
+    </div>
+    <p class="prod-intro fu fu-d3">Baz&#259; rom&acirc;neasc&#259; autentic&#259; &mdash; untur&#259; de porc, jum&#259;ri, s&#259;nz&#259;iene. Reinterpretat&#259; cu ingrediente alese cu grij&#259;: boia afumat&#259; din Ungaria, harissa tunisian&#259;, sos de soia japonez, miere local&#259;, arom&#259; natural&#259; de fum Givaudan. Nu e fuz&#259;. E respect fa&#539;&#259; de materia prim&#259; &#351;i curiozitate fa&#539;&#259; de lume.</p>
     <div class="products-list">
       <div class="prow fu">
         <div class="p-num">01</div>
@@ -448,9 +470,10 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 <div id="statement">
   <div class="st-label fu">Promisiunea</div>
   <p class="st-text fu fu-d1">
-    C&acirc;nd deschizi un borcan A&#536;EZAT,<br>
-    te opre&#351;ti. Nu pentru c&#259; &#539;i se cere.<br>
-    Pentru c&#259; sim&#539;i c&#259; <em>merit&#259;.</em>
+    C&acirc;nd deschizi<br>
+    <span class="st-big">un borcan</span><br>
+    <span class="st-italic">te opre&#351;ti.</span><br>
+    <span class="st-small">Nu pentru c&#259; &#539;i se cere &mdash; pentru c&#259; sim&#539;i c&#259; <em>merit&#259;.</em></span>
   </p>
   <p class="st-after fu fu-d3">&mdash; promisiunea brandului &middot; Cluj-Napoca &middot; 2026</p>
 </div>
