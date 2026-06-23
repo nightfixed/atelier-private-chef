@@ -125,6 +125,16 @@
   /* ══════════════════════════════════════════
      HERO
   ══════════════════════════════════════════ */
+  #heat-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #hero > *:not(#heat-canvas) { position: relative; z-index: 1; }
+
   #hero {
     min-height: 100vh;
     background: var(--dark);
@@ -1081,6 +1091,7 @@
 
 <!-- ══════════ HERO ══════════ -->
 <section id="hero">
+  <canvas id="heat-canvas"></canvas>
   <div class="hero-line-top"></div>
   <p class="hero-eyebrow">Cluj-Napoca · Transilvania · România</p>
   <h1 class="hero-brand"><span class="h-letter">A</span><span class="h-letter">Ș</span><span class="h-letter">E</span><span class="h-letter">Z</span><span class="h-letter">A</span><span class="h-letter">T</span></h1>
@@ -1207,12 +1218,12 @@
       <!-- P03 -->
       <div class="pcard fu fu-d2">
         <div class="pcard-num">03 · Pilot · Lot 2026</div>
-        <div class="pcard-name">Pastă Picantă de Jumări</div>
+        <div class="pcard-name">Cremă Picantă din Porc</div>
         <div class="pcard-sub">Pastă tartinabilă · borcan 120g</div>
-        <p class="pcard-desc">Jumări de porc măcinate fin, cu harissa, usturoi copt, sos de soia, miere și ghimbir. Prăjit scurt la 180°C pentru a unifica aromele. Complex, adânc, ușor picant — tartinabil sau condiment.</p>
+        <p class="pcard-desc">Carne de porc prăjită și măcinată fin, cu harissa, usturoi copt, sos de soia, miere și ghimbir. Prăjit scurt la 180°C pentru a unifica aromele. Complex, adânc, ușor picant — tartinabil sau condiment de bucătărie.</p>
         <div class="pcard-ing">
           <div class="ing-label">Ingrediente principale</div>
-          <div class="ing-list">Pastă jumări · Harissa · Usturoi copt · Sos soia · Miere · Ghimbir · Piper</div>
+          <div class="ing-list">Porc prăjit · Harissa · Usturoi copt · Sos soia · Miere · Ghimbir · Piper</div>
         </div>
         <div class="pcard-price">
           <span class="price-lbl">HoReCa</span>
@@ -1436,6 +1447,54 @@
 </footer>
 
 <script>
+/* ── Heat particles ── */
+(function(){
+  const canvas = document.getElementById('heat-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  const COUNT = 38;
+  function mkParticle(initial){
+    return {
+      x: Math.random() * W,
+      y: initial ? Math.random() * H : H + 8,
+      r: Math.random() * 1.6 + 0.3,
+      speed: Math.random() * 0.28 + 0.08,
+      drift: (Math.random() - .5) * 0.18,
+      alpha: Math.random() * 0.22 + 0.04,
+      flicker: Math.random() * Math.PI * 2,
+      fSpeed: Math.random() * 0.018 + 0.006,
+    };
+  }
+
+  for(let i = 0; i < COUNT; i++) particles.push(mkParticle(true));
+
+  function frame(){
+    ctx.clearRect(0, 0, W, H);
+    const now = performance.now();
+    particles.forEach((p, i) => {
+      p.y    -= p.speed;
+      p.x    += p.drift;
+      p.flicker += p.fSpeed;
+      const a = p.alpha * (.65 + .35 * Math.sin(p.flicker));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(196,134,30,${a.toFixed(3)})`;
+      ctx.fill();
+      if(p.y < -6) particles[i] = mkParticle(false);
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
 /* ── NAV scroll ── */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
