@@ -48,18 +48,20 @@ a{color:inherit;text-decoration:none}
 
 /* HERO */
 #hero{min-height:100vh;background:var(--parch2);display:grid;grid-template-rows:1fr auto;align-items:center;position:relative;overflow:hidden;padding-top:100px}
+#hero::after{content:'';position:absolute;bottom:-20%;left:35%;width:60%;height:80%;background:radial-gradient(ellipse at center,rgba(184,117,26,.07) 0%,transparent 65%);animation:glowPulse 6s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes glowPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 #hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(184,117,26,.055) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-#steam{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .hero-bg-word{position:absolute;right:-5vw;bottom:-8vh;font-family:var(--serif);font-size:clamp(180px,32vw,440px);font-weight:700;color:rgba(184,117,26,.055);line-height:1;letter-spacing:-.02em;pointer-events:none;user-select:none;z-index:1;transform:rotate(-8deg);white-space:nowrap}
+.hero-bg-word2{position:absolute;left:-2vw;top:12%;font-family:var(--serif);font-size:clamp(60px,10vw,140px);font-weight:700;color:rgba(139,48,18,.04);line-height:1;pointer-events:none;user-select:none;z-index:1;transform:rotate(-90deg);transform-origin:left center;white-space:nowrap;letter-spacing:.05em}
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;padding:0 var(--g);max-width:var(--max);margin:0 auto;width:100%}
-.hero-sup{font-size:9px;letter-spacing:.52em;text-transform:uppercase;color:var(--amber);font-weight:500;font-family:var(--sans);margin-bottom:36px;opacity:0;animation:hIn .6s ease 1s forwards}
+.hero-sup{font-size:8.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--ink3);font-weight:400;font-family:var(--sans);margin-top:20px;opacity:0;animation:hIn .6s ease 3.2s forwards}
 .hero-title{font-family:var(--serif);font-size:clamp(52px,10vw,138px);font-weight:700;line-height:.88;color:var(--ink);letter-spacing:.04em;overflow:hidden}
 .hero-title .word{display:block;overflow:hidden}
-.hero-title .word span{display:block;transform:translateY(110%);animation:wordUp .9s cubic-bezier(.16,.84,.44,1) 1.2s both}
+.hero-title .word span{display:block;transform:translateY(110%);animation:wordUp .9s cubic-bezier(.16,.84,.44,1) 1.0s both}
 .hero-rule{width:0;height:3px;background:var(--terra);margin:36px 0;animation:ruleW 1s ease 2.4s forwards}
 @keyframes ruleW{to{width:clamp(60px,8vw,100px)}}
-.hero-tagline{font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2.2vw,26px);color:var(--ink2);font-weight:300;line-height:1.45;max-width:480px;opacity:0;animation:hIn .8s ease 2.6s forwards}.hero-tagline .accent{color:var(--terra);font-style:normal}
-.hero-note{margin-top:18px;font-family:var(--cormo);font-style:italic;font-size:clamp(13px,1.4vw,17px);color:var(--ink3);max-width:420px;line-height:1.55;opacity:0;animation:hIn .7s ease 2.85s forwards}.hero-sub{margin-top:10px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;opacity:0;animation:hIn .7s ease 2.9s forwards}
+.hero-tagline{font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2.2vw,26px);color:var(--ink2);font-weight:300;line-height:1.45;max-width:480px;opacity:0;margin-bottom:28px;animation:hIn .8s ease 0.6s forwards}.hero-tagline .accent{color:var(--terra);font-style:normal}
+.hero-note{margin-top:16px;font-family:var(--cormo);font-style:italic;font-size:clamp(12px,1.3vw,15px);color:var(--ink3);max-width:380px;line-height:1.55;opacity:0;animation:hIn .7s ease 2.7s forwards}.hero-sub{margin-top:10px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink3);font-weight:400;opacity:0;animation:hIn .7s ease 2.9s forwards}
 @keyframes hIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
 .hero-lot{position:absolute;right:var(--g);top:50%;transform:translateY(-50%);text-align:right;z-index:2;opacity:0;animation:hIn .6s ease 3.2s forwards}
@@ -70,13 +72,7 @@ a{color:inherit;text-decoration:none}
 .hero-scroll-line{width:44px;height:1px;background:linear-gradient(to right,var(--amber),transparent);flex-shrink:0}
 .hero-scroll span{font-size:8.5px;letter-spacing:.35em;text-transform:uppercase;color:var(--ink3);font-family:var(--sans)}
 
-/* MARQUEE */
-.mq-wrap{background:var(--terra);padding:16px 0;overflow:hidden;white-space:nowrap}
-.mq-track{display:inline-flex;animation:mq 22s linear infinite}
-.mq-track:hover{animation-play-state:paused}
-.mq-item{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:rgba(247,240,228,.65);font-weight:500;font-family:var(--sans);padding:0 40px}
-.mq-item.g{color:rgba(247,240,228,.35)}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+to{transform:translateX(-50%)}}
 
 /* LAYOUT */
 .sec{padding:110px var(--g)}
@@ -92,6 +88,9 @@ h2 em{color:var(--amber);font-style:italic}
 /* CUVANTUL */
 #cuvantul{background:var(--parch)}
 .meanings-layout{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:52px}
+.meaning:nth-child(odd){transform:translateY(0)}
+.meaning:nth-child(even){transform:translateY(28px)}
+.meaning:hover{transform:translateY(0) !important;z-index:2}
 .meaning{background:var(--parch2);padding:48px 44px;position:relative;overflow:hidden;transition:background .3s}
 .meaning:hover{background:var(--parch3)}
 .m-idx{font-family:var(--serif);font-size:80px;font-weight:700;color:rgba(184,117,26,.08);line-height:1;margin-bottom:20px;transition:color .3s}
@@ -108,6 +107,7 @@ h2 em{color:var(--amber);font-style:italic}
 .story-quote{font-family:var(--cormo);font-style:italic;font-size:clamp(18px,2.2vw,28px);color:rgba(247,240,228,.88);line-height:1.45;font-weight:300;margin-bottom:28px}
 .story-quote em{color:var(--amberB);font-style:normal}
 .story-attr{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(247,240,228,.28);font-family:var(--sans)}
+.story-giant{font-family:var(--serif);font-size:clamp(36px,6vw,80px);font-weight:700;color:rgba(247,240,228,.07);letter-spacing:-.01em;margin-top:20px;line-height:1}
 .story-right{padding:110px var(--g);display:flex;flex-direction:column;justify-content:center;background:var(--ink2)}
 .story-right h2{color:rgba(247,240,228,.9);font-size:clamp(20px,2.2vw,30px)}
 .story-right p{font-size:13.5px;line-height:1.85;color:rgba(247,240,228,.5);margin-bottom:18px}
@@ -122,7 +122,7 @@ h2 em{color:var(--amber);font-style:italic}
 .ing-s-name{font-family:var(--serif);font-size:clamp(16px,2vw,24px);font-weight:700;color:var(--ink);line-height:1.1}
 .ing-s-sep{font-family:var(--serif);font-size:28px;color:rgba(184,117,26,.3);padding:0 4px;align-self:center;font-weight:300}
 .prod-intro{font-family:var(--cormo);font-style:italic;font-size:clamp(13px,1.3vw,16px);color:var(--ink2);line-height:1.65;max-width:620px;margin-bottom:0;padding:0 0 0 20px;border-left:2px solid var(--terra)}.products-list{margin-top:48px}
-.prow{display:grid;grid-template-columns:72px 1fr 220px;align-items:start;gap:0 48px;padding:52px 0;border-top:1px solid var(--line);position:relative}
+.prow{display:grid;grid-template-columns:90px 1fr 220px;align-items:start;gap:0 40px;padding:52px 0;border-top:1px solid var(--line);position:relative}
 .prow::before{content:'';position:absolute;left:-24px;right:-24px;top:0;bottom:0;background:var(--terraP);opacity:0;transition:opacity .3s;pointer-events:none}
 .prow:hover::before{opacity:1}
 .prow:last-of-type{border-bottom:1px solid var(--line)}
@@ -161,6 +161,8 @@ h2 em{color:var(--amber);font-style:italic}
 .princ{background:var(--parch2);padding:52px 40px;position:relative;overflow:hidden}
 .princ::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .35s}
 .princ:hover::after{background:var(--terra)}
+.princ-featured{background:var(--parch3);transform:translateY(-16px) rotate(.4deg)}
+.princ-featured:hover{transform:translateY(-20px) rotate(.4deg)}
 .princ-n{font-family:var(--serif);font-size:72px;font-weight:700;color:rgba(184,117,26,.09);line-height:1;margin-bottom:24px}
 .princ-title{font-family:var(--cormo);font-style:italic;font-size:21px;color:var(--ink);line-height:1.3;margin-bottom:16px;font-weight:400}
 .princ-body{font-size:13px;color:var(--ink2);line-height:1.78}
@@ -285,17 +287,16 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 </div>
 
 <section id="hero">
-  <canvas id="steam"></canvas>
   <div class="hero-bg-word">PORC.</div>
+  <div class="hero-bg-word2">ACASA.</div>
   <div class="hero-inner">
-    <p class="hero-sup">Cluj-Napoca &middot; Transilvania &middot; Rom&acirc;nia</p>
+    <p class="hero-tagline">Me&#537;te&#537;ug din <span class="accent">porc</span>.<br>R&#259;bdare din neam.</p>
     <h1 class="hero-title">
       <span class="word"><span>A&#536;EZAT</span></span>
     </h1>
     <div class="hero-rule"></div>
-    <p class="hero-tagline">Me&#537;te&#537;ug din <span class="accent">porc</span>.<br>R&#259;bdare din neam.</p>
-    <p class="hero-note">Tradi&#539;ie rom&acirc;neasc&#259; &mdash; reinterpretat&#259; cu ingrediente locale &#351;i condimente alese din toat&#259; lumea.</p>
-    <p class="hero-sub">Conserve artizanale &nbsp;&middot;&nbsp; Produs &icirc;n Rom&acirc;nia &nbsp;&middot;&nbsp; Lot numerotat</p>
+    <p class="hero-note">Tradi&#539;ie rom&acirc;neasc&#259; &mdash; reinterpretat&#259; cu ingrediente locale &#351;i condimente alese cu grij&#259; din toat&#259; lumea.</p>
+    <p class="hero-sup">Cluj-Napoca &middot; Transilvania &middot; 2026</p>
   </div>
   <div class="hero-lot">
     <div class="hero-lot-label">Lot curent</div>
@@ -308,21 +309,6 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
   </div>
 </section>
 
-<div class="mq-wrap">
-  <div class="mq-track">
-    <span class="mq-item">F&#259;r&#259; grab&#259;</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Lot numerotat</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Produs &icirc;n Transilvania</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Me&#537;te&#537;ug din porc</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Fabric&#259; certificat&#259; EU</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">F&#259;r&#259; conservan&#539;i artificiali</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">F&#259;r&#259; grab&#259;</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Lot numerotat</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Produs &icirc;n Transilvania</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Me&#537;te&#537;ug din porc</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">Fabric&#259; certificat&#259; EU</span><span class="mq-item g">&middot;</span>
-    <span class="mq-item">F&#259;r&#259; conservan&#539;i artificiali</span><span class="mq-item g">&middot;</span>
-  </div>
 </div>
 
 <section id="cuvantul" class="sec">
@@ -375,6 +361,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
       <p class="fu fu-d3">St&#259;team l&acirc;ng&#259; ea &icirc;n buc&#259;t&#259;rie. &Icirc;mi explica fiecare pas, m&#259; l&#259;sa s&#259; fac, m&#259; corecta c&acirc;nd era nevoie. De fiecare dat&#259;, acelea&#351;i trei lucruri.</p>
       <p class="fu fu-d3">At&acirc;t.</p>
       <p class="fu fu-d4">&#8222;<strong>A&#351;ezat</strong>&#8221; nu e brand. E promisiune.</p>
+      <p class="story-giant fu">1997&ndash;2026</p>
     </div>
   </div>
 </section>
@@ -468,6 +455,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 </section>
 
 <div id="statement">
+  <div style="max-width:var(--max);margin:0 auto;padding:0 var(--g)">
   <div class="st-label fu">Promisiunea</div>
   <p class="st-text fu fu-d1">
     C&acirc;nd deschizi<br>
@@ -476,6 +464,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
     <span class="st-small">Nu pentru c&#259; &#539;i se cere &mdash; pentru c&#259; sim&#539;i c&#259; <em>merit&#259;.</em></span>
   </p>
   <p class="st-after fu fu-d3">&mdash; promisiunea brandului &middot; Cluj-Napoca &middot; 2026</p>
+  </div>
 </div>
 
 <section id="principii" class="sec">
@@ -489,7 +478,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
         <div class="princ-title">S&#259; nu te gr&#259;be&#351;ti.</div>
         <p class="princ-body">Fermenta&#539;ia cere s&#259;pt&#259;m&acirc;ni. Maturarea cere luni. R&#259;bdarea nu e lips&#259; &mdash; e ingredient. Fiecare borcan iese c&acirc;nd e gata, nu c&acirc;nd e convenabil.</p>
       </div>
-      <div class="princ fu fu-d1">
+      <div class="princ princ-featured fu fu-d1">
         <div class="princ-n">02</div>
         <div class="princ-title">S&#259; faci totul bine.</div>
         <p class="princ-body">pH-ul controlat. Sarea c&acirc;nt&#259;rit&#259; la gram. Lotul numerotat. Niciun pas s&#259;rit, niciun compromis ascuns &icirc;n spatele etichetei.</p>
@@ -629,35 +618,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 <script>
 
 
-/* STEAM — fire ondulate pe fundal crem */
-(function(){
-  const cv=document.getElementById('steam'),ctx=cv.getContext('2d');
-  let W,H,pts=[];
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  window.addEventListener('resize',resize,{passive:true}); resize();
-  function mk(init){
-    return{ox:Math.random()*W,y:init?Math.random()*H:H+16,lf:0,
-      ml:200+Math.random()*180,sp:.38+Math.random()*.28,
-      am:12+Math.random()*20,fq:.02+Math.random()*.013,
-      ph:Math.random()*Math.PI*2,w:1.4+Math.random()*1.3,ln:30+Math.random()*28};
-  }
-  for(let i=0;i<28;i++) pts.push(mk(true));
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach((p,i)=>{
-      p.y-=p.sp; p.lf++;
-      let a; if(p.lf<45) a=(p.lf/45)*.48; else if(p.lf>p.ml-55) a=((p.ml-p.lf)/55)*.48; else a=.48;
-      const seg=12,sh=p.ln/seg;
-      ctx.beginPath();
-      for(let s=0;s<=seg;s++){const sy=p.y+s*sh,sx=p.ox+Math.sin(p.ph+sy*p.fq)*p.am; s===0?ctx.moveTo(sx,sy):ctx.lineTo(sx,sy);}
-      ctx.strokeStyle=`rgba(140,85,15,${a.toFixed(3)})`;
-      ctx.lineWidth=p.w; ctx.lineCap='round'; ctx.stroke();
-      if(p.lf>=p.ml) pts[i]=mk(false);
-    });
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
+
 
 /* LOT COUNTER */
 (function(){
