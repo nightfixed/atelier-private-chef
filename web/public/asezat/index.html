@@ -22,14 +22,14 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--parch);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+body{background:var(--parch);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--amber);color:#fff}
 
 /* CURSOR */
-#cur{position:fixed;width:8px;height:8px;background:var(--amber);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s,background .18s;mix-blend-mode:multiply}
-#cur.big{width:36px;height:36px;background:rgba(184,117,26,.18)}
-#cur-trail{position:fixed;width:28px;height:28px;border:1px solid rgba(184,117,26,.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease}
+
+
+
 
 /* NAV */
 #nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:28px var(--g);transition:background .4s,padding .3s,box-shadow .3s}
@@ -43,7 +43,7 @@ a{color:inherit;text-decoration:none}
 .nav-links a:hover::after{width:100%}
 .nav-cta{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:#fff;background:var(--amber);padding:11px 22px;transition:background .2s,transform .1s}
 .nav-cta:hover{background:var(--amberB);transform:translateY(-1px)}
-.nav-burger{display:none;flex-direction:column;gap:5px;cursor:none;padding:4px}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
 .nav-burger span{display:block;width:20px;height:1px;background:var(--ink)}
 
 /* HERO */
@@ -135,7 +135,7 @@ h2 em{color:var(--amber);font-style:italic}
 .coming-row{padding:44px 0;border-top:1px solid var(--line)}
 .coming-title{font-size:8.5px;letter-spacing:.45em;text-transform:uppercase;color:var(--amber);font-weight:500;font-family:var(--sans);margin-bottom:24px;opacity:.7}
 .coming-items{display:flex;flex-wrap:wrap;gap:10px}
-.c-pill{font-size:11px;letter-spacing:.1em;color:var(--ink2);font-family:var(--sans);border:1px solid var(--line);padding:8px 16px;transition:border-color .2s,color .2s,background .2s;cursor:none}
+.c-pill{font-size:11px;letter-spacing:.1em;color:var(--ink2);font-family:var(--sans);border:1px solid var(--line);padding:8px 16px;transition:border-color .2s,color .2s,background .2s}
 .c-pill:hover{border-color:var(--amber);color:var(--amber);background:var(--amberP)}
 
 /* STATEMENT */
@@ -200,7 +200,7 @@ h2 em{color:var(--amber);font-style:italic}
 .cf select{color:rgba(247,240,228,.3)}
 .cf select option{background:var(--ink)}
 .cf textarea{height:100px;resize:vertical}
-.btn-send{display:block;width:100%;background:var(--amber);color:var(--parch);font-family:var(--sans);font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;padding:18px;border:none;cursor:none;transition:background .2s,transform .1s;margin-top:6px}
+.btn-send{display:block;width:100%;background:var(--amber);color:var(--parch);font-family:var(--sans);font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;padding:18px;border:none;cursor:pointer;transition:background .2s,transform .1s;margin-top:6px}
 .btn-send:hover{background:var(--amberB);transform:translateY(-1px)}
 #form-ok{display:none;padding:32px 0;text-align:center}
 #form-ok p{font-family:var(--cormo);font-style:italic;font-size:22px;color:var(--amberB);line-height:1.5}
@@ -221,7 +221,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 #mnav.open{display:flex}
 #mnav a{font-family:var(--serif);font-size:26px;font-style:italic;color:rgba(247,240,228,.85);font-weight:400;transition:color .2s}
 #mnav a:hover{color:var(--amber)}
-.mnav-x{position:absolute;top:24px;right:24px;background:none;border:none;color:rgba(247,240,228,.28);font-size:24px;cursor:none;padding:4px}
+.mnav-x{position:absolute;top:24px;right:24px;background:none;border:none;color:rgba(247,240,228,.28);font-size:24px;cursor:pointer;padding:4px}
 
 /* RESPONSIVE */
 @media(max-width:960px){
@@ -250,11 +250,8 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-trail"></div>
-
 <nav id="nav">
-  <a href="#hero" class="nav-logo">&#256;EZAT</a>
+  <a href="#hero" class="nav-logo">AȘEZAT</a>
   <ul class="nav-links">
     <li><a href="#produse">Produse</a></li>
     <li><a href="#principii">Filozofie</a></li>
@@ -607,20 +604,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
 </footer>
 
 <script>
-/* CURSOR */
-const cur=document.getElementById('cur'),trail=document.getElementById('cur-trail');
-let mx=0,my=0,tx=0,ty=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function animC(){
-  tx+=(mx-tx)*.14; ty+=(my-ty)*.14;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  trail.style.left=tx+'px'; trail.style.top=ty+'px';
-  requestAnimationFrame(animC);
-})();
-document.querySelectorAll('a,button,.meaning,.prow,.tier,.c-pill,.pbadge').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
+
 
 /* STEAM — fire ondulate pe fundal crem */
 (function(){
