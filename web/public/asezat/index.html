@@ -365,14 +365,14 @@
     line-height: 1.15;
     margin-bottom: 28px;
   }
-  h2.on-dark  { font-size: clamp(32px, 4.5vw, 56px); color: var(--ivory); }
-  h2.on-cream { font-size: clamp(30px, 4vw, 52px);   color: var(--dark); }
+  h2.on-dark  { font-size: clamp(24px, 3vw, 38px); color: var(--ivory); }
+  h2.on-cream { font-size: clamp(22px, 2.8vw, 34px); color: var(--dark); }
   .lead {
     font-family: var(--serif);
     font-style: italic;
-    font-size: clamp(18px, 2.5vw, 24px);
+    font-size: clamp(15px, 1.6vw, 18px);
     line-height: 1.6;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
   .lead.on-dark  { color: var(--amber-bright); }
   .lead.on-cream { color: var(--muted-cream); }
@@ -446,9 +446,9 @@
   .m-text {
     font-family: var(--serif);
     font-style: italic;
-    font-size: 19px;
+    font-size: 15px;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.55;
     font-weight: 400;
   }
 
@@ -465,7 +465,7 @@
   }
   .story-pull {
     font-family: var(--serif);
-    font-size: clamp(24px, 3vw, 34px);
+    font-size: clamp(18px, 2vw, 24px);
     font-style: italic;
     font-weight: 400;
     color: var(--amber);
@@ -491,11 +491,11 @@
     font-family: var(--sans);
   }
   .story-body p {
-    font-size: 17px;
-    line-height: 1.85;
+    font-size: 14px;
+    line-height: 1.8;
     color: var(--dark);
     opacity: .82;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   }
   .story-body strong { color: var(--amber); font-weight: 400; }
 
@@ -555,10 +555,10 @@
     font-family: var(--sans);
   }
   .pcard-desc {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--muted-dark);
-    line-height: 1.75;
-    margin-bottom: 28px;
+    line-height: 1.7;
+    margin-bottom: 22px;
   }
   .pcard-ing {
     border-top: 1px solid var(--dark-border);
@@ -1502,17 +1502,23 @@
   window.addEventListener('resize', resize, { passive: true });
   resize();
 
-  const COUNT = 38;
+  /* Abur — fire ondulate care se ridică */
+  const COUNT = 22;
+
   function mkParticle(initial){
+    const startX = Math.random() * W;
     return {
-      x: Math.random() * W,
-      y: initial ? Math.random() * H : H + 8,
-      r: Math.random() * 1.6 + 0.3,
-      speed: Math.random() * 0.28 + 0.08,
-      drift: (Math.random() - .5) * 0.18,
-      alpha: Math.random() * 0.22 + 0.04,
-      flicker: Math.random() * Math.PI * 2,
-      fSpeed: Math.random() * 0.018 + 0.006,
+      x:      startX,
+      originX: startX,
+      y:      initial ? Math.random() * H : H + 12,
+      life:   0,
+      maxLife: 260 + Math.random() * 200,   /* cadre până dispare */
+      speed:  0.35 + Math.random() * 0.25,
+      amp:    18 + Math.random() * 22,       /* amplitudine ondulare */
+      freq:   0.018 + Math.random() * 0.014,
+      phase:  Math.random() * Math.PI * 2,
+      width:  1.2 + Math.random() * 1.4,    /* grosime fir */
+      len:    28 + Math.random() * 30,       /* lungime segment */
     };
   }
 
@@ -1520,17 +1526,31 @@
 
   function frame(){
     ctx.clearRect(0, 0, W, H);
-    const now = performance.now();
     particles.forEach((p, i) => {
       p.y    -= p.speed;
-      p.x    += p.drift;
-      p.flicker += p.fSpeed;
-      const a = p.alpha * (.65 + .35 * Math.sin(p.flicker));
+      p.life += 1;
+
+      /* fade-in primele 40 cadre, fade-out ultimele 60 */
+      let a;
+      if(p.life < 40)        a = (p.life / 40) * 0.38;
+      else if(p.life > p.maxLife - 60) a = ((p.maxLife - p.life) / 60) * 0.38;
+      else                   a = 0.38;
+
+      /* desenez firul ca o serie de segmente ondulate */
+      const segments = 10;
+      const segH = p.len / segments;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(196,134,30,${a.toFixed(3)})`;
-      ctx.fill();
-      if(p.y < -6) particles[i] = mkParticle(false);
+      for(let s = 0; s <= segments; s++){
+        const sy = p.y + s * segH;
+        const sx = p.originX + Math.sin(p.phase + sy * p.freq) * p.amp;
+        s === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.strokeStyle = `rgba(220,175,90,${a.toFixed(3)})`;
+      ctx.lineWidth   = p.width;
+      ctx.lineCap     = 'round';
+      ctx.stroke();
+
+      if(p.life >= p.maxLife) particles[i] = mkParticle(false);
     });
     requestAnimationFrame(frame);
   }
