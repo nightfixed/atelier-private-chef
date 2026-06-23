@@ -620,6 +620,48 @@
   }
   .more-products strong { color: var(--amber); font-weight: 400; }
 
+  /* COMING GRID */
+  .coming-grid {
+    margin-top: 56px;
+    padding-top: 44px;
+    border-top: 1px solid var(--dark-border);
+  }
+  .coming-label {
+    font-size: 9px;
+    letter-spacing: .45em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    font-family: var(--sans);
+    margin-bottom: 28px;
+    opacity: .7;
+  }
+  .coming-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+  }
+  .citem {
+    background: rgba(255,255,255,.025);
+    border: 1px solid var(--dark-border);
+    padding: 28px 30px;
+    transition: background .25s;
+  }
+  .citem:hover { background: rgba(196,134,30,.04); }
+  .citem-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ivory);
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .citem-desc {
+    font-size: 13px;
+    color: var(--muted-dark);
+    line-height: 1.65;
+  }
+
   /* ══════════════════════════════════════════
      SECȚIUNEA: PRINCIPII (cream)
   ══════════════════════════════════════════ */
