@@ -24,5 +24,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    {
+      url: `${BASE}/asezat/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${BASE}/asezat/confidentialitate/`,
+      lastModified: new Date('2026-06-23'),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
   ];
 }

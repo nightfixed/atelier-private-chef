@@ -204,6 +204,7 @@ h2 em{color:var(--amber);font-style:italic}
 .tier-list li{font-size:12px;color:var(--ink2);padding:7px 0;border-bottom:1px solid var(--line);font-family:var(--sans);line-height:1.5}
 .tier-list li::before{content:'-> ';color:var(--amber)}
 .tier-list li:last-child{border-bottom:none}
+.tier-detail{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:11px;font-family:var(--sans);color:var(--ink2);letter-spacing:.04em;margin-bottom:28px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .tier-cta{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;font-weight:500;color:var(--amber);border-bottom:1px solid currentColor;padding-bottom:2px;transition:color .2s;font-family:var(--sans)}
 .tier-cta:hover{color:var(--amberB)}
 
@@ -607,42 +608,46 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
     <div class="sl fu">Colabor&#259;ri</div>
     <h2 class="fu fu-d1">Parteneriate B2B</h2>
     <div class="rule fu fu-d2"></div>
+    <p class="fu fu-d2" style="font-family:var(--cormo);font-style:italic;font-size:clamp(17px,2vw,22px);color:var(--ink2);max-width:560px;margin-bottom:60px;line-height:1.7">Lucrăm cu cei care înțeleg că un borcan spune o poveste &mdash; și că povestea aceea merită raftul potrivit.</p>
     <div class="tiers">
       <div class="tier ft fu">
         <div class="tier-tag">HoReCa</div>
         <div class="tier-name">Restaurante &amp; Bistro-uri</div>
-        <p class="tier-desc">Produse gata de utilizare. Etichet&#259; curat&#259;, ingredient list complet declarat&#259;, lot trasat.</p>
-        <ul class="tier-list">
-          <li>Minim 12 borcane / produs</li>
-          <li>27&ndash;37 lei / borcan HoReCa</li>
-          <li>Livrare &icirc;n Transilvania</li>
-          <li>Etichet&#259; personalizat&#259; la volum</li>
-        </ul>
-        <a href="#contact" class="tier-cta">Solicit&#259; ofert&#259;</a>
+        <p class="tier-desc">Ingrediente gata de utilizare, etichetă curată, lot trasat. Poți spune clienților exact ce este în farfurie și de unde vine.</p>
+        <div class="tier-detail fu">
+          <span>de la 27 lei / borcan</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>min. 12 borcane / produs</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>livrare &icirc;n Transilvania</span>
+        </div>
+        <a href="#contact" class="tier-cta">Hai s&#259; vorbim</a>
       </div>
       <div class="tier fu fu-d1">
         <div class="tier-tag">Retail Specialitate</div>
         <div class="tier-name">Fine Food &amp; Delicatessen</div>
-        <p class="tier-desc">Produse cu poveste, prezentare premium, marj&#259; bun&#259;. Ideal pentru raftul de produse locale.</p>
-        <ul class="tier-list">
-          <li>Minim 24 borcane / referin&#539;&#259;</li>
-          <li>33&ndash;46 lei sugestie retail</li>
-          <li>Materiale de prezentare</li>
-          <li>Exclusivitate zonal&#259; la cerere</li>
-        </ul>
-        <a href="#contact" class="tier-cta">Solicit&#259; ofert&#259;</a>
+        <p class="tier-desc">Produse cu o poveste reală, ambalaj premium, marjă bună. Pentru raftul de produse locale care merită mai mult decât o etichetă generică.</p>
+        <div class="tier-detail fu">
+          <span>33&ndash;46 lei sugestie retail</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>min. 24 borcane</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>exclusivitate zonal&#259; la cerere</span>
+        </div>
+        <a href="#contact" class="tier-cta">Hai s&#259; vorbim</a>
       </div>
       <div class="tier fu fu-d2">
         <div class="tier-tag">Export &amp; Diaspora</div>
         <div class="tier-name">Pie&#539;e Interna&#539;ionale</div>
-        <p class="tier-desc">Gust rom&acirc;nesc autentic pentru diaspora sau pie&#539;ele europene care caut&#259; artizanat din Transilvania.</p>
-        <ul class="tier-list">
-          <li>&#536;tampil&#259; oval&#259; EU valabil&#259;</li>
-          <li>Documenta&#539;ie complet&#259; export</li>
-          <li>MOQ negociabil</li>
-          <li>Etichet&#259; multilingv&#259; la cerere</li>
-        </ul>
-        <a href="#contact" class="tier-cta">Solicit&#259; ofert&#259;</a>
+        <p class="tier-desc">Gust românesc autentic pentru diaspora sau piețele europene care caută artizanat real din Transilvania. Ștampilă ovală EU, documentație completă.</p>
+        <div class="tier-detail fu">
+          <span>MOQ negociabil</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>etichet&#259; multilingv&#259;</span>
+          <span style="color:var(--ink3);font-size:10px">&middot;</span>
+          <span>EU certified</span>
+        </div>
+        <a href="#contact" class="tier-cta">Hai s&#259; vorbim</a>
       </div>
     </div>
   </div>
@@ -660,6 +665,19 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
         <div class="ci-row fu fu-d3"><div class="ci-lbl">Loca&#539;ie</div><div class="ci-val">Cluj-Napoca, Transilvania</div></div>
         <div class="ci-row fu fu-d3"><div class="ci-lbl">Produc&#539;ie</div><div class="ci-val">Fabric&#259; certificat&#259; EU, Transilvania</div></div>
         <div class="ci-row fu fu-d4"><div class="ci-lbl">Status</div><div class="ci-val">Comenzi pilot active &middot; Cantit&#259;&#539;i limitate</div></div>
+        <div class="ci-row fu fu-d4" style="margin-top:28px;padding-top:28px;border-top:1px solid var(--line)">
+          <div class="ci-lbl">WhatsApp</div>
+          <div class="ci-val">
+            <a href="https://wa.me/40700000000?text=Bun%C4%83%20ziua%2C%20sunt%20interesat%20de%20produsele%20A%C8%98EZAT." 
+               target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:10px;color:var(--amber);font-family:var(--sans);font-size:13px;letter-spacing:.04em;border-bottom:1px solid var(--amberP);padding-bottom:2px;transition:border-color .2s"
+               onmouseover="this.style.borderColor='var(--amber)'"
+               onmouseout="this.style.borderColor='var(--amberP)'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Scrie-ne direct
+            </a>
+          </div>
+        </div>
         <p class="ci-note fu">Suntem la faza de lansare. Cantit&#259;&#539;ile sunt limitate &mdash; primii parteneri ob&#539;in priorit&#259;&#539;i &#351;i condi&#539;ii speciale.</p>
       </div>
       <div class="fu fu-d2">
@@ -697,6 +715,7 @@ footer{background:var(--ink2);border-top:1px solid rgba(247,240,228,.05);overflo
       <li><a href="#procesul">Procesul</a></li>
       <li><a href="#parteneriate">Parteneriate</a></li>
       <li><a href="#contact">Contact</a></li>
+      <li><a href="/asezat/confidentialitate/">Confiden&#539;ialitate</a></li>
     </ul>
     <div class="footer-copy">&copy; 2026 A&#536;EZAT<br>Cluj-Napoca &middot; Transilvania &middot; Rom&acirc;nia</div>
   </div>
