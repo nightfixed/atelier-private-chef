@@ -356,7 +356,7 @@ export default function HomePage() {
           <div className="story-grid story-grid-solo">
             <div className="story-card razvan reveal-left">
               <div className="story-num">R</div>
-              <div className="story-icon">👨‍🍳</div>
+              <div className="story-icon" style={{color:'var(--gold)'}}>R</div>
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator (autor)</div>
               <p className="story-text">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
@@ -386,9 +386,9 @@ export default function HomePage() {
             <div className="phil-right reveal">
               <p>"Ingredientul este primul. <em>Tehnica</em> este în slujba lui. Farfuria este ultimul cuvânt."</p>
               <div className="phil-pillars">
-                <div className="pillar"><div className="pillar-icon">⚒️</div><div className="pillar-name">Craft</div><div className="pillar-desc">Fiecare preparat este construit de la zero, cu ingrediente selectate personal.</div></div>
-                <div className="pillar"><div className="pillar-icon">🤫</div><div className="pillar-name">Discretion</div><div className="pillar-desc">Evenimentele voastre rămân ale voastre. Confidențialitate absolută.</div></div>
-                <div className="pillar"><div className="pillar-icon">✦</div><div className="pillar-name">Excellence</div><div className="pillar-desc">Nu există compromis când vine vorba de calitate — nici în ingredient, nici în execuție.</div></div>
+                <div className="pillar"><div className="pillar-icon">I</div><div className="pillar-name">Craft</div><div className="pillar-desc">Fiecare preparat este construit de la zero, cu ingrediente selectate personal.</div></div>
+                <div className="pillar"><div className="pillar-icon">II</div><div className="pillar-name">Discretion</div><div className="pillar-desc">Evenimentele voastre rămân ale voastre. Confidențialitate absolută.</div></div>
+                <div className="pillar"><div className="pillar-icon">III</div><div className="pillar-name">Excellence</div><div className="pillar-desc">Nu există compromis când vine vorba de calitate — nici în ingredient, nici în execuție.</div></div>
               </div>
             </div>
           </div>
