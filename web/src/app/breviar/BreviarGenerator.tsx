@@ -342,9 +342,9 @@ export default function BreviarGenerator() {
           <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', marginBottom: 20 }}>Ce urmează</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {[
-              { nr: '01', titlu: 'Sesiunea de Profil', desc: 'O zi cu întreaga echipă — individual sau în grup. Nu suntem HR, nu facem team building. Cartografiem gusturile, aversiunile și asocierile senzoriale ale fiecărei persoane.' },
+              { nr: '01', titlu: 'Sesiunea de Profil', desc: 'O zi cu întreaga echipă — individual sau în grup. Nu sunt HR, nu fac team building. Cartografiez gusturile, aversiunile și asocierile senzoriale ale fiecărei persoane.' },
               { nr: '02', titlu: 'Analiza Dinamică', desc: 'Transformăm datele individuale într-un profil colectiv. Unde se intersectează? Unde există tensiune? Ce lipsește din experiența comună a echipei? Această analiză durează 1-2 săptămâni.' },
-              { nr: '03', titlu: 'Construcția Experienței', desc: 'Gătim. Nu improvizăm — fiecare preparat, fiecare moment al serii este construit pe baza profilului real al echipei. Planificarea completă ia între 3-6 săptămâni de la primul contact.' },
+              { nr: '03', titlu: 'Construcția Experienței', desc: 'Gătesc. Nu improvizez — fiecare preparat, fiecare moment al serii este construit pe baza profilului real al echipei. Planificarea completă ia între 3-6 săptămâni de la primul contact.' },
             ].map(({ nr, titlu, desc }) => (
               <div key={nr} style={{ display: 'grid', gridTemplateColumns: '32px 1fr', gap: 16, alignItems: 'start' }}>
                 <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.3em', color: 'rgba(201,169,110,0.25)', margin: 0, paddingTop: 3 }}>{nr}</p>

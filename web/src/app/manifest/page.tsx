@@ -10,7 +10,7 @@ const principles = [
   {
     num: 'I',
     title: 'Ingredientul are origine sau nu are gust.',
-    body: 'Orice ingredient fără poveste este doar materie primă. Noi nu cumpărăm materie primă — cumpărăm locuri, oameni, sezoane. Un fruct din Ardeal nu seamănă cu același fruct din Spania. Nu din patriotism, ci din adevăr. Originea nu este opțională. Este primul strat de gust.',
+    body: 'Orice ingredient fără poveste este doar materie primă. Eu nu cumpăr materie primă — cumpăr locuri, oameni, sezoane. Un fruct din Ardeal nu seamănă cu același fruct din Spania. Nu din patriotism, ci din adevăr. Originea nu este opțională. Este primul strat de gust.',
     axiom: '"Dacă nu știu de unde vine, nu îl pun pe masă."',
   },
   {
@@ -22,19 +22,19 @@ const principles = [
   {
     num: 'III',
     title: 'Masa nu se termină când pleci. Se termină când uiți.',
-    body: 'O cină la Atelier nu este un serviciu. Este o experiență care continuă în conversația din mașină, în visul de noaptea aceea, în momentul când, luni mai târziu, miroși ceva și îți amintești brusc. Construim pentru memorie, nu pentru recenzie.',
+    body: 'O cină la Atelier nu este un serviciu. Este o experiență care continuă în conversația din mașină, în visul de noaptea aceea, în momentul când, luni mai târziu, miroși ceva și îiți amintești brusc. Construiesc pentru memorie, nu pentru recenzie.',
     axiom: '"Cel mai bun compliment pe care îl poți primi este: nu știu să explic, dar nu uit."',
   },
   {
     num: 'IV',
-    title: 'Tehnica este japoneză. Ingredientul este al nostru.',
-    body: 'Precizia, disciplina, respectul față de produs — le-am luat de oriunde au existat cel mai bine. Dar solul, ciobanul, apele, pădurile, mirosul de fân uscat în august — acestea sunt ale noastre. Sinteza dintre rigoarea mondială și materia primă locală nu este un compromis. Este cea mai înaltă formă de fine dining.',
-    axiom: '"Nu avem bucătărie românească. Avem bucătărie ardeleană cu gramatică internațională."',
+    title: 'Tehnica este japoneză. Ingredientul este al meu.',
+    body: 'Precizia, disciplina, respectul față de produs — le-am luat de oriunde au existat cel mai bine. Dar solul, ciobanul, apele, pădurile, mirosul de fân uscat în august — acestea sunt ale mele. Sinteza dintre rigoarea mondială și materia primă locală nu este un compromis. Este cea mai înaltă formă de fine dining.',
+    axiom: '"Nu am bucătărie românească. Am bucătărie ardeleană cu gramatică internațională."',
   },
   {
     num: 'V',
     title: 'Oaspetele nu este client. Este co-autor.',
-    body: 'Fiecare persoană care se așază la masa noastră aduce cu ea o stare, o amintire, o așteptare. Ignorarea lor este lipsă de respect. Lectura lor este artă. Construim experiența în jurul omului, nu în jurul meniului. Meniul se adaptează. Omul rămâne suveran.',
+    body: 'Fiecare persoană care se așază la masa mea aduce cu ea o stare, o amintire, o așteptare. Ignorarea lor este lipsă de respect. Lectura lor este artă. Construiesc experiența în jurul omului, nu în jurul meniului. Meniul se adaptează. Omul rămâne suveran.',
     axiom: '"Un meniu fix este o declarație de indiferență față de cel care mănâncă."',
   },
   {
@@ -52,19 +52,19 @@ const principles = [
   {
     num: 'VIII',
     title: 'Inteligența artificială este scribul, nu bucătarul.',
-    body: 'Folosim AI ca să ascultăm mai bine, nu ca să gătim mai repede. Sistemul nostru cunoaște fiecare oaspete — nu ca date, ci ca profil senzorial și emoțional. Înainte de cină, AI-ul compune. După cină, AI-ul documentează. Între aceste momente — totul este uman, cald, imperfect și real.',
+    body: 'Folosesc AI ca să ascult mai bine, nu ca să gătesc mai repede. Sistemul meu cunoaște fiecare oaspete — nu ca date, ci ca profil senzorial și emoțional. Înainte de cină, AI-ul compune. După cină, AI-ul documentează. Între aceste momente — totul este uman, cald, imperfect și real.',
     axiom: '"Tehnologia bună dispare. Rămâne doar experiența."',
   },
   {
     num: 'IX',
     title: 'Fiecare seară este un capitol. Codex-ul crește.',
     body: 'Atelier nu este o destinație fixă. Este un manuscris viu. Fiecare cină adaugă un text, o textură, o întrebare. Peste zece ani, vom avea un corpus unic de experiențe documentate, un arhiv al sensibilității culinare transilvănene. Nimeni altcineva nu va putea scrie acest text — pentru că nimeni altcineva nu a trăit aceste seri.',
-    axiom: '"Nu construim un restaurant. Construim un corp de cunoaștere."',
+    axiom: '"Nu construiesc un restaurant. Construiesc un corp de cunoaștere."',
   },
   {
     num: 'X',
     title: 'Autorul nu se ascunde în bucătărie.',
-    body: 'Vocea din spatele Atelier este o voce reală, cu opinie, cu greșeli, cu evoluție publică. Ideologia culinară a acestui loc nu există fără cel care a gândit-o. Anonimatul este confortabil, dar ștergerea identității autorului distruge autenticitatea operei. Suntem ce gătim. Și gătim ce credem.',
+    body: 'Vocea din spatele Atelier este o voce reală, cu opinie, cu greșeli, cu evoluție publică. Ideologia culinară a acestui loc nu există fără cel care a gândit-o. Anonimatul este confortabil, dar ștergerea identității autorului distruge autenticitatea operei. Sunt ce gătesc. Și gătesc ce cred.',
     axiom: '"Un atelier fără autor este doar o bucătărie."',
   },
 ];
@@ -276,7 +276,7 @@ export default function ManifestPage() {
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Masa nu se termină când pleci. Se termină când uiți.</p>
               <p style={axiomBodyStyle}>
-                Construim pentru memorie, nu pentru recenzie. O cină la Atelier continuă în conversația din mașină, în visul de noaptea aceea.
+                Construiesc pentru memorie, nu pentru recenzie. O cină la Atelier continuă în conversația din mașină, în visul de noaptea aceea.
               </p>
             </div>
 
@@ -290,7 +290,7 @@ export default function ManifestPage() {
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Fiecare seară este un capitol. Codex-ul crește.</p>
               <p style={axiomBodyStyle}>
-                Nu construim un restaurant. Construim un corp de cunoaștere — un manuscris viu, unic, imposibil de replicat.
+                Nu construiesc un restaurant. Construiesc un corp de cunoaștere — un manuscris viu, unic, imposibil de replicat.
               </p>
             </div>
 
@@ -318,7 +318,7 @@ export default function ManifestPage() {
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Fiecare echipă are un gust pe care nu l-a gustat încă.</p>
               <p style={axiomBodyStyle}>
-                Cartografiem gusturile, stilurile și tensiunile unui grup și le transformăm într-un meniu și un document intern.
+                Cartografiez gusturile, stilurile și tensiunile unui grup și le transform într-un meniu și un document intern.
               </p>
             </div>
 

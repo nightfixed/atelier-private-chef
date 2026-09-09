@@ -118,7 +118,7 @@ export default function PrivateDiningClujPage() {
       <section style={{ textAlign: 'center', padding: '80px 24px', borderTop: '1px solid rgba(201,169,110,0.15)' }}>
         <p style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.55rem', letterSpacing: '0.5em', color: '#c9a96e', textTransform: 'uppercase', opacity: 0.65, marginBottom: 32 }}>Rezervă o Seară</p>
         <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(232,224,208,0.7)', maxWidth: 480, margin: '0 auto 40px' }}>
-          Locurile sunt limitate. Lucrăm cu maxim 2–3 grupe pe lună.
+          Locurile sunt limitate. Lucrez cu maxim 2–3 grupe pe lună.
         </p>
         <a href="/#rezervare" style={{ display: 'inline-block', border: '1px solid #c9a96e', color: '#c9a96e', fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.65rem', letterSpacing: '0.45em', textTransform: 'uppercase', padding: '14px 40px', textDecoration: 'none' }}>
           Solicită o Seară

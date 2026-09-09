@@ -36,7 +36,7 @@ const SERVICES = [
 const WHY = [
   { q: 'De ce chef privat și nu restaurant?', a: 'Într-un restaurant, meniul este fix și oaspeții se adaptează. La Atelier, meniul se construiește în jurul tău. Este singura formă de fine dining cu adevărat personalizat.' },
   { q: 'Ce include serviciul?', a: 'Consultație prealabilă, achiziție ingrediente, pregătire, servire, curățenie completă. Tu nu faci nimic altceva decât să fii prezent.' },
-  { q: 'Maximum câte persoane?', a: 'Lucrăm pentru 2–12 persoane. Sub 12 persoane, calitatea se păstrează. Peste, nu mai putem garanta experiența.' },
+  { q: 'Maximum câte persoane?', a: 'Lucrez pentru 2–12 persoane. Sub 12 persoane, calitatea se păstrează. Peste, nu mai pot garanta experiența.' },
   { q: 'Câtă experiență?', a: '18+ ani de fine dining. Formare internațională. Ingrediente carpatice locale — unele unice în România: licheni, rășină de molid, miso de fasole ardeleană.' },
 ];
 
@@ -89,7 +89,7 @@ export default function ChefPrivatClujPage() {
 
       {/* CE OFERIM */}
       <section style={{ maxWidth: 720, margin: '0 auto', padding: '80px 24px' }}>
-        <p style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.55rem', letterSpacing: '0.5em', color: '#c9a96e', textTransform: 'uppercase', opacity: 0.65, textAlign: 'center', marginBottom: 48 }}>Ce Oferim</p>
+        <p style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.55rem', letterSpacing: '0.5em', color: '#c9a96e', textTransform: 'uppercase', opacity: 0.65, textAlign: 'center', marginBottom: 48 }}>Ce Ofer</p>
         <div style={{ display: 'grid', gap: 32 }}>
           {SERVICES.map(s => (
             <div key={s.title} style={{ borderLeft: '1px solid rgba(201,169,110,0.25)', paddingLeft: 24 }}>
@@ -105,7 +105,7 @@ export default function ChefPrivatClujPage() {
         <div style={{ maxWidth: 620, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.55rem', letterSpacing: '0.5em', color: '#c9a96e', textTransform: 'uppercase', opacity: 0.65, marginBottom: 32 }}>Filozofie</p>
           <blockquote style={{ fontSize: 'clamp(1.1rem, 2vw, 1.4rem)', fontWeight: 300, fontStyle: 'italic', lineHeight: 2, color: '#e8e0d0' }}>
-            "Nu avem bucătărie românească. Avem bucătărie ardeleană cu gramatică internațională."
+            "Nu am bucătărie românească. Am bucătărie ardeleană cu gramatică internațională."
           </blockquote>
           <div style={{ width: 1, height: 60, background: 'linear-gradient(to bottom, transparent, #c9a96e, transparent)', margin: '40px auto' }} />
           <p style={{ fontSize: '1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(232,224,208,0.7)' }}>

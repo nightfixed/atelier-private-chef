@@ -136,13 +136,13 @@ export default function MatriceaPage() {
         <div className="mat-cine">
           <p className="mat-sec-label mat-sec-label-center">De ce Atelier</p>
           <p className="mat-cine-p1">
-            Suntem doi oameni. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
+            Sunt un singur om. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
           </p>
           <p className="mat-cine-p2">
             Răzvan, cu 18+ ani de fine dining internațional. Fiecare Matrice e construită de mine, personal — nu delegată, nu standardizată.
           </p>
           <p className="mat-cine-p3">
-            Acceptăm 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.
+            Accept 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.
           </p>
         </div>
       </section>
@@ -152,7 +152,7 @@ export default function MatriceaPage() {
         <p className="mat-sec-label mat-sec-label-center">Disponibilitate</p>
         <h2 className="mat-cta-h2">Discutăm?</h2>
         <p className="mat-cta-p">
-          Prima conversație e fără angajament. Ne interesează brandul vostru — dacă potrivirea există, construim.
+          Prima conversație e fără angajament. Mă interesează brandul vostru — dacă potrivirea există, construiesc.
         </p>
         <a
           href="mailto:contact@atelierprivatedining.ro?subject=Matrice%20%E2%80%94%20Identitate%20Culinara"

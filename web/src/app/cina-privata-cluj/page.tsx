@@ -16,7 +16,7 @@ const OCCASIONS = [
   {
     icon: '◇',
     title: 'Cereri în Căsătorie',
-    desc: 'Cel mai important moment dintr-o relație merită mai mult decât o masă obișnuită. Construim seara în jurul momentului — cu tot ce înseamnă el pentru voi.',
+    desc: 'Cel mai important moment dintr-o relație merită mai mult decât o masă obișnuită. Construiesc seara în jurul momentului — cu tot ce înseamnă el pentru voi.',
   },
   {
     icon: '◇',
@@ -42,10 +42,10 @@ const OCCASIONS = [
 
 const FLOW = [
   { step: '01', title: 'Soliciți o Seară', desc: 'Completezi formularul cu data dorită, numărul de persoane și ocazia. Primești răspuns în aceeași zi.' },
-  { step: '02', title: 'Consultație', desc: 'Discutăm seara ta — preferințe, intoleranțe, dorințe. Construim profilul senzorial al fiecărui oaspete.' },
+  { step: '02', title: 'Consultație', desc: 'Discutăm seara ta — preferințe, intoleranțe, dorințe. Construiesc profilul senzorial al fiecărui oaspete.' },
   { step: '03', title: 'Meniu Personalizat', desc: 'Pe baza profilului, compunem meniul. Nu exista meniuri fixe. Fiecare seară este un document unic.' },
   { step: '04', title: 'Seara ta', desc: 'Chef-ul vine cu totul. Tu nu faci nimic altceva decât să fii prezent. Servire, vinuri (opțional), curățenie — toate incluse.' },
-  { step: '05', title: 'Artefactul Serii', desc: 'La finalul cinei, primești un text literar al serii tale — scris de sistemul nostru, unic și irepetabil.' },
+  { step: '05', title: 'Artefactul Serii', desc: 'La finalul cinei, primești un text literar al serii tale — scris de sistemul meu, unic și irepetabil.' },
 ];
 
 export default function CinaPrivataClujPage() {

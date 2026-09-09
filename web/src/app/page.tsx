@@ -30,11 +30,11 @@ const SPECIMENS: Specimen[] = [
   {num:'03',code:'APD-003',nameRo:'Cenușă de Fag',latin:'Fagus sylvatica',nameLarge:'Cenușă',badge:'Permanent',badgeCls:'',meta:[{k:'Origine',ro:'Păduri de fag carpatin',en:'Carpathian beech forests'},{k:'Disponibilitate',ro:'Permanent',en:'Year-round'},{k:'Calcinare',ro:'200°C · 30 min',en:'200°C · 30 min'}],spectrum:['rgba(120,120,120,.6)','rgba(80,100,120,.5)','rgba(60,80,100,.4)','rgba(100,80,80,.3)','rgba(201,169,110,.15)'],pills:['Mineral','Fum rece','Alcalin'],descRo:'Cel mai dramatic ingredient vizual. Negrul absolut dintr-un copac carpatin.',descEn:"Atelier's most visually dramatic ingredient. Absolute black from a Carpathian tree.",noteRo:'Negrul absolut pe proteina albă.',noteEn:'Absolute black on white protein.',usage:['Cruste','Terrine foie','Pește','Înghețată']},
   {num:'04',code:'APD-004',category:'Feleac · La 11 km de această masă',nameRo:'Afine Sălbatice de Feleac',latin:'Vaccinium myrtillus',nameLarge:'Afine',badge:'Feleac',badgeCls:'local',meta:[{k:'Locație exactă',ro:'Dealul Feleac · Pădurea Bacău',en:'Feleac Hill · Bacău Forest'},{k:'Distanță',ro:'11 km de Atelier',en:'11 km from Atelier'},{k:'Sezon',ro:'Iulie–August',en:'July–August'}],spectrum:['rgba(100,80,180,.6)','rgba(140,80,140,.5)','rgba(180,80,100,.4)','rgba(201,169,110,.25)','rgba(80,60,100,.3)'],pills:['Acid','Tanic','Violete'],descRo:'Nu blueberry. Miezul violet complet, acid pronunțat. Fermentat lacto 5 zile.',descEn:'Not blueberry. Entirely violet flesh, pronounced acid. Lacto-fermented 5 days.',noteRo:'Miezul violet complet. Nimic în comun cu blueberry-ul de supermarket.',noteEn:'Entirely violet flesh.',usage:['Foie gras','Rață','Somon','Oțet propriu']},
   {num:'05',code:'APD-005',nameRo:'Muguri de Mesteacăn',latin:'Betula pendula',nameLarge:'Mesteacăn',badge:'7 zile / an',badgeCls:'local',meta:[{k:'Locație exactă',ro:'Dealul Feleac, Cluj',en:'Feleac Hill, Cluj'},{k:'Fereastră',ro:'7–10 zile / an',en:'7–10 days per year'},{k:'Stoc',ro:'Tincturat · 12 luni',en:'Tinctured · 12 months'}],spectrum:['rgba(120,180,120,.5)','rgba(160,200,140,.4)','rgba(201,169,110,.4)','rgba(100,140,100,.35)','rgba(80,120,80,.25)'],pills:['Bălsamic','Rășinos','Mentolat'],descRo:'Un parfum bălsamic care nu există în niciun ingredient comercial.',descEn:'A balsamic fragrance that exists in no commercial ingredient anywhere.',noteRo:'Cel mai scurt sezon — 7 zile. Cea mai persistentă aromă — 12 luni.',noteEn:'The shortest season — 7 days. The most persistent flavour — 12 months.',usage:['Unt','Ulei finisaj','Panna cotta','Vânat']},
-  {num:'06',code:'APD-006',category:'Fermentare Proprie',nameRo:'Miso de Fasole Românească',latin:'Phaseolus vulgaris + koji',nameLarge:'Miso',badge:'Produs intern',badgeCls:'fermentat',meta:[{k:'Producție',ro:'Bucătăria Atelierului',en:'Atelier kitchen'},{k:'Maturare',ro:'90–180 zile',en:'90–180 days'},{k:'Lot curent',ro:'Lot #3',en:'Batch #3'}],spectrum:['rgba(160,120,80,.6)','rgba(180,140,80,.5)','rgba(140,100,60,.5)','rgba(100,80,60,.4)','rgba(80,60,40,.3)'],pills:['Umami','Sărat','Fermentat'],descRo:'Tehnica e japoneză. Fasolea e din Ardeal. Fermentarea e în borcane numerotate.',descEn:'The technique is Japanese. The bean is Transylvanian. The fermentation is ours.',noteRo:'Tehnica este japoneză. Ingredientul este al nostru.',noteEn:'The technique is Japanese. The ingredient is ours.',usage:['Somon','Glazură vițel','Baze de sos','Unt de miso']},
+  {num:'06',code:'APD-006',category:'Fermentare Proprie',nameRo:'Miso de Fasole Românească',latin:'Phaseolus vulgaris + koji',nameLarge:'Miso',badge:'Produs intern',badgeCls:'fermentat',meta:[{k:'Producție',ro:'Bucătăria Atelierului',en:'Atelier kitchen'},{k:'Maturare',ro:'90–180 zile',en:'90–180 days'},{k:'Lot curent',ro:'Lot #3',en:'Batch #3'}],spectrum:['rgba(160,120,80,.6)','rgba(180,140,80,.5)','rgba(140,100,60,.5)','rgba(100,80,60,.4)','rgba(80,60,40,.3)'],pills:['Umami','Sărat','Fermentat'],descRo:'Tehnica e japoneză. Fasolea e din Ardeal. Fermentarea e în borcane numerotate.',descEn:'The technique is Japanese. The bean is Transylvanian. The fermentation is ours.',noteRo:'Tehnica este japoneză. Ingredientul este al meu.',noteEn:'The technique is Japanese. The ingredient is mine.',usage:['Somon','Glazură vițel','Baze de sos','Unt de miso']},
   {num:'07',code:'APD-007',category:'Transilvania · Ingrediente Permanente',nameRo:'Hrean de Turda',latin:'Armoracia rusticana',nameLarge:'Hrean',badge:'Turda · 30km',badgeCls:'local',meta:[{k:'Origine',ro:'Turda · 30 km de Atelier',en:'Turda · 30 km from Atelier'},{k:'Intensitate',ro:'3× față de comercial',en:'3× commercial intensity'},{k:'Disponibilitate',ro:'Permanent',en:'Year-round'}],spectrum:['rgba(220,220,180,.5)','rgba(200,180,120,.4)','rgba(180,160,100,.5)','rgba(160,120,80,.3)','rgba(140,100,60,.2)'],pills:['Iute','Pungent','Proaspăt'],descRo:'Soiul local de Turda este incomparabil cu orice hrean comercial.',descEn:'The local Turda variety is incomparable to commercial horseradish.',noteRo:'Soiul de Turda e de 3 ori mai intens decât ce se găsește în comerț.',noteEn:'3× more intense than commercial.',usage:['Somon afumat','Vită dry-aged','Cremă · ulei']},
   {num:'08',code:'APD-008',nameRo:'Lapte de Bivoliță',latin:'Bubalus bubalis',nameLarge:'Bivoliță',badge:'Câmpia Transilvaniei',badgeCls:'local',meta:[{k:'Origine',ro:'Câmpia Transilvaniei',en:'Transylvanian Plain'},{k:'Grăsime',ro:'8–10%',en:'8–10% fat'},{k:'Distanță',ro:'40 km de Atelier',en:'40 km from Atelier'}],spectrum:['rgba(230,210,170,.5)','rgba(210,190,140,.5)','rgba(201,169,110,.4)','rgba(180,150,90,.3)','rgba(160,130,80,.2)'],pills:['Cremos','Dulce','Bogat'],descRo:'Mătăsos fără emulsifianți. Dulce fără zahăr adăugat.',descEn:'Silky without emulsifiers. Sweet without added sugar.',noteRo:'Mătăsos fără emulsifianți. Dulce fără zahăr. 40 km de această masă.',noteEn:'40 km from this table.',usage:['Labneh','Panna cotta','Înghețată','Unt']},
   {num:'09',code:'APD-009',nameRo:'Untură de Gâscă Infuzată',latin:'Anser anser domesticus',nameLarge:'Gâscă',badge:'Permanent',badgeCls:'',meta:[{k:'Origine',ro:'Ferme locale, Ardeal',en:'Local farms, Transylvania'},{k:'Infuzie',ro:'Cimbru + usturoi afumat',en:'Thyme + smoked garlic'},{k:'Disponibilitate',ro:'Tot anul',en:'Year-round'}],spectrum:['rgba(201,169,110,.5)','rgba(180,140,80,.5)','rgba(160,120,60,.4)','rgba(140,100,50,.4)','rgba(120,80,40,.3)'],pills:['Bogat','Aromat','Animal'],descRo:'Foie gras gătit în untură de gâscă — gătit în propria sa familie.',descEn:'Foie gras cooked in its own family.',noteRo:'Clasicii francezi ar aproba-o imediat.',noteEn:'The French classics would approve.',usage:['Foie gras','Confit rată','Cartofi confit']},
-  {num:'10',code:'APD-010',nameRo:'Tărâțe de Grâu Prăjite',latin:'Triticum aestivum',nameLarge:'Tărâțe',badge:'Permanent',badgeCls:'',meta:[{k:'Tehnica',ro:'Prăjire uscată 8–10 min',en:'Dry-toast 8–10 min'},{k:'Formă',ro:'Praf · crustă · element crocant',en:'Dust · crust · crunchy element'},{k:'Origine',ro:'Ardeal',en:'Transylvania'}],spectrum:['rgba(160,120,60,.6)','rgba(180,140,80,.5)','rgba(140,100,50,.4)','rgba(120,90,40,.35)','rgba(100,70,30,.3)'],pills:['Nucă','Caramel','Cereală'],descRo:'Cel mai umil ingredient al grâului, transformat prin căldură.',descEn:'The humblest part of the wheat, transformed by heat.',noteRo:'Noma i-a dat legitimitate globală. Noi i-am dat context românesc.',noteEn:'Noma gave it global legitimacy.',usage:['Cruste pește','Pâine Atelier','Caramel desert']},
+  {num:'10',code:'APD-010',nameRo:'Tărâțe de Grâu Prăjite',latin:'Triticum aestivum',nameLarge:'Tărâțe',badge:'Permanent',badgeCls:'',meta:[{k:'Tehnica',ro:'Prăjire uscată 8–10 min',en:'Dry-toast 8–10 min'},{k:'Formă',ro:'Praf · crustă · element crocant',en:'Dust · crust · crunchy element'},{k:'Origine',ro:'Ardeal',en:'Transylvania'}],spectrum:['rgba(160,120,60,.6)','rgba(180,140,80,.5)','rgba(140,100,50,.4)','rgba(120,90,40,.35)','rgba(100,70,30,.3)'],pills:['Nucă','Caramel','Cereală'],descRo:'Cel mai umil ingredient al grâului, transformat prin căldură.',descEn:'The humblest part of the wheat, transformed by heat.',noteRo:'Noma i-a dat legitimitate globală. Eu i-am dat context românesc.',noteEn:'Noma gave it global legitimacy.',usage:['Cruste pește','Pâine Atelier','Caramel desert']},
   {num:'11',code:'APD-011',nameRo:'Hrișcă Transilvăneană Prăjită',latin:'Fagopyrum esculentum',nameLarge:'Hrișcă',badge:'Ardeal',badgeCls:'local',meta:[{k:'Origine',ro:'Cultivată în Ardeal',en:'Grown in Transylvania'},{k:'Tehnica',ro:'Prăjire uscată obligatorie',en:'Mandatory dry-toast'},{k:'Disponibilitate',ro:'Permanent',en:'Year-round'}],spectrum:['rgba(160,120,60,.6)','rgba(180,140,80,.5)','rgba(140,100,50,.4)','rgba(120,90,40,.35)','rgba(100,70,30,.3)'],pills:['Nucă','Pământ','Complex'],descRo:'Nu orez. Nu quinoa. Hrișca Ardealului, prăjită uscat până devine altceva complet.',descEn:'Not rice. Not quinoa. Transylvanian buckwheat dry-toasted until it becomes something else.',noteRo:'Nu orez. Nu quinoa. Garnitura care face preparatul întreg.',noteEn:'The side that completes a dish without asking for attention.',usage:['Risotto','Vânat','Cruste','Granola']},
 ];
 
@@ -201,13 +201,13 @@ export default function HomePage() {
 
     api.chat(apiMessages, resolvedName || undefined)
       .then((data: { reply?: string } | null) => {
-        const reply = data?.reply ?? 'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
+        const reply = data?.reply ?? 'Vă mulțumesc pentru mesaj! Vă rugăm să mă contactați la exquisitefoodtravel@yahoo.com — Chef Răzvan vă va răspunde în maximum 24 de ore.';
         setAiTyping(false);
         setAiMessages(m => [...m, {role:'bot', text:reply}]);
       })
       .catch(() => {
         setAiTyping(false);
-        setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumim pentru mesaj! Vă rugăm să ne contactați la exquisitefoodtravel@yahoo.com.'}]);
+        setAiMessages(m => [...m, {role:'bot', text:'Vă mulțumesc pentru mesaj! Vă rugăm să mă contactați la exquisitefoodtravel@yahoo.com.'}]);
       });
   }
 
@@ -344,7 +344,7 @@ export default function HomePage() {
 
       {/* QUOTE 1 */}
       <div className="quote-section reveal">
-        <div className="quote-text">"Nu gătim pentru a umple stomacul. Gătim pentru a crea <em>un moment pe care îl vei ține minte</em>."</div>
+        <div className="quote-text">"Nu gătesc pentru a umple stomacul. Gătesc pentru a crea <em>un moment pe care îl vei ține minte</em>."</div>
       </div>
 
       {/* STORY */}
@@ -373,7 +373,7 @@ export default function HomePage() {
       {/* PHILOSOPHY */}
       <div style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
         <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal">Ce ne ghidează</div>
+          <div className="sec-label reveal">Ce mă ghidează</div>
           <h2 className="sec-title reveal d1">Filosofia <em>Atelierului</em></h2>
           <div className="gold-line reveal d2"></div>
           <div className="philosophy-wrap">
@@ -465,13 +465,13 @@ export default function HomePage() {
       <div style={{borderTop:'1px solid #141414',padding:'110px 0',background:'#080808'}}>
         <div className="section" style={{padding:'0 48px'}}>
           <div className="sec-label reveal">Cum funcționează</div>
-          <h2 className="sec-title reveal d1">Procesul <em>nostru</em></h2>
+          <h2 className="sec-title reveal d1">Procesul <em>meu</em></h2>
           <div className="gold-line reveal d2"></div>
           <div className="process-steps">
-            <div className="step reveal d1"><div className="step-num">I</div><h4>Cerere</h4><p>Completați formularul sau scrieți-ne direct. Răspundem în 24 de ore.</p></div>
-            <div className="step reveal d2"><div className="step-num">II</div><h4>Consultație</h4><p>Discutăm despre ocazie, preferințe, restricții și așteptări. Construim meniul împreună.</p></div>
-            <div className="step reveal d3"><div className="step-num">III</div><h4>Pregătire</h4><p>Selectăm ingredientele, pregătim mise en place-ul. Ajungem cu tot ce este necesar.</p></div>
-            <div className="step reveal d4"><div className="step-num">IV</div><h4>Experiența</h4><p>Gătim la voi, servim, curățăm. Voi nu faceți nimic în afara bucuriei.</p></div>
+            <div className="step reveal d1"><div className="step-num">I</div><h4>Cerere</h4><p>Completați formularul sau scrieți-mi direct. Răspund în 24 de ore.</p></div>
+            <div className="step reveal d2"><div className="step-num">II</div><h4>Consultație</h4><p>Discutăm despre ocazie, preferințe, restricții și așteptări. Construiesc meniul împreună cu tine.</p></div>
+            <div className="step reveal d3"><div className="step-num">III</div><h4>Pregătire</h4><p>Selectez ingredientele, pregătesc mise en place-ul. Ajung cu tot ce este necesar.</p></div>
+            <div className="step reveal d4"><div className="step-num">IV</div><h4>Experiența</h4><p>Gătesc la voi, servesc, curăț. Voi nu faceți nimic în afara bucuriei.</p></div>
           </div>
         </div>
       </div>
@@ -487,7 +487,7 @@ export default function HomePage() {
               <span key={i} className="herb-letter" style={{transition:`color .7s ${i*.08}s ease,opacity .7s ${i*.08}s ease,transform .7s ${i*.08+.1}s cubic-bezier(.34,1.56,.64,1)`}}>{l}</span>
             ))}
           </div>
-          <div className="herb-subtitle-ro" id="hSubRo">Enciclopedia ingredientelor noastre</div>
+          <div className="herb-subtitle-ro" id="hSubRo">Enciclopedia ingredientelor mele</div>
           <div className="herb-subtitle-en" id="hSubEn">The Encyclopedia of Our Ingredients</div>
           <div className="herb-rule" id="hRule"></div>
           <div className="herb-intro" id="hIntro">
@@ -631,7 +631,7 @@ export default function HomePage() {
               <div className="sec-label">Dincolo de bucătărie</div>
               <div className="sec-title" style={{marginBottom:'16px'}}>Așezat</div>
               <div className="gold-line"></div>
-              <div className="asezat-intro">"Când nu gătim pentru ceilalți, gătim pentru noi."</div>
+              <div className="asezat-intro">"Când nu gătesc pentru ceilalți, gătesc pentru mine."</div>
               <div className="asezat-body"><strong>Așezat</strong> este brandul artizanal născut din aceeași obsesie pentru calitate și autenticitate care stă la baza Atelier.</div>
               <div className="asezat-products">
                 <div className="prod-card reveal d1"><h4>Gemuri Artizanale</h4><p>Combinații neașteptate. Fum, flori, mirodenii exotice.</p></div>
@@ -710,14 +710,14 @@ export default function HomePage() {
           </div>
           <div className="gelato-footnote reveal">
             <div className="gf-dot"></div>
-            <div className="gf-text">Gelato-urile sezoniere (flori de salcâm, sevă de mesteacăn, muguri) apar pe meniu doar în fereastra lor naturală de câteva zile. Nu se produc în afara sezonului. Nu există stoc. Dacă suntem în sezon — le veți găsi. Dacă nu — așteptați.</div>
+            <div className="gf-text">Gelato-urile sezoniere (flori de salcâm, sevă de mesteacăn, muguri) apar pe meniu doar în fereastra lor naturală de câteva zile. Nu se produc în afara sezonului. Nu există stoc. Dacă e sezon — le veți găsi. Dacă nu — așteptați.</div>
           </div>
         </div>
       </div>
 
       {/* QUOTE 2 */}
       <div className="quote-section reveal" style={{borderTop:'1px solid #111'}}>
-        <div className="quote-text">"Cluj-Napoca are restaurante bune. Noi nu suntem un restaurant. Suntem <em>alternativa pentru momentele care merită mai mult</em>."</div>
+        <div className="quote-text">"Cluj-Napoca are restaurante bune. Eu nu sunt un restaurant. Sunt <em>alternativa pentru momentele care merită mai mult</em>."</div>
       </div>
 
       {/* FAQ */}
@@ -728,9 +728,9 @@ export default function HomePage() {
           <div className="gold-line reveal d2"></div>
           <div className="faq-wrap reveal">
             {[
-              {q:'Veniți în afara Cluj-ului?', a:'Da. Atelier operează în primul rând în Cluj-Napoca și împrejurimi, dar acceptăm evenimente în orice locație din România, cu preaviz suficient și transport inclus în ofertă.'},
-              {q:'Cu câte zile înainte trebuie să rezervăm?', a:'Recomandăm minimum 7–10 zile pentru un eveniment privat standard și 3–4 săptămâni pentru evenimente corporate sau meniuri care implică ingrediente de sezon și achiziții speciale.'},
-              {q:'Puteți adapta meniul pentru alergii sau preferințe alimentare?', a:'Absolut. Consultația inițială include o discuție completă despre restricții alimentare, alergii, intoleranțe și preferințe. Nu avem un meniu fix — construim meniul de la zero ținând cont de toți oaspeții.'},
+              {q:'Veniți în afara Cluj-ului?', a:'Da. Atelier operează în primul rând în Cluj-Napoca și împrejurimi, dar accept evenimente în orice locație din România, cu preaviz suficient și transport inclus în ofertă.'},
+              {q:'Cu câte zile înainte trebuie să rezervăm?', a:'Recomand minimum 7–10 zile pentru un eveniment privat standard și 3–4 săptămâni pentru evenimente corporate sau meniuri care implică ingrediente de sezon și achiziții speciale.'},
+              {q:'Puteți adapta meniul pentru alergii sau preferințe alimentare?', a:'Absolut. Consultația inițială include o discuție completă despre restricții alimentare, alergii, intoleranțe și preferințe. Nu am un meniu fix — construiesc meniul de la zero ținând cont de toți oaspeții.'},
               {q:'Ce include prețul unui eveniment?', a:'Oferta include consultația și crearea meniului, achiziționarea ingredientelor, gătitul complet la locația ta, serviciul de masă și curățenia bucătăriei la final.'},
               {q:'Pentru câte persoane gătiți?', a:'Private dining: 2–20 persoane. Corporate dining: 10–50 persoane. Pentru grupuri mai mari, discutăm soluții personalizate.'},
             ].map((item, i) => (

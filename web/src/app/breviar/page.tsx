@@ -12,7 +12,7 @@ const PASI = [
     nr: '01',
     titlu: 'Sesiunea de profil',
     durata: 'O zi cu echipa',
-    desc: 'Ne întâlnim cu toți membrii echipei — individual sau în grup, în funcție de dinamică. Cartografiem gusturile, preferințele, aversiunile și asocierile senzoriale ale fiecărei persoane.',
+    desc: 'Mă întâlnesc cu toți membrii echipei — individual sau în grup, în funcție de dinamică. Cartografiez gusturile, preferințele, aversiunile și asocierile senzoriale ale fiecărei persoane.',
   },
   {
     nr: '02',
@@ -24,7 +24,7 @@ const PASI = [
     nr: '03',
     titlu: 'Meniu colectiv + document intern',
     durata: 'Livrabil fizic',
-    desc: 'Construim un meniu personalizat pentru echipă și un document intern — profilul senzorial al grupului — care rămâne în companie și poate ghida viitoarele experiențe.',
+    desc: 'Construiesc un meniu personalizat pentru echipă și un document intern — profilul senzorial al grupului — care rămâne în companie și poate ghida viitoarele experiențe.',
   },
 ];
 
