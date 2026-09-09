@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s · Atelier Private Dining",
   },
   description:
-    "Experiențe culinare private, gândite și executate de la zero — pentru cei care știu diferența. Chef Răzvan & Roland · 18+ ani fine dining · Cluj-Napoca, România.",
+    "Experiențe culinare private, gândite și executate de la zero — pentru cei care știu diferența. Chef Răzvan · 18+ ani fine dining · Cluj-Napoca, România.",
   keywords: [
     "private dining Cluj",
     "chef privat Cluj-Napoca",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "Atelier Private Dining",
     title: "Atelier Private Dining · Cluj-Napoca",
     description:
-      "Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate, ingrediente carpatice, 18+ ani fine dining. Cluj-Napoca, România.",
+      "Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, ingrediente carpatice, 18+ ani fine dining. Cluj-Napoca, România.",
     images: [
       {
         url: "/og-image.png",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Atelier Private Dining · Cluj-Napoca",
     description:
-      "Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate · Cluj-Napoca.",
+      "Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate · Cluj-Napoca.",
     images: ["/og-image.png"],
   },
   robots: {

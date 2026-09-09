@@ -269,7 +269,7 @@ export default function HomePage() {
           '@context': 'https://schema.org',
           '@type': 'FoodEstablishment',
           name: 'Atelier Private Dining',
-          description: 'Experiențe culinare private cu Chef Răzvan & Roland. Meniuri de degustare personalizate, 18+ ani fine dining. Cluj-Napoca, România.',
+          description: 'Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, 18+ ani fine dining. Cluj-Napoca, România.',
           url: 'https://atelierprivatedining.ro',
           email: 'exquisitefoodtravel@yahoo.com',
           address: { '@type': 'PostalAddress', addressLocality: 'Cluj-Napoca', addressRegion: 'Cluj', addressCountry: 'RO' },
@@ -277,7 +277,7 @@ export default function HomePage() {
           servesCuisine: ['Fine Dining', 'Romanian Cuisine', 'European Cuisine'],
           priceRange: '€€€€',
           openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], description: 'Evenimente private la programare' },
-          founder: [{ '@type': 'Person', name: 'Răzvan', jobTitle: 'Chef & Fondator' }, { '@type': 'Person', name: 'Roland', jobTitle: 'Chef & Partner' }],
+          founder: [{ '@type': 'Person', name: 'Răzvan', jobTitle: 'Chef & Fondator' }],
         }) }}
       />
 
@@ -313,7 +313,7 @@ export default function HomePage() {
           <h1 className="hero-title">Atelier</h1>
           <div className="hero-cursive">Private Dining</div>
           <div className="hero-div"><span></span><i>✦</i><span></span></div>
-          <p className="hero-desc">Experiențe culinare private · Chef Răzvan & Roland · 18+ ani bucătărie modernă și fine dining</p>
+          <p className="hero-desc">Experiențe culinare private · Chef Răzvan · 18+ ani bucătărie modernă și fine dining</p>
         </div>
         <div className="hero-bottom">Descoperă<div className="scroll-line"></div></div>
       </section>
@@ -353,7 +353,7 @@ export default function HomePage() {
           <div className="sec-label reveal">Oamenii din spatele mesei</div>
           <h2 className="sec-title reveal d1">Povestea <em>noastră</em></h2>
           <div className="gold-line reveal d2"></div>
-          <div className="story-grid">
+          <div className="story-grid story-grid-solo">
             <div className="story-card razvan reveal-left">
               <div className="story-num">R</div>
               <div className="story-icon">👨‍🍳</div>
@@ -364,18 +364,6 @@ export default function HomePage() {
                 <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani fine dining</div></div>
                 <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri create</div></div>
                 <div><div className="stat-n"><span className="count" data-target="200">0</span></div><div className="stat-l">meniuri unice</div></div>
-              </div>
-            </div>
-            <div className="story-card roland reveal-right">
-              <div className="story-num">R</div>
-              <div className="story-icon">🍽️</div>
-              <h3>Roland</h3>
-              <div className="story-role">Chef · Partner</div>
-              <p className="story-text">Cu o carieră construită în restaurante de top din România, Roland aduce <strong>precizie tehnică</strong> și un simț al echilibrului care completează viziunea Atelierului. Împreună, cei doi chefi creează experiențe imposibil de reprodus.</p>
-              <div className="story-stats">
-                <div><div className="stat-n" style={{color:'var(--copper2)'}}>15<span style={{fontSize:'20px'}}>+</span></div><div className="stat-l">ani experiență</div></div>
-                <div><div className="stat-n" style={{color:'var(--copper2)'}}>50<span style={{fontSize:'20px'}}>+</span></div><div className="stat-l">clienți corporate</div></div>
-                <div><div className="stat-n" style={{color:'var(--copper2)'}}>100<span style={{fontSize:'20px'}}>+</span></div><div className="stat-l">evenimente</div></div>
               </div>
             </div>
           </div>

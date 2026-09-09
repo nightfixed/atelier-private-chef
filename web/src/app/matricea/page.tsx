@@ -12,7 +12,7 @@ const ETAPE = [
     nr: 'I',
     titlu: 'Cartografierea',
     durata: 'O jumătate de zi',
-    desc: 'O sesiune de lucru cu echipa cheie a brandului. Nu interviuri de marketing — exerciții senzoriale reale. Materiale, mirosuri, texturi, temperaturi, contrast. Răzvan și Roland nu pun întrebări. Pun obiecte pe masă și urmăresc reacțiile.',
+    desc: 'O sesiune de lucru cu echipa cheie a brandului. Nu interviuri de marketing — exerciții senzoriale reale. Materiale, mirosuri, texturi, temperaturi, contrast. Răzvan nu pune întrebări. Pune obiecte pe masă și urmărește reacțiile.',
     output: 'Harta brută a identității senzoriale',
   },
   {
@@ -139,7 +139,7 @@ export default function MatriceaPage() {
             Suntem doi oameni. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
           </p>
           <p className="mat-cine-p2">
-            Răzvan și Roland, cu 18+ ani de fine dining internațional. Fiecare Matrice e construită de noi, personal — nu delegată, nu standardizată.
+            Răzvan, cu 18+ ani de fine dining internațional. Fiecare Matrice e construită de mine, personal — nu delegată, nu standardizată.
           </p>
           <p className="mat-cine-p3">
             Acceptăm 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.

@@ -381,7 +381,7 @@ export default function ManifestPage() {
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Acceptăm 1–2 proiecte pe trimestru. Nu mai mult.</p>
               <p style={axiomBodyStyle}>
-                Fiecare Matrice e construită de Răzvan și Roland, personal. Nu delegată. Nu standardizată. Nu replicată.
+                Fiecare Matrice e construită de Răzvan, personal. Nu delegată. Nu standardizată. Nu replicată.
               </p>
             </div>
 
@@ -408,7 +408,7 @@ export default function ManifestPage() {
           <p style={{
             fontSize: '1.3rem', fontWeight: 300,
             letterSpacing: '0.2em', color: gold, marginBottom: 8,
-          }}>Răzvan & Roland</p>
+          }}>Răzvan</p>
           <p style={{
             fontFamily: sans, fontWeight: 200, fontSize: '0.55rem',
             letterSpacing: '0.45em', color: textFaint, textTransform: 'uppercase',

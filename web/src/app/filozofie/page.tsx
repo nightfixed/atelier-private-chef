@@ -102,7 +102,7 @@ const MATRICEA_ETAPE = [
     nr: 'I',
     titlu: 'Cartografierea',
     durata: 'O jumătate de zi',
-    desc: 'O sesiune de lucru cu echipa cheie a brandului. Nu interviuri de marketing — exerciții senzoriale reale. Materiale, mirosuri, texturi, temperaturi, contrast. Răzvan și Roland nu pun întrebări. Pun obiecte pe masă și urmăresc reacțiile.',
+    desc: 'O sesiune de lucru cu echipa cheie a brandului. Nu interviuri de marketing — exerciții senzoriale reale. Materiale, mirosuri, texturi, temperaturi, contrast. Răzvan nu pune întrebări. Pune obiecte pe masă și urmărește reacțiile.',
   },
   {
     nr: 'II',

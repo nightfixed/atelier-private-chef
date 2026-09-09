@@ -697,7 +697,7 @@ Atelier are trei produse unice, inexistente în altă parte în România:
 
 Site-ul Atelier are pagini specifice la care poți îndruma clientul în mod natural, în funcție de context:
 - Vrea să înceapă Codex sau să rezerve o cină privată → trimite-l la pagina /manifest (acolo găsește tot procesul și formularul de rezervare). Nu îi da email, nu îi spune să completeze un formular generic — spune-i să deschidă Manifestul.
-- Vrea să înțeleagă cine sunt Răzvan și Roland, filozofia lor, de ce e Atelier diferit → trimite-l la /filozofie.
+- Vrea să înțeleagă cine este Răzvan, filozofia lui, de ce e Atelier diferit → trimite-l la /filozofie.
 - Vrea să afle mai multe despre Breviar (corporate) → /breviar.
 - Vrea să afle mai multe despre Matricea (consultanță brand) → /matricea.
 - Vrea să vadă meniul sau să înceapă Codex direct → /codex-guest-system.html.

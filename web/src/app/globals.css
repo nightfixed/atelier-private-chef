@@ -78,28 +78,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);b
 
 /* STORY */
 .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:80px;}
+.story-grid-solo{grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto;}
 .story-card{padding:52px 44px;position:relative;overflow:hidden;transition:transform .4s;}
 .story-card:hover{transform:translateY(-4px);}
 .story-card.razvan{background:#0a0a0a;border:1px solid #1a1a1a;}
-.story-card.roland{background:#0d0a08;border:1px solid #1e1810;}
 .story-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
 .story-card.razvan::before{background:linear-gradient(to right,transparent,var(--gold),transparent);}
-.story-card.roland::before{background:linear-gradient(to right,transparent,var(--copper2),transparent);}
 .story-num{position:absolute;top:36px;right:40px;font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;opacity:.04;color:#fff;}
 .story-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:24px;transition:transform .3s;}
 .story-card:hover .story-icon{transform:scale(1.12);}
 .story-card.razvan .story-icon{background:rgba(201,169,110,.08);border:1px solid rgba(201,169,110,.2);}
-.story-card.roland .story-icon{background:rgba(176,112,80,.08);border:1px solid rgba(176,112,80,.2);}
 .story-card h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:6px;}
-.story-card.razvan h3{color:#fff;}.story-card.roland h3{color:#f0e0d0;}
+.story-card.razvan h3{color:#fff;}
 .story-role{font-size:9px;letter-spacing:4px;margin-bottom:24px;text-transform:uppercase;}
-.story-card.razvan .story-role{color:var(--gold);}.story-card.roland .story-role{color:var(--copper2);}
+.story-card.razvan .story-role{color:var(--gold);}
 .story-text{font-size:13px;color:#666;line-height:1.95;font-weight:300;}
 .story-text strong{font-weight:500;}
-.story-card.razvan .story-text strong{color:var(--gold);}.story-card.roland .story-text strong{color:var(--copper2);}
+.story-card.razvan .story-text strong{color:var(--gold);}
 .story-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px;padding-top:28px;border-top:1px solid #1a1a1a;}
 .stat-n{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;line-height:1;}
-.story-card.razvan .stat-n{color:var(--gold);}.story-card.roland .stat-n{color:var(--copper2);}
+.story-card.razvan .stat-n{color:var(--gold);}
 .stat-l{font-size:9px;letter-spacing:2px;color:#444;margin-top:4px;text-transform:uppercase;line-height:1.4;}
 
 /* PHILOSOPHY */
