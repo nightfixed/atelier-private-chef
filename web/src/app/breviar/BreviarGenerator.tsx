@@ -307,7 +307,7 @@ export default function BreviarGenerator() {
       { label: 'Intenția Serii', v: result.intentie },
     ];
     const hasStructured = sections.some(s => s.v);
-    const emailSubject = encodeURIComponent(`Breviar — ${answers.industry || 'Echipa noastră'}`);
+    const emailSubject = encodeURIComponent(`Țesătura — ${answers.industry || 'Echipa noastră'}`);
     const emailBody = encodeURIComponent(
       `Buna ziua,\n\nAm completat generatorul Portret Gustativ si as vrea sa discutam despre experienta reala pentru echipa noastra.\n\nIndustria: ${answers.industry || ''}\nCultura echipei: ${answers.culture || ''}\nRealizare colectiva: ${answers.achievement || ''}\nProvocarea actuala: ${answers.challenge || ''}\nCe dorim sa simtim: ${answers.feeling || ''}\nEnergia dorita: ${answers.energy || ''}\nNumar participanti: ${answers.participants || ''}\nRestrictii alimentare: ${answers.restrictions || ''}\nDinamica grupului: ${answers.dynamics || ''}\n\nTitlu generat: ${result.titlu || ''}\n\nAstept contactul vostru.`
     );
@@ -409,7 +409,7 @@ export default function BreviarGenerator() {
                     onClick={async () => {
                       setSubmitting(true);
                       const msg = [
-                        '[Breviar — Portret Gustativ]',
+                        '[Țesătura — Portret Gustativ]',
                         `Industria: ${answers.industry}`,
                         `Cultura echipei: ${answers.culture}`,
                         `Realizare colectiva: ${answers.achievement}`,

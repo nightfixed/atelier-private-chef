@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Filozofie · Atelier Private Dining',
-  description: 'Filozofia culinară Atelier — Codex, Breviar, Matricea. Trei limbaje. O filozofie.',
+  description: 'Filozofia culinară Atelier — Oglinda, Țesătura, Temelia. Trei limbaje. O filozofie.',
   robots: { index: false, follow: false },
 };
 
@@ -57,7 +57,7 @@ const CODEX_PRINCIPLES = [
   },
   {
     num: 'IX',
-    title: 'Fiecare seară este un capitol. Codex-ul crește.',
+    title: 'Fiecare seară este un capitol. Oglinda crește.',
     body: 'Atelier nu este o destinație fixă. Este un manuscris viu. Fiecare cină adaugă un text, o textură, o întrebare. Peste zece ani, vom avea un corpus unic de experiențe documentate, un arhiv al sensibilității culinare transilvănene. Nimeni altcineva nu va putea scrie acest text — pentru că nimeni altcineva nu a trăit aceste seri.',
     axiom: '"Nu construiesc un restaurant. Construiesc un corp de cunoaștere."',
   },
@@ -112,7 +112,7 @@ const MATRICEA_ETAPE = [
   },
   {
     nr: 'III',
-    titlu: 'Matricea',
+    titlu: 'Temelia',
     durata: 'Livrabilul final',
     desc: 'Un document fizic, legat, de înaltă calitate. Nu un PDF. Nu o prezentare PowerPoint. Un obiect. Biblia culinară internă a brandului vostru — care rămâne.',
   },
@@ -122,7 +122,7 @@ const MATRICEA_DOC = [
   { titlu: '3–5 preparate semnătură', sub: 'Construite să incarneze identitatea senzorială a brandului. Nu decorative — definitorii.' },
   { titlu: 'Principii de asociere', sub: 'Cu ce merge brandul. Cu ce nu merge niciodată. Reguli clare, nu opinii.' },
   { titlu: 'Traducere sezonieră', sub: 'Cum evoluează identitatea culinară pe parcursul anului fără să-și piardă esența.' },
-  { titlu: 'Codexul Brandului', sub: 'Limbajul senzorial intern — pentru orice eveniment viitor, orice parteneriat, orice experiență VIP.' },
+  { titlu: 'Limbajul Brandului', sub: 'Limbajul senzorial intern — pentru orice eveniment viitor, orice parteneriat, orice experiență VIP.' },
 ];
 
 export default function FilozofiePage() {
@@ -163,9 +163,9 @@ export default function FilozofiePage() {
         </a>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {[
-            { label: 'CODEX', href: '#codex' },
-            { label: 'BREVIAR', href: '#breviar' },
-            { label: 'MATRICEA', href: '#matricea' },
+            { label: 'OGLINDA', href: '#codex' },
+            { label: 'ȚESĂTURA', href: '#breviar' },
+            { label: 'TEMELIA', href: '#matricea' },
           ].map(({ label, href }) => (
             <a key={href} href={href} style={{
               fontFamily: sans, fontWeight: 200, fontSize: '0.5rem',
@@ -200,7 +200,7 @@ export default function FilozofiePage() {
           fontSize: '1rem', fontWeight: 300, fontStyle: 'italic',
           color: textFaint, maxWidth: 480, margin: '0 auto',
         }}>
-          Codex este filozofia cinei private. Breviarul este filozofia echipei. Matricea este filozofia brandului. Sursa e aceeași.
+          Oglinda este filozofia cinei private. Țesătura este filozofia echipei. Temelia este filozofia brandului. Sursa e aceeași.
         </p>
       </section>
 
@@ -212,11 +212,11 @@ export default function FilozofiePage() {
           <h2 style={{
             fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 300,
             letterSpacing: '0.06em', color: gold, lineHeight: 1, marginBottom: 8,
-          }}>CODEX</h2>
+          }}>OGLINDA</h2>
           <p style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', fontWeight: 300, fontStyle: 'italic',
             color: textFaint, letterSpacing: '0.12em', marginBottom: 72,
-          }}>Manifestul unui atelier viu</p>
+          }}>Oglinda ta — meniul care te arată pe tine</p>
 
           {/* PREAMBUL */}
           <div style={{
@@ -229,7 +229,7 @@ export default function FilozofiePage() {
               lineHeight: 2, color: textFaint,
             }}>
               Acest document este fundația. Nu un meniu, nu un brand — o ideologie culinară scrisă de mână, cu intenție, cu timp.<br /><br />
-              Înainte de orice altceva, a existat o convingere simplă: că o masă bună nu se uită niciodată, dar o masă cu sens schimbă ceva în cel care a mâncat-o. Codex Atelier este declarația acestei convingeri.
+              Înainte de orice altceva, a existat o convingere simplă: că o masă bună nu se uită niciodată, dar o masă cu sens schimbă ceva în cel care a mâncat-o. Oglinda Atelier este declarația acestei convingeri.
             </p>
           </div>
 
@@ -286,17 +286,17 @@ export default function FilozofiePage() {
           <h2 style={{
             fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 300,
             letterSpacing: '0.06em', color: gold, lineHeight: 1, marginBottom: 8,
-          }}>BREVIAR</h2>
+          }}>ȚESĂTURA</h2>
           <p style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', fontWeight: 300, fontStyle: 'italic',
             color: textFaint, letterSpacing: '0.12em', marginBottom: 72,
-          }}>Profilul culinar al echipei</p>
+          }}>Țesătura echipei — cum sunteți împletiți, de fapt</p>
 
           {/* INTRO */}
           <div style={{ borderLeft: `1px solid ${goldMid}`, paddingLeft: 32, marginBottom: 80 }}>
             <p style={{ ...eyebrow, marginBottom: 16 }}>Premisa</p>
             <p style={{ fontSize: '1rem', fontWeight: 300, fontStyle: 'italic', lineHeight: 2, color: textFaint }}>
-              Codex profilează un individ. Breviarul profilează o echipă.<br /><br />
+              Oglinda profilează un individ. Țesătura profilează o echipă.<br /><br />
               O experiență culinară care cartografiază gusturile, stilurile și tensiunile unui grup — și le transformă într-un meniu și un document intern. Nu team building. Nu cină corporativă cu catering standard. O investigație gustativă a echipei voastre. Nimic similar nu există în România.
             </p>
           </div>
@@ -350,11 +350,11 @@ export default function FilozofiePage() {
           <h2 style={{
             fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 300,
             letterSpacing: '0.06em', color: gold, lineHeight: 1, marginBottom: 8,
-          }}>MATRICEA</h2>
+          }}>TEMELIA</h2>
           <p style={{
             fontSize: 'clamp(1rem, 2.5vw, 1.4rem)', fontWeight: 300, fontStyle: 'italic',
             color: textFaint, letterSpacing: '0.12em', marginBottom: 72,
-          }}>Identitatea culinară a brandului</p>
+          }}>Temelia brandului — gustul din care crește tot</p>
 
           {/* INTRO */}
           <div style={{ borderLeft: `1px solid ${goldMid}`, paddingLeft: 32, marginBottom: 80 }}>

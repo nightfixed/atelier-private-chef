@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import BreviarGenerator from './BreviarGenerator';
 
 export const metadata: Metadata = {
-  title: 'Breviarul · Corporate Dining · Atelier',
+  title: 'Țesătura · Corporate Dining · Atelier',
   description: 'Fiecare echipă are un gust pe care nu l-a gustat încă. Atelier construiește experiențe culinare care profilează și revelează echipa.',
   robots: { index: false, follow: false },
 };
@@ -49,12 +49,12 @@ export default function BreviarPage() {
       <section className="brev-hero">
         <div className="brev-hero-vline" />
         <p className="brev-hero-eyebrow">Atelier · Corporate Dining · În pregătire</p>
-        <h1 className="brev-hero-h1">Breviarul</h1>
+        <h1 className="brev-hero-h1">Țesătura</h1>
         <div className="brev-hero-div" />
-        <p className="brev-hero-tag">Fiecare echipă are un gust pe care nu l-a gustat încă.</p>
+        <p className="brev-hero-tag">Țesătura echipei — cum sunteți împletiți, de fapt.</p>
         <p className="brev-hero-p1">
-          Codex profilează un individ.<br />
-          <span>Breviarul profilează o echipă.</span>
+          Oglinda profilează un individ.<br />
+          <span>Țesătura profilează o echipă.</span>
         </p>
         <p className="brev-hero-p2">
           O experiență culinară care cartografiază gusturile, stilurile și
@@ -95,7 +95,7 @@ export default function BreviarPage() {
           <p className="brev-eyebrow brev-eyebrow-center">Livrabilele</p>
           <h2 className="brev-h2 brev-h2-center">Ce primește echipa</h2>
           <p className="brev-body-p" style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto 56px' }}>
-            Fiecare Breviar e unic. Nu există un template. Documentul reflectă exact echipa care l-a generat.
+            Fiecare Țesătură e unică. Nu există un template. Documentul reflectă exact echipa care l-a generat.
           </p>
           <div className="brev-deliverables">
             {LIVRABILE.map((l, i) => (

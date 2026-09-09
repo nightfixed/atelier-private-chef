@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 
 export const metadata: Metadata = {
   title: 'Manifest · Atelier Private Dining',
-  description: 'Codex Atelier — manifestul unui atelier viu. Filozofia culinară a lui Răzvan, chef și fondator Atelier Private Dining, Cluj-Napoca.',
+  description: 'Oglinda Atelier — manifestul unui atelier viu. Filozofia culinară a lui Răzvan, chef și fondator Atelier Private Dining, Cluj-Napoca.',
 };
 
 const principles = [
@@ -57,7 +57,7 @@ const principles = [
   },
   {
     num: 'IX',
-    title: 'Fiecare seară este un capitol. Codex-ul crește.',
+    title: 'Fiecare seară este un capitol. Oglinda crește.',
     body: 'Atelier nu este o destinație fixă. Este un manuscris viu. Fiecare cină adaugă un text, o textură, o întrebare. Peste zece ani, vom avea un corpus unic de experiențe documentate, un arhiv al sensibilității culinare transilvănene. Nimeni altcineva nu va putea scrie acest text — pentru că nimeni altcineva nu a trăit aceste seri.',
     axiom: '"Nu construiesc un restaurant. Construiesc un corp de cunoaștere."',
   },
@@ -151,15 +151,15 @@ export default function ManifestPage() {
             { label: 'Filozofie', href: '/filozofie' },
             { label: 'Meniu', href: '/#meniu' },
             { label: 'FAQ', href: '/#faq' },
-            { label: 'Codex', href: '/codex-guest-system.html' },
+            { label: 'Oglinda', href: '/codex-guest-system.html' },
           ].map(({ label, href }) => (
             <li key={href}>
               <a href={href} style={{
                 fontSize: 9, letterSpacing: 3,
-                color: label === 'Manifest' ? gold : label === 'Filozofie' ? gold : label === 'Codex' ? gold : '#555',
+                color: label === 'Manifest' ? gold : label === 'Filozofie' ? gold : label === 'Oglinda' ? gold : '#555',
                 textDecoration: 'none', textTransform: 'uppercase',
                 transition: '.3s',
-                ...(label === 'Codex' ? { border: '1px solid rgba(201,169,110,0.3)', padding: '6px 14px' } : {}),
+                ...(label === 'Oglinda' ? { border: '1px solid rgba(201,169,110,0.3)', padding: '6px 14px' } : {}),
               }}>{label}</a>
             </li>
           ))}
@@ -270,8 +270,8 @@ export default function ManifestPage() {
           {/* ── CODEX ── */}
           <div style={colStyle(true)}>
             <p style={eyebrowStyle}>Cina privată · 2–6 persoane</p>
-            <h2 style={titleStyle}>CODEX</h2>
-            <p style={subtitleStyle}>Manifestul unui atelier viu</p>
+            <h2 style={titleStyle}>OGLINDA</h2>
+            <p style={subtitleStyle}>Oglinda ta — meniul care te arată pe tine</p>
 
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Masa nu se termină când pleci. Se termină când uiți.</p>
@@ -288,7 +288,7 @@ export default function ManifestPage() {
             </div>
 
             <div style={axiomBlockStyle}>
-              <p style={axiomTitleStyle}>Fiecare seară este un capitol. Codex-ul crește.</p>
+              <p style={axiomTitleStyle}>Fiecare seară este un capitol. Oglinda crește.</p>
               <p style={axiomBodyStyle}>
                 Nu construiesc un restaurant. Construiesc un corp de cunoaștere — un manuscris viu, unic, imposibil de replicat.
               </p>
@@ -312,8 +312,8 @@ export default function ManifestPage() {
           {/* ── BREVIAR ── */}
           <div style={colStyle(true)}>
             <p style={eyebrowStyle}>Corporate Dining · Lansare 2026</p>
-            <h2 style={titleStyle}>BREVIAR</h2>
-            <p style={subtitleStyle}>Profilul culinar al echipei</p>
+            <h2 style={titleStyle}>ȚESĂTURA</h2>
+            <p style={subtitleStyle}>Țesătura echipei — cum sunteți împletiți, de fapt</p>
 
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Fiecare echipă are un gust pe care nu l-a gustat încă.</p>
@@ -332,12 +332,12 @@ export default function ManifestPage() {
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Ce rămâne după o masă de echipă nu e mâncarea. E conversația.</p>
               <p style={axiomBodyStyle}>
-                Breviarul creează contextul în care un grup vorbește altfel. Nu despre mâncare — despre sine.
+                Țesătura creează contextul în care un grup vorbește altfel. Nu despre mâncare — despre sine.
               </p>
             </div>
 
             <div style={axiomBlockStyle}>
-              <p style={axiomTitleStyle}>Codex profilează un individ. Breviarul profilează o echipă.</p>
+              <p style={axiomTitleStyle}>Oglinda profilează un individ. Țesătura profilează o echipă.</p>
               <p style={axiomBodyStyle}>
                 Același principiu senzorial, aplicat unui organism colectiv. Livrabilul: un document fizic care rămâne în companie.
               </p>
@@ -354,8 +354,8 @@ export default function ManifestPage() {
           {/* ── MATRICEA ── */}
           <div style={colStyle(false)}>
             <p style={eyebrowStyle}>Consultanță · Identitate Culinară</p>
-            <h2 style={titleStyle}>MATRICEA</h2>
-            <p style={subtitleStyle}>Identitatea culinară a brandului</p>
+            <h2 style={titleStyle}>TEMELIA</h2>
+            <p style={subtitleStyle}>Temelia brandului — gustul din care crește tot</p>
 
             <div style={axiomBlockStyle}>
               <p style={axiomTitleStyle}>Nu am venit să vă îmbunătățim meniul. Am venit să vă găsim gustul.</p>

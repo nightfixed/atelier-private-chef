@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import MatriceaGenerator from './MatriceaGenerator';
 
 export const metadata: Metadata = {
-  title: 'Matricea · Identitate Culinară · Atelier',
+  title: 'Temelia · Identitate Culinară · Atelier',
   description: 'Atelier construiește identitatea culinară a brandului tău — documentată, sistematizată, replicabilă. Nu catering. Un produs intelectual.',
   robots: { index: false, follow: false },
 };
@@ -24,7 +24,7 @@ const ETAPE = [
   },
   {
     nr: 'III',
-    titlu: 'Matricea',
+    titlu: 'Temelia',
     durata: 'Livrabilul final',
     desc: 'Un document fizic, legat, de înaltă calitate. Nu un PDF. Nu o prezentare PowerPoint. Un obiect. Biblia culinară internă a brandului vostru — care rămâne.',
     output: 'Documentul complet · tipărit · livrat personal',
@@ -35,7 +35,7 @@ const DOCUMENT_CONTINE = [
   { titlu: '3–5 preparate semnătură', sub: 'Construite să incarneze identitatea senzorială a brandului. Nu decorative — definitorii.' },
   { titlu: 'Principii de asociere', sub: 'Cu ce merge brandul. Cu ce nu merge niciodată. Reguli clare, nu opinii.' },
   { titlu: 'Traducere sezonieră', sub: 'Cum evoluează identitatea culinară pe parcursul anului fără să-și piardă esența.' },
-  { titlu: 'Codexul Brandului', sub: 'Limbajul senzorial intern — pentru orice eveniment viitor, orice parteneriat, orice experiență VIP.' },
+  { titlu: 'Limbajul Brandului', sub: 'Limbajul senzorial intern — pentru orice eveniment viitor, orice parteneriat, orice experiență VIP.' },
 ];
 
 export default function MatriceaPage() {
@@ -52,9 +52,9 @@ export default function MatriceaPage() {
       {/* HERO */}
       <section className="mat-hero">
         <p className="mat-eyebrow">Atelier · Consultanță · Identitate Culinară</p>
-        <h1 className="mat-hero-h1">Matricea</h1>
-        <p className="mat-hero-tag">Nu am venit să vă îmbunătățim meniul.</p>
-        <p className="mat-hero-p">Am venit să vă găsim gustul.</p>
+        <h1 className="mat-hero-h1">Temelia</h1>
+        <p className="mat-hero-tag">Temelia brandului — gustul din care crește tot.</p>
+        <p className="mat-hero-p">Nu vă îmbunătățesc meniul. Vă găsesc gustul.</p>
         <p className="mat-hero-p2">
           Brandurile premium din România au identitate vizuală, verbală, sonoră.
           Nu au identitate culinară. Nu știu ce gust au.
@@ -114,7 +114,7 @@ export default function MatriceaPage() {
         <div className="mat-inner-760">
           <div className="mat-doc-h2-wrap">
             <p className="mat-sec-label mat-sec-label-center">Documentul</p>
-            <h2 className="mat-sec-h2 mat-sec-h2-center" style={{ marginBottom: 24 }}>Matricea conține</h2>
+            <h2 className="mat-sec-h2 mat-sec-h2-center" style={{ marginBottom: 24 }}>Temelia conține</h2>
             <p className="mat-doc-intro">
               Un document fizic. Legat. Tipărit pe hârtie de calitate.
               Nu se trimite prin email. Se livrează personal.
@@ -139,7 +139,7 @@ export default function MatriceaPage() {
             Sunt un singur om. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
           </p>
           <p className="mat-cine-p2">
-            Răzvan, cu 18+ ani de fine dining internațional. Fiecare Matrice e construită de mine, personal — nu delegată, nu standardizată.
+            Răzvan, cu 18+ ani de fine dining internațional. Fiecare Temelie e construită de mine, personal — nu delegată, nu standardizată.
           </p>
           <p className="mat-cine-p3">
             Accept 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.

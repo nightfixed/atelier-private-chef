@@ -414,9 +414,10 @@ export default function HomePage() {
             {/* Card dreapta: Codex */}
             <div style={{textAlign:'center',padding:'0 16px'}}>
               <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Inovativ · AI</div>
-              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>CODEX — <em>Ritualul de Inițiere</em></h3>
-              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul Codex compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
-              <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Codex →</a>
+              <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'0.5rem',lineHeight:1.2}}>Oglinda</h3>
+              <div style={{fontFamily:'"Cormorant Garamond",serif',fontStyle:'italic',fontWeight:300,fontSize:'1.05rem',color:'var(--gold)',marginBottom:'1rem',lineHeight:1.4}}>Oglinda ta — meniul care te arată pe tine</div>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
+              <a href="/codex-guest-system.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Oglinda →</a>
               <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'8px',letterSpacing:'0.35em',color:'rgba(201,169,110,0.35)',textTransform:'uppercase',marginTop:'1rem'}}>Exclusiv Private Dining · 2–6 persoane</div>
             </div>
           </div>
@@ -437,7 +438,7 @@ export default function HomePage() {
               <div className="svc-label">Cine intime · 2–6 persoane</div>
               <p>Meniu de degustare construit personal pentru ocazia voastră. De la amuse-bouche până la mignardises, fiecare element reflectă gusturile și momentul vostru.</p>
               <div className="svc-price">De la consultație gratuită</div>
-              <a href="/codex-guest-system.html" className="svc-product-badge svc-product-badge--link">Codex →</a>
+              <a href="/codex-guest-system.html" className="svc-product-badge svc-product-badge--link">Oglinda →</a>
             </div>
             <div className="svc reveal d2">
               <div className="svc-num">II</div>
@@ -446,7 +447,7 @@ export default function HomePage() {
               <div className="svc-label">Team dinner · Client entertainment · 10–50 pers.</div>
               <p>Experiențe culinare pentru companii care înțeleg că o masă bună nu este un cost, ci o investiție în relații.</p>
               <div className="svc-price">Ofertă personalizată</div>
-              <a href="/breviar" className="svc-product-badge svc-product-badge--link">Breviar →</a>
+              <a href="/breviar" className="svc-product-badge svc-product-badge--link">Țesătura →</a>
             </div>
             <div className="svc reveal d3">
               <div className="svc-num">III</div>
@@ -455,7 +456,7 @@ export default function HomePage() {
               <div className="svc-label">Meniu · Concept · Formare</div>
               <p>Consultanță culinară pentru restaurante, hoteluri și branduri alimentare care vor să ridice ștacheta calitativă.</p>
               <div className="svc-price">La cerere</div>
-              <a href="/matricea" className="svc-product-badge svc-product-badge--link">Matricea →</a>
+              <a href="/matricea" className="svc-product-badge svc-product-badge--link">Temelia →</a>
             </div>
           </div>
         </div>
@@ -804,8 +805,8 @@ export default function HomePage() {
           {/* Acțiuni contextuale — apar doar după ce userul a trimis cel puțin un mesaj */}
           {!aiTyping && !!guestName && aiMessages.length > 0 && aiMessages[aiMessages.length - 1].role === 'bot' && (() => {
             const userMsgs = aiMessages.filter(m => m.role === 'user');
-            const hasPrivate = userMsgs.some(m => /cin[aă]|codex|privat|sear[aă]|rezerv/i.test(m.text));
-            const hasCorporate = userMsgs.some(m => /corporate|brand|echip[aă]|breviar|matrice/i.test(m.text));
+            const hasPrivate = userMsgs.some(m => /cin[aă]|codex|oglind|privat|sear[aă]|rezerv/i.test(m.text));
+            const hasCorporate = userMsgs.some(m => /corporate|brand|echip[aă]|breviar|țesătur|tesatur|matrice|temeli/i.test(m.text));
             if (hasPrivate && !hasCorporate) {
               return (
                 <div style={{alignSelf:'flex-start',marginTop:'4px'}}>
@@ -818,7 +819,7 @@ export default function HomePage() {
                   }}
                   onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.background='rgba(201,169,110,0.08)';}}
                   onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.background='transparent';}}
-                  >✦ Începe Codex acum →</a>
+                  >✦ Începe Oglinda acum →</a>
                 </div>
               );
             }

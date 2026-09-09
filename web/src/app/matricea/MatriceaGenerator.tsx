@@ -236,7 +236,7 @@ export default function MatriceaGenerator() {
           <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', marginBottom: 16 }}>Cum continuăm</p>
           <p style={{ fontFamily: serif, fontSize: 'clamp(0.9rem,1.8vw,1rem)', color: 'rgba(232,224,208,0.55)', lineHeight: 1.9, fontWeight: 300, marginBottom: 0 }}>
             Acest diagnostic este un prim punct de vedere, construit pe ce ne-ați spus. Nu înlocuiește procesul real.
-            Matricea completă presupune o zi de întâlnire la fața locului, exerciții senzoriale cu echipa cheie, și 4-6 săptămâni de analiză și documentare.
+            Temelia completă presupune o zi de întâlnire la fața locului, exerciții senzoriale cu echipa cheie, și 4-6 săptămâni de analiză și documentare.
             Rezultatul final este un document de identitate culinară care rămâne al afacerii voastre pe termen nedefinit.
           </p>
         </div>
@@ -272,7 +272,7 @@ export default function MatriceaGenerator() {
               onClick={async () => {
                 try {
                   const msg = [
-                    '[Matricea — Diagnostic Culinar]',
+                    '[Temelia — Diagnostic Culinar]',
                     `Tip activitate: ${answers.type || ''}`,
                     `Provocarea principală: ${answers.problem || ''}`,
                     `Experiență anterioară: ${answers.tried || ''}`,
