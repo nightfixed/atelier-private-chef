@@ -350,7 +350,7 @@ export default function HomePage() {
       {/* STORY */}
       <div id="story" style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
         <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal">Oamenii din spatele mesei</div>
+          <div className="sec-label reveal">Omul din spatele mesei</div>
           <h2 className="sec-title reveal d1">Povestea <em>mea</em></h2>
           <div className="gold-line reveal d2"></div>
           <div className="story-grid story-grid-solo">
