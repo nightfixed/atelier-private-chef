@@ -114,7 +114,7 @@ export default function HomePage() {
             const t = setInterval(() => {
               cur += inc;
               if (cur >= target) { cur = target; clearInterval(t); }
-              el.textContent = Math.floor(cur) + (target === 18 || target === 2 ? '+' : '+');
+              el.textContent = Math.floor(cur) + (el.dataset.suffix ?? '+');
             }, step);
           });
           cObs.unobserve(e.target);
@@ -368,8 +368,8 @@ export default function HomePage() {
               <p className="story-text">Format în bucătăriile de gastronomie rafinată din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
               <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu în ce secundă să corectez, nu doar să repet o rețetă memorată.</p>
               <div className="story-stats">
-                <div><div className="stat-n"><span className="count" data-target="20">0</span></div><div className="stat-l">ani gastronomie rafinată</div></div>
-                <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri create</div></div>
+                <div><div className="stat-n"><span className="count" data-target="20" data-suffix="">0</span></div><div className="stat-l">ani în gastronomie</div></div>
+                <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri și concepte culinare create</div></div>
                 <div><div className="stat-n" style={{fontSize:'14px',fontStyle:'italic',lineHeight:1.4}}>Fiecare masă —</div><div className="stat-l" style={{textTransform:'none',letterSpacing:'0.3px'}}>un meniu unic, care nu va mai exista a doua oară</div></div>
               </div>
             </div>
@@ -435,7 +435,7 @@ export default function HomePage() {
       {/* SERVICES */}
       <div id="services" style={{borderTop:'1px solid #141414',padding:'110px 0'}}>
         <div className="section" style={{padding:'0 48px'}}>
-          <div className="sec-label reveal">Ce oferim</div>
+          <div className="sec-label reveal">Ce ofer</div>
           <h2 className="sec-title reveal d1">Servicii <em>exclusive</em></h2>
           <div className="gold-line reveal d2"></div>
           <div className="services-grid">
@@ -601,7 +601,7 @@ export default function HomePage() {
           <div className="gold-line reveal d2"></div>
           <div className="menu-prev-wrap reveal">
             <div>
-              <p className="menu-prev-intro">"Un meniu compus din două lumi: produsele cele mai bune ale României și ingrediente internaționale de lux, toate ușor de procurat. Fiecare curs — o decizie cu intenție."</p>
+              <p className="menu-prev-intro">"Un meniu compus din două lumi: produsele cele mai bune ale României — simple, dar rafinate — și ingrediente internaționale premium, toate ușor de procurat. Fiecare curs — o decizie cu intenție."</p>
               <p className="menu-prev-note">Meniurile sunt create exclusiv pentru ocazia și preferințele voastre. Ingredientele variază în funcție de sezon și disponibilitate. Toate restricțiile alimentare sunt luate în considerare.</p>
             </div>
             <div className="menu-prev-div"></div>
@@ -674,7 +674,7 @@ export default function HomePage() {
             <div className="sec-label">O altă obsesie</div>
             <div className="sec-title" style={{marginBottom:'16px'}}>Gelato & Sorbeturi <em>Artizanale</em></div>
             <div className="gold-line" style={{margin:'0 auto 28px'}}></div>
-            <p style={{maxWidth:'580px',margin:'0 auto',fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',fontSize:'17px',color:'#666',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero. Fiecare aromă e construită în jurul unui ingredient carpatic — sezonier, local, imposibil de replicat industrial.</p>
+            <p style={{maxWidth:'580px',margin:'0 auto',fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',fontSize:'17px',color:'#666',lineHeight:'1.9'}}>Gelato-ul lui Răzvan nu este gelato. Este o teorie despre gust aplicată la temperaturi sub zero. Fiecare aromă e construită fie în jurul unui ingredient carpatic — sezonier, local, imposibil de replicat industrial — fie în jurul unui ingredient premium, ales cu aceeași rigoare chiar și atunci când nu ține de sezon.</p>
           </div>
           <div className="gelato-sub-label reveal">Gelato · Cu lapte de bivoliță transilvăneană · Câmpia Transilvaniei</div>
           <div className="gelato-grid reveal">
