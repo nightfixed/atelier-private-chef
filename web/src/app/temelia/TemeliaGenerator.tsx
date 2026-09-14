@@ -109,11 +109,14 @@ export default function TemeliaGenerator() {
   }, [emailSent, router]);
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const stepRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (loading || result) return;
     const t = setTimeout(() => {
-      STEPS[step].multiline ? textareaRef.current?.focus() : inputRef.current?.focus();
+      // La pasul urmator aducem intrebarea in capul ecranului, nu doar campul de input
+      if (step > 0) stepRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      STEPS[step].multiline ? textareaRef.current?.focus({ preventScroll: true }) : inputRef.current?.focus({ preventScroll: true });
     }, 60);
     return () => clearTimeout(t);
   }, [step, loading, result]);
@@ -325,7 +328,7 @@ export default function TemeliaGenerator() {
   }
 
   return (
-    <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 40px 80px' }}>
+    <div ref={stepRef} style={{ maxWidth: 640, margin: '0 auto', padding: '0 40px 80px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 56 }}>
         <p style={{ fontFamily: sans, fontSize: '0.4rem', letterSpacing: '0.45em', color: goldMid, textTransform: 'uppercase', margin: 0, whiteSpace: 'nowrap' }}>Diagnostic Culinar</p>
         <div style={{ display: 'flex', gap: 4, flex: 1 }}>

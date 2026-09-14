@@ -1315,11 +1315,11 @@ function startRitual() {
   const phoneInput = document.getElementById('guest-phone');
   guestPhone = phoneInput ? phoneInput.value.trim() : '';
   reservationDate = document.getElementById('reservation-date').value;
-  if (!guestName || guestName.length < 3) { input.focus(); return; }
+  if (!guestName || guestName.length < 3) { input.focus({ preventScroll: true }); return; }
   if (isGibberish(guestName)) {
     const errEl = document.getElementById('name-gibberish-err');
     if (errEl) { errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.'; errEl.style.display = 'block'; }
-    input.focus();
+    input.focus({ preventScroll: true });
     return;
   }
   const errEl = document.getElementById('name-gibberish-err');
@@ -1327,7 +1327,7 @@ function startRitual() {
   if (!guestEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(guestEmail)) {
     const emailErr = document.getElementById('email-err');
     if (emailErr) emailErr.style.display = 'block';
-    emailInput && emailInput.focus();
+    emailInput && emailInput.focus({ preventScroll: true });
     return;
   }
   const emailErr = document.getElementById('email-err');
