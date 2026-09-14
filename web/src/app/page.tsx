@@ -365,8 +365,8 @@ export default function HomePage() {
               <div className="story-icon" style={{color:'var(--gold)'}}>R</div>
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator (autor)</div>
-              <p className="story-text">Format în bucătăriile de gastronomie rafinată din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
-              <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu în ce secundă să corectez, nu doar să repet o rețetă memorată.</p>
+              <p className="story-text">Format în bucătăriile din România și Europa — gastronomie cu specific românesc, dar și cu influențe internaționale și ingrediente premium — Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
+              <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu cum și ce să repar, nu doar să repet o rețetă memorată.</p>
               <div className="story-stats">
                 <div><div className="stat-n"><span className="count" data-target="20" data-suffix="">0</span></div><div className="stat-l">ani în gastronomie</div></div>
                 <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri proprii · consultanță · concepte create</div></div>
