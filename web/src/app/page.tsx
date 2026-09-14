@@ -366,10 +366,11 @@ export default function HomePage() {
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator (autor)</div>
               <p className="story-text">Format în bucătăriile de gastronomie rafinată din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
+              <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu în ce secundă să corectez, nu doar să repet o rețetă memorată.</p>
               <div className="story-stats">
-                <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani gastronomie rafinată</div></div>
+                <div><div className="stat-n"><span className="count" data-target="20">0</span></div><div className="stat-l">ani gastronomie rafinată</div></div>
                 <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri create</div></div>
-                <div><div className="stat-n"><span className="count" data-target="200">0</span></div><div className="stat-l">meniuri unice</div></div>
+                <div><div className="stat-n" style={{fontSize:'14px',fontStyle:'italic',lineHeight:1.4}}>Fiecare masă —</div><div className="stat-l" style={{textTransform:'none',letterSpacing:'0.3px'}}>un meniu unic, care nu va mai exista a doua oară</div></div>
               </div>
             </div>
           </div>
@@ -423,6 +424,7 @@ export default function HomePage() {
               <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'0.5rem',lineHeight:1.2}}>Oglinda</h3>
               <div style={{fontFamily:'"Cormorant Garamond",serif',fontStyle:'italic',fontWeight:300,fontSize:'1.05rem',color:'var(--gold)',marginBottom:'1rem',lineHeight:1.4}}>Oglinda ta — meniul care te arată pe tine</div>
               <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Un meniu generat în timp real, exclusiv pentru tine. Răspunzi la câteva întrebări despre gusturi, senzații, amintiri. Sistemul compune un meniu unic de degustare și povestea serii tale — inedite, imposibil de reprodus.</p>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontStyle:'italic',fontWeight:300,fontSize:'0.85rem',lineHeight:1.6,color:'rgba(201,169,110,0.55)',marginBottom:'1rem'}}>Arhiva Oglinda crește tăcut, seară după seară. Al tău capitol nu există încă — dar poate începe azi.</p>
               <a href="/oglinda.html" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Încearcă Oglinda →</a>
               <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'8px',letterSpacing:'0.35em',color:'rgba(201,169,110,0.35)',textTransform:'uppercase',marginTop:'1rem'}}>Exclusiv Private Dining · 2–6 persoane</div>
             </div>
