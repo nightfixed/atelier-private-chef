@@ -66,6 +66,7 @@ export default function HomePage() {
 
   const aiInputRef = useRef<HTMLInputElement>(null);
   const aiMessagesEndRef = useRef<HTMLDivElement>(null);
+  const lastAiMessageRef = useRef<HTMLDivElement>(null);
 
   // ── EFFECTS ──
   useEffect(() => {
@@ -154,7 +155,12 @@ export default function HomePage() {
     const userCount = aiMessages.filter(m => m.role === 'user').length;
     if (userCount === 0) return;
     setTimeout(() => {
-      aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      // Aliniem începutul ultimului mesaj sus, ca tot textul lui să fie vizibil fără scroll manual
+      if (lastAiMessageRef.current) {
+        lastAiMessageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        aiMessagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
     }, 50);
   }, [aiMessages, aiTyping]);
 
@@ -800,7 +806,7 @@ export default function HomePage() {
         <div className="ai-messages">
           <div className="ai-divider">astăzi</div>
           {aiMessages.map((m, i) => (
-            <div key={i} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
+            <div key={i} ref={i === aiMessages.length - 1 ? lastAiMessageRef : undefined} className={`ai-msg ${m.role}`} style={{alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', background: m.role === 'user' ? 'rgba(201,169,110,.1)' : 'rgba(255,255,255,.03)', border: '1px solid rgba(201,169,110,.12)', padding: '0.7rem 1rem', fontSize: '12px', color: '#ccc', lineHeight: '1.6', maxWidth: '85%'}}>{renderMessageText(m.text)}</div>
           ))}
           {/* Acțiuni contextuale — apar doar după ce userul a trimis cel puțin un mesaj */}
           {!aiTyping && !!guestName && aiMessages.length > 0 && aiMessages[aiMessages.length - 1].role === 'bot' && (() => {
