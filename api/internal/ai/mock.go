@@ -35,7 +35,7 @@ var seasonalCourses = map[string][]MenuCourse{
 	},
 	"Toamnă": {
 		{Num: 1, Category: "Amuse-bouche", Name: "Tartă de ciuperci sălbatice · lichen", Ingredient: "Licheni Carpatici"},
-		{Num: 2, Category: "Pâine", Name: "Pâine de hrișcă · unt de miso · tărâțe", Ingredient: "Tărâțe de Grâu Prăjite"},
+		{Num: 2, Category: "Pâine", Name: "Pâine de hrișcă · unt brun · tărâțe", Ingredient: "Tărâțe de Grâu Prăjite"},
 		{Num: 3, Category: "Supă", Name: "Bisque de homar · rășină de molid · smântână", Ingredient: "Rășină de Molid"},
 		{Num: 4, Category: "Aperitiv rece", Name: "Terrine de foie gras · cenușă · brioche", Ingredient: "Cenușă de Fag"},
 		{Num: 5, Category: "Aperitiv cald", Name: "Creveți · unt de mesteacăn · zucchini", Ingredient: "Muguri de Mesteacăn"},

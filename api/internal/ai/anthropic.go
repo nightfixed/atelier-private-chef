@@ -101,7 +101,7 @@ var jumariLiniaProducts = []string{
 	"Jumări Condimentate (cu miere de salcâm, boia afumată, sare de mare — caramelizate la cuptor 160°C/8min → dulce-picant-crocant; ideal amuse-bouche sau snack între cursuri)",
 	"Praf de Jumări Afumate (jumări deshidratate la 80°C, măcinate grosier cu sare de mare, boia afumată, piper negru → condiment de presărat pe supă cremă, ou, cartofi copți, legume, crustă de pește)",
 	"Jumări Lacto-Fermentate (saramură 2%, 5-7 zile fermentare naturală → aciditate vie, umami lactic, textură diferită; servit cu pâine neagră sau ca garnish la preparate cu carne)",
-	"Gomasio de Jumări (praf de jumări + susan negru prăjit + alge nori sfărâmate + sare de mare → condiment japonez reinterpretat cu bază de porc; pe orez, ou fiert moale, supă miso, crustă de pește)",
+	"Gomasio de Jumări (praf de jumări + susan negru prăjit + alge marine sfărâmate + sare de mare → condiment tradițional reinterpretat cu bază de porc; pe orez, ou fiert moale, supe creme, crustă de pește)",
 	"Jumări la Confit în Grăsime de Rață cu Lavandă (confit lent 80°C/3h în grăsime de rață infuzată cu lavandă alimentară, coajă de portocală bio, piper roz → gust catifelat-floral, aperitiv de colecție)",
 	"Jumări învelite în Ciocolată Neagră 70% cu Sare Maldon (jumări crocante în ciocolată couverture temperată, finisate cu fulgi de sare sau chili afumat → patiserie de lux sărat-dulce; amuse-bouche sau pre-desert surpriză)",
 	"Gem de Ceapă Roșie cu Jumări (ceapă roșie caramelizată cu oțet de mere, vin Fetească Neagră, zahăr muscovado, cimbru → jumări sfărâmate adăugate la final pentru crocant; pe tablă de brânzeturi, lângă pateu, sub friptură)",
@@ -139,7 +139,7 @@ var razvanSignatureDishes = []string{
 	// Supe & Consommé
 	"Consommé limpede de rață cu paprikă afumată și pastă de nuci",
 	"Supă cremă de conopidă cu curry verde și bacon crocant",
-	"Supă japoneză udon cu creveți, alge tăiate fin și tahini",
+	"Bisque de creveți cu alge de mare tăiate fin și tahini",
 	// Intrări calde
 	"Foie gras cu fenicul sotat, chutney de mango și piure de tahini",
 	"Foie gras cu chutney de ceapă roșie pe ciuperci hribi crocante",
@@ -154,16 +154,16 @@ var razvanSignatureDishes = []string{
 	"Risotto cremă cu anșoa, praz, unt și parmezan",
 	"Linguine kamut cu creveți tiger, crab și foie gras",
 	// Pește
-	"Sashimi de biban cu perle de tapioca, wasabi și spumă de morcovi-portocală",
+	"Tartare de biban cu perle de tapioca, hrean proaspăt și spumă de morcovi-portocală",
 	"File de biban cu emulsie de unt infuzat cu șofran și baby legume",
 	"Halibut pe jeleu de morcovi cu muguri de pin și ulei de cimbru",
 	"Somon confit cu sos de curry, radicchio și sfeclă roșie",
 	"Somon în crustă de susan negru-alb pe jeleu de morcovi și mango",
-	"Somon glazurat cu sos miso, sparanghel și roșii cherry",
+	"Somon glazurat cu unt brun și miere de salcâm, sparanghel și roșii cherry",
 	"Somon en papillote cu gremolata, legume de sezon",
-	"Sashimi de somon pe pat de ceapă aromatizată",
-	"Rulou de somon afumat de casă cu avocado, hrean și wasabi",
-	"Char sui salmon cu pepene de iarnă și germeni de linte",
+	"Tartare de somon pe pat de ceapă aromatizată",
+	"Rulou de somon afumat de casă cu avocado și hrean proaspăt",
+	"Somon glazurat la jar cu pepene de iarnă și germeni de linte",
 	// Carne de pasăre
 	"Piept de rață glazurat cu sirop de Cotnar și spumă de păstârnac",
 	"Piept de rață cu jeleu de morcovi, șofran și demi-glace",
@@ -184,35 +184,35 @@ var razvanSignatureDishes = []string{
 	"Fondant de ciocolată cu vin de fructe și perle de chilli",
 	"Parfait de cireșe cu coulis de mentă proaspătă",
 	"Sorbet de banane cu lichi prăjit și flori de lotus",
-	"Kulfi cu cocos, chilli și cremă amaretti cu ciocolată albă",
+	"Blancmange cu cocos, chilli și cremă amaretti cu ciocolată albă",
 	"Strat de caramel natural din curmale (curmale hidratate + unt + smântână, blenduit fin — devine caramel la cuptor; pe fundul farfuriei la vânat/rață sau ca desert)",
-	// NOI menu — dialogul româno-japonez (meniu 8 cursuri)
+	// NOI menu — dialogul româno-internațional (meniu 8 cursuri)
 	"Nigiri de mămăligă compresată acidulată cu oțet de mere, icre de știucă, gel de cătină și cristal Maldon (arată japonez, gustă românesc)",
 	"Crispy hrișcă prăjită cu mousse de crap afumat local, hrean de Turda și fir de mărar",
 	"Con de piele de somon uscată crocantă cu burduf bătut cu unt brun, miere de pădure și nucă prăjită",
 	"Granita de lapte de pufuleți cu spumă de hrean de Turda și ulei de cătină (pufuleții glazurați cu miere se topesc în granita în 60 secunde — clientul mănâncă imediat)",
 	"Somon sous-vide 47°C cu piure Robuchon de bisque de crustacee, lemon butter montat, con de piele cu smântână fermentată și icre de știucă",
-	"Ou parfait 63°C pe piure Robuchon cu unt de trufe, hribi sotați în unt brun-noisette și voal de praf de nori cernut",
-	"Foie gras de gâscă nigiri pe mămăligă compresată, miere de pădure caramelizată live cu blowtorch la masă, gel de cătină și garum de fasole",
+	"Ou parfait 63°C pe piure Robuchon cu unt de trufe, hribi sotați în unt brun-noisette și voal de praf de ciuperci cernut",
+	"Foie gras de gâscă pe mămăligă compresată, miere de pădure caramelizată live cu blowtorch la masă, gel de cătină și garum de fasole",
 	// PRESIUNE menu — 8 tipuri de presiune ca tehnici
 	"Caviar de ulei de cătină prin spherification de bază (gravitație 0 bar) pe gel de iaurt de oaie răcit cu praf de sare afumată — sferele se formează singure căzând liber",
-	"Pepene galben compressat la vid în apă de trandafiri (0.8 bar, 5 min) — devine translucid portocaliu intens ca sashimi, cu prosciutto San Daniele 24 luni, pastă de fistic Bronte și o singură picătură de balsamic 25 ani",
-	"Dim sum cristal de vițel cu tartare de mușchiuleț crud și unt de trufe în aluat translucid la abur (1.2 bar) — umplutura se vede prin aluat, dashi de parmezan turnat la masă din ibric",
-	"Consommé de garum cu sfeclă lacto-cristalizată, gel de miso de fasole neagră și ulei de cimbru fermentat (presiune biologică — luni de transformare)",
-	// Sushi reinterpretat — 6 concepte
-	"Nigiri de hrișcă compresată cu crap sălbatic ceviche marinat în acid de măceșe și gel translucid din același fruct",
-	"Gunkan maki de mămăligă cu icre de știucă și smântână fermentată, bandă din piele de crap uscată la 80°C/2h (înlocuitor de nori — crăpă identic la mușcătură)",
+	"Pepene galben compressat la vid în apă de trandafiri (0.8 bar, 5 min) — devine translucid portocaliu intens ca o piatră prețioasă, cu prosciutto San Daniele 24 luni, pastă de fistic Bronte și o singură picătură de balsamic 25 ani",
+	"Ravioli cristal de vițel cu tartare de mușchiuleț crud și unt de trufe în aluat translucid la abur (1.2 bar) — umplutura se vede prin aluat, consommé de parmezan turnat la masă din ibric",
+	"Consommé de garum cu sfeclă lacto-cristalizată, gel fermentat de fasole neagră și ulei de cimbru fermentat (presiune biologică — luni de transformare)",
+	// Forme compacte reinterpretate — identitate românească
+	"Tartar de crap sălbatic ceviche marinat în acid de măceșe, pe hrișcă compresată, cu gel translucid din același fruct",
+	"Cupă de mămăligă cu icre de știucă și smântână fermentată, înveliș crocant din piele de crap uscată la 80°C/2h (crăpă identic la mușcătură)",
 	"Uramaki de mămăligă cu brânză de burduf și sfeclă fermentată lacto — secțiunea transversală roșu-alb-galben (tricolor natural involuntar)",
-	"Temaki de mămăligă crocantă cu hribi sotați și gălbenuș sous-vide 63°C care curge la mușcătură — clientul ține conul în mână",
+	"Con crocant de mămăligă cu hribi sotați și gălbenuș sous-vide 63°C care curge la mușcătură — clientul ține conul în mână",
 	// Top 5 rețete absolute
-	"Ceapă arsă în lut la jar 3 ore — exteriorul carbonizat negru, interiorul auriu caramelizat în propriul abur (110-115°C intern); deschisă la masă cu cuțit, servită cu sos miso-unt brun-noisette și spumă de parmezan",
+	"Ceapă arsă în lut la jar 3 ore — exteriorul carbonizat negru, interiorul auriu caramelizat în propriul abur (110-115°C intern); deschisă la masă cu cuțit, servită cu sos de unt brun-noisette, glazură de fasole fermentată și spumă de parmezan",
 	"Pasta di ricci — aluat de spaghettoni cu 80g icre de arici (zero apă adăugată, culoare portocaliu profund), sos crud de arici emulsionat cu unt rece la max 58°C (peste 62°C se coagulează), icre crude deasupra — același ingredient în 3 stări simultan",
 	// Gelato & deserturi speciale
 	"Panna cotta cu lapte de cereale (corn flakes cold infusion 20min, filtrat prin tifon) — topping caramel sărat, petale de corn flakes caramelizate cu unt brun",
 	"Gelato cu lapte de pufarini infuzat la rece 12-15min (amidonul natural îngroașă laptele), procesare cold method cu Briogel și glucoză atomizată — servit cu pufarini glazurați caramel sărat deasupra",
 	"Popcorn de trufe (popcorn artizanal cu ulei de trufe și parmezan fin ras) ca garnit/crunch pentru farfurii cu foie gras sau bisque",
 	// Pogacea Atelier — bread service / pre-amuse / cheese course
-	"Pogacea Atelier: aluat dospit laminat cu untură de porc + untură de gâscă infuzată cimbru-ienupăr, jumări tocate fin, cenușă de fag Herbarium (textură și afumat cald) — glazură de gălbenuș cu miso de fasole borlotti fermentat 6 luni, topping Maldon, praf de jumări uscate, chimen negru; servită caldă pe piatră de râu la 60°C (pre-amuse, bread service sau cheese course)",
+	"Pogacea Atelier: aluat dospit laminat cu untură de porc + untură de gâscă infuzată cimbru-ienupăr, jumări tocate fin, cenușă de fag Herbarium (textură și afumat cald) — glazură de gălbenuș cu pastă de fasole borlotti fermentată 6 luni, topping Maldon, praf de jumări uscate, chimen negru; servită caldă pe piatră de râu la 60°C (pre-amuse, bread service sau cheese course)",
 	"Pogacea Pădurii (variațiunea carpatică): baza pogacei Atelier + rășină de molid în aluat, glazură finală de untură de gâscă-sirop de rășină-miere de brad aplicată post-coacere la 60°C strict, topping ace de molid tocate fin (max 30min înainte) — servită pe felie de lemn de brad cu cetină uscată încălzită care eliberează aromă la masă",
 }
 
@@ -233,7 +233,7 @@ var codexProtagonistSeeds = []string{
 	"cereale și paste artizanale — gnocchi de cartofi mov, pappardelle de casă, polenta de malai",
 	"legume ardei și solanacee — ardei Florinis copt, roșii soarele, vinete la jar",
 	"fructe și conserve de sezon — gutui, mere ionatane, corcodușe, dulceață de petale",
-	"alge marine și plante acvatice — nori, kombu, sală de mare, wasabi proaspăt",
+	"alge marine și plante acvatice — sălată de mare, kombu, wasabi proaspăt",
 }
 
 // codexForbiddenSeeds: overused fine-dining clichés to explicitly avoid today.
@@ -744,7 +744,7 @@ Site-ul Atelier are pagini specifice la care poți îndruma clientul în mod nat
 - Vrea să vadă meniul sau să înceapă Oglinda direct → /oglinda.html.
 
 Când clientul e interesat de BRAND sau CONSULTANȚĂ (Temelia), citează natural unul dintre aceste principii din Manifestul Atelier, ca să arăți că înțelegi lumea lor:
-- "Tehnica este japoneză. Ingredientul este al nostru." — despre identitate autentică vs. import de tendințe.
+- "Tehnica este universală. Ingredientul este al nostru." — despre identitate autentică vs. import de tendințe.
 - "Un meniu fix este o declarație de indiferență față de cel care mănâncă." — despre personalizare vs. produse generice.
 - "Dacă nu știu de unde vine, nu îl pun pe masă." — despre trasabilitate și poveste de brand.
 Citează-l scurt, natural, ca pe o idee care rezonează cu ce spune clientul — nu ca pe o lecție.
