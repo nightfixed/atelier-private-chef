@@ -49,7 +49,7 @@ export default function HomePage() {
   const [aiMessages, setAiMessages] = useState<{role:'bot'|'user';text:string}[]>(() => {
     const h = new Date().getHours();
     const salut = h < 12 ? 'Bună dimineața' : h < 18 ? 'Bună ziua' : 'Bună seara';
-    return [{role:'bot', text:`${salut}. Nu sunt doar un chatbot obișnuit — sunt ceva mai mult, un sistem unic construit cu ajutorul AI, care înțelege ce cauți și te poartă spre experiența potrivită. La Atelier, nicio seară nu se repetă, se construiește împreună.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
+    return [{role:'bot', text:`${salut}. Nu sunt un chatbot obișnuit — sunt un sistem complex, construit să nu producă niciodată același rezultat de la un client la altul. Te ascult, apoi te pun în centrul atenției: totul se încheie cu povestea serii tale, unică, scrisă doar pentru tine.\n\nÎnainte de toate — spune-mi te rog numele tău, ca să îți pot oferi cele mai inedite experiențe.`}];
   });
   const [aiTyping, setAiTyping] = useState(false);
   const [guestName, setGuestName] = useState('');
@@ -319,7 +319,7 @@ export default function HomePage() {
           <h1 className="hero-title">Atelier</h1>
           <div className="hero-cursive">Private Dining</div>
           <div className="hero-div"><span></span><i>✦</i><span></span></div>
-          <p className="hero-desc">Experiențe culinare private · Chef Răzvan · 18+ ani bucătărie modernă și fine dining</p>
+          <p className="hero-desc">Experiențe culinare private · Chef Răzvan · 18+ ani bucătărie modernă și tehnică internațională de nivel înalt</p>
         </div>
         <div className="hero-bottom">Descoperă<div className="scroll-line"></div></div>
       </section>
