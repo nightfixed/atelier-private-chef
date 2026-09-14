@@ -8,7 +8,7 @@ import (
 	"github.com/nightfixed/atelier-private-chef/api/internal/ai"
 )
 
-// NewMatriceaHandler handles POST /api/generate-matricea.
+// NewMatriceaHandler handles POST /api/generate-temelia.
 func NewMatriceaHandler(provider ai.Provider) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {

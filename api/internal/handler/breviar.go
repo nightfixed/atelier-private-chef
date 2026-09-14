@@ -8,7 +8,7 @@ import (
 	"github.com/nightfixed/atelier-private-chef/api/internal/ai"
 )
 
-// NewBreviarHandler handles POST /api/generate-breviar.
+// NewBreviarHandler handles POST /api/generate-tesatura.
 func NewBreviarHandler(provider ai.Provider) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {

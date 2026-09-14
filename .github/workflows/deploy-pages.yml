@@ -40,11 +40,11 @@ jobs:
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ vars.FIREBASE_APP_ID }}
           NEXT_PUBLIC_API_URL: ${{ vars.API_URL }}
 
-      - name: Inject API_URL into codex HTML
+      - name: Inject API_URL into oglinda HTML
         run: |
-          sed -i "s|__API_URL__|${{ vars.API_URL }}|g" web/out/codex-guest-system.html
-          echo "Injected API_URL into web/out/codex-guest-system.html"
-          grep "API_URL" web/out/codex-guest-system.html | head -1
+          sed -i "s|__API_URL__|${{ vars.API_URL }}|g" web/out/oglinda.html
+          echo "Injected API_URL into web/out/oglinda.html"
+          grep "API_URL" web/out/oglinda.html | head -1
 
       - name: Inject API_URL into asezat HTML
         run: |

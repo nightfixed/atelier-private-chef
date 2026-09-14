@@ -167,7 +167,7 @@ function parseAI(text: string): Result {
   };
 }
 
-export default function BreviarGenerator() {
+export default function TesaturaGenerator() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [current, setCurrent] = useState('');
@@ -209,7 +209,7 @@ export default function BreviarGenerator() {
   const generate = async (updated: Record<string, string>) => {
     setLoading(true); setError('');
     try {
-      const res = await fetch(`${API_URL}/api/generate-breviar`, {
+      const res = await fetch(`${API_URL}/api/generate-tesatura`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -427,7 +427,7 @@ export default function BreviarGenerator() {
                           name: contactName.trim(),
                           email: contactEmail.trim(),
                           phone: contactPhone.trim() || undefined,
-                          occasion: 'BREVIAR',
+                          occasion: 'TESATURA',
                           message: msg,
                           guests_count: parseInt(answers.participants || '0') || undefined,
                         });

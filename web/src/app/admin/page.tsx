@@ -160,7 +160,7 @@ function ConfirmModal({ msg, onConfirm, onCancel }: { msg: string; onConfirm: ()
 function CodexMessageView({ message, occasion }: { message?: string; occasion?: string }) {
   if (!message) return <p style={{color:'#555',fontStyle:'italic'}}>( fără mesaj )</p>;
 
-  const isCodex = occasion === 'CODEX' || message.startsWith('[Rezervare via CODEX]');
+  const isCodex = occasion === 'CODEX' || occasion === 'OGLINDA' || message.startsWith('[Rezervare via CODEX]') || message.startsWith('[Rezervare via OGLINDA]');
 
   if (!isCodex) {
     return (
@@ -196,7 +196,7 @@ function CodexMessageView({ message, occasion }: { message?: string; occasion?: 
       {/* CODEX BADGE */}
       <div style={{marginBottom:'20px',display:'flex',alignItems:'center',gap:'12px'}}>
         <span style={{fontSize:'7px',letterSpacing:'4px',textTransform:'uppercase' as const,color:'rgba(201,169,110,.7)',border:'1px solid rgba(201,169,110,.2)',padding:'4px 12px'}}>
-          ✦ CODEX — Capitol Personal
+          ✦ OGLINDA — Capitol Personal
         </span>
       </div>
 
@@ -325,7 +325,7 @@ function ContactsTab({ token }: { token: string }) {
           const win = await api.createAvailabilityWindow({
             date: dateStr,
             max_guests: c.guests_count ?? 12,
-            notes: `REZERVAT — ${c.name} (CODEX)`,
+            notes: `REZERVAT — ${c.name} (OGLINDA)`,
           }, token);
           // Create a reservation tied to that window
           const res = await api.submitReservation({
@@ -333,8 +333,8 @@ function ContactsTab({ token }: { token: string }) {
             name: c.name,
             email: c.email,
             guests_count: c.guests_count,
-            occasion: 'CODEX',
-            message: `Acceptat via admin CODEX. Contact ID: ${c.id}`,
+            occasion: 'OGLINDA',
+            message: `Acceptat via admin OGLINDA. Contact ID: ${c.id}`,
           });
           // Confirm the reservation → marks window is_booked = true
           await api.updateReservationStatus(res.id, 'confirmed', token);
@@ -342,10 +342,10 @@ function ContactsTab({ token }: { token: string }) {
           // Window/reservation creation failed — contact is still accepted
         }
 
-        // 3. Auto-reject other CODEX requests for the same day
+        // 3. Auto-reject other OGLINDA requests for the same day
         const sameDay = items.filter(x =>
           x.id !== c.id &&
-          x.occasion === 'CODEX' &&
+          (x.occasion === 'CODEX' || x.occasion === 'OGLINDA') &&
           x.event_date?.substring(0, 10) === dateStr &&
           !['accepted', 'rejected'].includes(x.status)
         );
@@ -378,8 +378,8 @@ function ContactsTab({ token }: { token: string }) {
     'accepted': 'Acceptate', 'rejected': 'Refuzate', 'archived': 'Arhivate',
   };
 
-  // Count pending CODEX requests that need a decision
-  const pendingCodex = items.filter(x => x.occasion === 'CODEX' && x.status === 'new').length;
+  // Count pending OGLINDA requests that need a decision
+  const pendingCodex = items.filter(x => (x.occasion === 'CODEX' || x.occasion === 'OGLINDA') && x.status === 'new').length;
 
   const filtered = items.filter(c => {
     const matchFilter = !filter || c.status === filter;
@@ -396,7 +396,7 @@ function ContactsTab({ token }: { token: string }) {
             Cereri de rezervare
             {pendingCodex > 0 && (
               <span style={{marginLeft:'12px',fontSize:'11px',letterSpacing:'2px',color:'rgba(201,169,110,.8)',border:'1px solid rgba(201,169,110,.3)',padding:'3px 10px',verticalAlign:'middle'}}>
-                {pendingCodex} CODEX așteaptă răspuns
+                {pendingCodex} OGLINDA așteaptă răspuns
               </span>
             )}
           </div>
@@ -436,7 +436,7 @@ function ContactsTab({ token }: { token: string }) {
           <tbody>
             {items.length === 0 && <tr><td colSpan={8} style={{...S.td,...S.emptyState}}>Nicio cerere</td></tr>}
             {filtered.map(c => {
-              const isCodex = c.occasion === 'CODEX';
+              const isCodex = c.occasion === 'CODEX' || c.occasion === 'OGLINDA';
               const isPending = !['accepted','rejected'].includes(c.status);
               const isBusy = accepting === c.id;
               return (
@@ -448,7 +448,7 @@ function ContactsTab({ token }: { token: string }) {
                   >
                     <td style={S.tdStrong}>
                       {c.name}
-                      {isCodex && <span style={{marginLeft:'8px',fontSize:'7px',letterSpacing:'2px',color:'rgba(201,169,110,.5)',textTransform:'uppercase' as const}}>✦ codex</span>}
+                      {isCodex && <span style={{marginLeft:'8px',fontSize:'7px',letterSpacing:'2px',color:'rgba(201,169,110,.5)',textTransform:'uppercase' as const}}>✦ oglinda</span>}
                     </td>
                     <td style={S.td}>{c.email}</td>
                     <td style={S.td}>{c.occasion ?? '—'}</td>

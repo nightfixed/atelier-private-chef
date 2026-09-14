@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Oglinda Atelier — Ritualul de Inițiere. Compune-ți seara la Atelier Private Dining, Cluj-Napoca.">
+<meta property="og:title" content="OGLINDA — Ritual de Inițiere | Atelier Private Dining">
+<meta property="og:description" content="Șase întrebări. O seară compusă pentru tine.">
+<meta property="og:url" content="https://atelierprivatedining.ro/oglinda.html">
+<meta property="og:type" content="website">
+<title>OGLINDA — Ritual de Inițiere | Atelier Private Dining</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.12);
+    --bg: #0a0a0a;
+    --text: #e8e0d0;
+    --muted: rgba(232,224,208,0.45);
+    --border: rgba(201,169,110,0.2);
+  }
+
+  html { }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  .nav-back {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-back:hover { color: var(--gold); }
+
+  /* MAIN */
+  main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem 2rem;
+  }
+
+  .app { width: 100%; max-width: 640px; }
+
+  /* SCREENS */
+  .screen { display: none; animation: fadeIn 0.8s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* INTRO */
+  .intro { text-align: center; padding: 0.5rem 1rem; }
+  .sigil {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.7rem;
+  }
+  .intro h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .intro .sub {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.7rem;
+  }
+  .intro p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text);
+    opacity: 0.75;
+    max-width: 460px;
+    margin: 0 auto 0.8rem;
+  }
+
+  .divider { width: 1px; height: 30px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 0 auto 0.8rem; }
+
+  /* NAME INPUT */
+  .name-wrap { margin-bottom: 0.7rem; }
+  .name-wrap input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.1em;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .name-wrap input::placeholder { color: var(--muted); font-style: italic; }
+  .name-wrap input:focus { border-bottom-color: var(--gold); }
+
+  /* DATE PICKER */
+  .date-wrap { margin-bottom: 0.7rem; }
+  .field-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: block;
+    text-align: center;
+  }
+  .date-wrap input[type="date"] {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.08em;
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .date-wrap input[type="date"]:focus { border-bottom-color: var(--gold); }
+  .date-wrap input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7) sepia(1) saturate(0.5) hue-rotate(10deg);
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .date-wrap input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+  /* PERSONS STEPPER */
+  .persons-wrap { margin-bottom: 0.8rem; }
+  .persons-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 0.4rem 0 0.8rem;
+  }
+  .stepper-btn {
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 200;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+  .stepper-btn:hover { opacity: 1; }
+  .stepper-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+  .stepper-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text);
+    min-width: 4rem;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .stepper-value span {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 200;
+    color: var(--muted);
+    letter-spacing: 0.3em;
+    margin-left: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  /* BUTTON */
+  .btn {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.65rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn:hover { background: var(--gold-dim); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* QUESTIONS */
+  .questions-wrap { padding: 2rem 0; }
+  .q-header { text-align: center; margin-bottom: 3rem; }
+  .q-header .chapter {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .q-header h2 { font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--text); }
+
+  /* PROGRESS */
+  .progress-bar { width: 100%; height: 1px; background: var(--border); margin-bottom: 0.5rem; }
+  .progress-fill { height: 100%; background: var(--gold); transition: width 0.6s ease; }
+  .progress-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-align: right;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  /* SINGLE QUESTION */
+  .question-card { animation: fadeIn 0.6s ease; }
+  .question-number {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .question-text { font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 300; line-height: 1.7; color: var(--text); margin-bottom: 2.5rem; }
+  .question-hint { font-size: 0.85rem; font-style: italic; color: var(--muted); margin-bottom: 2rem; margin-top: -1.5rem; }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.5rem; }
+  .option-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    line-height: 1.5;
+  }
+  .option-btn:hover, .option-btn.selected { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+  /* OCCASION OPTIONS */
+  .occasion-options { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+  .occasion-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: 1.2rem 2rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .occasion-btn:hover, .occasion-btn.selected {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-dim);
+  }
+  .occasion-icon { font-size: 1.3rem; opacity: 0.75; flex-shrink: 0; }
+  .occasion-info { display: flex; flex-direction: column; gap: 0.2rem; }
+  .occasion-name { font-size: 1.1rem; letter-spacing: 0.05em; }
+  .occasion-desc {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--muted);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    letter-spacing: 0.05em;
+  }
+
+  /* TEXTAREA */
+  .free-input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.8;
+    outline: none;
+    resize: none;
+    min-height: 120px;
+    margin-bottom: 2rem;
+    transition: border-color 0.3s;
+  }
+  .free-input:focus { border-color: var(--gold); }
+  .free-input::placeholder { color: var(--muted); font-style: italic; }
+
+  .q-nav { display: flex; justify-content: flex-end; }
+
+  /* GENERATING */
+  .generating { text-align: center; padding: 4rem 1rem; }
+  .generating h2 { font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--gold); margin-bottom: 1.5rem; }
+  .generating p { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 2; margin-bottom: 3rem; }
+  .pulse-ring {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    margin: 0 auto 1rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  /* COMPOSITION */
+  .composition { padding: 1rem 0; }
+  .comp-header { text-align: center; margin-bottom: 3rem; }
+  .comp-header .eve-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .comp-header .guest-name { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 300; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .comp-header .eve-date { font-size: 0.85rem; font-style: italic; color: var(--muted); }
+  .comp-body {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .comp-body::before {
+    content: '❧';
+    position: absolute;
+    top: -0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg);
+    padding: 0 1rem;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 1rem;
+  }
+  .comp-text { font-size: 1.05rem; font-weight: 300; line-height: 2.2; color: var(--text); white-space: pre-wrap; }
+  .comp-footer { text-align: center; }
+  .comp-footer .artifact-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.45em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.6;
+  }
+  .btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* MENU */
+  .menu-section { padding: 1rem 0; }
+  .menu-header { text-align: center; margin-bottom: 3rem; }
+  .menu-header .menu-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+  }
+  .menu-header .menu-guest { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 300; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 0.3rem; }
+  .menu-header .menu-date { font-size: 0.85rem; font-style: italic; color: var(--muted); }
+  .menu-courses {
+    border-top: 1px solid var(--border);
+    padding-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .menu-course {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0 1.2rem;
+    align-items: start;
+  }
+  .course-num {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.5;
+    padding-top: 0.3rem;
+    text-transform: uppercase;
+    text-align: right;
+  }
+  .course-type {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.42rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    opacity: 0.45;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+  .course-body {}
+  .course-name {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .course-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .menu-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 auto 2.5rem;
+  }
+  .menu-footer { text-align: center; }
+  .menu-footer .artifact-hint {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.55;
+  }
+
+  /* ARTIFACT */
+  .artifact { padding: 1rem 0; }
+  .art-header { text-align: center; margin-bottom: 3rem; }
+  .art-chapter-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  .art-title { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 300; font-style: italic; color: var(--gold); margin-bottom: 0.5rem; }
+  .art-sub { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+  .art-body {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0;
+    margin-bottom: 2.5rem;
+  }
+  .art-text { font-size: 1.05rem; font-weight: 300; line-height: 2.3; color: var(--text); white-space: pre-wrap; }
+  .art-seal { text-align: center; padding: 2rem 0; }
+  .art-seal .seal-name { font-size: 1.1rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.3rem; }
+  .art-seal .seal-date { font-family: 'Raleway', sans-serif; font-weight: 200; font-size: 0.55rem; letter-spacing: 0.4em; color: var(--muted); text-transform: uppercase; opacity: 0.6; }
+
+  /* LOADING DOTS */
+  .dots::after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+  }
+  @keyframes dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+  }
+
+  .error-msg { color: #c96e6e; font-style: italic; font-size: 0.9rem; text-align: center; margin-top: 1rem; }
+
+  /* SUMMARY */
+  .summary-page { padding: 1rem 0; }
+  .sum-header { text-align: center; margin-bottom: 2rem; }
+  .sum-section-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 1.8rem;
+    text-align: center;
+  }
+  .sum-story-wrap { margin-bottom: 1rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  footer a {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 0.5rem;
+    letter-spacing: 0.45em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+  }
+  footer a:hover { opacity: 1; color: var(--gold); }
+
+  /* ───── MOBILE ───── */
+  @media (max-width: 480px) {
+    nav {
+      padding: 1rem 1.2rem;
+    }
+    .nav-logo {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+    }
+    .nav-back {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+    }
+
+    main {
+      padding: 4rem 1rem 2rem;
+    }
+
+    /* INTRO */
+    .intro {
+      padding: 0.5rem 0.5rem;
+    }
+    .sigil {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 1rem;
+    }
+    .intro h1 {
+      font-size: clamp(2.2rem, 12vw, 3.5rem);
+    }
+    .intro .sub {
+      font-size: 0.9rem;
+    }
+    .intro p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+    }
+
+    /* BUTTON */
+    .btn {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      padding: 0.9rem 1.8rem;
+    }
+    .btn-row {
+      gap: 0.7rem;
+    }
+    .btn-row .btn {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    /* QUESTIONS */
+    .questions-wrap {
+      padding: 1rem 0;
+    }
+    .q-header {
+      margin-bottom: 2rem;
+    }
+    .q-header h2 {
+      font-size: 1.4rem;
+    }
+    .q-header .chapter {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+    }
+    .progress-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      margin-bottom: 2rem;
+    }
+    .question-number {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+    }
+    .question-text {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      margin-bottom: 2rem;
+    }
+    .question-hint {
+      font-size: 0.8rem;
+    }
+
+    /* OPTIONS */
+    .options {
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .option-btn {
+      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+    }
+
+    /* OCCASION OPTIONS */
+    .occasion-options {
+      gap: 0.7rem;
+      margin-bottom: 2rem;
+    }
+    .occasion-btn {
+      font-size: 0.95rem;
+      padding: 0.9rem 1rem;
+      gap: 0.8rem;
+    }
+    .occasion-icon {
+      font-size: 1.1rem;
+    }
+    .occasion-name {
+      font-size: 0.95rem;
+    }
+    .occasion-desc {
+      font-size: 0.72rem;
+    }
+
+    /* COMPOSITION */
+    .comp-body {
+      padding: 1.5rem 1rem;
+    }
+    .comp-header .guest-name {
+      font-size: clamp(1.6rem, 7vw, 2.5rem);
+    }
+    .comp-text {
+      font-size: 0.95rem;
+      line-height: 2;
+    }
+
+    /* MENU */
+    .menu-header .menu-guest {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+    }
+    .menu-header .menu-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+    }
+    .menu-course {
+      grid-template-columns: 2rem 1fr;
+      gap: 0 0.8rem;
+    }
+    .course-num {
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+    }
+    .course-name {
+      font-size: 1rem;
+    }
+    .course-desc {
+      font-size: 0.82rem;
+    }
+    .menu-footer .artifact-hint {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+    }
+
+    /* ARTIFACT */
+    .art-title {
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+    }
+    .art-chapter-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+    }
+    .art-text {
+      font-size: 0.95rem;
+      line-height: 2.1;
+    }
+    .art-seal .seal-name {
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+    }
+    .art-seal .seal-date {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+    }
+
+    /* SUMMARY */
+    .sum-section-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+    }
+
+    /* GENERATING */
+    .generating {
+      padding: 2.5rem 0.5rem;
+    }
+    .generating h2 {
+      font-size: 1.4rem;
+    }
+    .generating p {
+      font-size: 0.9rem;
+    }
+
+    /* FIELD LABELS */
+    .field-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+    }
+
+    /* FREE TEXT */
+    .free-input {
+      font-size: 0.95rem;
+      min-height: 100px;
+    }
+  }
+</style>
+</head>
+<script>(function(){var KEY='aRx7km9Qz3vT',STORE='ap_preview';var ok=false;try{ok=localStorage.getItem(STORE)===KEY;}catch(e){}if(!ok){document.documentElement.style.visibility='hidden';document.addEventListener('DOMContentLoaded',function(){window.location.replace('https://atelierprivatedining.ro');});}})()</script>
+
+<body>
+
+<nav>
+  <a href="https://atelierprivatedining.ro" class="nav-logo">Atelier Private Dining</a>
+  <button class="nav-back" onclick="navBack()">← Înapoi</button>
+</nav>
+
+<main>
+<div class="app">
+
+  <!-- S1: INTRO -->
+  <div class="screen active" id="s-intro">
+    <div class="intro">
+      <div class="sigil">Atelier Private Dining — Cluj-Napoca</div>
+      <h1>OGLINDA</h1>
+      <p class="sub">Ritual de Inițiere</p>
+      <div class="divider"></div>
+      <p>
+        Înainte de a vă așeza la masă, vă rugăm să răspundeți la câteva întrebări.<br>
+        Nu există răspunsuri corecte sau greșite.<br>
+        Există doar seara dumneavoastră.
+      </p>
+      <div class="name-wrap">
+        <input type="text" id="guest-name" placeholder="Numele dumneavoastră" autocomplete="off" oninput="nameInput(this)" />
+        <p id="name-gibberish-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;"></p>
+      </div>
+      <div class="name-wrap">
+        <input type="email" id="guest-email" placeholder="Adresa dumneavoastră de email" autocomplete="email" />
+        <p id="email-err" style="display:none;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:10px;line-height:1.8;">Vă rugăm să introduceți o adresă de email validă.</p>
+      </div>
+      <div class="name-wrap">
+        <input type="tel" id="guest-phone" placeholder="Număr de telefon (opțional)" autocomplete="tel" />
+      </div>
+      <div class="date-wrap">
+        <span class="field-label">Data rezervării</span>
+        <input type="date" id="reservation-date" />
+      </div>
+      <div class="persons-wrap">
+        <span class="field-label">Numărul de persoane</span>
+        <div class="persons-stepper">
+          <button class="stepper-btn" id="persons-minus" onclick="changePersons(-1)" disabled>−</button>
+          <div class="stepper-value" id="persons-display">2 <span>pers.</span></div>
+          <button class="stepper-btn" id="persons-plus" onclick="changePersons(1)">+</button>
+        </div>
+        <div style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.5rem;letter-spacing:0.35em;color:rgba(201,169,110,0.4);text-transform:uppercase;margin-top:0.6rem;">2–6 persoane · exclusiv Private Dining</div>
+      </div>
+      <button class="btn" id="intro-cta" onclick="startRitual()">Compune Seara</button>
+    </div>
+  </div>
+
+  <!-- S2: QUESTIONS -->
+  <div class="screen" id="s-questions">
+    <div class="questions-wrap">
+      <div class="q-header">
+        <div class="chapter">Oglinda Atelier — Profil Senzorial</div>
+        <h2>Cunoaștem seara dumneavoastră</h2>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="progress-label">0 / 7</div>
+      <div id="question-slot"></div>
+    </div>
+  </div>
+
+  <!-- S5: GENERATING MENU -->
+  <div class="screen" id="s-gen-menu">
+    <div class="generating">
+      <div class="pulse-ring"></div>
+      <div class="divider"></div>
+      <h2>Compunem meniul serii<span class="dots"></span></h2>
+      <p>Sistemul construiește cursurile personalizate<br>pe baza profilului dumneavoastră senzorial.</p>
+      <p style="margin-top:1.5rem;font-size:.85rem;color:var(--muted);opacity:.7;line-height:1.8;">Vă rugăm să aveți răbdare — acesta este un sistem inovativ<br>care lucrează cu atenție pentru dumneavoastră.<br>Promitem o experiență extraordinară.</p>
+    </div>
+  </div>
+
+  <!-- S6: MENU -->
+  <div class="screen" id="s-menu">
+    <div class="menu-section">
+      <div class="menu-header">
+        <div class="menu-label">Meniul Serii — Atelier Private Dining</div>
+        <div class="menu-guest" id="menu-guest"></div>
+        <div class="menu-date" id="menu-date"></div>
+      </div>
+      <div class="menu-courses" id="menu-courses"></div>
+      <div class="menu-divider"></div>
+      <div class="menu-footer">
+        <div class="artifact-hint">La finalul serii, veți primi povestea dumneavoastră personală</div>
+        <div class="btn-row">
+          <button class="btn" onclick="generateArtifact()">Generează Povestea</button>
+          <button class="btn" onclick="restart()">Seară Nouă</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7: GENERATING ARTIFACT -->
+  <div class="screen" id="s-gen-artifact">
+    <div class="generating">
+      <div class="pulse-ring"></div>
+      <div class="divider"></div>
+      <h2>Scriem capitolul dumneavoastră<span class="dots"></span></h2>
+      <p>Seara aceasta devine text.<br>Un text care nu va mai exista niciodată în aceeași formă.</p>
+    </div>
+  </div>
+
+  <!-- S6: ARTIFACT -->
+  <div class="screen" id="s-artifact">
+    <div class="artifact">
+      <div class="art-header">
+        <div class="art-chapter-label">Oglinda Atelier — Capitol Personal</div>
+        <div class="art-title" id="art-title"></div>
+        <div class="art-sub" id="art-sub"></div>
+      </div>
+      <div class="art-body">
+        <div class="art-text" id="art-text"></div>
+      </div>
+      <div class="art-seal">
+        <div class="divider"></div>
+        <div class="seal-name" id="seal-name"></div>
+        <div class="seal-date" id="seal-date"></div>
+      </div>
+      <div style="text-align:center; margin-top:1rem;">
+        <div class="btn-row">
+          <button class="btn" onclick="showSummary()">Finalizează Povestea</button>
+          <button class="btn" onclick="restart()">Seară Nouă</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S8: SUMMARY FINAL -->
+  <div class="screen" id="s-summary">
+    <div class="summary-page">
+      <div class="sum-header">
+        <div class="sigil">Oglinda Atelier — Seara Dumneavoastră</div>
+        <div class="guest-name" id="sum-name"></div>
+        <div class="eve-date" id="sum-date"></div>
+      </div>
+      <div class="divider"></div>
+      <div class="sum-section-label">Meniul Serii</div>
+      <div class="menu-courses" id="sum-courses"></div>
+      <div class="menu-divider"></div>
+      <div class="sum-section-label">Povestea Serii</div>
+      <div class="sum-story-wrap">
+        <div class="art-title" id="sum-story-title"></div>
+        <div class="art-sub" id="sum-story-sub" style="margin-bottom:1.5rem;"></div>
+        <div class="art-text" id="sum-story-text"></div>
+      </div>
+      <div class="art-seal">
+        <div class="divider"></div>
+        <div class="seal-name" id="sum-seal-name"></div>
+        <div class="seal-date" id="sum-seal-date"></div>
+      </div>
+      <div style="text-align:center; margin-top:2rem;">
+        <div class="btn-row">
+          <button class="btn" onclick="rezerva()" style="background:var(--gold-dim);border-color:var(--gold);">Rezervă Această Seară →</button>
+          <button class="btn" onclick="restart()">Seară Nouă</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9: PENDING — cerere trimisă, așteptare răspuns -->
+  <div class="screen" id="s-pending">
+    <div class="pending-page">
+      <div class="sigil" style="margin-bottom:2.5rem;">Oglinda Atelier — Confirmare</div>
+      <div class="divider"></div>
+
+      <div style="text-align:center; padding: 1rem 0 2rem;">
+        <div style="font-size:2rem; color:var(--gold); opacity:0.5; margin-bottom:1.5rem;">◈</div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.6rem,5vw,2.4rem); font-weight:300; font-style:italic; color:var(--gold); margin-bottom:1rem; line-height:1.3;" id="pending-name-title">Cererea dumneavoastră<br>a fost primită</h2>
+        <div style="width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:1.5rem auto;"></div>
+      </div>
+
+      <div style="max-width:480px; margin:0 auto; padding:0 1rem;">
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:300; line-height:2.2; color:var(--text); opacity:0.8; text-align:center; margin-bottom:2rem;">
+          Seara pe care tocmai ați compus-o este unică.<br>
+          Meniul, povestea, profilul dumneavoastră senzorial —<br>
+          toate au ajuns la Atelier.
+        </p>
+
+        <div style="border:1px solid rgba(201,169,110,0.12); padding:2rem; margin-bottom:2rem; position:relative;">
+          <div style="position:absolute;top:-0.6rem;left:50%;transform:translateX(-50%);background:var(--bg);padding:0 1rem;color:var(--gold);font-size:0.7rem;">✦</div>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:300; line-height:2; color:rgba(232,224,208,0.65); text-align:center; font-style:italic;">
+            Într-un atelier ca acesta, fiecare seară se creează o singură dată.<br>
+            Înainte de confirmare, verificăm că totul poate fi pregătit<br>
+            exact așa cum merită seara dumneavoastră.
+          </p>
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:1.2rem; margin-bottom:1.4rem;">
+          <div style="font-size:0.7rem;color:var(--gold);opacity:0.6;min-width:20px;margin-top:3px;">◇</div>
+          <p style="font-size:0.95rem; font-weight:300; line-height:1.9; color:rgba(232,224,208,0.55);">
+            Veți primi un răspuns personal în câteva ore — de obicei în aceeași zi.
+          </p>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1.2rem; margin-bottom:1.4rem;">
+          <div style="font-size:0.7rem;color:var(--gold);opacity:0.6;min-width:20px;margin-top:3px;">◇</div>
+          <p style="font-size:0.95rem; font-weight:300; line-height:1.9; color:rgba(232,224,208,0.55);">
+            Dacă seara solicitată este disponibilă și poate fi compusă pentru dumneavoastră, vom confirma data și vom bloca ziua exclusiv pentru această seară.
+          </p>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:1.2rem; margin-bottom:2.5rem;">
+          <div style="font-size:0.7rem;color:var(--gold);opacity:0.6;min-width:20px;margin-top:3px;">◇</div>
+          <p style="font-size:0.95rem; font-weight:300; line-height:1.9; color:rgba(232,224,208,0.55);">
+            Dacă aveți întrebări înainte, ne puteți scrie oricând la
+            <a href="mailto:contact@atelierprivatedining.ro" style="color:var(--gold);opacity:0.7;text-decoration:none;">contact@atelierprivatedining.ro</a>.
+          </p>
+        </div>
+
+        <div style="border-top:1px solid rgba(201,169,110,0.1); padding-top:2rem; text-align:center;">
+          <div style="font-family:'Raleway',sans-serif; font-weight:200; font-size:0.55rem; letter-spacing:0.45em; color:rgba(201,169,110,0.35); text-transform:uppercase; margin-bottom:0.8rem;">Confirmat pentru</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:300; color:var(--gold); letter-spacing:0.08em;" id="pending-name"></div>
+          <div style="font-size:0.85rem; font-style:italic; color:var(--muted); margin-top:0.3rem;" id="pending-date"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:3rem;">
+        <a href="https://atelierprivatedining.ro" style="font-family:'Raleway',sans-serif;font-weight:200;font-size:0.55rem;letter-spacing:0.45em;color:rgba(201,169,110,0.4);text-transform:uppercase;text-decoration:none;">← Înapoi la Atelier</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <a href="https://atelierprivatedining.ro">atelierprivatedining.ro</a>
+</footer>
+
+<script>
+const OCCASIONS = [
+  { id: 'romantic',   icon: '◇', name: 'Romantică',  desc: 'O seară pentru doi — intimitate, emoție, prezență' },
+  { id: 'celebrare', icon: '◈', name: 'Celebrare',   desc: 'Un moment de marcat — aniversare, reușită, bucurie' },
+  { id: 'intim',     icon: '○', name: 'Intimă',      desc: 'Prieteni apropiați sau familie — căldură și sinceritate' },
+  { id: 'business',  icon: '▱', name: 'Business',    desc: 'O întâlnire cu miză — eleganță, atenție, rafinament' },
+  { id: 'surpriza',  icon: '◉', name: 'Surpriză',    desc: 'Oaspetele nu știe unde ajunge — magie și neașteptat' }
+];
+
+const PROTEINS = [
+  { id: 'vita',        icon: '◉', name: 'Vită',            desc: 'Wagyu local, dry-aged, tehnici lente' },
+  { id: 'miel',        icon: '◍', name: 'Miel',            desc: 'Ardeal, ierburi sălbatice, fân' },
+  { id: 'rata',        icon: '◈', name: 'Rață',            desc: 'Confit, piept, foie gras' },
+  { id: 'peste',       icon: '◇', name: 'Pește',           desc: 'Somon, biban, homar — tehnici japoneze' },
+  { id: 'fructe_mare', icon: '○', name: 'Fructe de mare',  desc: 'Creveți, scoici, caracatiță' },
+  { id: 'surprinde',   icon: '✦', name: 'Surprinde-mă',   desc: 'Răzvan alege pentru tine' }
+];
+
+const QUESTIONS = [
+  {
+    id: 'occasion',
+    type: 'occasion',
+    text: 'Care este natura acestei seri?',
+    hint: 'Alegerea dumneavoastră va ghida compoziția întregii experiențe.'
+  },
+  {
+    id: 'protein',
+    type: 'protein',
+    text: 'Ce proteină va fi inima serii?',
+    hint: 'Aceasta va fi centrul felului principal.'
+  },
+  {
+    id: 'taste',
+    type: 'options',
+    text: 'Ce notă de gust să domine seara?',
+    hint: 'Aceasta va colora toate cursurile.',
+    options: [
+      'Umami profund — garum, fermentat, miso, pământ',
+      'Acid & viu — citrice, fermentare, lacto, oțet',
+      'Dulce & savuros — contrast, reducții, caramel sărat',
+      'Afumat & prăjit — foc, cărbune, memorie, rădăcini',
+      'Floral & delicat — efemer, petale, ierburi, brumă'
+    ]
+  },
+  {
+    id: 'memory',
+    type: 'options',
+    text: 'Care este prima amintire culinară care vă vine în minte când vă gândiți la copilărie?',
+    hint: 'Alegeți instinctiv — prima reacție este cea adevărată.',
+    options: [
+      'Miros de pâine sau cozonac proaspăt copt',
+      'O ciorbă sau supă de acasă',
+      'Ceva dulce — fructe, gem, prăjitură',
+      'Fum, grătar, miros de carne',
+      'Ceva acru sau fermentat — murături, borș',
+      'Nu am o amintire clară — mâncarea nu a fost centrală'
+    ]
+  },
+  {
+    id: 'sensation',
+    type: 'options',
+    text: 'Ce senzație căutați cel mai mult într-o masă memorabilă?',
+    hint: null,
+    options: [
+      'Contrast — cald/rece, dulce/acru, crocant/cremos',
+      'Profunzime — gusturi care evoluează în timp',
+      'Simplitate perfectă — un singur ingredient, tratat impecabil',
+      'Surpriză — ceva neașteptat, care schimbă percepția',
+      'Confort — ceva familiar, reconfortant, ca acasă'
+    ]
+  },
+  {
+    id: 'rhythm',
+    type: 'options',
+    text: 'Cum trăiți cel mai bine o cină lungă?',
+    hint: null,
+    options: [
+      'Cu conversație intensă — mâncarea e fundal',
+      'În tăcere contemplativă — fiecare curs, singur',
+      'Cu muzică — ritmul mesei depinde de sunet',
+      'Alternând — momente de vorbă, momente de atenție totală'
+    ]
+  },
+  {
+    id: 'element',
+    type: 'options',
+    text: 'Dintre aceste patru ingrediente, care vă atrage instinctiv cel mai mult?',
+    hint: 'Nu neapărat preferatul — ci cel care vă trezește ceva.',
+    options: [
+      'Trufe — pământ, mister, esență obscură',
+      'Citrice fermentate — acid, viu, complex',
+      'Afumătură — memorie, foc, rădăcini',
+      'Flori comestibile — efemer, delicat, artistic'
+    ]
+  },
+  {
+    id: 'end',
+    type: 'options',
+    text: 'Cum vreți să vă simțiți la finalul serii?',
+    hint: null,
+    options: [
+      'Sătul și fericit — o masă completă, fără regrete',
+      'Ușor — parcă ai mâncat mult, dar nu te simți greu',
+      'Intrigat — cu întrebări deschise, cu ceva de digerat',
+      'Emoționat — că ai simțit ceva ce nu poți numi exact'
+    ]
+  },
+  {
+    id: 'avoid',
+    type: 'free',
+    optional: true,
+    text: 'Ceva ce evitați sau nu consumați?',
+    hint: 'Opțional — lăsați gol dacă nu aveți restricții.'
+  },
+  {
+    id: 'philosophy',
+    type: 'free',
+    text: 'O singură frază: ce înseamnă pentru dumneavoastră o masă bună?',
+    hint: 'Scrisă liber, fără gândire prea multă.'
+  }
+];
+
+let guestName = '';
+let guestEmail = '';
+let guestPhone = '';
+let reservationDate = '';
+let guestPersons = 2;
+let generatedCourses = [];
+let generatedStoryTitle = '';
+let generatedStoryText = '';
+const API_URL = '__API_URL__';
+const apiKey = '__ANTHROPIC_API_KEY__';
+const DEMO_MODE = !API_URL.startsWith('http');
+let answers = {};
+let currentQ = 0;
+let currentSelection = null;
+
+const DEMO_MENUS = {
+  romantic: [
+    { name: 'Amuse-bouche', desc: 'Tartă de brânză de burduf afumată, gel de cireșe fermentate, petale de trandafir comestibil' },
+    { name: 'Starter I', desc: 'Carpaccio de sfeclă coaptă în argilă, cremă de hrean, ulei de măcriș, crocant de secară' },
+    { name: 'Starter II', desc: 'Supă limpede de rădăcinoase, găluște de măduvă, trufe de Ardeal, frunze de măcriș' },
+    { name: 'Intermediar', desc: 'Sorbet de trandafir și litchi, spumă de apă de roze, petale cristalizate' },
+    { name: 'Fel principal', desc: 'Piept de rață confiat 48h, jus de portocală sanguină, piure de gulie arsă, ierburi murate' },
+    { name: 'Pre-desert', desc: 'Brie de Ardeal copt, miere de lavandă, nuci caramelizate, flori de cimbru' },
+    { name: 'Desert', desc: 'Mousse de ciocolată neagră și zmeur, geleu de roze, foiță de aur, caramel de vin roșu' }
+  ],
+  celebrare: [
+    { name: 'Amuse-bouche', desc: 'Cornet de aluat auriu, mousse de foie gras, compot de smochine cu vin fiert și stea de anason' },
+    { name: 'Starter I', desc: 'Blini de hrișcă cu somon selvatic marinat 24h, cremă de hrean cu dill, icre de crap din Cojocna' },
+    { name: 'Starter II', desc: 'Velouté de castane cu trufe negre, spumă de unt ars, crocant de prosciutto de Bihor' },
+    { name: 'Intermediar', desc: 'Sorbet de șampanie cu mentă sălbatică, zest de lămâie confiată' },
+    { name: 'Fel principal', desc: 'Mușchi de vițel din Câmpia Ardealului, en croûte de ierburi, jus de vișine și vin negru, legume glasate cu miere' },
+    { name: 'Brânzeturi', desc: 'Selecție de brânzeturi ardelene afumate și maturate, dulceață de gutui, nuci și pâine de secară cu semințe' },
+    { name: 'Desert', desc: 'Tartă cu vanilie Bourbon și praline de alune de pădure, cremă de caramel sărat, aur comestibil' }
+  ],
+  intim: [
+    { name: 'Amuse-bouche', desc: 'Supă de ceapă caramelizată cu crutoane de pâine de casă, gratinată cu brânză de burduf' },
+    { name: 'Starter I', desc: 'Salată caldă de fasole bătută, ceapă roșie murată, ou poșat, ulei de ardei copt și papricaș afumat' },
+    { name: 'Starter II', desc: 'Bisque de ciuperci de pădure, spumă de unt cu usturoi, pesmet de secară prăjit, tarhon proaspăt' },
+    { name: 'Intermediar', desc: 'Sorbet de măr verde și cimbru, cristale de sare de la Turda' },
+    { name: 'Fel principal', desc: 'Miel de la stâna din Apuseni, copt lent în sare și ierburi, sos de usturoi negru, legume rădăcinoase glasate' },
+    { name: 'Desert', desc: 'Tort cu mac și lămâie fermentată, cremă de rozmarin, fructe de pădure din Munții Apuseni, miere brută' }
+  ],
+  business: [
+    { name: 'Amuse-bouche', desc: 'Tartă crispy de parmezan, mousse de avocado, caviar de somon, crocant de capere' },
+    { name: 'Starter I', desc: 'Carpaccio de vițel cu trufă neagră rasă, rucola sălbatică, ulei de lămâie Meyer, parmigiano 36 luni' },
+    { name: 'Starter II', desc: 'Bisque de homar cu cognac, spumă de unt de tarhon, crocant de brioche și ikre de sturion' },
+    { name: 'Intermediar', desc: 'Sorbet de yuzu cu mentă de câmp, granit de prosecco' },
+    { name: 'Fel principal', desc: 'Piept de vițel de lapte din Sălaj, sous-vide 72h, jus de ciuperci sălbatice, piure de trufe și cartofi albi, asparagi' },
+    { name: 'Brânzeturi', desc: 'Brânzeturi fine de Ardeal și internaționale, selecție de miere, nuci și fructe deshidratate' },
+    { name: 'Desert', desc: 'Soufflé de ciocolată Valrhona 70%, înghețată de vanilie Bourbon, tofee de caramel sărat' }
+  ],
+  surpriza: [
+    { name: 'Amuse-bouche', desc: 'Sferă de apă de rozmarin care explodează în gură, pe pat de cenușă comestibilă de paie' },
+    { name: 'Starter I', desc: 'Varză roșie fermentată 21 de zile, prezentată ca desert — zahăr brun, ghimbir, cremă de zer' },
+    { name: 'Starter II', desc: 'Ouă de prepeliță cu negru de sepie, praf de sfeclă, spumă de sare afumată — fals caviar ardelean' },
+    { name: 'Intermediar', desc: 'Granit transparent cu miere și pin — un zer de culoarea gheții de munte' },
+    { name: 'Fel principal', desc: 'Rată din Sălaj servită cu garnitură care pare desert: rădăcinoase glazate cu scorțișoară, faux caramel din ceapă' },
+    { name: 'Pre-desert', desc: 'Brânză de burduf ca pre-desert: spumă sărată cu dulceață de vișine și biscuit de secară cu cacao' },
+    { name: 'Desert', desc: 'Desert care arată a farfurie savuroasă — ciocolată modelată, praf de papricaș dulce, caramel de oțet balsamic' }
+  ]
+};
+
+const DEMO_ARTIFACTS = {
+  romantic: { title: 'Seara Contrastelor Liniștite', text: `Au venit la ora când lumina de afară mai ezita încă să se retragă complet. S-au așezat fără grabă, cu acea familiaritate discretă a oamenilor care știu să fie împreună fără să umple fiecare secundă cu cuvinte.\n\nPrimul curs a sosit ca o întrebare — acid și dulce în aceeași lingură, o tensiune rezolvată înainte să devină incomodă. Cineva a zâmbit fără să spună nimic. Era de ajuns.\n\nPe la al treilea fel, conversația s-a adâncit — nu în subiecte mari, ci în calitate. Vorbele au devenit mai rare și mai precise. Mâncarea a trecut pe planul al doilea, nu pentru că ar fi fost mai puțin prezentă, ci pentru că cei doi deveniseră mai prezenți unul față de celălalt.\n\nDulcele final a venit ca o concluzie la care nu te aștepți: simplu, aproape sever, dar cu o reverberație lungă. Genul de gust la care te gândești a doua zi, fără să știi de ce.\n\nAu plecat târziu. Nimeni nu s-a uitat la ceas.` },
+  celebrare: { title: 'Capitolul Luminii Meritate', text: `Există seri care se cer marcate — nu pentru că ar fi diferite de altele, ci pentru că ai nevoie să le spui pe nume. Să le privești în față și să spui: aceasta este a mea.\n\nSeara aceasta a fost construită în jurul acestei certitudini. Fiecare curs a venit ca o confirmare — nu ca o surpriză, ci ca o recunoaștere. Conversația a devenit mai caldă, mai deschisă, mai ușoară de purtat odată cu brânzeturile.\n\nLa final, tarta cu caramel sărat a adus acea lacrimă mică pe care nu o vezi venind. Genul de dulce care nu e despre zahăr. Este despre timp și despre oamenii cu care îl trăiești.\n\nO seară de marcat. Marcată.` },
+  intim: { title: 'Capitolul Memoriei Recuperate', text: `Există o teorie că gustul este singurul simț care poate traversa timpul fără avertisment. Că o aromă poate deschide o ușă pe care credeai că ai închis-o demult.\n\nAceastă seară a fost construită în jurul acestei teorii. Nu ca o demonstrație, ci ca o invitație.\n\nPrimul moment a adus ceva familiar — un ecou al unui miros de copilărie, reinterpretat cu o tehnică pe care copilăria nu o cunoștea. Recunoașterea a venit brusc, ca un nume uitat brusc amintit.\n\nUrmătoarele cursuri au mers mai adânc. Fermentarea, fumul, acidul — toate vorbeau despre timp și transformare. Despre cum lucrurile devin mai bune sau mai înțelepte prin simplul fapt că trece timp peste ele.\n\nSigillum serii: un gust de sfârșit care semăna, în mod inexplicabil, cu un început.` },
+  business: { title: 'Seara Atenției Depline', text: `Unele mese se mănâncă. Altele se negociază în timp ce mâncarea se răcește în farfurie. Seara aceasta nu a fost nici una, nici alta.\n\nA fost o masă în care atenția s-a împărțit echitabil — jumătate la oameni, jumătate la ceea ce era în farfurie. Un echilibru rar, obținut fără efort aparent.\n\nCarpaccio cu trufă a impus tăcere. Nu o tăcere incomodă, ci aceea în care toți din jurul mesei înțeleg că ceva merită oprit și savurat. Conversația a reînceput mai bine după.\n\nSoufflé-ul de final a sosit exact la momentul potrivit — când agenda se epuizase și rămăsese doar compania. A fost primit ca un cadou neașteptat: cald, fragil, irepetabil.\n\nAfacerile pot aștepta. Gustul unui soufflé perfect, nu.` },
+  surpriza: { title: 'Noaptea Când Nimic Nu Era Ce Părea', text: `A intrat fără să știe unde merge. Aceasta este, poate, cea mai curajoasă formă de a fi prezent la o masă.\n\nPrimul curs l-a dezechilibrat — în sens bun. Acea sferă care explodează, gustul care nu se potrivea cu ce vedea ochiul: o mică declarație de intenție. Seara aceasta nu va fi previzibilă.\n\nPe parcurs, dezorientarea s-a transformat în curiozitate, curiozitatea în joc. A început să ghicească ce urmează — și a greșit de fiecare dată, cu plăcere crescândă.\n\nDesertul care arăta a farfurie savuroasă a primit o privire lungă, înainte de prima lingură. Și primul zâmbet adevărat al serii — nu unul politicos, ci unul surprins de sine însuși.\n\nA plecat cu senzația că a trăit ceva ce nu poate explica exact. Cel mai bun sentiment cu care poți părăsi o masă.` }
+};
+
+const PROTEIN_MAINS = {
+  vita:        'Mușchi de vită dry-aged 28 de zile, jus de ciuperci sălbatice și vin Fetească Neagră, piure de trufe, varză murată glasată cu unt brun',
+  miel:        'Cotlet de miel din stâna Apusenilor, crustă de ierburi de munte, sos de rozmarin și vin roșu de Dealu Mare, legume rădăcinoase coapte în cenușă',
+  rata:        'Piept de rată din Sălaj confiat 48h, portocală sanguină redusă cu anason, piure de gulie arsă, ierburi murate și sos de jus clar',
+  peste:       'File de calcan sălbatic de Marea Neagră, beurre blanc cu capere și lămâie confiată, spanac sălbatic, roe de crap afumat',
+  fructe_mare: 'Lagustine și creveți tigru, bisque de crustacee redus cu cognac, spumă de unt cu tarhon, legume juliene și caviar de șampanie',
+  surprinde:   'Surpriza zilei — proteina aleasă de chef în dimineața evenimentului, dezvăluită la masă cu ceremonie',
+};
+
+function getDemoMenu() {
+  const occ = answers.occasion || 'romantic';
+  const base = (DEMO_MENUS[occ] || DEMO_MENUS.romantic).map(c => ({ ...c }));
+  const mainDesc = PROTEIN_MAINS[answers.protein];
+  if (mainDesc) {
+    const idx = base.findIndex(c => c.name === 'Fel principal');
+    if (idx !== -1) base[idx] = { name: 'Fel principal', desc: mainDesc };
+  }
+  return base;
+}
+function getDemoArtifact() {
+  const occ = answers.occasion || 'romantic';
+  return DEMO_ARTIFACTS[occ] || DEMO_ARTIFACTS.romantic;
+}
+
+function changePersons(delta) {
+  guestPersons = Math.max(2, Math.min(6, guestPersons + delta));
+  document.getElementById('persons-display').innerHTML = `${guestPersons} <span>pers.</span>`;
+  document.getElementById('persons-minus').disabled = guestPersons <= 2;
+  document.getElementById('persons-plus').disabled = guestPersons >= 6;
+}
+
+function scrollTop() {
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollTop()));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const [y, m, d] = dateStr.split('-');
+  const months = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+  return `${parseInt(d)} ${months[parseInt(m) - 1]} ${y}`;
+}
+
+function today() {
+  return new Date().toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function escQ(s) { return s.replace(/'/g, "\\'"); }
+
+function getSeason() {
+  const d = reservationDate ? new Date(reservationDate + 'T12:00:00') : new Date();
+  const m = d.getMonth();
+  if (m >= 2 && m <= 4) return 'Primăvară';
+  if (m >= 5 && m <= 7) return 'Vară';
+  if (m >= 8 && m <= 10) return 'Toamnă';
+  return 'Iarnă';
+}
+
+function personsLabel() {
+  return `${guestPersons} ${guestPersons === 1 ? 'persoană' : 'persoane'}`;
+}
+
+function buildProfile() {
+  const occasionObj = OCCASIONS.find(o => o.id === answers.occasion);
+  const occasionLabel = occasionObj ? occasionObj.name : answers.occasion;
+  const proteinObj = PROTEINS.find(p => p.id === answers.protein);
+  const proteinLabel = proteinObj ? proteinObj.name : (answers.protein || '—');
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+  const persLabel = personsLabel();
+  return `Oaspete: ${guestName}
+Data rezervării: ${dateLabel}
+Număr persoane: ${persLabel}
+Tipul serii: ${occasionLabel}
+Proteina principală: ${proteinLabel}
+Nota de gust dominantă: ${answers.taste || '—'}
+De evitat: ${answers.avoid || '—'}
+Amintire culinară din copilărie: ${answers.memory}
+Senzație căutată: ${answers.sensation}
+Ritm la masă: ${answers.rhythm}
+Ingredient de atracție: ${answers.element}
+Stare dorită la final: ${answers.end}
+Filosofia personală despre o masă bună: ${answers.philosophy}`;
+}
+
+function startRitual() {
+  const input = document.getElementById('guest-name');
+  const emailInput = document.getElementById('guest-email');
+  guestName = input.value.trim();
+  guestEmail = emailInput ? emailInput.value.trim() : '';
+  const phoneInput = document.getElementById('guest-phone');
+  guestPhone = phoneInput ? phoneInput.value.trim() : '';
+  reservationDate = document.getElementById('reservation-date').value;
+  if (!guestName || guestName.length < 3) { input.focus(); return; }
+  if (isGibberish(guestName)) {
+    const errEl = document.getElementById('name-gibberish-err');
+    if (errEl) { errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.'; errEl.style.display = 'block'; }
+    input.focus();
+    return;
+  }
+  const errEl = document.getElementById('name-gibberish-err');
+  if (errEl) errEl.style.display = 'none';
+  if (!guestEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(guestEmail)) {
+    const emailErr = document.getElementById('email-err');
+    if (emailErr) emailErr.style.display = 'block';
+    emailInput && emailInput.focus();
+    return;
+  }
+  const emailErr = document.getElementById('email-err');
+  if (emailErr) emailErr.style.display = 'none';
+  currentQ = 0;
+  answers = {};
+  show('s-questions');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  currentSelection = null;
+  const total = QUESTIONS.length;
+  document.getElementById('progress-fill').style.width = (currentQ / total * 100) + '%';
+  document.getElementById('progress-label').textContent = currentQ + ' / ' + total;
+
+  let html = `<div class="question-card">
+    <div class="question-number">Întrebarea ${currentQ + 1} din ${total}</div>
+    <div class="question-text">${q.text}</div>`;
+  if (q.hint) html += `<div class="question-hint">${q.hint}</div>`;
+
+  if (q.type === 'occasion') {
+    html += `<div class="occasion-options">`;
+    OCCASIONS.forEach(occ => {
+      html += `<button class="occasion-btn" onclick="selectOption(this, '${occ.id}')">
+        <span class="occasion-icon">${occ.icon}</span>
+        <span class="occasion-info">
+          <span class="occasion-name">${occ.name}</span>
+          <span class="occasion-desc">${occ.desc}</span>
+        </span>
+      </button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'protein') {
+    html += `<div class="occasion-options">`;
+    PROTEINS.forEach(p => {
+      html += `<button class="occasion-btn" onclick="selectOption(this, '${p.id}')">
+        <span class="occasion-icon">${p.icon}</span>
+        <span class="occasion-info">
+          <span class="occasion-name">${p.name}</span>
+          <span class="occasion-desc">${p.desc}</span>
+        </span>
+      </button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'options') {
+    html += `<div class="options">`;
+    q.options.forEach(opt => {
+      html += `<button class="option-btn" onclick="selectOption(this, '${escQ(opt)}')">${opt}</button>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<textarea class="free-input" id="free-ans" placeholder="Scrieți liber..." oninput="freeInput(this)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){const b=document.getElementById('next-btn');if(!b.disabled){event.preventDefault();nextQuestion();}}"></textarea>`;
+    html += `<div class="q-nav"><button class="btn" id="next-btn" onclick="nextQuestion()" ${q.optional ? '' : 'disabled'}>Finalizează</button></div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById('question-slot').innerHTML = html;
+  requestAnimationFrame(() => requestAnimationFrame(() => scrollTop()));
+}
+
+function selectOption(btn, val) {
+  document.querySelectorAll('.option-btn, .occasion-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  currentSelection = val;
+  setTimeout(() => nextQuestion(), 420);
+}
+
+function nameInput(el) {
+  const val = el.value.trim();
+  const bad = val.length >= 3 && isGibberish(val);
+  const errEl = document.getElementById('name-gibberish-err');
+  if (bad) {
+    errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.';
+    errEl.style.display = 'block';
+  } else {
+    errEl.style.display = 'none';
+  }
+}
+
+function freeInput(el) {
+  const val = el.value.trim();
+  const bad = val.length >= 3 && isGibberish(val);
+  const btn = document.getElementById('next-btn');
+  const isOptional = QUESTIONS[currentQ] && QUESTIONS[currentQ].optional;
+  btn.disabled = (!isOptional && val.length < 3) || bad;
+  let errEl = document.getElementById('gibberish-err');
+  if (bad) {
+    if (!errEl) {
+      errEl = document.createElement('p');
+      errEl.id = 'gibberish-err';
+      errEl.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:12px;line-height:1.8;';
+      el.after(errEl);
+    }
+    errEl.textContent = 'V\u0103 rug\u0103m s\u0103 completa\u021bi cu un r\u0103spuns clar \u2014 acesta va fi folosit pentru a compune seara dumneavoastr\u0103.';
+  } else if (errEl) {
+    errEl.remove();
+  }
+}
+
+function navBack() {
+  if (document.getElementById('s-questions').classList.contains('active')) {
+    if (currentQ > 0) {
+      currentQ--;
+      const prevQ = QUESTIONS[currentQ];
+      currentSelection = answers[prevQ.id] || null;
+      delete answers[prevQ.id];
+      renderQuestion();
+      if (currentSelection) {
+        setTimeout(() => {
+          document.querySelectorAll('.option-btn, .occasion-btn').forEach(b => {
+            const name = b.querySelector('.occasion-name')?.textContent;
+            const txt = b.textContent.trim();
+            const matchOcc = OCCASIONS.find(o => o.id === currentSelection)?.name;
+            const matchProt = PROTEINS.find(p => p.id === currentSelection)?.name;
+            if (txt === currentSelection || name === matchOcc || name === matchProt) {
+              b.classList.add('selected');
+            }
+          });
+          const ta = document.getElementById('free-ans');
+          if (ta && currentSelection) { ta.value = currentSelection; document.getElementById('next-btn').disabled = false; }
+        }, 50);
+      }
+    } else {
+      show('s-intro');
+    }
+  } else {
+    window.location.href = 'https://atelierprivatedining.ro';
+  }
+}
+
+function isGibberish(text) {
+  const t = text.toLowerCase().replace(/\s+/g, '');
+  if (t.length === 0) return false;
+  const vowels = (t.match(/[aeiouăîâ]/g) || []).length;
+  if (vowels === 0) return true;
+  if (t.length > 5 && vowels / t.length < 0.10) return true;
+  if (/[^aeiouăîâ]{5,}/.test(t)) return true;
+  if (/(.)\1{3,}/.test(t)) return true;
+  if (/(.{2,4})\1{2,}/.test(t)) return true;
+  if (new Set(t).size < 4 && t.length > 8) return true;
+  // Clustere invalide de consoane la start
+  const validStart = /^(bl|br|cl|cr|dr|dz|fl|fr|gh|gl|gr|mr|pl|pr|ps|sc|sf|sk|sl|sm|sn|sp|st|str|sw|tr|ts|vl|vr|zb|zg|zh|zm|zv)/;
+  if (t.length >= 3 && /^[^aeiouăîâ]{2}/.test(t) && !validStart.test(t)) return true;
+  return false;
+}
+
+function nextQuestion() {
+  const q = QUESTIONS[currentQ];
+  if (q.type === 'free') {
+    const val = document.getElementById('free-ans').value.trim();
+    if (isGibberish(val)) {
+      let errEl = document.getElementById('gibberish-err');
+      if (!errEl) {
+        errEl = document.createElement('p');
+        errEl.id = 'gibberish-err';
+        errEl.style.cssText = 'font-family:"Cormorant Garamond",serif;font-size:0.9rem;color:rgba(201,169,110,0.55);font-style:italic;margin-top:12px;line-height:1.8;';
+        document.getElementById('free-ans').after(errEl);
+      }
+      errEl.textContent = 'Vă rugăm să completați cu un răspuns inteligibil — răspunsul va fi folosit pentru a compune seara dumneavoastră.';
+      return;
+    }
+    answers[q.id] = val;
+  } else {
+    answers[q.id] = currentSelection;
+  }
+  currentQ++;
+  if (currentQ >= QUESTIONS.length) {
+    generateMenu();
+  } else {
+    renderQuestion();
+  }
+}
+
+function renderMenuCourses(courses) {
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII'];
+  return courses.map((c, i) => `
+    <div class="menu-course">
+      <div class="course-num">${ROMAN[i] || (i+1)}</div>
+      <div class="course-body">
+        ${c.type ? `<div class="course-type">${c.type}</div>` : ''}
+        <div class="course-name">${c.name}</div>
+        ${c.desc ? `<div class="course-desc">${c.desc}</div>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+async function generateMenu() {
+  show('s-gen-menu');
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+
+  const setMenu = (courses) => {
+    generatedCourses = courses;
+    document.getElementById('menu-guest').textContent = guestName;
+    document.getElementById('menu-date').textContent = `${dateLabel} · ${personsLabel()}`;
+    document.getElementById('menu-courses').innerHTML = renderMenuCourses(courses);
+    show('s-menu');
+  };
+
+  if (DEMO_MODE) {
+    await new Promise(r => setTimeout(r, 2000));
+    setMenu(getDemoMenu());
+    return;
+  }
+
+  // Try backend API first
+  if (API_URL) {
+    try {
+      const proteinObj = PROTEINS.find(p => p.id === answers.protein);
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 55000);
+      const res = await fetch(API_URL + '/api/generate-oglinda', {
+        signal: ctrl.signal,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guest_name:    guestName,
+          occasion:      OCCASIONS.find(o => o.id === answers.occasion)?.name || answers.occasion,
+          guest_count:   guestPersons,
+          season:        getSeason(),
+          protein:       proteinObj ? proteinObj.name : (answers.protein || ''),
+          taste_profile: answers.taste || '',
+          avoid:         answers.avoid || '',
+          memory:        answers.memory || '',
+          sensation:     answers.sensation || '',
+          rhythm:        answers.rhythm || '',
+          element:       answers.element || '',
+          end:           answers.end || '',
+          philosophy:    answers.philosophy || '',
+        })
+      });
+      clearTimeout(timer);
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.menu?.length) {
+          const courses = data.menu.map(c => ({
+            type: c.tip || '',
+            name: c.nume || c.tip || '',
+            desc: c.descriere || ''
+          }));
+          setMenu(courses);
+          window._codexStory = data.story || '';
+          return;
+        }
+      }
+    } catch(err) { console.error('[Codex] generateMenu error:', err); }
+  }
+
+  // Backend unavailable — show demo menu
+  console.warn('[Codex] falling back to demo menu');
+  setMenu(getDemoMenu());
+}
+
+async function generateArtifact() {
+  show('s-gen-artifact');
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+  const chapterNum = Math.floor(Math.random() * 900) + 100;
+
+  const setArtifact = (title, sub, text) => {
+    generatedStoryTitle = title;
+    generatedStoryText = text;
+    document.getElementById('art-title').textContent = title;
+    document.getElementById('art-sub').textContent = sub || `Capitol #${chapterNum} — ${dateLabel}`;
+    document.getElementById('art-text').textContent = text;
+    document.getElementById('seal-name').textContent = guestName;
+    document.getElementById('seal-date').textContent = `Atelier Private Dining — ${dateLabel} · ${personsLabel()}`;
+    show('s-artifact');
+  };
+
+  if (DEMO_MODE) {
+    await new Promise(r => setTimeout(r, 2200));
+    const demo = getDemoArtifact();
+    setArtifact(demo.title, `Capitol #${chapterNum} — ${dateLabel}`, demo.text);
+    return;
+  }
+
+  // Use story from backend if already generated
+  if (window._codexStory) {
+    const story = window._codexStory;
+    window._codexStory = '';
+    setArtifact(
+      guestName ? `Seara lui ${guestName}` : 'Capitol Personal',
+      `Capitol #${chapterNum} — ${dateLabel}`,
+      story
+    );
+    return;
+  }
+
+  // Backend unavailable — show demo artifact
+  const demo = getDemoArtifact();
+  setArtifact(demo.title, `Capitol #${chapterNum} — ${dateLabel}`, demo.text);
+}
+
+function showSummary() {
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+  document.getElementById('sum-name').textContent = guestName;
+  document.getElementById('sum-date').textContent = `${dateLabel} · ${personsLabel()}`;
+  document.getElementById('sum-courses').innerHTML = document.getElementById('menu-courses').innerHTML;
+  document.getElementById('sum-story-title').textContent = document.getElementById('art-title').textContent;
+  document.getElementById('sum-story-sub').textContent = document.getElementById('art-sub').textContent;
+  document.getElementById('sum-story-text').textContent = document.getElementById('art-text').textContent;
+  document.getElementById('sum-seal-name').textContent = guestName;
+  document.getElementById('sum-seal-date').textContent = `Atelier Private Dining — ${dateLabel} · ${personsLabel()}`;
+  show('s-summary');
+}
+
+async function rezerva() {
+  // Build message with generated menu + story
+  const menuText = generatedCourses.map((c, i) => `${i+1}. ${c.name} — ${c.desc}`).join('\n');
+  const message = [
+    '[Rezervare via OGLINDA]',
+    '',
+    'MENIU GENERAT:',
+    menuText || '(meniu demo)',
+    '',
+    'POVESTEA SERII:',
+    generatedStoryTitle ? `${generatedStoryTitle}\n${generatedStoryText}` : '(poveste nedisponibilă)',
+    '',
+    'PROFIL SENZORIAL:',
+    answers.avoid ? `\u26a0\ufe0f RESTRIC\u021aii: ${answers.avoid}` : null,
+    `Gust dominant: ${answers.taste || '-'}`,
+    `Amintire: ${answers.memory || '-'}`,
+    `Senza\u021bie: ${answers.sensation || '-'}`,
+    `Ritm: ${answers.rhythm || '-'}`,
+    `Ingredient: ${answers.element || '-'}`,
+    `Final dorit: ${answers.end || '-'}`,
+    `Filosofie: ${answers.philosophy || '-'}`,
+  ].filter(l => l !== null).join('\n');
+  // Save to backend
+  if (API_URL && API_URL.startsWith('http')) {
+    try {
+      await fetch(API_URL + '/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: guestName,
+          email: guestEmail || 'oglinda@atelierprivatedining.ro',
+          phone: guestPhone || undefined,
+          message,
+          occasion: 'OGLINDA',
+          event_date: reservationDate || undefined,
+          guests_count: guestPersons || undefined,
+        })
+      });
+    } catch (_) {}
+  }
+  // Show elegant pending screen instead of redirecting
+  const dateLabel = reservationDate ? formatDate(reservationDate) : today();
+  document.getElementById('pending-name').textContent = guestName;
+  document.getElementById('pending-date').textContent = `${dateLabel} · ${personsLabel()}`;
+  show('s-pending');
+}
+
+function restart() {
+  document.getElementById('guest-name').value = '';
+  document.getElementById('reservation-date').value = '';
+  guestName = '';
+  guestEmail = '';
+  guestPhone = '';
+  reservationDate = '';
+  guestPersons = 2;
+  const emailInput = document.getElementById('guest-email');
+  if (emailInput) emailInput.value = '';
+  const phoneInputR = document.getElementById('guest-phone');
+  if (phoneInputR) phoneInputR.value = '';
+  changePersons(0);
+  answers = {};
+  currentQ = 0;
+  window._codexStory = '';
+  show('s-intro');
+}
+
+document.getElementById('reservation-date').min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>

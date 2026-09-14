@@ -163,9 +163,9 @@ export default function FilozofiePage() {
         </a>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           {[
-            { label: 'OGLINDA', href: '#codex' },
-            { label: 'ȚESĂTURA', href: '#breviar' },
-            { label: 'TEMELIA', href: '#matricea' },
+            { label: 'OGLINDA', href: '#oglinda' },
+            { label: 'ȚESĂTURA', href: '#tesatura' },
+            { label: 'TEMELIA', href: '#temelia' },
           ].map(({ label, href }) => (
             <a key={href} href={href} style={{
               fontFamily: sans, fontWeight: 200, fontSize: '0.5rem',
@@ -204,8 +204,8 @@ export default function FilozofiePage() {
         </p>
       </section>
 
-      {/* ══════════════════════════════ CODEX ══════════════════════════════ */}
-      <section id="codex" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
+      {/* ══════════════════════════════ OGLINDA ══════════════════════════════ */}
+      <section id="oglinda" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
 
           <p style={eyebrow}>Cina privată · 2–6 persoane</p>
@@ -278,8 +278,8 @@ export default function FilozofiePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════ BREVIAR ══════════════════════════════ */}
-      <section id="breviar" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
+      {/* ══════════════════════════════ ȚESĂTURA ══════════════════════════════ */}
+      <section id="tesatura" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
 
           <p style={eyebrow}>Corporate Dining · Lansare 2026</p>
@@ -342,8 +342,8 @@ export default function FilozofiePage() {
         </div>
       </section>
 
-      {/* ══════════════════════════════ MATRICEA ══════════════════════════════ */}
-      <section id="matricea" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
+      {/* ══════════════════════════════ TEMELIA ══════════════════════════════ */}
+      <section id="temelia" style={{ scrollMarginTop: 64, padding: '100px 24px 80px', borderBottom: `1px solid ${goldFaint}` }}>
         <div style={{ maxWidth: 760, margin: '0 auto' }}>
 
           <p style={eyebrow}>Consultanță · Identitate Culinară</p>

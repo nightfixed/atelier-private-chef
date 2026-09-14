@@ -70,7 +70,7 @@ export const api = {
   generateMenu: (body: { occasion: string; guest_count: string; season: string; dietary: string[]; host_name: string }) =>
     apiFetch("/api/generate-menu", { method: "POST", body: JSON.stringify(body) }),
 
-  generateCodex: (body: {
+  generateOglinda: (body: {
     guest_name: string;
     occasion: string;
     guest_count: number;
@@ -82,7 +82,7 @@ export const api = {
     wish?: string;
     date?: string;
   }) =>
-    apiFetch("/api/generate-codex", { method: "POST", body: JSON.stringify(body) }),
+    apiFetch("/api/generate-oglinda", { method: "POST", body: JSON.stringify(body) }),
 
   chat: (messages: { role: "user" | "assistant"; content: string }[], guestName?: string) =>
     apiFetch("/api/chat", { method: "POST", body: JSON.stringify({ messages, guest_name: guestName || undefined }) }),

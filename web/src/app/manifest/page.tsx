@@ -151,7 +151,7 @@ export default function ManifestPage() {
             { label: 'Filozofie', href: '/filozofie' },
             { label: 'Meniu', href: '/#meniu' },
             { label: 'FAQ', href: '/#faq' },
-            { label: 'Oglinda', href: '/codex-guest-system.html' },
+            { label: 'Oglinda', href: '/oglinda.html' },
           ].map(({ label, href }) => (
             <li key={href}>
               <a href={href} style={{
@@ -301,10 +301,10 @@ export default function ManifestPage() {
               </p>
             </div>
 
-            <a href="/codex-guest-system.html" style={ctaStyle}>
+            <a href="/oglinda.html" style={ctaStyle}>
               Solicită o seară →
             </a>
-            <a href="/filozofie#codex" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
+            <a href="/filozofie#oglinda" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
               Citește filozofia completă →
             </a>
           </div>
@@ -343,10 +343,10 @@ export default function ManifestPage() {
               </p>
             </div>
 
-            <a href="/breviar" style={ctaStyle}>
+            <a href="/tesatura" style={ctaStyle}>
               Înregistrează Interesul →
             </a>
-            <a href="/filozofie#breviar" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
+            <a href="/filozofie#tesatura" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
               Citește filozofia completă →
             </a>
           </div>
@@ -385,10 +385,10 @@ export default function ManifestPage() {
               </p>
             </div>
 
-            <a href="/matricea" style={ctaStyle}>
-              Solicită Matricea →
+            <a href="/temelia" style={ctaStyle}>
+              Solicită Temelia →
             </a>
-            <a href="/filozofie#matricea" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
+            <a href="/filozofie#temelia" style={{ ...ctaStyle, marginTop: 12, opacity: 0.4, fontSize: '0.44rem' }}>
               Citește filozofia completă →
             </a>
           </div>

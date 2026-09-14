@@ -92,7 +92,7 @@ function isGibberish(text: string): boolean {
 
 
 
-export default function MatriceaGenerator() {
+export default function TemeliaGenerator() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [current, setCurrent] = useState('');
@@ -142,7 +142,7 @@ export default function MatriceaGenerator() {
 
     setLoading(true); setError('');
     try {
-      const res = await fetch(`${API_URL}/api/generate-matricea`, {
+      const res = await fetch(`${API_URL}/api/generate-temelia`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -291,7 +291,7 @@ export default function MatriceaGenerator() {
                       name: answers.type || 'Anonim',
                       email: answers.email || 'matricea@atelierprivatedining.ro',
                       phone: answers.phone || undefined,
-                      occasion: 'MATRICEA',
+                      occasion: 'TEMELIA',
                       message: msg,
                     }),
                   });
