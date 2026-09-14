@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Private Dining Cluj-Napoca · Atelier',
   description:
-    'Private dining în Cluj-Napoca — experiențe culinare exclusive pentru 2–12 persoane. Meniu de degustare personalizat, ingrediente carpatice, chef cu 18+ ani fine dining.',
+    'Private dining în Cluj-Napoca — experiențe culinare exclusive pentru 2–12 persoane. Meniu de degustare personalizat, ingrediente carpatice, chef cu 18+ ani gastronomie rafinată.',
   robots: { index: false, follow: false },
 };
 
@@ -31,7 +31,7 @@ const EXPERIENCES = [
 ];
 
 const INGREDIENTS = [
-  { name: 'Licheni Carpatici', sub: 'Cetraria islandica · 1.400m', note: 'Primul lichen pe o farfurie românească de fine dining.' },
+  { name: 'Licheni Carpatici', sub: 'Cetraria islandica · 1.400m', note: 'Primul lichen pe o farfurie românească de gastronomie rafinată.' },
   { name: 'Rășină de Molid', sub: 'Picea abies · Mai–Iunie exclusiv', note: 'Gust citric-rășinos-alpin fără echivalent comercial.' },
   { name: 'Miso de Fasole Ardeleană', sub: 'Producție internă · 90–180 zile', note: 'Tehnica e japoneză. Fasolea e din Ardeal.' },
   { name: 'Afine Sălbatice de Feleac', sub: 'Dealul Feleac · 11 km de masă', note: 'Fermentate lacto 5 zile. Miezul violet complet.' },

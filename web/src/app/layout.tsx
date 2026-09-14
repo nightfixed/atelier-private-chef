@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     template: "%s · Atelier Private Dining",
   },
   description:
-    "Experiențe culinare private, gândite și executate de la zero — pentru cei care știu diferența. Chef Răzvan · 18+ ani fine dining · Cluj-Napoca, România.",
+    "Experiențe culinare private, gândite și executate de la zero — pentru cei care știu diferența. Chef Răzvan · 18+ ani gastronomie rafinată · Cluj-Napoca, România.",
   keywords: [
     "private dining Cluj",
     "chef privat Cluj-Napoca",
-    "fine dining la domiciliu",
+    "gastronomie rafinată la domiciliu",
     "meniu degustare personalizat",
     "corporate dining Cluj",
     "chef Razvan",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "Atelier Private Dining",
     title: "Atelier Private Dining · Cluj-Napoca",
     description:
-      "Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, ingrediente carpatice, 18+ ani fine dining. Cluj-Napoca, România.",
+      "Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, ingrediente carpatice, 18+ ani gastronomie rafinată. Cluj-Napoca, România.",
     images: [
       {
         url: "/og-image.png",

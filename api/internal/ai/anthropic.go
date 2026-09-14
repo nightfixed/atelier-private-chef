@@ -60,7 +60,7 @@ var culinaryInfluences = []string{
 	"românească tradițională din Ardeal (afumături ușoare, cartofi cu untură, varză călită, fasole cu costiță, papricaș)",
 	"românească tradițională din Muntenia (ciorbă acrită cu zeamă de varză, sarmale fine, mujdei de usturoi, ardei copți, miere de salcâm)",
 	"românească de sezon carpatic (ciuperci de pădure, fructe de pădure, vânat nobil, ierburi montane — urzici, lobodă, leurdă, măcriș)",
-	"românească rafinată de fine dining (ingrediente autohtone — must de struguri, vin de Dealu Mare, iaurt de oaie, cașcaval de Rucăr — cu tehnici moderne)",
+	"românească de gastronomie rafinată (ingrediente autohtone — must de struguri, vin de Dealu Mare, iaurt de oaie, cașcaval de Rucăr — cu tehnici moderne)",
 }
 
 var culinaryTechniques = []string{
@@ -473,7 +473,7 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 	rand.Shuffle(len(pastePool), func(i, j int) { pastePool[i], pastePool[j] = pastePool[j], pastePool[i] })
 	pastePick := strings.Join(pastePool[:3], "\n  • ")
 
-	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca.
+	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de gastronomie rafinată din Cluj-Napoca.
 %s
 Identitatea acestui meniu este definită de trei axe obligatorii:
 1. Influență culinară dominantă: %s
@@ -541,7 +541,7 @@ Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
 		Messages:    []anthropicMessage{{Role: "user", Content: profile}},
 	}
 
-	storySystem := `Ești scribul Atelier Private Dining, un atelier de fine dining din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de fine dining și experiențe senzoriale imersive.
+	storySystem := `Ești scribul Atelier Private Dining, un atelier de gastronomie rafinată din Cluj-Napoca cu o filozofie culinară profundă, bazată pe tehnici internaționale de gastronomie rafinată și experiențe senzoriale imersive.
 
 Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 200-240 cuvinte în română care evocă atmosfera, preparatele, ingredientele cheie și starea pe care o va trăi oaspetele. Tonul: cald, literar, imersiv, ca o scrisoare intimă. Integrează subtil detalii din profil. Nu enumera cursuri sec.
 
@@ -934,11 +934,11 @@ Limbaj cald, uman, specific. Fără corporatism. Fără clișee HR.`, bSeason, b
 
 // matriceaSectorSeeds adds variety by anchoring each generation in a specific industry angle.
 var matriceaSectorSeeds = []string{
-	"sector: fine dining independent — identitate construită pe chef, nu pe brand corporativ",
+	"sector: gastronomie rafinată independentă — identitate construită pe chef, nu pe brand corporativ",
 	"sector: hotel boutique de lux — ospitalitate cu personalitate proprie, nu standardizare de lanț",
 	"sector: brand alimentar premium — produs fizic care trebuie să poarte o poveste de gust",
 	"sector: catering corporate pentru evenimente VIP — mâncarea ca instrument de reprezentare",
-	"sector: bistro urban cu ambiții de fine dining — potențial nevalorificat, identitate in formare",
+	"sector: bistro urban cu ambiții de gastronomie rafinată — potențial nevalorificat, identitate in formare",
 	"sector: winery sau cram cu experiențe oenoturistice — gustul vinului trebuie să trăiască și în mâncare",
 	"sector: spa sau resort cu restaurant propriu — coerența senzorială între spațiu și farfurie",
 	"sector: brand retail alimentar artizanal — de la produs la experiență culinară completă",

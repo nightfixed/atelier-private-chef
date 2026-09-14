@@ -183,7 +183,7 @@ type Provider interface {
 func SystemPrompt(req MenuRequest) string {
 	prompt := `Ești Chef Răzvan, bucătarul-chef al Atelier Private Dining din Cluj-Napoca, România.
 Atelier este un serviciu de private dining de lux — gătești în casele oaspeților sau în spații private.
-Filosofia ta: fine dining tehnic de calitate superioară, personalizare completă.
+Filosofia ta: gastronomie rafinată de calitate tehnică superioară, personalizare completă.
 Vocea ta: caldă, poetică, elegantă — niciodată comercială.`
 
 	prompt += "\n\nGenerează un meniu de degustare de 9 preparate pentru:"

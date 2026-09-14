@@ -25,7 +25,7 @@ function norm(s: Specimen): Specimen {
 }
 
 const SPECIMENS: Specimen[] = [
-  {num:'01',code:'APD-001',category:'Forestier & Montan',nameRo:'Licheni Carpatici',latin:'Cetraria islandica',nameLarge:'Lichen',badge:'Teren propriu',badgeCls:'local',meta:[{k:'Locație',ro:'Carpații Orientali, 1.400m',en:'Eastern Carpathians, 1,400m'},{k:'Sezon',ro:'Primăvară · Toamnă',en:'Spring · Autumn'},{k:'Prima recoltare',ro:'Martie 2024',en:'March 2024'}],spectrum:['rgba(100,140,180,.7)','rgba(80,160,120,.6)','rgba(201,169,110,.4)','rgba(150,100,80,.25)','rgba(60,80,60,.5)'],pills:['Mineral','Iodic','Forestier'],descRo:'Primul lichen pe o farfurie românească de fine dining. Gust mineral-iodic, ca piatra udă după ploaie de munte.',descEn:'The first lichen ever used on a Romanian fine dining plate. Mineral, faintly iodic.',noteRo:'Arată ca mușchiul de pe piatră — și are exact același gust mineral.',noteEn:'Looks like moss on stone.',usage:['Amuse-bouche','Somon','Pasăre','Infuzii']},
+  {num:'01',code:'APD-001',category:'Forestier & Montan',nameRo:'Licheni Carpatici',latin:'Cetraria islandica',nameLarge:'Lichen',badge:'Teren propriu',badgeCls:'local',meta:[{k:'Locație',ro:'Carpații Orientali, 1.400m',en:'Eastern Carpathians, 1,400m'},{k:'Sezon',ro:'Primăvară · Toamnă',en:'Spring · Autumn'},{k:'Prima recoltare',ro:'Martie 2024',en:'March 2024'}],spectrum:['rgba(100,140,180,.7)','rgba(80,160,120,.6)','rgba(201,169,110,.4)','rgba(150,100,80,.25)','rgba(60,80,60,.5)'],pills:['Mineral','Iodic','Forestier'],descRo:'Primul lichen pe o farfurie românească de gastronomie rafinată. Gust mineral-iodic, ca piatra udă după ploaie de munte.',descEn:'The first lichen ever used on a Romanian fine dining plate. Mineral, faintly iodic.',noteRo:'Arată ca mușchiul de pe piatră — și are exact același gust mineral.',noteEn:'Looks like moss on stone.',usage:['Amuse-bouche','Somon','Pasăre','Infuzii']},
   {num:'02',code:'APD-002',nameRo:'Rășină de Molid',latin:'Picea abies',nameLarge:'Rășină',badge:'Sezonier rar',badgeCls:'',meta:[{k:'Locație',ro:'Păduri de molid, 900–1.200m',en:'Spruce forests, 900–1,200m'},{k:'Sezon',ro:'Mai–Iunie exclusiv',en:'May–June exclusively'},{k:'Limită termică',ro:'Max. 70°C',en:'Max. 70°C'}],spectrum:['rgba(180,210,100,.5)','rgba(201,169,110,.7)','rgba(220,190,80,.45)','rgba(100,160,120,.3)','rgba(80,120,80,.3)'],pills:['Citric','Rășinos','Alpin'],descRo:'Rășina tânără de molid, recoltată primăvara. Gust citric-rășinos-alpin, fără echivalent.',descEn:'Young spruce resin harvested in spring. Citric, resinous, alpine.',noteRo:'Niciodată la foc direct. Dizolvată în unt clarificat la bain-marie.',noteEn:'Never over direct heat.',usage:['Unt de serviciu','Foie gras','Glazuri','Caramel']},
   {num:'03',code:'APD-003',nameRo:'Cenușă de Fag',latin:'Fagus sylvatica',nameLarge:'Cenușă',badge:'Permanent',badgeCls:'',meta:[{k:'Origine',ro:'Păduri de fag carpatin',en:'Carpathian beech forests'},{k:'Disponibilitate',ro:'Permanent',en:'Year-round'},{k:'Calcinare',ro:'200°C · 30 min',en:'200°C · 30 min'}],spectrum:['rgba(120,120,120,.6)','rgba(80,100,120,.5)','rgba(60,80,100,.4)','rgba(100,80,80,.3)','rgba(201,169,110,.15)'],pills:['Mineral','Fum rece','Alcalin'],descRo:'Cel mai dramatic ingredient vizual. Negrul absolut dintr-un copac carpatin.',descEn:"Atelier's most visually dramatic ingredient. Absolute black from a Carpathian tree.",noteRo:'Negrul absolut pe proteina albă.',noteEn:'Absolute black on white protein.',usage:['Cruste','Terrine foie','Pește','Înghețată']},
   {num:'04',code:'APD-004',category:'Feleac · La 11 km de această masă',nameRo:'Afine Sălbatice de Feleac',latin:'Vaccinium myrtillus',nameLarge:'Afine',badge:'Feleac',badgeCls:'local',meta:[{k:'Locație exactă',ro:'Dealul Feleac · Pădurea Bacău',en:'Feleac Hill · Bacău Forest'},{k:'Distanță',ro:'11 km de Atelier',en:'11 km from Atelier'},{k:'Sezon',ro:'Iulie–August',en:'July–August'}],spectrum:['rgba(100,80,180,.6)','rgba(140,80,140,.5)','rgba(180,80,100,.4)','rgba(201,169,110,.25)','rgba(80,60,100,.3)'],pills:['Acid','Tanic','Violete'],descRo:'Nu blueberry. Miezul violet complet, acid pronunțat. Fermentat lacto 5 zile.',descEn:'Not blueberry. Entirely violet flesh, pronounced acid. Lacto-fermented 5 days.',noteRo:'Miezul violet complet. Nimic în comun cu blueberry-ul de supermarket.',noteEn:'Entirely violet flesh.',usage:['Foie gras','Rață','Somon','Oțet propriu']},
@@ -275,7 +275,7 @@ export default function HomePage() {
           '@context': 'https://schema.org',
           '@type': 'FoodEstablishment',
           name: 'Atelier Private Dining',
-          description: 'Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, 18+ ani fine dining. Cluj-Napoca, România.',
+          description: 'Experiențe culinare private cu Chef Răzvan. Meniuri de degustare personalizate, 18+ ani gastronomie rafinată. Cluj-Napoca, România.',
           url: 'https://atelierprivatedining.ro',
           email: 'exquisitefoodtravel@yahoo.com',
           address: { '@type': 'PostalAddress', addressLocality: 'Cluj-Napoca', addressRegion: 'Cluj', addressCountry: 'RO' },
@@ -315,7 +315,7 @@ export default function HomePage() {
         </div>
         <div className="hero-content">
           <div className="hero-orn"></div>
-          <div className="hero-eye">Cluj-Napoca · România · Fine Dining</div>
+          <div className="hero-eye">Cluj-Napoca · România · Gastronomie Rafinată</div>
           <h1 className="hero-title">Atelier</h1>
           <div className="hero-cursive">Private Dining</div>
           <div className="hero-div"><span></span><i>✦</i><span></span></div>
@@ -365,9 +365,9 @@ export default function HomePage() {
               <div className="story-icon" style={{color:'var(--gold)'}}>R</div>
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator (autor)</div>
-              <p className="story-text">Format în bucătăriile de fine dining din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
+              <p className="story-text">Format în bucătăriile de gastronomie rafinată din România și Europa, Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
               <div className="story-stats">
-                <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani fine dining</div></div>
+                <div><div className="stat-n"><span className="count" data-target="18">0</span></div><div className="stat-l">ani gastronomie rafinată</div></div>
                 <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri create</div></div>
                 <div><div className="stat-n"><span className="count" data-target="200">0</span></div><div className="stat-l">meniuri unice</div></div>
               </div>
@@ -412,7 +412,7 @@ export default function HomePage() {
             <div style={{textAlign:'center',padding:'0 16px'}}>
               <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'10px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',opacity:.65,marginBottom:'1.2rem'}}>Meniu Prestabilit</div>
               <h3 style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1.9rem',color:'#e8e0d0',marginBottom:'1rem',lineHeight:1.2}}>Meniu de <em>Degustare</em></h3>
-              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici de fine dining european. O seară gândită în detaliu, pentru tine. Meniul complet îl găsești mai jos.</p>
+              <p style={{fontFamily:'"Cormorant Garamond",serif',fontWeight:300,fontSize:'1rem',lineHeight:1.9,color:'rgba(232,224,208,0.6)',marginBottom:'1.5rem'}}>Compus de Chef Răzvan și rafinat de-a lungul sezoanelor. Fiecare curs reflectă ani de experiență, ingrediente carpatice rare și tehnici europene de gastronomie rafinată. O seară gândită în detaliu, pentru tine. Meniul complet îl găsești mai jos.</p>
               <a href="#meniu" style={{display:'inline-block',borderBottom:'1px solid rgba(201,169,110,0.4)',paddingBottom:'2px',fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.45em',color:'var(--gold)',textTransform:'uppercase',textDecoration:'none',transition:'opacity .3s'}}>Vezi Meniul →</a>
             </div>
             {/* Linie separator */}

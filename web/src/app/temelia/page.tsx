@@ -139,7 +139,7 @@ export default function TemeliaPage() {
             Sunt un singur om. Nu o agenție. Nu o firmă de consultanță cu 40 de angajați și prezentări PowerPoint.
           </p>
           <p className="mat-cine-p2">
-            Răzvan, cu 18+ ani de fine dining internațional. Fiecare Temelie e construită de mine, personal — nu delegată, nu standardizată.
+            Răzvan, cu 18+ ani de gastronomie rafinată internațională. Fiecare Temelie e construită de mine, personal — nu delegată, nu standardizată.
           </p>
           <p className="mat-cine-p3">
             Accept 1–2 proiecte pe trimestru. Dacă calendarul permite, putem discuta.

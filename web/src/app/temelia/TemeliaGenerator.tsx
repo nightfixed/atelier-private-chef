@@ -14,7 +14,7 @@ const STEPS = [
     key: 'type',
     eyebrow: '01 · Activitate',
     question: 'Ce tip de activitate reprezentați?',
-    placeholder: 'ex. restaurant fine dining, bistro urban, hotel boutique, catering corporate, brand alimentar...',
+    placeholder: 'ex. restaurant de gastronomie rafinată, bistro urban, hotel boutique, catering corporate, brand alimentar...',
     multiline: false,
   },
   {

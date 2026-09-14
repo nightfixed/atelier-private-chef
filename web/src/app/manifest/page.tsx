@@ -28,7 +28,7 @@ const principles = [
   {
     num: 'IV',
     title: 'Tehnica este japoneză. Ingredientul este al meu.',
-    body: 'Precizia, disciplina, respectul față de produs — le-am luat de oriunde au existat cel mai bine. Dar solul, ciobanul, apele, pădurile, mirosul de fân uscat în august — acestea sunt ale mele. Sinteza dintre rigoarea mondială și materia primă locală nu este un compromis. Este cea mai înaltă formă de fine dining.',
+    body: 'Precizia, disciplina, respectul față de produs — le-am luat de oriunde au existat cel mai bine. Dar solul, ciobanul, apele, pădurile, mirosul de fân uscat în august — acestea sunt ale mele. Sinteza dintre rigoarea mondială și materia primă locală nu este un compromis. Este cea mai înaltă formă de gastronomie rafinată.',
     axiom: '"Nu am bucătărie românească. Am bucătărie ardeleană cu gramatică internațională."',
   },
   {

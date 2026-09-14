@@ -3,12 +3,12 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Chef Privat Cluj-Napoca · Atelier Private Dining',
   description:
-    'Chef privat în Cluj-Napoca — meniuri de degustare personalizate, ingrediente carpatice, 18+ ani fine dining. Atelier Private Dining compune seara ta de la zero.',
+    'Chef privat în Cluj-Napoca — meniuri de degustare personalizate, ingrediente carpatice, 18+ ani gastronomie rafinată. Atelier Private Dining compune seara ta de la zero.',
   robots: { index: false, follow: false },
 };
 
 const STATS = [
-  { num: '18+', label: 'Ani fine dining' },
+  { num: '18+', label: 'Ani gastronomie rafinată' },
   { num: '2–12', label: 'Persoane per seară' },
   { num: '6–9', label: 'Cursuri per meniu' },
   { num: '100%', label: 'Personalizat' },
@@ -17,7 +17,7 @@ const STATS = [
 const SERVICES = [
   {
     title: 'Cină Privată la Domiciliu',
-    desc: 'Chef-ul vine la tine. Bucătăria ta devine un atelier de fine dining pentru o seară. Totul — prep, servire, curățenie — este inclus.',
+    desc: 'Chef-ul vine la tine. Bucătăria ta devine un atelier de gastronomie rafinată pentru o seară. Totul — prep, servire, curățenie — este inclus.',
   },
   {
     title: 'Corporate & Evenimente de Business',
@@ -34,10 +34,10 @@ const SERVICES = [
 ];
 
 const WHY = [
-  { q: 'De ce chef privat și nu restaurant?', a: 'Într-un restaurant, meniul este fix și oaspeții se adaptează. La Atelier, meniul se construiește în jurul tău. Este singura formă de fine dining cu adevărat personalizat.' },
+  { q: 'De ce chef privat și nu restaurant?', a: 'Într-un restaurant, meniul este fix și oaspeții se adaptează. La Atelier, meniul se construiește în jurul tău. Este singura formă de gastronomie rafinată cu adevărat personalizată.' },
   { q: 'Ce include serviciul?', a: 'Consultație prealabilă, achiziție ingrediente, pregătire, servire, curățenie completă. Tu nu faci nimic altceva decât să fii prezent.' },
   { q: 'Maximum câte persoane?', a: 'Lucrez pentru 2–12 persoane. Sub 12 persoane, calitatea se păstrează. Peste, nu mai pot garanta experiența.' },
-  { q: 'Câtă experiență?', a: '18+ ani de fine dining. Formare internațională. Ingrediente carpatice locale — unele unice în România: licheni, rășină de molid, miso de fasole ardeleană.' },
+  { q: 'Câtă experiență?', a: '18+ ani de gastronomie rafinată. Formare internațională. Ingrediente carpatice locale — unele unice în România: licheni, rășină de molid, miso de fasole ardeleană.' },
 ];
 
 export default function ChefPrivatClujPage() {
@@ -67,7 +67,7 @@ export default function ChefPrivatClujPage() {
           Chef Privat<br />în Cluj-Napoca
         </h1>
         <p style={{ fontSize: '1.1rem', fontWeight: 300, lineHeight: 2, color: 'rgba(232,224,208,0.75)', maxWidth: 520, margin: '0 auto 48px' }}>
-          Fine dining la domiciliu, cu ingrediente carpatice și meniu construit exclusiv pentru tine.
+          Gastronomie rafinată la domiciliu, cu ingrediente carpatice și meniu construit exclusiv pentru tine.
           Nu există două seri identice.
         </p>
         <a href="/#rezervare" style={{ display: 'inline-block', border: '1px solid #c9a96e', color: '#c9a96e', fontFamily: "'Raleway', sans-serif", fontWeight: 200, fontSize: '0.65rem', letterSpacing: '0.45em', textTransform: 'uppercase', padding: '14px 40px', textDecoration: 'none', transition: 'all 0.3s' }}>
