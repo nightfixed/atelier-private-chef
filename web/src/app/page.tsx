@@ -369,7 +369,7 @@ export default function HomePage() {
               <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu în ce secundă să corectez, nu doar să repet o rețetă memorată.</p>
               <div className="story-stats">
                 <div><div className="stat-n"><span className="count" data-target="20" data-suffix="">0</span></div><div className="stat-l">ani în gastronomie</div></div>
-                <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri și concepte culinare create</div></div>
+                <div><div className="stat-n"><span className="count" data-target="2">0</span></div><div className="stat-l">branduri proprii · consultanță · concepte create</div></div>
                 <div><div className="stat-n" style={{fontSize:'14px',fontStyle:'italic',lineHeight:1.4}}>Fiecare masă —</div><div className="stat-l" style={{textTransform:'none',letterSpacing:'0.3px'}}>un meniu unic, care nu va mai exista a doua oară</div></div>
               </div>
             </div>
