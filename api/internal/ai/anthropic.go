@@ -8,9 +8,11 @@ import (
 	"io"
 	"math/rand"
 	"net/http"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
+	"unicode"
 )
 
 const (
@@ -631,7 +633,12 @@ Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără exp
 		story = ""
 	}
 
-	return &CodexResponse{Menu: courses, Story: story}, nil
+	for i := range courses {
+		courses[i].Nume = sanitizeRomanian(courses[i].Nume)
+		courses[i].Descriere = sanitizeRomanian(courses[i].Descriere)
+	}
+
+	return &CodexResponse{Menu: courses, Story: sanitizeRomanian(story)}, nil
 }
 
 // GenerateArtifact calls Claude to produce a post-dinner personal artifact (title + text).
@@ -668,7 +675,7 @@ TEXT: [200-250 cuvinte — text literar care evocă seara tocmai încheiată, ca
 		text = strings.TrimSpace(raw)
 	}
 
-	return &ArtifactResponse{Title: title, Subtitle: subtitle, Text: strings.TrimSpace(text)}, nil
+	return &ArtifactResponse{Title: sanitizeRomanian(title), Subtitle: sanitizeRomanian(subtitle), Text: sanitizeRomanian(strings.TrimSpace(text))}, nil
 }
 
 func extractLine(s, prefix string) string {
@@ -686,6 +693,36 @@ func extractAfter(s, prefix string) string {
 		return ""
 	}
 	return strings.TrimSpace(s[idx+len(prefix):])
+}
+
+// romanianWordFixes corrects invented/non-DEX words the model occasionally produces,
+// as a deterministic safety net on top of the "vorbești o română corectă" prompt instruction.
+// Modelul a inventat variante diferite ale aceluiași cuvânt inexistent ("curiozează", "curioazează") —
+// regex-urile acoperă familia de variante posibile ale falsului verb "a (curio)a?za", nu doar forma exactă văzută.
+var romanianWordFixes = []struct {
+	pattern *regexp.Regexp
+	replace string
+}{
+	{regexp.MustCompile(`(?i)m[ăa]\s+curioa?zeaz[ăa]`), "mă intrigă"},
+	{regexp.MustCompile(`(?i)curioa?zeaz[ăa]`), "intrigă"},
+	{regexp.MustCompile(`(?i)curioa?zat[ăa]?`), "intrigat"},
+	{regexp.MustCompile(`(?i)curioa?zez`), "sunt curios"},
+}
+
+// sanitizeRomanian applies romanianWordFixes to any AI-generated text before it reaches the client,
+// preserving the capitalization of the original match (e.g. sentence-starting "Mă").
+func sanitizeRomanian(text string) string {
+	for _, fix := range romanianWordFixes {
+		text = fix.pattern.ReplaceAllStringFunc(text, func(match string) string {
+			if match != "" && unicode.IsUpper(rune(match[0])) {
+				r := []rune(fix.replace)
+				r[0] = unicode.ToUpper(r[0])
+				return string(r)
+			}
+			return fix.replace
+		})
+	}
+	return text
 }
 
 // Chat handles multi-turn conversation using Claude.
@@ -804,7 +841,7 @@ Nu inventezi prețuri sau disponibilitate. Vorbești o română corectă, de dic
 	if len(ar.Content) == 0 {
 		return nil, fmt.Errorf("empty response")
 	}
-	return &ChatResponse{Reply: ar.Content[0].Text}, nil
+	return &ChatResponse{Reply: sanitizeRomanian(ar.Content[0].Text)}, nil
 }
 
 // breviarDynamicSeeds adds variety to Breviar generation — practical group dynamics + culinary format seeds.
@@ -1045,6 +1082,7 @@ Limbaj direct, profesional, fără adjective inutile. Specifică, nu generic. Sp
 
 func parseMatriceaText(text string) *MatriceaResponse {
 	text = strings.NewReplacer("**", "", "*", "").Replace(text)
+	text = sanitizeRomanian(text)
 	lines := strings.Split(strings.TrimSpace(text), "\n")
 	sections := map[string][]string{}
 	cur := ""
@@ -1081,6 +1119,7 @@ func parseMatriceaText(text string) *MatriceaResponse {
 func parseBreviarText(text string) *BreviarResponse {
 	// Strip markdown
 	text = strings.NewReplacer("**", "", "*", "").Replace(text)
+	text = sanitizeRomanian(text)
 	lines := strings.Split(strings.TrimSpace(text), "\n")
 	sections := map[string][]string{}
 	cur := ""
