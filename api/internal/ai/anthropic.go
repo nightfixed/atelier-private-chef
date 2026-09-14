@@ -477,6 +477,7 @@ Regula de aur: dacă există orice dubiu că un ingredient sau o tehnică conți
 
 	menuSystem := fmt.Sprintf(`Ești chef-ul Atelier Private Dining, un atelier de gastronomie rafinată din Cluj-Napoca.
 Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite.
+Când descrii gust sau textură, eviți cuvinte crude precum „animal” — alege termeni rafinați: „carnal”, „adânc”, „de vânat”, „visceral”.
 %s
 Identitatea acestui meniu este definită de trei axe obligatorii:
 1. Influență culinară dominantă: %s
@@ -548,7 +549,7 @@ Răspunde STRICT cu JSON valid, fără markdown, fără text suplimentar:
 
 Pe baza profilului senzorial al oaspetelui, scrie povestea serii — un text de 200-240 cuvinte în română care evocă atmosfera, preparatele, ingredientele cheie și starea pe care o va trăi oaspetele. Tonul: cald, literar, imersiv, ca o scrisoare intimă. Integrează subtil detalii din profil. Nu enumera cursuri sec.
 
-Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite.
+Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite. Când descrii gust sau textură, eviți cuvinte crude precum „animal” — alege termeni rafinați: „carnal”, „adânc”, „de vânat”, „visceral”.
 
 Răspunde DOAR cu textul poveștii, fără titlu, fără introducere, fără explicații.`
 
@@ -649,7 +650,7 @@ func (p *AnthropicProvider) GenerateArtifact(ctx context.Context, req ArtifactRe
 	system := fmt.Sprintf(`Ești arhivarul Oglinda Atelier — sistemul care documentează fiecare seară ca un capitol unic, ireplicabil.
 
 Pe baza profilului senzorial al oaspetelui, scrie un artefact post-cină în română.
-Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite.
+Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite. Când descrii gust sau textură, eviți cuvinte crude precum „animal” — alege termeni rafinați: „carnal”, „adânc”, „de vânat”, „visceral”.
 
 Răspunde STRICT în formatul:
 TITLU: [un titlu poetic de 3-6 cuvinte]
@@ -892,7 +893,7 @@ func (p *AnthropicProvider) GenerateBreviar(ctx context.Context, req BreviarRequ
 	system := fmt.Sprintf(`Ești Chef Răzvan de la Atelier Private Dining Cluj-Napoca.
 Ești specialist în experiențe culinare revelatorii pentru echipe corporative.
 Filozofia ta: o masă bine gândită poate face ceea ce nici un workshop de team building nu reușește.
-Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite.
+Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite. Când descrii gust sau textură, eviți cuvinte crude precum „animal” — alege termeni rafinați: „carnal”, „adânc”, „de vânat”, „visceral”.
 
 ANCORARE LOCALĂ OBLIGATORIE — ingrediente de sezon din Transilvania (%s):
 Ingrediente de integrat natural în meniu: %s
@@ -1005,7 +1006,7 @@ func (p *AnthropicProvider) GenerateMatricea(ctx context.Context, req MatriceaRe
 Ești consultant de identitate culinară pentru branduri premium din România.
 Filozofia ta: nu îmbunătățești meniuri — construiești sisteme. Nu dai rețete — schimbi perspectiva pentru totdeauna.
 Principiul tău fundamental: "Nu am venit să vă îmbunătățim meniul. Am venit să vă găsim gustul."
-Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite.
+Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite. Când descrii gust sau textură, eviți cuvinte crude precum „animal” — alege termeni rafinați: „carnal”, „adânc”, „de vânat”, „visceral”.
 
 Pentru acest diagnostic specific, folosești următoarele filtre de analiză:
 - %s

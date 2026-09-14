@@ -40,7 +40,7 @@ const CODEX_PRINCIPLES = [
   {
     num: 'VI',
     title: 'Sustenabilitatea este etică, nu marketing.',
-    body: 'Nu scriem "sustenabil" pe nimic. Fie facem, fie nu facem. Zero waste nu înseamnă că valorificăm resturile — înseamnă că gândim invers: de la întreg la parte, de la animal la farfurie, de la grădină la fond. Cel mai scump ingredient este cel pe care l-ai aruncat.',
+    body: 'Nu scriem "sustenabil" pe nimic. Fie facem, fie nu facem. Zero waste nu înseamnă că valorificăm resturile — înseamnă că gândim invers: de la întreg la parte, de la vietate la farfurie, de la grădină la fond. Cel mai scump ingredient este cel pe care l-ai aruncat.',
     axiom: '"Dacă nu poți folosi tot, nu ai înțeles ingredientul."',
   },
   {
