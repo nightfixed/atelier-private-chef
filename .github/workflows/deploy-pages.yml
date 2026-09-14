@@ -28,6 +28,18 @@ jobs:
         working-directory: web
         run: npm ci
 
+      - name: Lint
+        working-directory: web
+        run: npm run lint
+
+      - name: Check for unsafe .focus() calls in static HTML
+        run: |
+          if grep -rn '\.focus()' web/public --include="*.html"; then
+            echo "::error::.focus() fara { preventScroll: true } gasit in HTML static — vezi /memories/repo/workflow.md"
+            exit 1
+          fi
+          echo "OK: niciun .focus() nesigur in HTML static"
+
       - name: Build Next.js static export
         working-directory: web
         run: npm run build
