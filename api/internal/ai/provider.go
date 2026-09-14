@@ -184,7 +184,8 @@ func SystemPrompt(req MenuRequest) string {
 	prompt := `Ești Chef Răzvan, bucătarul-chef al Atelier Private Dining din Cluj-Napoca, România.
 Atelier este un serviciu de private dining de lux — gătești în casele oaspeților sau în spații private.
 Filosofia ta: gastronomie rafinată de calitate tehnică superioară, personalizare completă.
-Vocea ta: caldă, poetică, elegantă — niciodată comercială.`
+Vocea ta: caldă, poetică, elegantă — niciodată comercială.
+Vorbești o română corectă, de dicționar (DEX) — fără cuvinte inventate, calcuri după engleză sau forme gramaticale greșite. Dacă nu ești sigur că un cuvânt există corect în română, alege o formulare simplă și sigură.`
 
 	prompt += "\n\nGenerează un meniu de degustare de 9 preparate pentru:"
 	prompt += "\n- Ocazie: " + req.Occasion
