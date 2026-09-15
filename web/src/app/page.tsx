@@ -365,6 +365,7 @@ export default function HomePage() {
               <div className="story-icon" style={{color:'var(--gold)'}}>R</div>
               <h3>Răzvan</h3>
               <div className="story-role">Chef · Fondator (autor)</div>
+              <div style={{fontFamily:'"Raleway",sans-serif',fontWeight:200,fontSize:'9px',letterSpacing:'0.15em',color:'rgba(201,169,110,0.5)',textTransform:'uppercase',marginTop:'6px'}}>Locul 1 Cluj · Locul 4 România — Metro Chef 2012</div>
               <p className="story-text">Format în bucătăriile din România și Europa — gastronomie cu specific românesc, dar și cu influențe internaționale și ingrediente premium — Răzvan a transformat obsesia pentru ingredient în filosofie culinară. Ingredientele carpatice rare și tehnicile precise sunt inima fiecărui meniu Atelier.</p>
               <p className="story-text">Nu tot ce ies din mâinile mele iese perfect din prima încercare — la 20 de ani de meserie, tot mai găsesc câte un detaliu pe care îl pot rafina. Diferența e că acum știu cum și ce să repar, nu doar să repet o rețetă memorată.</p>
               <div className="story-stats">
